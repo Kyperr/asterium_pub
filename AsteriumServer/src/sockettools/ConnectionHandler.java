@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import sessionmanagement.SessionManager;
 import sessionmanagement.SessionManager.Session;
@@ -12,6 +14,8 @@ import sessionmanagement.SessionManager.Session;
 public class ConnectionHandler extends Thread {
 	
 	private static final int SOCKET_HANDLER_TIMEOUT = 60000;
+	
+	private static ExecutorService threadPoolExec = Executors.newCachedThreadPool();
 
 	/* The Session for this ConnectionHandler thread. Has the associated socket
 	 * and authentication token.
@@ -49,6 +53,22 @@ public class ConnectionHandler extends Thread {
 					
 					// Call the parser, give them the string/input
 					// ^^ TODO ^^
+					
+					// Pass a runnable to the ExecutorService
+					Runnable runnable = new Runnable() {
+						@Override
+						public void run() {
+							try {
+								Thread.sleep(100);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							System.out.println("sleepy");
+							
+						}
+					};
+					threadPoolExec.execute(runnable);
 			}
 				
 		/* If there has been a timeout, the user has been disconnected. Kill this thread. */
