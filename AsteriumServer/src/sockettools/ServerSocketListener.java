@@ -3,13 +3,9 @@ package sockettools;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
 
 public class ServerSocketListener {
 	
-	private static final int SOCKET_HANDLER_TIMEOUT = 60000;
-
-	//
 	private final int port;
 
 	/* Condition: is the server loop running? */
@@ -37,7 +33,6 @@ public class ServerSocketListener {
 	private void listen() throws IOException {
 		// We'll need a connection to listen for
 		Socket socket;
-		ConnectionHandler handler;
 
 		// Spin/listen
 		while (run) {
@@ -45,15 +40,8 @@ public class ServerSocketListener {
 			socket = listener.accept();
 
 			// Make a new connection handler
-			handler = new ConnectionHandler(socket);
-			handler.run();
-			// Make a new session
-			try {
-				socket.setSoTimeout(SOCKET_HANDLER_TIMEOUT);
-			} catch (SocketException e) {
-				// If the thread times out, handles shit
-				handler.interrupt();
-			}
+			new ConnectionHandler(socket).run();
+			
 		}
 	}
 }
