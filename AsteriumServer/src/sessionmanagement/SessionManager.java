@@ -4,6 +4,7 @@ import java.net.Socket;
 import java.security.SecureRandom;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ThreadPoolExecutor;
 
 public final class SessionManager {
 	
@@ -47,13 +48,13 @@ public final class SessionManager {
 		return sessions.get(authToken);
 	}
 	
-	public final class Session {
+	public static final class Session {
 
-		private final String CHAR_SET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+		private static final String CHAR_SET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
-		private final SecureRandom RANDOM = new SecureRandom();
+		private static final SecureRandom RANDOM = new SecureRandom();
 		
-		private final int TOKEN_LENGTH = 256;
+		private static final int TOKEN_LENGTH = 256;
 		
 		/**
 		 * 
@@ -86,7 +87,7 @@ public final class SessionManager {
 		 * 
 		 * @return
 		 */
-		private String generateAuthToken() {
+		private static String generateAuthToken() {
 			StringBuilder sb = new StringBuilder();
 			
 			for (int i = 0; i < TOKEN_LENGTH; i++) {
