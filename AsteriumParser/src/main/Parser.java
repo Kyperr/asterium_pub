@@ -12,7 +12,7 @@ import org.json.JSONObject;
 import general.AbstractAction;
 import general.CreateGameAction;
 import general.JoinAsPlayerAction;
-import general.Player;
+import general.PlayerData;
 
 public class Parser {
 
@@ -72,7 +72,7 @@ public class Parser {
 	private static JoinAsPlayerAction joinAsPlayer(JSONObject jsonObj) {
 		String[] fields;
 		String lobby_id;
-		Player player;
+		PlayerData player;
 		String name;
 		JoinAsPlayerAction action;
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -86,12 +86,12 @@ public class Parser {
 				throw new JSONException(JSON_FORMAT_ERR);
 			}
 
-			if (jsonObj.has(JoinAsPlayerAction.PLAYER)) {
-				jsonObj = jsonObj.getJSONObject(JoinAsPlayerAction.PLAYER);
+			if (jsonObj.has(JoinAsPlayerAction.PLAYER_DATA)) {
+				jsonObj = jsonObj.getJSONObject(JoinAsPlayerAction.PLAYER_DATA);
 				fields = JSONObject.getNames(jsonObj); // get object's keys
 				
-				if (jsonObj.has(Player.NAME)) {
-					name = jsonObj.get(Player.NAME).toString();
+				if (jsonObj.has(PlayerData.NAME)) {
+					name = jsonObj.get(PlayerData.NAME).toString();
 				} else {
 					throw new JSONException(JSON_FORMAT_ERR);
 				}
@@ -99,15 +99,15 @@ public class Parser {
 				
 				/* Create Player object  */
 				if (!name.isEmpty()) {
-					player = new Player(name);
+					player = new PlayerData(name);
 
 					map.put(JoinAsPlayerAction.LOBBY_ID, lobby_id);
-					map.put(JoinAsPlayerAction.PLAYER, player);
+					map.put(JoinAsPlayerAction.PLAYER_DATA, player);
 					
 					action = new JoinAsPlayerAction(map);
 					
 				} else {
-					throw new JSONException(String.format(JSON_EMPTY_ERR, Player.NAME));
+					throw new JSONException(String.format(JSON_EMPTY_ERR, PlayerData.NAME));
 				}
 				
 			} else {
