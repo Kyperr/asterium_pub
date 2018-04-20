@@ -4,10 +4,8 @@ import java.util.Map;
 
 public class CreateGameAction extends AbstractAction {
 	
-	public static final String NAME = "create_game";
-	
 	public CreateGameAction(Map<String, Object> args) {
-		super(NAME, args);
+		super(AbstractAction.CREATE_GAME, args);
 	}
 
 	@Override

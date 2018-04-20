@@ -1,6 +1,10 @@
 package general;
 
 public class Player {
+	
+	/* Argument names */ 
+	public static final String NAME = "name";
+	
 	protected String name;
 	
 	public Player(final String name) {
