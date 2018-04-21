@@ -9,10 +9,11 @@ import java.util.function.Function;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import general.AbstractAction;
-import general.CreateGameAction;
-import general.JoinAsPlayerAction;
+import action.AbstractAction;
+import action.CreateGameAction;
+import action.JoinAsPlayerAction;
 import general.PlayerData;
+import message.Message;
 
 public class Parser {
 
@@ -42,13 +43,13 @@ public class Parser {
 		JSONObject jsonObj = new JSONObject(msg);
 
 		fields = JSONObject.getNames(jsonObj); // get object's keys
-		if (fields != null && fields.length >= 1 && (fields[0].equals(AbstractAction.REQUEST) || fields[0].equals(AbstractAction.RESPONSE))) {
-			isRequest = fields[0].equals(AbstractAction.REQUEST);
+		if (fields != null && fields.length >= 1 && (fields[0].equals(Message.REQUEST) || fields[0].equals(Message.RESPONSE))) {
+			isRequest = fields[0].equals(Message.REQUEST);
 			jsonObj = jsonObj.getJSONObject(fields[0]); // reassign json object to next nested object
 			fields = JSONObject.getNames(jsonObj); // reassign fields to get object's keys
 
-			if (jsonObj.has(AbstractAction.ACTION_NAME)) {
-				actionName = jsonObj.get(AbstractAction.ACTION_NAME).toString();
+			if (jsonObj.has(Message.ACTION_NAME)) {
+				actionName = jsonObj.get(Message.ACTION_NAME).toString();
 			} else {
 				throw new JSONException(JSON_FORMAT_ERR);
 			}

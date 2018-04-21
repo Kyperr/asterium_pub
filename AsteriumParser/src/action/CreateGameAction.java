@@ -1,4 +1,4 @@
-package general;
+package action;
 
 import java.util.Map;
 

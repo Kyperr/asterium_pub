@@ -1,6 +1,8 @@
-package general;
+package action;
 
 import java.util.Map;
+
+import general.PlayerData;
 
 public class JoinAsPlayerAction extends AbstractAction {
 	

@@ -1,18 +1,20 @@
-package general;
+package action;
 
 import java.util.Map;
 
 public abstract class AbstractAction implements Runnable{
 	
 	/* Constants for action names */
-	public static final String JOIN_AS_PLAYER = "join_as_player";
 	public static final String CREATE_GAME = "create_game";
+	public static final String JOIN_AS_PLAYER = "join_as_player";
+	public static final String JOIN_AS_GAME_BOARD = "join_as_game_board";
+	public static final String START_GAME = "start_game";
+	public static final String TURN_SEQUENCE = "turn_sequence";
+	public static final String READY = "ready";
+	public static final String END_GAME = "end_game";
+	public static final String PLAYER_SYNC = "player_sync";
 	
-	/* Constants for all messages */
-	public static final String ACTION_NAME = "action_name";
-	public static final String REQUEST = "request";
-	public static final String RESPONSE = "response";
-
+	
 	private String name;
 	private Map<String, Object> args;
 	
