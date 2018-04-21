@@ -2,12 +2,10 @@ package gamelogic;
 
 import sessionmanagement.SessionManager.Session;
 
-public class GameBoard {
-
-	private final Session session;
+public class GameBoard extends Client {
 	
 	public GameBoard(Session session) {
-		this.session = session;
+		super(session);
 	}
 
 }

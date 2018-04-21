@@ -27,6 +27,7 @@ public class ConnectionHandler extends Thread {
 	
 	public ConnectionHandler(Socket socket) {
 		this.session = SessionManager.getInstance().createSession(socket);
+		System.out.println("ConnectionHandler created");
 	}
 	
 	public void run() {
