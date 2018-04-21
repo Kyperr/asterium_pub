@@ -2,6 +2,8 @@ package action;
 
 import java.util.Map;
 
+import org.json.JSONObject;
+
 public class CreateGameAction extends AbstractAction {
 	
 	public CreateGameAction(Map<String, Object> args) {
@@ -14,5 +16,8 @@ public class CreateGameAction extends AbstractAction {
 		
 	}
 	
+	public static CreateGameAction parseArgs(JSONObject jsonObj) {
+		return null;
+	}
 	
 }
