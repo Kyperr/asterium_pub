@@ -1,4 +1,4 @@
-package general;
+package message;
 
 import java.util.Map;
 
