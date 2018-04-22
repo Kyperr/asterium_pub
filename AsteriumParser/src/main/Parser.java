@@ -9,48 +9,48 @@ import java.util.function.Function;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import actiondata.ActionData;
 import message.Message;
 
 public class Parser {
 
 	/* Map of action names to action functions */
-	private Map<List<Object>, Function<JSONObject, Runnable>> actionLookup = new HashMap<List<Object>, Function<JSONObject, Runnable>>();
-	
-	private Runnable errorAction;
+	private Map<List<Object>, Function<JSONObject, ActionData>> actionDataLookup = new HashMap<List<Object>, Function<JSONObject, ActionData>>();
 
-	public Parser(final Map<List<Object>, Function<JSONObject, Runnable>> actions, Runnable errorAction) {
+	public Parser(final Map<List<Object>, Function<JSONObject, ActionData>> actions) {
 		setActionMap(actions);
-		this.errorAction = errorAction;
-	}
-	
-	public void setActionMap(final Map<List<Object>, Function<JSONObject, Runnable>> actions) {
-		this.actionLookup = actions;
 	}
 
-	public Runnable parse(final String msg) {
-		Runnable action = null;
+	public void setActionMap(final Map<List<Object>, Function<JSONObject, ActionData>> actions) {
+		this.actionDataLookup = actions;
+	}
+
+	public ActionData parseToActionData(final String msg) throws JSONException {
+		ActionData actionData = null;
 		String[] fields;
 		Boolean isRequest;
 		String actionName;
 		JSONObject jsonObj = new JSONObject(msg);
 
 		fields = JSONObject.getNames(jsonObj); // get object's keys
+		
 		if (!fields[0].equals(Message.REQUEST) && !fields[0].equals(Message.RESPONSE)) {
-			return this.errorAction;
+			throw new JSONException("JSON malformed: " + jsonObj.toString());
 		}
 
-		try {
-			isRequest = fields[0].equals(Message.REQUEST);
-			jsonObj = jsonObj.getJSONObject(fields[0]); // reassign json object to next nested object
-			fields = JSONObject.getNames(jsonObj); // reassign fields to get object's keys
-			actionName = jsonObj.get(Message.ACTION_NAME).toString();
-			jsonObj = jsonObj.getJSONObject(actionName);
-			action = actionLookup.get(Arrays.asList(isRequest, actionName)).apply(jsonObj);
-		} catch (JSONException ex) {
-			return this.errorAction;
-		}
+		isRequest = fields[0].equals(Message.REQUEST);
+		
+		jsonObj = jsonObj.getJSONObject(fields[0]); // reassign json object to next nested object
+		
+		fields = JSONObject.getNames(jsonObj); // reassign fields to get object's keys
+		
+		actionName = jsonObj.get(Message.ACTION_NAME).toString();
+		
+		jsonObj = jsonObj.getJSONObject(actionName);
+		
+		actionData = actionDataLookup.get(Arrays.asList(isRequest, actionName)).apply(jsonObj);
 
-		return action;
+		return actionData;
 	}
 
 }
