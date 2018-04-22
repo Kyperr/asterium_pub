@@ -1,6 +1,6 @@
 package main;
 
-import src.connection.ServerConnection;
+import connection.ServerConnection;
 
 public class Main {
 
