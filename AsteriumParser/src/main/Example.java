@@ -28,15 +28,8 @@ public class Example {
 	};
 
 	public static void main(String[] args) {
-		 Map<List<Object>, Function<JSONObject, ActionData>> actionLookup = new HashMap<List<Object>, Function<JSONObject, ActionData>>(){
-			private static final long serialVersionUID = 1L;
-			{
-				put(Arrays.asList(true, ActionData.JOIN_AS_PLAYER), JoinAsPlayerActionData::parseArgs);
-				put(Arrays.asList(true, ActionData.CREATE_GAME), CreateGameActionData::parseArgs);
-			}
-		};
 		
-		Parser parser = new Parser(actionLookup);
+		Parser parser = new Parser();
 		
 		//String msg = "{\"request\":{\"auth_token\":\"12345\",\"action_name\":\"join_as_player\",\"join_as_player\":{\"lobby_id\":\"Fuck Yeah\",\"player_data\":{\"name\":\"Lieutenant Dudefella\"}}}}";
 		

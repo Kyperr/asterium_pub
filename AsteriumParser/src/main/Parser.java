@@ -10,19 +10,22 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import actiondata.ActionData;
+import actiondata.CreateGameActionData;
+import actiondata.JoinAsPlayerActionData;
 import message.Message;
 
 public class Parser {
 
 	/* Map of action names to action functions */
-	private Map<List<Object>, Function<JSONObject, ActionData>> actionDataLookup = new HashMap<List<Object>, Function<JSONObject, ActionData>>();
+	private static Map<List<Object>, Function<JSONObject, ActionData>> actionDataLookup = new HashMap<List<Object>, Function<JSONObject, ActionData>>(){{
+		put(Arrays.asList(true, ActionData.JOIN_AS_PLAYER), JoinAsPlayerActionData::parseArgs);
+		put(Arrays.asList(true, ActionData.CREATE_GAME), CreateGameActionData::parseArgs);
+	}};
 
-	public Parser(final Map<List<Object>, Function<JSONObject, ActionData>> actions) {
-		setActionMap(actions);
-	}
-
-	public void setActionMap(final Map<List<Object>, Function<JSONObject, ActionData>> actions) {
-		this.actionDataLookup = actions;
+	
+	
+	public Parser() {
+		
 	}
 
 	public ActionData parseToActionData(final String msg) throws JSONException {
