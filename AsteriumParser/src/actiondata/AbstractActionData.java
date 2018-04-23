@@ -12,4 +12,11 @@ public abstract class AbstractActionData implements ActionData {
 		return this.name;
 	}
 	
+	public boolean equals(final Object other) {
+		return other instanceof AbstractActionData && 
+			   ((AbstractActionData) other).name.equals(this.name) && 
+			   fieldsEqual(other);
+	}
+	
+	protected abstract boolean fieldsEqual(final Object other);
 }

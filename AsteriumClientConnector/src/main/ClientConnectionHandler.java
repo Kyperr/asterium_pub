@@ -13,13 +13,16 @@ public class ClientConnectionHandler {
 	private Parser parser;
 	
 	
-	private Thread listener;
+	private ListenerThread listener;
+	private SenderThreadPool senders;
 	
 
 	public ClientConnectionHandler() {
 		serverConnection = new ServerConnection("localhost", PORT);
 		parser = new Parser();
 		listener = new ListenerThread(serverConnection, parser);
+		senders = new SenderThreadPool(serverConnection, parser);
+		listener.subscribe(senders);
 		listener.start();
 	}
 	

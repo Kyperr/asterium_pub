@@ -27,6 +27,11 @@ public class CreateGameActionData extends AbstractActionData{
 		return new CreateGameActionData();
 
 	}
+
+	@Override
+	protected boolean fieldsEqual(final Object other) {
+		return true;
+	}
 	
 	
 }
