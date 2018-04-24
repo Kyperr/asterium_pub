@@ -57,23 +57,25 @@ public class ConnectionHandler extends Thread {
 			InputStreamReader isr = new InputStreamReader(this.session.getSocket().getInputStream());
 			BufferedReader br = new BufferedReader(isr);
 
-			while (run) {
 				System.out.println("Listening...");
 				
 				// Get the input
 				StringBuilder builder = new StringBuilder();
 				String line = "";
 
+				System.out.println("Connected: " + this.session.getSocket().isConnected());
+				
 				// Get every line
 				while ((line = br.readLine()) != null) {
-					System.out.println("Added line: " + line);
+					line = br.readLine();
+					System.out.println("Adding line: " + line);
 					builder.append(line);
 				}
 				
 				System.out.println("Budding thread to handle: " + builder.toString());
 
 				handleMessage(builder.toString());
-			}
+			
 
 		/*
 		 * If there has been a timeout, the user has been disconnected. Kill this
@@ -98,6 +100,7 @@ public class ConnectionHandler extends Thread {
 				
 		Action action = Action.getActionFor(this.session, actionData);
 		
+		System.out.println("Handling a thread for: " + action.getName());
 		threadPoolExec.execute(action);
 	}
 
