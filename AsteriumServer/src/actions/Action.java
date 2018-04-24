@@ -27,11 +27,11 @@ public abstract class Action implements Runnable {
 			ACTION_LOOKUP.put(CreateGameActionData.class, CreateGameAction::fromActionData);
 		}
 	};
-	
+
 	public static Action getActionFor(Session sender, ActionData actionData) {
 		try {
-			return ACTION_LOOKUP.get(actionData.getClass()).apply(sender, actionData);	
-		} catch(ClassCastException e) {
+			return ACTION_LOOKUP.get(actionData.getClass()).apply(sender, actionData);
+		} catch (ClassCastException e) {
 			return new SendErrorAction(sender, actionData.getName(), SendErrorAction.INCORRECT_ACTION_MAPPING);
 		}
 	}
@@ -51,7 +51,7 @@ public abstract class Action implements Runnable {
 		doAction();
 
 	}
-	
+
 	public String getName() {
 		return this.name;
 	}
