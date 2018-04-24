@@ -9,8 +9,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Function;
 
-import org.json.JSONException;
-
 import actiondata.ActionData;
 import actions.Action;
 import main.Parser;

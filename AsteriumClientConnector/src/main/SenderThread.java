@@ -6,7 +6,6 @@ import java.util.concurrent.Flow.Subscriber;
 import java.util.concurrent.Flow.Subscription;
 import java.util.function.Consumer;
 
-import actiondata.ActionData;
 import message.Message;
 
 public class SenderThread extends Thread implements Subscriber<Message> {
