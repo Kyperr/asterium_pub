@@ -16,7 +16,7 @@ public abstract class Action implements Runnable {
 
 	public static final String JOIN_AS_PLAYER = "join_as_player";
 	public static final String JOIN_AS_PLAYER_RESPONSE = "join_as_player_response";
-	
+
 	public static final String JOIN_AS_GAMEBOARD = "join_as_gameboard";
 	public static final String JOIN_AS_GAMEBOARD_RESPONSE = "join_as_gameboard_response";
 
@@ -24,16 +24,19 @@ public abstract class Action implements Runnable {
 	public static final String CREATE_GAME_RESPONSE = "create_game_response";
 
 	//
-	private final static Map<Class<? extends ActionData>, BiFunction<Session, ActionData, Action>> ACTION_LOOKUP = new HashMap<Class<? extends ActionData>, BiFunction<Session, ActionData, Action>>();
-
+	private final static Map<Class<? extends ActionData>, BiFunction<Session, ActionData, Action>> ACTION_LOOKUP = new HashMap<Class<? extends ActionData>, BiFunction<Session, ActionData, Action>>() {
 		{
-			ACTION_LOOKUP.put(JoinAsPlayerActionData.class, JoinAsPlayerAction::fromActionData);
-			ACTION_LOOKUP.put(CreateGameActionData.class, CreateGameAction::fromActionData);
+			put(JoinAsPlayerActionData.class, JoinAsPlayerAction::fromActionData);
+			put(CreateGameActionData.class, CreateGameAction::fromActionData);
 		}
+	};
 
 	public static Action getActionFor(Session sender, ActionData actionData) {
 		try {
 			System.out.println("class: " + actionData.getClass());
+			for (Class<? extends ActionData> c : ACTION_LOOKUP.keySet()) {
+				System.out.println("class2: " + c.getName());
+			}
 			return ACTION_LOOKUP.get(actionData.getClass()).apply(sender, actionData);
 		} catch (ClassCastException e) {
 			return new SendErrorAction(sender, actionData.getName(), SendErrorAction.INCORRECT_ACTION_MAPPING);

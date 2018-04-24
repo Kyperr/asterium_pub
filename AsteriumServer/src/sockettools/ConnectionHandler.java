@@ -38,7 +38,7 @@ public class ConnectionHandler extends Thread {
 	 */
 	private boolean run = false;
 
-	public ConnectionHandler(Socket socket) {
+	public ConnectionHandler(Socket socket) throws IOException {
 		this.session = SessionManager.getInstance().createSession(socket);
 		//System.out.println("auth: " + session.getAuthToken());
 		System.out.println("ConnectionHandler created");
