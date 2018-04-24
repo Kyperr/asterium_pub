@@ -43,6 +43,12 @@ public class CreateGameResponseData extends AbstractActionData {
 		return new CreateGameResponseData(lobbyID, authToken);
 
 	}
+
+	@Override
+	protected boolean fieldsEqual(Object other) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 	
 }

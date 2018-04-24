@@ -66,6 +66,26 @@ public class JoinAsPlayerActionData extends AbstractActionData {
 			data.put("name", this.name);
 			return data;
 		}
+		
+		public boolean equals(final Object other) {
+			if (other instanceof PlayerData) {
+				PlayerData otherPlayerData = (PlayerData) other;
+				return otherPlayerData.name.equals(this.name);
+			} else {
+				return false;
+			}
+		}
+	}
+
+	@Override
+	protected boolean fieldsEqual(final Object other) {
+		if (other instanceof JoinAsPlayerActionData) {
+			JoinAsPlayerActionData otherData = (JoinAsPlayerActionData) other;
+			return otherData.lobbyID.equals(this.lobbyID) && 
+				   otherData.playerData.equals(this.playerData);
+		} else {
+			return false;
+		}
 	}
 
 }

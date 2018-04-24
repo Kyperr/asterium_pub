@@ -25,4 +25,5 @@ public interface ActionData {
 	public String getName();
 
 	
+	public boolean equals(final Object other);
 }

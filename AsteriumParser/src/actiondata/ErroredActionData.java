@@ -12,4 +12,9 @@ public class ErroredActionData extends AbstractActionData{
 		JSONObject data = new JSONObject();
 		return data;
 	}
+
+	@Override
+	protected boolean fieldsEqual(Object other) {
+		return true;
+	}
 }
