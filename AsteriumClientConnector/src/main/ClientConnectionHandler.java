@@ -9,7 +9,7 @@ import message.Message;
 public class ClientConnectionHandler {
 
 	private static int PORT = 25632;
-	private static int NUMBER_OF_SENDER_THREADS = 1000;
+	private static int NUMBER_OF_SENDER_THREADS = 1;
 	
 	private ServerConnection serverConnection;
 	private Parser parser;

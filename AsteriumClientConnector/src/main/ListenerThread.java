@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.concurrent.Flow.Publisher;
 import java.util.concurrent.Flow.Subscriber;
 
-import actiondata.ActionData;
 import message.Message;
 
 public class ListenerThread extends Thread implements Publisher<Message> {
@@ -19,9 +18,9 @@ public class ListenerThread extends Thread implements Publisher<Message> {
 	private List<Subscriber<? super Message>> subscribers;
 
 	public ListenerThread(ServerConnection connection, Parser parser) {
-System.out.println("Constructing ListenerThread...");
+System.out.println("Constructing ListenerThread (not listening yet)...");
 		this.parser = parser;
-		this.running = true;
+		this.running = false;
 		this.subscribers = new LinkedList<Subscriber<? super Message>>();
 		try {
 			this.isr = new InputStreamReader(connection.getSocket().getInputStream());
@@ -35,10 +34,12 @@ System.out.println("Constructing ListenerThread...");
 	
 	public void startListening() {
 		this.running = true;
+		System.out.println("ListenerThread listening...");
 	}
 	
 	public void stopListening() {
 		this.running = false;
+		System.out.println("ListenerThread stopped listening...");
 	}
 	
 	@Override
@@ -47,6 +48,7 @@ System.out.println("Constructing ListenerThread...");
 		String line;
 		while (running) {
 			try {
+				System.out.print('.');
 				line = this.br.readLine();
 				
 				if (line != null) {
@@ -54,9 +56,11 @@ System.out.println("Constructing ListenerThread...");
 				} else {
 					// End of message reached. Parse contents of string builder.
 					Message data = this.parser.parse(sb.toString());
+					System.out.println("End of message reached. Publishing message...");
 					publish(data);
 					
 					// End of message reached, clear string builder
+					System.out.println("Resetting stringbuilder...");
 					sb.setLength(0);
 				}
 			} catch (IOException e) {
@@ -74,6 +78,7 @@ System.out.println("Constructing ListenerThread...");
 	
 	@Override
 	public void subscribe(Subscriber<? super Message> subscriber) {
+		System.out.println("Adding subscriber to ListenerThread...");
 		this.subscribers.add(subscriber);
 	}
 }
