@@ -1,11 +1,12 @@
 package actiondata;
 
+import java.util.function.Function;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class CreateGameActionData extends AbstractActionData{
+public class CreateGameActionData extends AbstractActionData {
 
-	
 	public CreateGameActionData() {
 		super(CREATE_GAME);
 	}
@@ -15,6 +16,7 @@ public class CreateGameActionData extends AbstractActionData{
 		JSONObject data = new JSONObject();
 		return data;
 	}
+	
 	/**
 	 * Parses JSONObject into a {@link CreateGameActionData} object.
 	 * 
@@ -23,10 +25,9 @@ public class CreateGameActionData extends AbstractActionData{
 	 * @throws JSONException
 	 */
 	public static CreateGameActionData parseArgs(JSONObject jsonObj) throws JSONException {
-		//Construct and return
+		// Construct and return
 		return new CreateGameActionData();
 
 	}
-	
-	
+
 }
