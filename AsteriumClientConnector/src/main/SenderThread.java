@@ -72,4 +72,9 @@ public class SenderThread extends Thread implements Subscriber<Message> {
 		// TODO Auto-generated method stub
 
 	}
+	
+	@Override
+	public String toString() {
+		return "I am a SenderThread!";
+	}
 }
