@@ -32,8 +32,10 @@ System.out.println("Constructing ListenerThread (not listening yet)...");
 		
 	}
 	
-	public void startListening() {
+	@Override
+	public void start() {
 		this.running = true;
+		super.start();
 		System.out.println("ListenerThread listening...");
 	}
 	
@@ -48,7 +50,6 @@ System.out.println("Constructing ListenerThread (not listening yet)...");
 		String line;
 		while (running) {
 			try {
-				System.out.print('.');
 				line = this.br.readLine();
 				
 				if (line != null) {
@@ -56,11 +57,9 @@ System.out.println("Constructing ListenerThread (not listening yet)...");
 				} else {
 					// End of message reached. Parse contents of string builder.
 					Message data = this.parser.parse(sb.toString());
-					System.out.println("End of message reached. Publishing message...");
 					publish(data);
 					
 					// End of message reached, clear string builder
-					System.out.println("Resetting stringbuilder...");
 					sb.setLength(0);
 				}
 			} catch (IOException e) {
@@ -78,7 +77,6 @@ System.out.println("Constructing ListenerThread (not listening yet)...");
 	
 	@Override
 	public void subscribe(Subscriber<? super Message> subscriber) {
-		System.out.println("Adding subscriber to ListenerThread...");
 		this.subscribers.add(subscriber);
 	}
 }
