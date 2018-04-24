@@ -94,7 +94,7 @@ public final class SessionManager {
 		}
 
 		public void sendMessage(Message message) throws IOException {
-			System.out.println("Sending message.");
+			System.out.println("Sending message: " + message.jsonify().toString());
 			this.printWriter.println(message.jsonify().toString());
 			this.printWriter.flush();
 		}

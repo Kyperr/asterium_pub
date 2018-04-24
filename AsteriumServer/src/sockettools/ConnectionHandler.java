@@ -40,7 +40,7 @@ public class ConnectionHandler extends Thread {
 
 	public ConnectionHandler(Socket socket) throws IOException {
 		this.session = SessionManager.getInstance().createSession(socket);
-		//System.out.println("auth: " + session.getAuthToken());
+		// System.out.println("auth: " + session.getAuthToken());
 		System.out.println("ConnectionHandler created");
 	}
 
@@ -59,16 +59,18 @@ public class ConnectionHandler extends Thread {
 			BufferedReader br = new BufferedReader(isr);
 
 			String line = "";
-			while (br.ready()) {
-				System.out.println("Listening...");
-				
-				line = br.readLine();				
+			while (run) {//is this needed?
+				while (br.ready()) {
+					System.out.println("Listening...");
 
-				System.out.println("Connected: " + this.session.getSocket().isConnected());
+					line = br.readLine();
 
-				System.out.println("Budding thread to handle: " + line);
+					System.out.println("Connected: " + this.session.getSocket().isConnected());
 
-				handleMessage(line);
+					System.out.println("Budding thread to handle: " + line);
+
+					handleMessage(line);
+				}
 			}
 
 			/*

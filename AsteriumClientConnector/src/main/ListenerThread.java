@@ -26,7 +26,6 @@ System.out.println("Constructing ListenerThread (not listening yet)...");
 			this.isr = new InputStreamReader(connection.getSocket().getInputStream());
 			this.br = new BufferedReader(isr);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -48,8 +47,9 @@ System.out.println("Constructing ListenerThread (not listening yet)...");
 		String line;
 		while (running) {
 			try {
-				System.out.print('.');
+				System.out.print("?????");
 				line = this.br.readLine();
+				System.out.print("!!!!!!!!!!!!!!!");
 				
 				if (line != null) {
 					sb.append(line);

@@ -9,7 +9,7 @@ public class Response  extends Message {
 	private Integer errorCode;
 	
 	public Response(ActionData actionData, Integer errorCode) {
-		super(Message.MessageType.REQUEST, actionData);
+		super(Message.MessageType.RESPONSE, actionData);
 		this.errorCode = errorCode;
 	}
 
