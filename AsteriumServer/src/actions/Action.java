@@ -24,17 +24,16 @@ public abstract class Action implements Runnable {
 	public static final String CREATE_GAME_RESPONSE = "create_game_response";
 
 	//
-	private final static Map<Class<? extends ActionData>, BiFunction<Session, ActionData, Action>> ACTION_LOOKUP = new HashMap<Class<? extends ActionData>, BiFunction<Session, ActionData, Action>>() {
-		private static final long serialVersionUID = 1L;
+	private final static Map<Class<? extends ActionData>, BiFunction<Session, ActionData, Action>> ACTION_LOOKUP = new HashMap<Class<? extends ActionData>, BiFunction<Session, ActionData, Action>>();
 
 		{
 			ACTION_LOOKUP.put(JoinAsPlayerActionData.class, JoinAsPlayerAction::fromActionData);
 			ACTION_LOOKUP.put(CreateGameActionData.class, CreateGameAction::fromActionData);
 		}
-	};
 
 	public static Action getActionFor(Session sender, ActionData actionData) {
 		try {
+			System.out.println("class: " + actionData.getClass());
 			return ACTION_LOOKUP.get(actionData.getClass()).apply(sender, actionData);
 		} catch (ClassCastException e) {
 			return new SendErrorAction(sender, actionData.getName(), SendErrorAction.INCORRECT_ACTION_MAPPING);

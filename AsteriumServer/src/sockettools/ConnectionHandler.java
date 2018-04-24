@@ -40,6 +40,7 @@ public class ConnectionHandler extends Thread {
 
 	public ConnectionHandler(Socket socket) {
 		this.session = SessionManager.getInstance().createSession(socket);
+		//System.out.println("auth: " + session.getAuthToken());
 		System.out.println("ConnectionHandler created");
 	}
 
@@ -57,30 +58,23 @@ public class ConnectionHandler extends Thread {
 			InputStreamReader isr = new InputStreamReader(this.session.getSocket().getInputStream());
 			BufferedReader br = new BufferedReader(isr);
 
+			String line = "";
+			while (br.ready()) {
 				System.out.println("Listening...");
 				
-				// Get the input
-				StringBuilder builder = new StringBuilder();
-				String line = "";
+				line = br.readLine();				
 
 				System.out.println("Connected: " + this.session.getSocket().isConnected());
-				
-				// Get every line
-				while ((line = br.readLine()) != null) {
-					line = br.readLine();
-					System.out.println("Adding line: " + line);
-					builder.append(line);
-				}
-				
-				System.out.println("Budding thread to handle: " + builder.toString());
 
-				handleMessage(builder.toString());
-			
+				System.out.println("Budding thread to handle: " + line);
 
-		/*
-		 * If there has been a timeout, the user has been disconnected. Kill this
-		 * thread.
-		 */
+				handleMessage(line);
+			}
+
+			/*
+			 * If there has been a timeout, the user has been disconnected. Kill this
+			 * thread.
+			 */
 		} catch (SocketTimeoutException e) {
 			run = false;
 			interrupt();
@@ -93,18 +87,18 @@ public class ConnectionHandler extends Thread {
 	}
 
 	public void handleMessage(String messageString) {
-		
+
 		Message message = this.parser.parse(messageString);
-		
+
 		ActionData actionData = message.getActionData();
-				
+
 		Action action = Action.getActionFor(this.session, actionData);
-		
+
 		System.out.println("Handling a thread for: " + action.getName());
 		threadPoolExec.execute(action);
 	}
 
 	public void thing(Function<String, String> func) {
 	}
-	
+
 }
