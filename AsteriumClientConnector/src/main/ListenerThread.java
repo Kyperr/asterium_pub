@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Flow.Publisher;
 import java.util.concurrent.Flow.Subscriber;
@@ -16,6 +17,7 @@ public class ListenerThread extends Thread implements Publisher {
 	private InputStreamReader isr;
 	private BufferedReader br;
 	private Parser parser;
+	private List<Subscriber<? super ActionData>> subscribers;
 
 	public ListenerThread(ServerConnection connection, Parser parser) {
 		this.parser = parser;
@@ -49,8 +51,9 @@ public class ListenerThread extends Thread implements Publisher {
 				if (line != null) {
 					sb.append(line);
 				} else {
+					// End of message reached. Parse contents of string builder.
 					ActionData data = this.parser.parseToActionData(sb.toString());
-					String name = data.getName();
+					publish(data);
 					
 					// End of message reached, clear string builder
 					sb.setLength(0);
@@ -62,9 +65,14 @@ public class ListenerThread extends Thread implements Publisher {
 		}
 	}
 
+	public void publish(ActionData data) {
+		for (Subscriber<? super ActionData> s : subscribers) {
+			s.onNext(data);
+		}
+	}
+	
 	@Override
 	public void subscribe(Subscriber subscriber) {
-		// TODO Auto-generated method stub
-		
+		subscribers.add(subscriber);
 	}
 }
