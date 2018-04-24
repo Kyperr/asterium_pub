@@ -27,6 +27,14 @@ public class JoinAsPlayerActionData extends AbstractActionData {
 		return data;
 	}
 
+	public String getLobbyID() {
+		return this.lobbyID;
+	}
+	
+	public PlayerData getPlayerData() {
+		return this.playerData;
+	}
+	
 	/**
 	 * Parses JSONObject into a {@link JoinAsPlayerActionData} object.
 	 * 
@@ -60,11 +68,35 @@ public class JoinAsPlayerActionData extends AbstractActionData {
 		public PlayerData(String name) {
 			this.name = name;
 		}
+		
+		public String getName() {
+			return this.name;
+		}
 
 		public JSONObject jsonify() {
 			JSONObject data = new JSONObject();
 			data.put("name", this.name);
 			return data;
+		}
+		
+		public boolean equals(final Object other) {
+			if (other instanceof PlayerData) {
+				PlayerData otherPlayerData = (PlayerData) other;
+				return otherPlayerData.name.equals(this.name);
+			} else {
+				return false;
+			}
+		}
+	}
+
+	@Override
+	protected boolean fieldsEqual(final Object other) {
+		if (other instanceof JoinAsPlayerActionData) {
+			JoinAsPlayerActionData otherData = (JoinAsPlayerActionData) other;
+			return (otherData.lobbyID.equals(this.lobbyID) && 
+				   otherData.playerData.equals(this.playerData));
+		} else {
+			return false;
 		}
 	}
 

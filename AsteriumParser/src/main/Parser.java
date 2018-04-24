@@ -13,6 +13,8 @@ import actiondata.ActionData;
 import actiondata.CreateGameActionData;
 import actiondata.JoinAsPlayerActionData;
 import message.Message;
+import message.Request;
+import message.Response;
 
 public class Parser {
 
@@ -25,24 +27,27 @@ public class Parser {
 	
 	
 	public Parser() {
-		
 	}
 
-	public ActionData parseToActionData(final String msg) throws JSONException {
+	public Message parse(final String msg) throws JSONException {
+		
 		ActionData actionData = null;
 		String[] fields;
 		Boolean isRequest;
 		String actionName;
+		
+		System.out.println("Message: " + msg);
+		
 		JSONObject jsonObj = new JSONObject(msg);
 
-		fields = JSONObject.getNames(jsonObj); // get object's keys
-		
-		if (!fields[0].equals(Message.REQUEST) && !fields[0].equals(Message.RESPONSE)) {
+		fields = JSONObject.getNames(jsonObj); 
+		System.out.println("problem? " + fields.toString());
+		if (!fields[0].equals(Message.MessageType.REQUEST.getJSONTag()) && !fields[0].equals(Message.MessageType.RESPONSE.getJSONTag())) {
 			throw new JSONException("JSON malformed: " + jsonObj.toString());
 		}
 
-		isRequest = fields[0].equals(Message.REQUEST);
-		
+		isRequest = fields[0].equals(Message.MessageType.REQUEST.getJSONTag());
+				
 		jsonObj = jsonObj.getJSONObject(fields[0]); // reassign json object to next nested object
 		
 		fields = JSONObject.getNames(jsonObj); // reassign fields to get object's keys
@@ -53,7 +58,18 @@ public class Parser {
 		
 		actionData = actionDataLookup.get(Arrays.asList(isRequest, actionName)).apply(jsonObj);
 
-		return actionData;
+		
+		Message message;
+		
+		if(isRequest) {
+			message = new Request(actionData);
+		} else {			
+			Integer errorCode = jsonObj.getInt("error_code");			
+			message = new Response(actionData, errorCode);
+		}
+		
+		return message;
 	}
+
 
 }
