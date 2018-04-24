@@ -18,11 +18,16 @@ public class ClientConnectionHandler {
 	
 
 	public ClientConnectionHandler() {
+System.out.println("Constructing ClientConnectionHandler...");
 		this.serverConnection = new ServerConnection("localhost", PORT);
 		this.parser = new Parser();
+System.out.println("Constructing ListenerThread...");
 		this.listener = new ListenerThread(serverConnection, parser);
+System.out.println("Constructing SenderThreadPool...");
 		this.senders = new SenderThreadPool(serverConnection, parser, listener, NUMBER_OF_SENDER_THREADS);
+System.out.println("Starting listener...");
 		this.listener.start();
+System.out.println("ClientConnectionHandler construction complete.");
 	}
 	
 	

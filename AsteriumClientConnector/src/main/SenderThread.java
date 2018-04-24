@@ -28,7 +28,7 @@ public class SenderThread extends Thread implements Subscriber<Message> {
 	}
 	
 	public void send(final String json, final Consumer<Message> action) {
-		this.subscribedData = this.parser.parseToActionData(json);
+		this.subscribedData = this.parser.parse(json).getActionData();
 		this.responseMethod = action;
 		this.isWaiting = true;
 		this.output.write(json);

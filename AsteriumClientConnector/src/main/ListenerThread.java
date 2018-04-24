@@ -19,6 +19,7 @@ public class ListenerThread extends Thread implements Publisher<Message> {
 	private List<Subscriber<? super Message>> subscribers;
 
 	public ListenerThread(ServerConnection connection, Parser parser) {
+System.out.println("Constructing ListenerThread...");
 		this.parser = parser;
 		this.running = true;
 		this.subscribers = new LinkedList<Subscriber<? super Message>>();
