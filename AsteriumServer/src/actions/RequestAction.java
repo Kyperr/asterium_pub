@@ -11,10 +11,5 @@ public abstract class RequestAction extends Action {
 	@Override
 	public final void run() {
 		doAction();
-		sendResponse();
 	}
-	
-	protected abstract void sendResponse();
-	
-
 }
