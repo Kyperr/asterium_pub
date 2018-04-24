@@ -1,6 +1,7 @@
 package sessionmanagement;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.security.SecureRandom;
 import java.util.Map;
@@ -27,6 +28,7 @@ public final class SessionManager {
 		return sessionManager;
 	}
 
+	
 	/**
 	 * 
 	 */
@@ -36,7 +38,7 @@ public final class SessionManager {
 
 	private Map<String, Session> sessions = new ConcurrentHashMap<String, Session>();
 
-	public Session createSession(Socket socket) {
+	public Session createSession(Socket socket) throws IOException {
 		// Make a session
 		Session session = new Session(socket);
 
@@ -56,13 +58,16 @@ public final class SessionManager {
 
 		private static final SecureRandom RANDOM = new SecureRandom();
 
-		private static final int TOKEN_LENGTH = 256;
+		private static final int TOKEN_LENGTH = 64;
 
 		/**
 		 * 
 		 */
 		private final Socket socket;
 
+		
+		private final PrintWriter printWriter;
+		
 		/**
 		 * 
 		 */
@@ -71,10 +76,13 @@ public final class SessionManager {
 		/**
 		 * 
 		 * @param socket
+		 * @throws IOException 
 		 */
-		private Session(Socket socket) {
+		private Session(Socket socket) throws IOException {
 			this.socket = socket;
 			authToken = generateAuthToken();
+			
+			this.printWriter = new PrintWriter(socket.getOutputStream());
 		}
 
 		public Socket getSocket() {
@@ -87,8 +95,8 @@ public final class SessionManager {
 
 		public void sendMessage(Message message) throws IOException {
 			System.out.println("Sending message.");
-			byte[] msgToByte = message.jsonify().toString().getBytes();
-			this.socket.getOutputStream().write(msgToByte);
+			this.printWriter.println(message.jsonify().toString());
+			this.printWriter.flush();
 		}
 
 		/**
