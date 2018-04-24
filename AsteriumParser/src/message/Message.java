@@ -4,7 +4,7 @@ import org.json.JSONObject;
 
 import actiondata.ActionData;
 
-public class Message {
+public abstract class Message {
 	
 	public enum MessageType {
 		REQUEST("request"),
@@ -25,17 +25,20 @@ public class Message {
 	/* Constants for all messages */
 	public static final String ACTION_NAME = "action_name";
 	
-	
 	protected final MessageType messageType;
 	
 	private final ActionData actionData;	
 	
-	public Message(MessageType messageType, final ActionData actionData) {
+	protected Message(MessageType messageType, final ActionData actionData) {
 		this.messageType = messageType;
 		this.actionData = actionData;
 	}
 	
-	public JSONObject jsonify() {
+	public ActionData getActionData() {
+		return this.actionData;
+	}
+	
+	public final JSONObject jsonify() {
 		JSONObject thisJO = new JSONObject();
 		
 		JSONObject inner = new JSONObject();
@@ -50,5 +53,7 @@ public class Message {
 		
 		return thisJO;
 	}
+	
+	protected abstract void addToJSONify(JSONObject jsonObject);
 	
 }

@@ -4,6 +4,7 @@ import actiondata.ActionData;
 import actiondata.JoinAsPlayerActionData;
 import actiondata.JoinAsPlayerActionData.PlayerData;
 import message.Message;
+import message.Request;
 
 public class Example {
 
@@ -31,7 +32,7 @@ public class Example {
 		JoinAsPlayerActionData.PlayerData pd = new PlayerData("Daniel");
 		ActionData joinAsPlayer = new JoinAsPlayerActionData("abcd", pd);
 
-		Message message = new Message(Message.MessageType.REQUEST, joinAsPlayer);
+		Message message = new Request(joinAsPlayer);
 
 		// Request r = new Request("join_as_player", joinAsPlayer.jsonify);
 

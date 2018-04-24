@@ -14,6 +14,7 @@ import org.json.JSONException;
 import actiondata.ActionData;
 import actions.Action;
 import main.Parser;
+import message.Message;
 import sessionmanagement.SessionManager;
 import sessionmanagement.SessionManager.Session;
 
@@ -57,14 +58,19 @@ public class ConnectionHandler extends Thread {
 			BufferedReader br = new BufferedReader(isr);
 
 			while (run) {
+				System.out.println("Listening...");
+				
 				// Get the input
 				StringBuilder builder = new StringBuilder();
 				String line = "";
 
 				// Get every line
 				while ((line = br.readLine()) != null) {
+					System.out.println("Added line: " + line);
 					builder.append(line);
 				}
+				
+				System.out.println("Budding thread to handle: " + builder.toString());
 
 				handleMessage(builder.toString());
 			}
@@ -84,9 +90,11 @@ public class ConnectionHandler extends Thread {
 		}
 	}
 
-	public void handleMessage(String message) {
+	public void handleMessage(String messageString) {
 		
-		ActionData actionData = this.parser.parseToActionData(message);
+		Message message = this.parser.parse(messageString);
+		
+		ActionData actionData = message.getActionData();
 				
 		Action action = Action.getActionFor(this.session, actionData);
 		

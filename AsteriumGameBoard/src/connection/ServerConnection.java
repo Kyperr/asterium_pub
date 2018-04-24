@@ -16,10 +16,13 @@ public class ServerConnection {
 		try {
 			Socket connection = new Socket(address, port);
 
-			connection.getOutputStream().write(CREATE_TEST.getBytes());
-
 			InputStreamReader isr = new InputStreamReader(connection.getInputStream());
 			BufferedReader br = new BufferedReader(isr);
+			
+			System.out.println("Sending Message...");
+			connection.getOutputStream().write(CREATE_TEST.getBytes());
+			System.out.println("Message Sent...");
+
 			
 			StringBuilder builder = new StringBuilder();
 			String line = "";
