@@ -1,7 +1,5 @@
 package actiondata;
 
-import java.util.function.Function;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 

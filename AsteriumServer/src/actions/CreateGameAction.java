@@ -2,8 +2,6 @@ package actions;
 
 import java.util.Optional;
 
-import org.json.JSONObject;
-
 import actiondata.ActionData;
 import actiondata.CreateGameActionData;
 import actiondata.CreateGameResponseData;
@@ -22,31 +20,30 @@ public class CreateGameAction extends RequestAction {
 	}
 
 	@Override
-	protected void doAction() {
-		Game game = GameManager.getInstance().createGame();
-		this.game = Optional.of(game);
-	}
-
-	@Override
 	protected void sendResponse() {
+		Message message;
 		if(this.game.isPresent()) {
 			Game game = this.game.get();
-			
 			CreateGameResponseData cgrData = new CreateGameResponseData(game.getLobbyID(), this.getCallingSession().getAuthToken());
-			
-			Message message = new Message(Message.MessageType.RESPONSE, cgrData);
+			message = new Message(Message.MessageType.RESPONSE, cgrData);
 			
 		} else {
 			ErroredActionData ead = new ErroredActionData(this.getName());
-			Message message = new Message(Message.MessageType.RESPONSE, ead);
+			message = new Message(Message.MessageType.RESPONSE, ead);
 		}
 
 	}
 
+	@Override
+	protected void doAction() {
+		Game game = GameManager.getInstance().createGame();
+		this.game = Optional.of(game);
+	}
+	
 	public static CreateGameAction fromActionData(Session sender, ActionData actionData) {
 
-		//This is not used here yet, but is here incase anything gets added later.
-		CreateGameAction cgAction = CreateGameAction.class.cast(actionData);
+		//This is not used here yet, but is here in case anything gets added later.
+		CreateGameActionData action = CreateGameActionData.class.cast(actionData);
 
 		return new CreateGameAction(sender);
 		

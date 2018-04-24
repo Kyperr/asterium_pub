@@ -9,27 +9,34 @@ import org.json.JSONObject;
 
 import actiondata.ActionData;
 import actiondata.CreateGameActionData;
+import actiondata.JoinAsPlayerActionData;
 import sessionmanagement.SessionManager.Session;
 
 public abstract class Action implements Runnable {
 
 	public static final String JOIN_AS_PLAYER = "join_as_player";
 	public static final String JOIN_AS_PLAYER_RESPONSE = "join_as_player_response";
+	
+	public static final String JOIN_AS_GAMEBOARD = "join_as_gameboard";
+	public static final String JOIN_AS_GAMEBOARD_RESPONSE = "join_as_gameboard_response";
 
 	public static final String CREATE_GAME = "create_game";
 	public static final String CREATE_GAME_RESPONSE = "create_game_response";
 
 	//
 	private final static Map<Class<? extends ActionData>, BiFunction<Session, ActionData, Action>> ACTION_LOOKUP = new HashMap<Class<? extends ActionData>, BiFunction<Session, ActionData, Action>>() {
+		private static final long serialVersionUID = 1L;
+
 		{
+			ACTION_LOOKUP.put(JoinAsPlayerActionData.class, JoinAsPlayerAction::fromActionData);
 			ACTION_LOOKUP.put(CreateGameActionData.class, CreateGameAction::fromActionData);
 		}
 	};
-	
+
 	public static Action getActionFor(Session sender, ActionData actionData) {
 		try {
-			return ACTION_LOOKUP.get(actionData.getClass()).apply(sender, actionData);	
-		} catch(ClassCastException e) {
+			return ACTION_LOOKUP.get(actionData.getClass()).apply(sender, actionData);
+		} catch (ClassCastException e) {
 			return new SendErrorAction(sender, actionData.getName(), SendErrorAction.INCORRECT_ACTION_MAPPING);
 		}
 	}
@@ -49,7 +56,7 @@ public abstract class Action implements Runnable {
 		doAction();
 
 	}
-	
+
 	public String getName() {
 		return this.name;
 	}

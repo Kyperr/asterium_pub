@@ -1,7 +1,5 @@
 package actiondata;
 
-import java.util.function.Function;
-
 import org.json.JSONObject;
 
 public interface ActionData {
@@ -9,6 +7,9 @@ public interface ActionData {
 	//Action Name Constants
 	public static final String JOIN_AS_PLAYER = "join_as_player";
 	public static final String JOIN_AS_PLAYER_RESPONSE = "join_as_player_response";
+	
+	public static final String JOIN_AS_GAMEBOARD = "join_as_gameboard";
+	public static final String JOIN_AS_GAMEBOARD_RESPONSE = "join_as_gameboard_response";
 
 	public static final String CREATE_GAME = "create_game";
 	public static final String CREATE_GAME_RESPONSE = "create_game_response";
