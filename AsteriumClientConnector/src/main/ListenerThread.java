@@ -3,25 +3,25 @@ package main;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.Flow.Publisher;
 import java.util.concurrent.Flow.Subscriber;
-import java.util.function.Consumer;
 
 import actiondata.ActionData;
+import message.Message;
 
-public class ListenerThread extends Thread implements Publisher {
+public class ListenerThread extends Thread implements Publisher<Message> {
 	private boolean running;
 	private InputStreamReader isr;
 	private BufferedReader br;
 	private Parser parser;
-	private List<Subscriber<? super ActionData>> subscribers;
+	private List<Subscriber<? super Message>> subscribers;
 
 	public ListenerThread(ServerConnection connection, Parser parser) {
 		this.parser = parser;
 		this.running = true;
+		this.subscribers = new LinkedList<Subscriber<? super Message>>();
 		try {
 			this.isr = new InputStreamReader(connection.getSocket().getInputStream());
 			this.br = new BufferedReader(isr);
@@ -52,7 +52,7 @@ public class ListenerThread extends Thread implements Publisher {
 					sb.append(line);
 				} else {
 					// End of message reached. Parse contents of string builder.
-					ActionData data = this.parser.parseToActionData(sb.toString());
+					Message data = this.parser.parse(sb.toString());
 					publish(data);
 					
 					// End of message reached, clear string builder
@@ -65,14 +65,14 @@ public class ListenerThread extends Thread implements Publisher {
 		}
 	}
 
-	public void publish(ActionData data) {
-		for (Subscriber<? super ActionData> s : subscribers) {
+	public void publish(Message data) {
+		for (Subscriber<? super Message> s : this.subscribers) {
 			s.onNext(data);
 		}
 	}
 	
 	@Override
-	public void subscribe(Subscriber subscriber) {
-		subscribers.add(subscriber);
+	public void subscribe(Subscriber<? super Message> subscriber) {
+		this.subscribers.add(subscriber);
 	}
 }

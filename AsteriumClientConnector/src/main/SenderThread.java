@@ -7,12 +7,14 @@ import java.util.concurrent.Flow.Subscription;
 import java.util.function.Consumer;
 
 import actiondata.ActionData;
+import message.Message;
 
-public class SenderThread extends Thread implements Subscriber<ActionData> {
+public class SenderThread extends Thread implements Subscriber<Message> {
 	private ActionData subscribedData;
-	private Consumer<ActionData> responseMethod;
+	private Consumer<Message> responseMethod;
 	private Parser parser;
 	private PrintWriter output;
+	private boolean isWaiting;
 	
 	public SenderThread(ServerConnection connection, Parser parser) {
 		try {
@@ -22,23 +24,33 @@ public class SenderThread extends Thread implements Subscriber<ActionData> {
 			e.printStackTrace();
 		}
 		this.parser = parser;
+		this.isWaiting = false;
 	}
 	
-	public void send(final String json, final Consumer<ActionData> action) {
+	public void send(final String json, final Consumer<Message> action) {
 		this.subscribedData = this.parser.parseToActionData(json);
 		this.responseMethod = action;
+		this.isWaiting = true;
+		this.output.write(json);
+	}
+	
+	public boolean isWaiting() {
+		return this.isWaiting;
 	}
 	
 	@Override
-	public void onNext(ActionData item) {
+	public void onNext(Message item) {
 		// Check if the published ActionData is the subscribed 
 		// data, and call response method if it is.
 		if (item.equals(subscribedData)) {
-			responseMethod.accept(item);
+			this.isWaiting = false;
+			this.responseMethod.accept(item);
 		}
 	}
 	
-	// Unused subscriber methods
+	/*
+	 * Unused methods from unsubscriber
+	 */
 	@Override
 	public void onSubscribe(Subscription subscription) {
 		// TODO Auto-generated method stub

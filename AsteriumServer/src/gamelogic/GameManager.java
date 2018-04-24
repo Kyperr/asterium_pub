@@ -20,6 +20,12 @@ public final class GameManager {
 		// Empty on purpose
 	}
 	
+	public Game createGame() {
+		Game game = new Game();
+		registerGame(game);
+		return game;
+	}
+	
 	public void registerGame(Game game) {
 		gameMap.put(game.getLobbyID(), game);
 	}

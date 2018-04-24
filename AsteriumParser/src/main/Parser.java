@@ -25,10 +25,10 @@ public class Parser {
 	
 	
 	public Parser() {
-		
 	}
 
 	public ActionData parseToActionData(final String msg) throws JSONException {
+		
 		ActionData actionData = null;
 		String[] fields;
 		Boolean isRequest;
@@ -37,11 +37,11 @@ public class Parser {
 
 		fields = JSONObject.getNames(jsonObj); // get object's keys
 		
-		if (!fields[0].equals(Message.REQUEST) && !fields[0].equals(Message.RESPONSE)) {
+		if (!fields[0].equals(Message.MessageType.REQUEST.getJSONTag()) && !fields[0].equals(Message.MessageType.RESPONSE.getJSONTag())) {
 			throw new JSONException("JSON malformed: " + jsonObj.toString());
 		}
 
-		isRequest = fields[0].equals(Message.REQUEST);
+		isRequest = fields[0].equals(Message.MessageType.REQUEST.getJSONTag());
 		
 		jsonObj = jsonObj.getJSONObject(fields[0]); // reassign json object to next nested object
 		
@@ -55,5 +55,6 @@ public class Parser {
 
 		return actionData;
 	}
+
 
 }
