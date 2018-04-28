@@ -9,7 +9,7 @@ import actiondata.ActionData;
  * or return information that has been requested.
  */
 public class Response  extends Message {
-
+	
 	/*
 	 * Indicates success or failure of an action that was requested.
 	 */

@@ -18,7 +18,6 @@ public class ListenerThread extends Thread implements Publisher<Message> {
 	private List<Subscriber<? super Message>> subscribers;
 
 	public ListenerThread(ServerConnection connection, Parser parser) {
-System.out.println("Constructing ListenerThread (not listening yet)...");
 		this.parser = parser;
 		this.running = false;
 		this.subscribers = new LinkedList<Subscriber<? super Message>>();
@@ -35,35 +34,26 @@ System.out.println("Constructing ListenerThread (not listening yet)...");
 	public void start() {
 		this.running = true;
 		super.start();
-		System.out.println("ListenerThread listening...");
 	}
 	
 	public void stopListening() {
 		this.running = false;
-		System.out.println("ListenerThread stopped listening...");
 	}
 	
 	@Override
 	public void run() {
-		StringBuilder sb = new StringBuilder();
-		String line;
+		String json;
 		while (running) {
 			try {
-				System.out.print("?????");
-				line = this.br.readLine();
-				System.out.print("!!!!!!!!!!!!!!!");
-				System.out.print("Message: " + line);
+				json = this.br.readLine();
 				
-				if (line != null) {
-					sb.append(line);
-				} else {
-					// End of message reached. Parse contents of string builder.
-					Message data = this.parser.parse(sb.toString());
-					publish(data);
-					
-					// End of message reached, clear string builder
-					sb.setLength(0);
-				}
+				System.out.println(json);
+				
+				Message data = this.parser.parse(json);
+				
+				
+				publish(data);
+				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -72,7 +62,11 @@ System.out.println("Constructing ListenerThread (not listening yet)...");
 	}
 
 	public void publish(Message data) {
+		System.out.println("Subscribers");
+		System.out.println(this.subscribers.toString());
 		for (Subscriber<? super Message> s : this.subscribers) {
+			System.out.println("Subscriber");
+			System.out.println(s.toString());
 			s.onNext(data);
 		}
 	}

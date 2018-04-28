@@ -3,6 +3,14 @@ package actiondata;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * JoinAsPlayerResponseData is the representation of data
+ * to be used in a Response to the Request to join a lobby
+ * as a player.
+ * 
+ * @author Bridgette Campbell, Jenna Hand, Daniel McBride, and Greg Schmitt
+ *
+ */
 public class JoinAsPlayerResponseData extends AbstractActionData {
 	
 	private final String authToken;
@@ -21,6 +29,13 @@ public class JoinAsPlayerResponseData extends AbstractActionData {
 		return data;
 	}
 	
+	/**
+	 * Parses JSONObject into a {@link JoinAsPlayerResponseData} object.
+	 * 
+	 * @param jsonObj the JSONObject to be parsed
+	 * @return	the JoinAsPlayerResponseData object parsed from JSON
+	 * @throws JSONException
+	 */
 	public static JoinAsPlayerResponseData parseArgs(final JSONObject jsonObj) throws JSONException {
 		//Get authToken
 		String authToken = jsonObj.getString(AUTH_TOKEN);

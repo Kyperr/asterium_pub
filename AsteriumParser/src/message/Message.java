@@ -71,7 +71,10 @@ public abstract class Message {
 		JSONObject thisJO = new JSONObject();
 		
 		JSONObject inner = new JSONObject();
-				
+		
+		//Add extra fields
+		addToJSONify(inner);
+		
 		//Add action name
 		inner.put(ACTION_NAME, this.actionData.getName());
 
@@ -79,6 +82,7 @@ public abstract class Message {
 		inner.put(this.actionData.getName(), this.actionData.jsonify());
 		
 		thisJO.put(this.messageType.getJSONTag(), inner);
+		
 		
 		return thisJO;
 	}

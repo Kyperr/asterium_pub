@@ -9,7 +9,7 @@ import java.util.function.Consumer;
 import message.Message;
 
 public class SenderThread extends Thread implements Subscriber<Message> {
-	private Message subscribedData;
+	private int sentMessageHash;
 	private Consumer<Message> responseMethod;
 	private Parser parser;
 	private PrintWriter output;
@@ -28,7 +28,7 @@ public class SenderThread extends Thread implements Subscriber<Message> {
 
 	public void send(final String json, final Consumer<Message> action) {
 		System.out.println("SenderThread is sending...");
-		this.subscribedData = this.parser.parse(json);
+		this.sentMessageHash = json.hashCode();
 		this.responseMethod = action;
 		this.isWaiting = true;
 		this.output.println(json);
@@ -45,7 +45,8 @@ public class SenderThread extends Thread implements Subscriber<Message> {
 		// Check if the published ActionData is the subscribed
 		// data, and call response method if it is.
 		System.out.println("SenderThread received publication. Checking for equality...");
-		if (item.equals(subscribedData)) {
+		
+		if (item.equals(sentMessageHash)) {
 			System.out.println("SenderThread ActionData is equal. Idling and calling responseMethod...");
 			this.responseMethod.accept(item);
 			this.isWaiting = false;
@@ -71,5 +72,10 @@ public class SenderThread extends Thread implements Subscriber<Message> {
 	public void onComplete() {
 		// TODO Auto-generated method stub
 
+	}
+	
+	@Override
+	public String toString() {
+		return "I am a SenderThread!";
 	}
 }
