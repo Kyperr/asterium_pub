@@ -1,0 +1,52 @@
+package view;
+
+import actiondata.CreateGameActionData;
+import connection.ServerConnection;
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import main.ClientConnectionHandler;
+import message.Request;
+ 
+public class GameBoardApp extends Application {
+	
+	static Text text = new Text();
+	
+	boolean run = true;
+	
+	
+	
+	public static void main(String[] args) {
+
+		ClientConnectionHandler ccHandler = new ClientConnectionHandler();
+		
+		CreateGameActionData cgaData = new CreateGameActionData();
+		
+		Request request = new Request(cgaData);
+		
+		String msg = request.jsonify().toString();
+		
+		ccHandler.sendJSON(msg, (message) -> text.setText(message.jsonify().toString()));
+		
+		
+		 launch(args);
+		
+	}
+	
+    @Override
+    public void start(Stage primaryStage) {
+    	
+        primaryStage.setTitle("Asterium GameBoard");
+        StackPane root = new StackPane();
+        root.getChildren().add(text);
+        primaryStage.setScene(new Scene(root, 300, 250));
+        primaryStage.show();
+        
+    }
+}
+
