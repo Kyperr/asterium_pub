@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.util.Optional;
 
 import actiondata.ActionData;
-import actiondata.ErroredActionData;
-import actiondata.JoinAsPlayerActionData;
-import actiondata.JoinAsPlayerActionData.PlayerData;
+import actiondata.ErroredResponseData;
+import actiondata.JoinAsPlayerRequestData;
+import actiondata.JoinAsPlayerRequestData.PlayerData;
 import exceptions.GameFullException;
 import gamelogic.Game;
 import gamelogic.GameManager;
@@ -64,11 +64,11 @@ public class JoinAsPlayerAction extends RequestAction {
 			try {
 				game.addPlayer(player);
 				// Construct success response.
-				JoinAsPlayerActionData jpaData = new JoinAsPlayerActionData(this.lobby_id.get(), this.playerData.get());
+				JoinAsPlayerRequestData jpaData = new JoinAsPlayerRequestData(this.lobby_id.get(), this.playerData.get());
 				message = new Response(jpaData, 0);
 			} catch (final GameFullException ex) { // If game is full...
 				// Construct game full response.
-				ErroredActionData ead = new ErroredActionData(this.getName());
+				ErroredResponseData ead = new ErroredResponseData(this.getName());
 				message = new Response(ead, SendErrorAction.GAME_FULL);
 			}
 
@@ -81,7 +81,7 @@ public class JoinAsPlayerAction extends RequestAction {
 			}
 		} else { // If one or more of the fields were not provided...
 			// Create an error response.
-			ErroredActionData ead = new ErroredActionData(this.getName());
+			ErroredResponseData ead = new ErroredResponseData(this.getName());
 			message = new Response(ead, SendErrorAction.EMPTY_FIELDS);
 			
 			// Try to send the error response
@@ -102,7 +102,7 @@ public class JoinAsPlayerAction extends RequestAction {
 	 * @return a JoinAsPlayerAction containing the data from actionData.
 	 */
 	public static JoinAsPlayerAction fromActionData(Session sender, ActionData actionData) {
-		JoinAsPlayerActionData action = JoinAsPlayerActionData.class.cast(actionData);
+		JoinAsPlayerRequestData action = JoinAsPlayerRequestData.class.cast(actionData);
 		return new JoinAsPlayerAction(sender, action.getLobbyID(), action.getPlayerData());
 
 	}

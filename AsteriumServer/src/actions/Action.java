@@ -5,8 +5,8 @@ import java.util.Map;
 import java.util.function.BiFunction;
 
 import actiondata.ActionData;
-import actiondata.CreateGameActionData;
-import actiondata.JoinAsPlayerActionData;
+import actiondata.CreateGameRequestData;
+import actiondata.JoinAsPlayerRequestData;
 import sessionmanagement.SessionManager.Session;
 
 /**
@@ -41,8 +41,8 @@ public abstract class Action implements Runnable {
 		 * As new Actions are written, their corresponding functions should be added here.
 		 */
 		{
-			put(JoinAsPlayerActionData.class, JoinAsPlayerAction::fromActionData);
-			put(CreateGameActionData.class, CreateGameAction::fromActionData);
+			put(JoinAsPlayerRequestData.class, JoinAsPlayerAction::fromActionData);
+			put(CreateGameRequestData.class, CreateGameAction::fromActionData);
 		}
 	};
 

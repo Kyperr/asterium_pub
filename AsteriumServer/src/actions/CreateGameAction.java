@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import actiondata.ActionData;
 import actiondata.CreateGameResponseData;
-import actiondata.ErroredActionData;
+import actiondata.ErroredResponseData;
 import gamelogic.Game;
 import gamelogic.GameManager;
 import message.Message;
@@ -52,7 +52,7 @@ public class CreateGameAction extends RequestAction {
 
 		} else { // If game was not created...
 			// Generate error response
-			ErroredActionData ead = new ErroredActionData(this.getName());
+			ErroredResponseData ead = new ErroredResponseData(this.getName());
 			message = new Response(ead, SendErrorAction.FAILED_TO_CREATE_GAME);
 		}
 

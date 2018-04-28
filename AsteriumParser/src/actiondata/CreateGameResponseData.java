@@ -3,6 +3,13 @@ package actiondata;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * CreateGameResponseData is the representation of data
+ * to be used in a Response to the Request to create a game.
+ * 
+ * @author Bridgette Campbell, Jenna Hand, Daniel McBride, and Greg Schmitt
+ *
+ */
 public class CreateGameResponseData extends AbstractActionData {
 
 	private final String lobbyID;

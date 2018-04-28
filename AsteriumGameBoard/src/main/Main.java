@@ -1,6 +1,6 @@
 package main;
 
-import actiondata.CreateGameActionData;
+import actiondata.CreateGameRequestData;
 import message.Request;
 
 public class Main {
@@ -12,7 +12,7 @@ public class Main {
 		
 		ClientConnectionHandler ccHandler = new ClientConnectionHandler();
 		
-		CreateGameActionData cgaData = new CreateGameActionData();
+		CreateGameRequestData cgaData = new CreateGameRequestData();
 		
 		Request request = new Request(cgaData);
 		
