@@ -19,7 +19,9 @@ import message.Response;
 public class Parser {
 
 	/* Map of action names to action functions */
-	private static Map<List<Object>, Function<JSONObject, ActionData>> actionDataLookup = new HashMap<List<Object>, Function<JSONObject, ActionData>>(){{
+	private static Map<List<Object>, Function<JSONObject, ActionData>> actionDataLookup = new HashMap<List<Object>, Function<JSONObject, ActionData>>(){
+		private static final long serialVersionUID = 1L;
+	{
 		put(Arrays.asList(true, ActionData.JOIN_AS_PLAYER), JoinAsPlayerRequestData::parseArgs);
 		put(Arrays.asList(true, ActionData.CREATE_GAME), CreateGameRequestData::parseArgs);
 	}};

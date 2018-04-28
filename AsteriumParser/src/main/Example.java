@@ -15,27 +15,16 @@ public class Example {
 
 		@Override
 		public void run() {
-			System.out.println("Fuck.");
+			System.out.println("Error in Example");
 		}
 	};
 
 	public static void main(String[] args) {
 
-		Parser parser = new Parser();
-
-		// String msg =
-		// "{\"request\":{\"auth_token\":\"12345\",\"action_name\":\"join_as_player\",\"join_as_player\":{\"lobby_id\":\"Fuck
-		// Yeah\",\"player_data\":{\"name\":\"Lieutenant Dudefella\"}}}}";
-
-		// ActionData ad = parser.parseToActionData(msg);
-
 		JoinAsPlayerRequestData.PlayerData pd = new PlayerData("Daniel");
 		ActionData joinAsPlayer = new JoinAsPlayerRequestData("abcd", pd);
 
 		Message message = new Request(joinAsPlayer);
-
-		// Request r = new Request("join_as_player", joinAsPlayer.jsonify);
-
 		System.out.println(message.jsonify().toString());
 
 	}
