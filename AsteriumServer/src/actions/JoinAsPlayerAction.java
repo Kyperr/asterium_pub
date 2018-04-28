@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 import actiondata.ActionData;
-import actiondata.ErroredActionData;
+import actiondata.ErroredResponseData;
 import actiondata.JoinAsPlayerActionData;
 import actiondata.JoinAsPlayerActionData.PlayerData;
 import exceptions.GameFullException;
@@ -40,7 +40,7 @@ public class JoinAsPlayerAction extends RequestAction {
 				JoinAsPlayerActionData jpaData = new JoinAsPlayerActionData(this.lobby_id.get(), this.playerData.get());
 				message = new Response(jpaData, 0);
 			} catch (final GameFullException ex) {
-				ErroredActionData ead = new ErroredActionData(this.getName());
+				ErroredResponseData ead = new ErroredResponseData(this.getName());
 				message = new Response(ead, SendErrorAction.GAME_FULL);
 			}
 
@@ -51,7 +51,7 @@ public class JoinAsPlayerAction extends RequestAction {
 				e.printStackTrace();
 			}
 		} else {
-			ErroredActionData ead = new ErroredActionData(this.getName());
+			ErroredResponseData ead = new ErroredResponseData(this.getName());
 			message = new Response(ead, SendErrorAction.EMPTY_FIELDS);
 			try {
 				this.getCallingSession().sendMessage(message);

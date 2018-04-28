@@ -21,6 +21,13 @@ public class JoinAsPlayerResponseData extends AbstractActionData {
 		return data;
 	}
 	
+	/**
+	 * Parses JSONObject into a {@link JoinAsPlayerResponseData} object.
+	 * 
+	 * @param jsonObj the JSONObject to be parsed
+	 * @return	the JoinAsPlayerResponseData object parsed from JSON
+	 * @throws JSONException
+	 */
 	public static JoinAsPlayerResponseData parseArgs(final JSONObject jsonObj) throws JSONException {
 		//Get authToken
 		String authToken = jsonObj.getString(AUTH_TOKEN);

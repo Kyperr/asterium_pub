@@ -13,18 +13,24 @@ public interface ActionData {
 
 	public static final String CREATE_GAME = "create_game";
 	public static final String CREATE_GAME_RESPONSE = "create_game_response";
+
+	public static final String PLAYER_SYNC = "player_sync";
+	public static final String PLAYER_SYNC_RESPONSE = "player_sync_response";
+
+	public static final String ALLOCATE_STATS = "allocate_stats";
+	public static final String ALLOCATE_STATS_RESPONSE = "allocate_stats_response";
 	
 	//Field Constants
 	public static final String ACTION_NAME = "action_name";
 	public static final String NAME = "name";
 	public static final String LOBBY_ID = "lobby_id";
+	public static final String PLAYER_LIST = "player_list";
 	public static final String PLAYER_DATA = "player_data";
 	public static final String AUTH_TOKEN = "auth_token";
 	
 	public JSONObject jsonify();
 	
 	public String getName();
-
 	
 	public boolean equals(final Object other);
 }

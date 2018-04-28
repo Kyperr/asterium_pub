@@ -18,11 +18,11 @@ public class CreateGameActionData extends AbstractActionData {
 	/**
 	 * Parses JSONObject into a {@link CreateGameActionData} object.
 	 * 
-	 * @param jsonObj
-	 * @return
+	 * @param jsonObj	the JSONObject to be parsed
+	 * @return	the CreateGameActionData object parsed from JSON
 	 * @throws JSONException
 	 */
-	public static CreateGameActionData parseArgs(JSONObject jsonObj) throws JSONException {
+	public static CreateGameActionData parseArgs(final JSONObject jsonObj) throws JSONException {
 		// Construct and return
 		return new CreateGameActionData();
 

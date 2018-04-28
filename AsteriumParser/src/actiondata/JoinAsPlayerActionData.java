@@ -38,8 +38,8 @@ public class JoinAsPlayerActionData extends AbstractActionData {
 	/**
 	 * Parses JSONObject into a {@link JoinAsPlayerActionData} object.
 	 * 
-	 * @param jsonObj
-	 * @return
+	 * @param jsonObj	the JSONObject to be parsed
+	 * @return	the JoinAsPlayerActionData object parsed from JSON
 	 * @throws JSONException
 	 */
 	public static JoinAsPlayerActionData parseArgs(JSONObject jsonObj) throws JSONException { 
