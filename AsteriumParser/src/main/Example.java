@@ -6,6 +6,12 @@ import actiondata.JoinAsPlayerRequestData.PlayerData;
 import message.Message;
 import message.Request;
 
+/**
+ * The Example for AsteriumParser.
+ * 
+ * @author Bridgette Campbell, Jenna Hand, Daniel McBride, and Greg Schmitt
+ *
+ */
 public class Example {
 
 	public static final String JSON_FORMAT_ERR = "JSON not formatted properly.";

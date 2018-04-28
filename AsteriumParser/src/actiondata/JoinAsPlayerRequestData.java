@@ -16,7 +16,7 @@ public class JoinAsPlayerRequestData extends AbstractActionData {
 	private final String lobbyID;
 	private final PlayerData playerData;
 
-	public JoinAsPlayerRequestData(String lobbyID, PlayerData playerData) {
+	public JoinAsPlayerRequestData(final String lobbyID, final PlayerData playerData) {
 		super(JOIN_AS_PLAYER);
 		this.lobbyID = lobbyID;
 		this.playerData = playerData;
@@ -49,7 +49,7 @@ public class JoinAsPlayerRequestData extends AbstractActionData {
 	 * @return	the JoinAsPlayerActionData object parsed from JSON
 	 * @throws JSONException
 	 */
-	public static JoinAsPlayerRequestData parseArgs(JSONObject jsonObj) throws JSONException { 
+	public static JoinAsPlayerRequestData parseArgs(final JSONObject jsonObj) throws JSONException { 
 		
 		//Getting lobby id
 		String lobbyID = jsonObj.getString(LOBBY_ID); 
@@ -79,7 +79,7 @@ public class JoinAsPlayerRequestData extends AbstractActionData {
 
 		private final String name;
 
-		public PlayerData(String name) {
+		public PlayerData(final String name) {
 			this.name = name;
 		}
 		

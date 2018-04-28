@@ -10,7 +10,7 @@ import org.json.JSONObject;
  *
  */
 public class ErroredResponseData extends AbstractActionData{
-	public ErroredResponseData(String erroredActionName) {
+	public ErroredResponseData(final String erroredActionName) {
 		super(erroredActionName);
 	}
 
@@ -21,7 +21,7 @@ public class ErroredResponseData extends AbstractActionData{
 	}
 
 	@Override
-	protected boolean fieldsEqual(Object other) {
+	protected boolean fieldsEqual(final Object other) {
 		return true;
 	}
 }

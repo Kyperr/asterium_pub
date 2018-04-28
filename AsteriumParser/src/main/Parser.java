@@ -16,6 +16,12 @@ import message.Message;
 import message.Request;
 import message.Response;
 
+/**
+ * Parser changes a JSONObject into a Message with appropriate ActionData. 
+ * 
+ * @author Bridgette Campbell, Jenna Hand, Daniel McBride, and Greg Schmitt
+ *
+ */
 public class Parser {
 
 	/* Map of action names to action functions */
@@ -26,11 +32,13 @@ public class Parser {
 		put(Arrays.asList(true, ActionData.CREATE_GAME), CreateGameRequestData::parseArgs);
 	}};
 
-	
-	
-	public Parser() {
-	}
-
+	/**
+	 * Turn a JSON string into a Message.
+	 * 
+	 * @param msg	the JSON message to be parsed
+	 * @return	a Message representation of the JSON sent.
+	 * @throws JSONException
+	 */
 	public Message parse(final String msg) throws JSONException {
 		
 		ActionData actionData = null;
@@ -38,12 +46,12 @@ public class Parser {
 		Boolean isRequest;
 		String actionName;
 		
-		System.out.println("Message: " + msg);
+		//System.out.println("Message: " + msg);
 		
 		JSONObject jsonObj = new JSONObject(msg);
 
 		fields = JSONObject.getNames(jsonObj); 
-		System.out.println("problem? " + fields.toString());
+		//System.out.println("problem? " + fields.toString());
 		if (!fields[0].equals(Message.MessageType.REQUEST.getJSONTag()) && !fields[0].equals(Message.MessageType.RESPONSE.getJSONTag())) {
 			throw new JSONException("JSON malformed: " + jsonObj.toString());
 		}
@@ -66,7 +74,7 @@ public class Parser {
 		if(isRequest) {
 			message = new Request(actionData);
 		} else {			
-			Integer errorCode = jsonObj.getInt("error_code");			
+			Integer errorCode = jsonObj.getInt(ActionData.ERROR_CODE);			
 			message = new Response(actionData, errorCode);
 		}
 		
