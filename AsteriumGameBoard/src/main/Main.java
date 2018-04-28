@@ -2,7 +2,7 @@ package main;
 
 import org.json.JSONObject;
 
-import actiondata.CreateGameActionData;
+import actiondata.CreateGameRequestData;
 import message.Request;
 /**
  * Main.
@@ -23,7 +23,7 @@ public class Main {
 		
 		ClientConnectionHandler ccHandler = new ClientConnectionHandler(ADDRESS, PORT);
 		
-		CreateGameActionData cgaData = new CreateGameActionData();
+		CreateGameRequestData cgaData = new CreateGameRequestData();
 		
 		Request request = new Request(cgaData);
 		

@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.util.Optional;
 
 import actiondata.ActionData;
-import actiondata.CreateGameActionData;
+import actiondata.CreateGameRequestData;
 import actiondata.CreateGameResponseData;
-import actiondata.ErroredActionData;
+import actiondata.ErroredResponseData;
 import gamelogic.Game;
 import gamelogic.GameManager;
 import message.Message;
@@ -35,7 +35,7 @@ public class CreateGameAction extends RequestAction {
 			message = new Response(cgrData, 0);
 
 		} else {
-			ErroredActionData ead = new ErroredActionData(this.getName());
+			ErroredResponseData ead = new ErroredResponseData(this.getName());
 			message = new Response(ead, SendErrorAction.FAILED_TO_CREATE_GAME);
 		}
 
@@ -50,7 +50,7 @@ public class CreateGameAction extends RequestAction {
 	public static CreateGameAction fromActionData(Session sender, ActionData actionData) {
 
 		// This is not used here yet, but is here in case anything gets added later.
-		CreateGameActionData action = CreateGameActionData.class.cast(actionData);
+		CreateGameRequestData action = CreateGameRequestData.class.cast(actionData);
 
 		return new CreateGameAction(sender);
 

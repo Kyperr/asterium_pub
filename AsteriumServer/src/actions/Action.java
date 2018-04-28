@@ -8,8 +8,8 @@ import java.util.function.Function;
 import org.json.JSONObject;
 
 import actiondata.ActionData;
-import actiondata.CreateGameActionData;
-import actiondata.JoinAsPlayerActionData;
+import actiondata.CreateGameRequestData;
+import actiondata.JoinAsPlayerRequestData;
 import sessionmanagement.SessionManager.Session;
 
 public abstract class Action implements Runnable {
@@ -26,8 +26,8 @@ public abstract class Action implements Runnable {
 	//
 	private final static Map<Class<? extends ActionData>, BiFunction<Session, ActionData, Action>> ACTION_LOOKUP = new HashMap<Class<? extends ActionData>, BiFunction<Session, ActionData, Action>>() {
 		{
-			put(JoinAsPlayerActionData.class, JoinAsPlayerAction::fromActionData);
-			put(CreateGameActionData.class, CreateGameAction::fromActionData);
+			put(JoinAsPlayerRequestData.class, JoinAsPlayerAction::fromActionData);
+			put(CreateGameRequestData.class, CreateGameAction::fromActionData);
 		}
 	};
 

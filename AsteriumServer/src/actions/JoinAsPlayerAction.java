@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.util.Optional;
 
 import actiondata.ActionData;
-import actiondata.ErroredActionData;
-import actiondata.JoinAsPlayerActionData;
-import actiondata.JoinAsPlayerActionData.PlayerData;
+import actiondata.ErroredResponseData;
+import actiondata.JoinAsPlayerRequestData;
+import actiondata.JoinAsPlayerRequestData.PlayerData;
 import exceptions.GameFullException;
 import gamelogic.Game;
 import gamelogic.GameManager;
@@ -37,10 +37,10 @@ public class JoinAsPlayerAction extends RequestAction {
 			Player player = new Player(this.getCallingSession(), data.getName());
 			try {
 				game.addPlayer(player);
-				JoinAsPlayerActionData jpaData = new JoinAsPlayerActionData(this.lobby_id.get(), this.playerData.get());
+				JoinAsPlayerRequestData jpaData = new JoinAsPlayerRequestData(this.lobby_id.get(), this.playerData.get());
 				message = new Response(jpaData, 0);
 			} catch (final GameFullException ex) {
-				ErroredActionData ead = new ErroredActionData(this.getName());
+				ErroredResponseData ead = new ErroredResponseData(this.getName());
 				message = new Response(ead, SendErrorAction.GAME_FULL);
 			}
 
@@ -51,7 +51,7 @@ public class JoinAsPlayerAction extends RequestAction {
 				e.printStackTrace();
 			}
 		} else {
-			ErroredActionData ead = new ErroredActionData(this.getName());
+			ErroredResponseData ead = new ErroredResponseData(this.getName());
 			message = new Response(ead, SendErrorAction.EMPTY_FIELDS);
 			try {
 				this.getCallingSession().sendMessage(message);
@@ -63,7 +63,7 @@ public class JoinAsPlayerAction extends RequestAction {
 	}
 
 	public static JoinAsPlayerAction fromActionData(Session sender, ActionData actionData) {
-		JoinAsPlayerActionData action = JoinAsPlayerActionData.class.cast(actionData);
+		JoinAsPlayerRequestData action = JoinAsPlayerRequestData.class.cast(actionData);
 		return new JoinAsPlayerAction(sender, action.getLobbyID(), action.getPlayerData());
 
 	}
