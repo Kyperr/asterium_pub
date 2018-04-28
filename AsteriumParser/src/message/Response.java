@@ -5,11 +5,10 @@ import org.json.JSONObject;
 import actiondata.ActionData;
 
 public class Response  extends Message {
-
 	private Integer errorCode;
 	
 	public Response(ActionData actionData, Integer errorCode) {
-		super(Message.MessageType.REQUEST, actionData);
+		super(Message.MessageType.RESPONSE, actionData);
 		this.errorCode = errorCode;
 	}
 

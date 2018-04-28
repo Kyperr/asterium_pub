@@ -25,7 +25,6 @@ public class ListenerThread extends Thread implements Publisher<Message> {
 			this.isr = new InputStreamReader(connection.getSocket().getInputStream());
 			this.br = new BufferedReader(isr);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -43,22 +42,18 @@ public class ListenerThread extends Thread implements Publisher<Message> {
 	
 	@Override
 	public void run() {
-		StringBuilder sb = new StringBuilder();
-		String line;
+		String json;
 		while (running) {
 			try {
-				line = this.br.readLine();
+				json = this.br.readLine();
 				
-				if (line != null) {
-					sb.append(line);
-				} else {
-					// End of message reached. Parse contents of string builder.
-					Message data = this.parser.parse(sb.toString());
-					publish(data);
-					
-					// End of message reached, clear string builder
-					sb.setLength(0);
-				}
+				System.out.println(json);
+				
+				Message data = this.parser.parse(json);
+				
+				
+				publish(data);
+				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

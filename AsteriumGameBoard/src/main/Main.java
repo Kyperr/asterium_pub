@@ -1,7 +1,5 @@
 package main;
 
-import org.json.JSONObject;
-
 import actiondata.CreateGameActionData;
 import message.Request;
 
@@ -21,7 +19,7 @@ public class Main {
 		String msg = request.jsonify().toString();
 		System.out.println("Message in main: " + msg);
 		
-		ccHandler.sendJSON(msg, (message) -> System.out.println(message.jsonify().toString()));
+		ccHandler.sendJSON(msg, (message) -> System.out.println("Game created!"));
 		
 		while(true) {
 			
