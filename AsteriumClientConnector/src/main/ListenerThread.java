@@ -69,20 +69,6 @@ public class ListenerThread extends Thread implements Publisher<Message> {
 		String json;
 		while (running) {
 			try {
-<<<<<<< HEAD
-				line = this.br.readLine();
-
-				if (line != null) {
-					sb.append(line);
-				} else {
-					// End of message reached. Parse contents of string builder.
-					Message data = this.parser.parse(sb.toString());
-					publish(data);
-
-					// End of message reached, clear string builder
-					sb.setLength(0);
-				}
-=======
 				json = this.br.readLine();
 				
 				System.out.println(json);
@@ -92,7 +78,6 @@ public class ListenerThread extends Thread implements Publisher<Message> {
 				
 				publish(data);
 				
->>>>>>> 96bd08ede144bf07e8e955ebdc3f5cabc3fb9808
 			} catch (IOException e) {
 				System.err.println("This breaks as part of a loop and just goes back to listening.");
 				e.printStackTrace();
@@ -100,17 +85,11 @@ public class ListenerThread extends Thread implements Publisher<Message> {
 		}
 	}
 
-<<<<<<< HEAD
 	/**
 	 * Publishes input to subscriber.
 	 * @param data
 	 */
 	private void publish(Message data) {
-=======
-	public void publish(Message data) {
-		System.out.println("Subscribers");
-		System.out.println(this.subscribers.toString());
->>>>>>> 96bd08ede144bf07e8e955ebdc3f5cabc3fb9808
 		for (Subscriber<? super Message> s : this.subscribers) {
 			System.out.println("Subscriber");
 			System.out.println(s.toString());
