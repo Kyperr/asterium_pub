@@ -3,7 +3,6 @@ package main;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Function;
 
 import org.json.JSONException;
@@ -25,7 +24,7 @@ import message.Response;
 public class Parser {
 
 	/* Map of action names to action functions */
-	private static Map<List<Object>, Function<JSONObject, ActionData>> actionDataLookup = new HashMap<List<Object>, Function<JSONObject, ActionData>>(){
+	private static HashMap<List<Object>, Function<JSONObject, ActionData>> actionDataLookup = new HashMap<List<Object>, Function<JSONObject, ActionData>>(){
 		private static final long serialVersionUID = 1L;
 	{
 		put(Arrays.asList(true, ActionData.JOIN_AS_PLAYER), JoinAsPlayerRequestData::parseArgs);
@@ -56,14 +55,15 @@ public class Parser {
 
 		isRequest = fields[0].equals(Message.MessageType.REQUEST.getJSONTag());
 				
-		jsonObj = jsonObj.getJSONObject(fields[0]); // reassign json object to next nested object
+		JSONObject innerJSONObj = jsonObj.getJSONObject(fields[0]); // reassign json object to next nested object
 		
-		fields = JSONObject.getNames(jsonObj); // reassign fields to get object's keys
+		fields = JSONObject.getNames(innerJSONObj); // reassign fields to get object's keys
 		
-		actionName = jsonObj.get(Message.ACTION_NAME).toString();
+		actionName = innerJSONObj.get(Message.ACTION_NAME).toString();
 		
-		jsonObj = jsonObj.getJSONObject(actionName);
+		jsonObj = innerJSONObj.getJSONObject(actionName);
 		
+		System.out.println(actionDataLookup.get(Arrays.asList(isRequest, actionName)));
 		actionData = actionDataLookup.get(Arrays.asList(isRequest, actionName)).apply(jsonObj);
 
 		
@@ -71,8 +71,8 @@ public class Parser {
 		
 		if(isRequest) {
 			message = new Request(actionData);
-		} else {			
-			Integer errorCode = jsonObj.getInt(ActionData.ERROR_CODE);			
+		} else {
+			Integer errorCode = jsonObj.getInt(ActionData.ERROR_CODE);
 			message = new Response(actionData, errorCode);
 		}
 		

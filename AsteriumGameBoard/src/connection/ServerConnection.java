@@ -8,8 +8,13 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+
+/**
+ * Manages the GameBoard's connection to the server.
+ */
 public class ServerConnection {
 
+	// Temporary JSON string
 	private final static String CREATE_TEST = "{“request”:{“action_name”:“create_game”,“create_game”:{}}}";
 
 	Socket connection;
