@@ -1,8 +1,8 @@
 package main;
 
 import actiondata.ActionData;
-import actiondata.JoinAsPlayerActionData;
-import actiondata.JoinAsPlayerActionData.PlayerData;
+import actiondata.JoinAsPlayerRequestData;
+import actiondata.JoinAsPlayerRequestData.PlayerData;
 import message.Message;
 import message.Request;
 
@@ -29,8 +29,8 @@ public class Example {
 
 		// ActionData ad = parser.parseToActionData(msg);
 
-		JoinAsPlayerActionData.PlayerData pd = new PlayerData("Daniel");
-		ActionData joinAsPlayer = new JoinAsPlayerActionData("abcd", pd);
+		JoinAsPlayerRequestData.PlayerData pd = new PlayerData("Daniel");
+		ActionData joinAsPlayer = new JoinAsPlayerRequestData("abcd", pd);
 
 		Message message = new Request(joinAsPlayer);
 

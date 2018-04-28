@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 import actiondata.ActionData;
-import actiondata.CreateGameActionData;
+import actiondata.CreateGameRequestData;
 import actiondata.CreateGameResponseData;
 import actiondata.ErroredResponseData;
 import gamelogic.Game;
@@ -49,7 +49,7 @@ public class CreateGameAction extends RequestAction {
 	public static CreateGameAction fromActionData(Session sender, ActionData actionData) {
 
 		// This is not used here yet, but is here in case anything gets added later.
-		CreateGameActionData action = CreateGameActionData.class.cast(actionData);
+		CreateGameRequestData action = CreateGameRequestData.class.cast(actionData);
 
 		return new CreateGameAction(sender);
 

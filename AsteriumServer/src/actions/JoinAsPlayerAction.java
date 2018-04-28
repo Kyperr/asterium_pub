@@ -5,8 +5,8 @@ import java.util.Optional;
 
 import actiondata.ActionData;
 import actiondata.ErroredResponseData;
-import actiondata.JoinAsPlayerActionData;
-import actiondata.JoinAsPlayerActionData.PlayerData;
+import actiondata.JoinAsPlayerRequestData;
+import actiondata.JoinAsPlayerRequestData.PlayerData;
 import exceptions.GameFullException;
 import gamelogic.Game;
 import gamelogic.GameManager;
@@ -37,7 +37,7 @@ public class JoinAsPlayerAction extends RequestAction {
 			Player player = new Player(this.getCallingSession(), data.getName());
 			try {
 				game.addPlayer(player);
-				JoinAsPlayerActionData jpaData = new JoinAsPlayerActionData(this.lobby_id.get(), this.playerData.get());
+				JoinAsPlayerRequestData jpaData = new JoinAsPlayerRequestData(this.lobby_id.get(), this.playerData.get());
 				message = new Response(jpaData, 0);
 			} catch (final GameFullException ex) {
 				ErroredResponseData ead = new ErroredResponseData(this.getName());
@@ -63,7 +63,7 @@ public class JoinAsPlayerAction extends RequestAction {
 	}
 
 	public static JoinAsPlayerAction fromActionData(Session sender, ActionData actionData) {
-		JoinAsPlayerActionData action = JoinAsPlayerActionData.class.cast(actionData);
+		JoinAsPlayerRequestData action = JoinAsPlayerRequestData.class.cast(actionData);
 		return new JoinAsPlayerAction(sender, action.getLobbyID(), action.getPlayerData());
 
 	}

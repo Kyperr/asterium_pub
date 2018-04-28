@@ -10,8 +10,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import actiondata.ActionData;
-import actiondata.CreateGameActionData;
-import actiondata.JoinAsPlayerActionData;
+import actiondata.CreateGameRequestData;
+import actiondata.JoinAsPlayerRequestData;
 import message.Message;
 import message.Request;
 import message.Response;
@@ -20,8 +20,8 @@ public class Parser {
 
 	/* Map of action names to action functions */
 	private static Map<List<Object>, Function<JSONObject, ActionData>> actionDataLookup = new HashMap<List<Object>, Function<JSONObject, ActionData>>(){{
-		put(Arrays.asList(true, ActionData.JOIN_AS_PLAYER), JoinAsPlayerActionData::parseArgs);
-		put(Arrays.asList(true, ActionData.CREATE_GAME), CreateGameActionData::parseArgs);
+		put(Arrays.asList(true, ActionData.JOIN_AS_PLAYER), JoinAsPlayerRequestData::parseArgs);
+		put(Arrays.asList(true, ActionData.CREATE_GAME), CreateGameRequestData::parseArgs);
 	}};
 
 	

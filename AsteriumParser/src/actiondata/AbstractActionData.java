@@ -1,5 +1,11 @@
 package actiondata;
 
+/**
+ * 
+ * 
+ * @author Bridgette Campbell, Jenna Hand, Daniel McBride, and Greg Schmitt
+ *
+ */
 public abstract class AbstractActionData implements ActionData {
 
 	protected final String name;

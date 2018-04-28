@@ -3,13 +3,20 @@ package actiondata;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
-public class JoinAsPlayerActionData extends AbstractActionData {
+/**
+ * JoinAsPlayerRequestData is the representation of data
+ * to be used in a Request from a player to join a lobby 
+ * for a game.
+ * 
+ * @author Bridgette Campbell, Jenna Hand, Daniel McBride, and Greg Schmitt
+ *
+ */
+public class JoinAsPlayerRequestData extends AbstractActionData {
 
 	private final String lobbyID;
 	private final PlayerData playerData;
 
-	public JoinAsPlayerActionData(String lobbyID, PlayerData playerData) {
+	public JoinAsPlayerRequestData(String lobbyID, PlayerData playerData) {
 		super(JOIN_AS_PLAYER);
 		this.lobbyID = lobbyID;
 		this.playerData = playerData;
@@ -36,13 +43,13 @@ public class JoinAsPlayerActionData extends AbstractActionData {
 	}
 	
 	/**
-	 * Parses JSONObject into a {@link JoinAsPlayerActionData} object.
+	 * Parses JSONObject into a {@link JoinAsPlayerRequestData} object.
 	 * 
 	 * @param jsonObj	the JSONObject to be parsed
 	 * @return	the JoinAsPlayerActionData object parsed from JSON
 	 * @throws JSONException
 	 */
-	public static JoinAsPlayerActionData parseArgs(JSONObject jsonObj) throws JSONException { 
+	public static JoinAsPlayerRequestData parseArgs(JSONObject jsonObj) throws JSONException { 
 		
 		//Getting lobby id
 		String lobbyID = jsonObj.getString(LOBBY_ID); 
@@ -57,10 +64,17 @@ public class JoinAsPlayerActionData extends AbstractActionData {
 		PlayerData pData = new PlayerData(playerDataName);
 		
 		//Construct and return
-		return new JoinAsPlayerActionData(lobbyID, pData);
+		return new JoinAsPlayerRequestData(lobbyID, pData);
 
 	}
 
+	/**
+	 * PlayerData is the representation of a player only for
+	 * the purposes of joining a lobby, not for a game player.
+	 * 
+	 * @author Bridgette Campbell, Jenna Hand, Daniel McBride, and Greg Schmitt
+	 *
+	 */
 	public static class PlayerData {
 
 		private final String name;
@@ -73,6 +87,10 @@ public class JoinAsPlayerActionData extends AbstractActionData {
 			return this.name;
 		}
 
+		/**
+		 * 
+		 * @return	JSONObject representation of the data.
+		 */
 		public JSONObject jsonify() {
 			JSONObject data = new JSONObject();
 			data.put("name", this.name);
@@ -91,8 +109,8 @@ public class JoinAsPlayerActionData extends AbstractActionData {
 
 	@Override
 	protected boolean fieldsEqual(final Object other) {
-		if (other instanceof JoinAsPlayerActionData) {
-			JoinAsPlayerActionData otherData = (JoinAsPlayerActionData) other;
+		if (other instanceof JoinAsPlayerRequestData) {
+			JoinAsPlayerRequestData otherData = (JoinAsPlayerRequestData) other;
 			return (otherData.lobbyID.equals(this.lobbyID) && 
 				   otherData.playerData.equals(this.playerData));
 		} else {

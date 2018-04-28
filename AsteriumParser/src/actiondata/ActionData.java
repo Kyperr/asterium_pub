@@ -2,6 +2,12 @@ package actiondata;
 
 import org.json.JSONObject;
 
+/**
+ * 
+ * 
+ * @author Bridgette Campbell, Jenna Hand, Daniel McBride, and Greg Schmitt
+ *
+ */
 public interface ActionData {
 
 	//Action Name Constants
@@ -28,6 +34,10 @@ public interface ActionData {
 	public static final String PLAYER_DATA = "player_data";
 	public static final String AUTH_TOKEN = "auth_token";
 	
+	/**
+	 * 
+	 * @return	JSONObject representation of the data.
+	 */
 	public JSONObject jsonify();
 	
 	public String getName();
