@@ -16,6 +16,11 @@ import message.Message;
 import sessionmanagement.SessionManager;
 import sessionmanagement.SessionManager.Session;
 
+/**
+ * This object maintains a single connection with a client and listens for input
+ * from the client. Any input is budded into a separate handling thread.
+ *
+ */
 public class ConnectionHandler extends Thread {
 
 	private static final int SOCKET_HANDLER_TIMEOUT = 60000;
@@ -36,12 +41,22 @@ public class ConnectionHandler extends Thread {
 	 */
 	private boolean run = false;
 
+	/**
+	 * Constructs a {@link ConnectionHandler}. This also creates a full
+	 * {@link Session} object for this connection.
+	 * 
+	 * @param socket
+	 *            - {@link Socket}
+	 * @throws IOException
+	 *             - The internet probably dropped.
+	 */
 	public ConnectionHandler(Socket socket) throws IOException {
 		this.session = SessionManager.getInstance().createSession(socket);
-		// System.out.println("auth: " + session.getAuthToken());
-		System.out.println("ConnectionHandler created");
 	}
 
+	/**
+	 * This runs, listens for input and buds the action into a new thread.
+	 */
 	public void run() {
 		// We're running
 		run = true;
@@ -57,15 +72,10 @@ public class ConnectionHandler extends Thread {
 			BufferedReader br = new BufferedReader(isr);
 
 			String line = "";
-			while (run) {//is this needed?
+			while (run) {// is this needed?
 				while (br.ready()) {
-					System.out.println("Listening...");
 
 					line = br.readLine();
-
-					System.out.println("Connected: " + this.session.getSocket().isConnected());
-
-					System.out.println("Budding thread to handle: " + line);
 
 					handleMessage(line);
 				}
@@ -80,13 +90,20 @@ public class ConnectionHandler extends Thread {
 			interrupt();
 
 		} catch (IOException e) {
+			// This probably need something additional.
+			System.err.println("Did the internet drop?");
 			e.printStackTrace();
-			// !!! What circumstances will this crash under?
-			// How should the program react to each circumstance?
 		}
 	}
 
-	public void handleMessage(String messageString) {
+	/**
+	 * Called just in here. Just for decomposing the run() method. This actually
+	 * executes the new thread.
+	 * 
+	 * @param messageString
+	 *            - {@link String}
+	 */
+	private void handleMessage(String messageString) {
 
 		Message message = this.parser.parse(messageString);
 
@@ -94,11 +111,7 @@ public class ConnectionHandler extends Thread {
 
 		Action action = Action.getActionFor(this.session, actionData);
 
-		System.out.println("Handling a thread for: " + action.getName());
 		threadPoolExec.execute(action);
-	}
-
-	public void thing(Function<String, String> func) {
 	}
 
 }

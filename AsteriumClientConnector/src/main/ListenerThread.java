@@ -10,6 +10,10 @@ import java.util.concurrent.Flow.Subscriber;
 
 import message.Message;
 
+/**
+ * This is an object that, as a client, listens for input from the server. As
+ * input comes from the server, it will publish the input to it's subscribers.
+ */
 public class ListenerThread extends Thread implements Publisher<Message> {
 	private boolean running;
 	private InputStreamReader isr;
@@ -17,8 +21,17 @@ public class ListenerThread extends Thread implements Publisher<Message> {
 	private Parser parser;
 	private List<Subscriber<? super Message>> subscribers;
 
+	/**
+	 * Constructs a ListenerThread. Requires a connection and a parser. This also
+	 * creates a reference to the connection's input stream.
+	 * 
+	 * @param connection
+	 *            - {@link ServerConnection}
+	 * @param parser
+	 *            - {@link Parser}
+	 */
 	public ListenerThread(ServerConnection connection, Parser parser) {
-System.out.println("Constructing ListenerThread (not listening yet)...");
+
 		this.parser = parser;
 		this.running = false;
 		this.subscribers = new LinkedList<Subscriber<? super Message>>();
@@ -28,56 +41,68 @@ System.out.println("Constructing ListenerThread (not listening yet)...");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	@Override
+	/**
+	 * Sets running and starts this thread.
+	 */
 	public void start() {
 		this.running = true;
 		super.start();
-		System.out.println("ListenerThread listening...");
 	}
-	
+
+	/**
+	 * Sets running to false;
+	 */
 	public void stopListening() {
 		this.running = false;
-		System.out.println("ListenerThread stopped listening...");
 	}
-	
+
 	@Override
+	/**
+	 * This is the run method for this thread. This is the part that listens for
+	 * input and publishes it.
+	 */
 	public void run() {
 		StringBuilder sb = new StringBuilder();
 		String line;
 		while (running) {
 			try {
-				System.out.print("?????");
 				line = this.br.readLine();
-				System.out.print("!!!!!!!!!!!!!!!");
-				System.out.print("Message: " + line);
-				
+
 				if (line != null) {
 					sb.append(line);
 				} else {
 					// End of message reached. Parse contents of string builder.
 					Message data = this.parser.parse(sb.toString());
 					publish(data);
-					
+
 					// End of message reached, clear string builder
 					sb.setLength(0);
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
+				System.err.println("This breaks as part of a loop and just goes back to listening.");
 				e.printStackTrace();
 			}
 		}
 	}
 
-	public void publish(Message data) {
+	/**
+	 * Publishes input to subscriber.
+	 * @param data
+	 */
+	private void publish(Message data) {
 		for (Subscriber<? super Message> s : this.subscribers) {
 			s.onNext(data);
 		}
 	}
-	
+
 	@Override
+	/**
+	 * Adds as a subscriber to be send publications.
+	 */
 	public void subscribe(Subscriber<? super Message> subscriber) {
 		this.subscribers.add(subscriber);
 	}

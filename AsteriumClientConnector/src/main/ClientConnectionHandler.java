@@ -5,6 +5,11 @@ import java.util.function.Consumer;
 import actiondata.ActionData;
 import message.Message;
 
+/**
+ * An object that is used to establish and maintain a connection to the server as well as send messages.
+ * 
+ *
+ */
 public class ClientConnectionHandler {
 
 	private static int PORT = 25632;
@@ -15,9 +20,13 @@ public class ClientConnectionHandler {
 	private ListenerThread listener;
 	private SenderThreadPool senders;
 
-	public ClientConnectionHandler() {
+	/**
+	 * Creates a ClientConnectionHandler. This creates a {@link ServerConnection}, a
+	 * {@link Parser}, a {@link ListenerThread}, and a {@link SenderThreadPool}.
+	 */
+	public ClientConnectionHandler(final String address, int port) {
 
-		this.serverConnection = new ServerConnection("localhost", PORT);
+		this.serverConnection = new ServerConnection(address, port);
 		this.parser = new Parser();
 
 		this.listener = new ListenerThread(serverConnection, parser);
@@ -27,6 +36,14 @@ public class ClientConnectionHandler {
 		this.listener.start();
 	}
 
+	/**
+	 * This method will send the {@link String} to the connection specified in the
+	 * constructor. The {@link Consumer} that is specified will be registered and
+	 * called upon response from the server.
+	 * 
+	 * @param json
+	 * @param responseAction
+	 */
 	public void sendJSON(final String json, final Consumer<Message> responseAction) {
 		this.senders.send(json, responseAction);
 	}

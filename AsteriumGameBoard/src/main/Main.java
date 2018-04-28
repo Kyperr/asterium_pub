@@ -4,15 +4,24 @@ import org.json.JSONObject;
 
 import actiondata.CreateGameActionData;
 import message.Request;
-
+/**
+ * Main.
+ *
+ */
 public class Main {
 
 	private static int PORT = 25632;
-
+	
+	private static String ADDRESS = "localhost"; 
+	
+	/**
+	 * The main method. Starts the gameboard. Duh.
+	 * @param args
+	 */
 	public static void main(String[] args) {
 
 		
-		ClientConnectionHandler ccHandler = new ClientConnectionHandler();
+		ClientConnectionHandler ccHandler = new ClientConnectionHandler(ADDRESS, PORT);
 		
 		CreateGameActionData cgaData = new CreateGameActionData();
 		

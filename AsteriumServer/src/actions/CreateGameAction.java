@@ -31,6 +31,7 @@ public class CreateGameAction extends RequestAction {
 			game = this.game.get();
 			CreateGameResponseData cgrData = new CreateGameResponseData(game.getLobbyID(),
 					this.getCallingSession().getAuthToken());
+			
 			message = new Response(cgrData, 0);
 
 		} else {

@@ -36,12 +36,9 @@ public class Parser {
 		Boolean isRequest;
 		String actionName;
 		
-		System.out.println("Message: " + msg);
-		
 		JSONObject jsonObj = new JSONObject(msg);
 
 		fields = JSONObject.getNames(jsonObj); 
-		System.out.println("problem? " + fields.toString());
 		if (!fields[0].equals(Message.MessageType.REQUEST.getJSONTag()) && !fields[0].equals(Message.MessageType.RESPONSE.getJSONTag())) {
 			throw new JSONException("JSON malformed: " + jsonObj.toString());
 		}

@@ -33,10 +33,6 @@ public abstract class Action implements Runnable {
 
 	public static Action getActionFor(Session sender, ActionData actionData) {
 		try {
-			System.out.println("class: " + actionData.getClass());
-			for (Class<? extends ActionData> c : ACTION_LOOKUP.keySet()) {
-				System.out.println("class2: " + c.getName());
-			}
 			return ACTION_LOOKUP.get(actionData.getClass()).apply(sender, actionData);
 		} catch (ClassCastException e) {
 			return new SendErrorAction(sender, actionData.getName(), SendErrorAction.INCORRECT_ACTION_MAPPING);

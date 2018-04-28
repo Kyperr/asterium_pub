@@ -8,6 +8,11 @@ import java.util.function.Consumer;
 
 import message.Message;
 
+/**
+ * This is a thread used to send data. It's purpose is to handle connection
+ * work. It will send the input and wait to handle the response.
+ *
+ */
 public class SenderThread extends Thread implements Subscriber<Message> {
 	private Message subscribedData;
 	private Consumer<Message> responseMethod;
@@ -15,6 +20,13 @@ public class SenderThread extends Thread implements Subscriber<Message> {
 	private PrintWriter output;
 	private boolean isWaiting;
 
+	/**
+	 * Creates a SenderThread. Creates a reference to the connection's output
+	 * stream.
+	 * 
+	 * @param connection
+	 * @param parser
+	 */
 	public SenderThread(ServerConnection connection, Parser parser) {
 		System.out.println("Constructing SenderThread...");
 		try {
@@ -26,6 +38,12 @@ public class SenderThread extends Thread implements Subscriber<Message> {
 		this.isWaiting = false;
 	}
 
+	/**
+	 * Sends a message to the connection specified in the consumer.
+	 * 
+	 * @param json
+	 * @param action
+	 */
 	public void send(final String json, final Consumer<Message> action) {
 		System.out.println("SenderThread is sending...");
 		this.subscribedData = this.parser.parse(json);
@@ -36,11 +54,20 @@ public class SenderThread extends Thread implements Subscriber<Message> {
 		System.out.println("SenderThread sent.");
 	}
 
+	/**
+	 * Returns whether or not this is waiting.
+	 * 
+	 * @return
+	 */
 	public boolean isWaiting() {
 		return this.isWaiting;
 	}
 
 	@Override
+	/**
+	 * Called by the publisher. You shouldn't be calling this. It reacts to the
+	 * input as specified.
+	 */
 	public void onNext(Message item) {
 		// Check if the published ActionData is the subscribed
 		// data, and call response method if it is.
@@ -56,18 +83,27 @@ public class SenderThread extends Thread implements Subscriber<Message> {
 	 * Unused methods from Subscriber
 	 */
 	@Override
+	/**
+	 * Does nothing.
+	 */
 	public void onSubscribe(Subscription subscription) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
+	/**
+	 * Does nothing.
+	 */
 	public void onError(Throwable throwable) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
+	/**
+	 * Does nothing.
+	 */
 	public void onComplete() {
 		// TODO Auto-generated method stub
 
