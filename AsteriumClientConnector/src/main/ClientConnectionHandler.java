@@ -2,7 +2,6 @@ package main;
 
 import java.util.function.Consumer;
 
-import actiondata.ActionData;
 import message.Message;
 
 /**

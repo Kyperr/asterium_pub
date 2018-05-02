@@ -29,6 +29,7 @@ public class Parser {
 	{
 		put(Arrays.asList(true, ActionData.JOIN_AS_PLAYER), JoinAsPlayerRequestData::parseArgs);
 		put(Arrays.asList(true, ActionData.CREATE_GAME), CreateGameRequestData::parseArgs);
+		put(Arrays.asList(false, ActionData.CREATE_GAME_RESPONSE), CreateGameRequestData::parseArgs);
 	}};
 
 	/**
@@ -72,7 +73,9 @@ public class Parser {
 		if(isRequest) {
 			message = new Request(actionData);
 		} else {
-			Integer errorCode = jsonObj.getInt(ActionData.ERROR_CODE);
+			System.out.println(jsonObj);
+			System.out.println(innerJSONObj);
+			Integer errorCode = innerJSONObj.getInt(ActionData.ERROR_CODE);
 			message = new Response(actionData, errorCode);
 		}
 		
