@@ -27,8 +27,10 @@ public class Parser {
 	private static HashMap<List<Object>, Function<JSONObject, ActionData>> actionDataLookup = new HashMap<List<Object>, Function<JSONObject, ActionData>>(){
 		private static final long serialVersionUID = 1L;
 	{
-		put(Arrays.asList(true, ActionData.JOIN_AS_PLAYER), JoinAsPlayerRequestData::parseArgs);
 		put(Arrays.asList(true, ActionData.CREATE_GAME), CreateGameRequestData::parseArgs);
+		put(Arrays.asList(false, ActionData.CREATE_GAME_RESPONSE), CreateGameRequestData::parseArgs);
+		put(Arrays.asList(true, ActionData.JOIN_AS_PLAYER), JoinAsPlayerRequestData::parseArgs);
+		put(Arrays.asList(false, ActionData.JOIN_AS_PLAYER_RESPONSE), JoinAsPlayerRequestData::parseArgs);
 	}};
 
 	/**
