@@ -1,5 +1,7 @@
 package actions;
 
+import java.util.UUID;
+
 import sessionmanagement.SessionManager.Session;
 
 /**
@@ -31,8 +33,8 @@ public class SendErrorAction extends ResponseAction {
 	 * @param erroredName The name of the error which occurred.
 	 * @param errorCode The code of the error which occurred.
 	 */
-	public SendErrorAction(Session callingSession, String erroredName, Integer errorCode) {
-		super(erroredName, callingSession);
+	public SendErrorAction(final String name, final Session callingSession, final Integer errorCode, final UUID messageID) {
+		super(name, callingSession, errorCode, messageID);
 	}
 
 	@Override
