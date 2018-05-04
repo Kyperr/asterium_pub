@@ -3,7 +3,10 @@ package gamelogic;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
+import actions.Action;
 import exceptions.GameFullException;
 
 /**
@@ -11,8 +14,13 @@ import exceptions.GameFullException;
  * 
  * @author Daniel McBride, Jenna Hand, Bridgette Campbell, Greg Schmitt
  */
-public class Game {
+public class Game extends Thread {
 
+	// TODO: turn into complex enum?
+	private enum GamePhase {
+		PLAYERS_JOINING, PLAYER_TURNS
+	}
+	
 	/*
 	 * The character set used to generate random strings.
 	 */
@@ -53,27 +61,52 @@ public class Game {
 		// Once the lobby ID is unique, return it.
 		return sb.toString();
 	}
-
-	/*
-	 * The game's list of player clients. 
-	 */
-	private final List<Player> playerList = new ArrayList<Player>();
-
-	/*
-	 * The game's list of gameboard clients.
-	 */
-	private final List<GameBoard> gameBoardList = new ArrayList<GameBoard>();
-
-	/*
-	 * The game's lobby ID, used to allow player clients to join.
-	 */
+	
 	private final String lobbyID;
 
+	private final List<Player> playerList = new ArrayList<Player>();
+
+	private final List<GameBoard> gameBoardList = new ArrayList<GameBoard>();
+
+	
+	
+	/*
+	 * The game's map of turn actions. Maps players to their turn action(s).
+	 */
+	private final Map<Player, Runnable> turnActionMap = new ConcurrentHashMap<Player, Runnable>(){
+
+		@Override
+		public Runnable put(Player player, Runnable runnable) {
+			//Here is where we wake thread.
+			synchronized (this) {
+				Game.this.notify();
+			}
+			return super.put(player, runnable);
+		}
+	};
+	
+	private GamePhase phase = GamePhase.PLAYERS_JOINING;
+	
 	/**
 	 * Creates and returns a {@link Game} that has a lobby ID.
 	 */
 	public Game() {
 		lobbyID = generateLobbyID();
+	}
+	
+	@Override
+	public void run() {
+		while (true) {
+			try {
+				synchronized (this) {
+					wait();
+				}
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// gp.do();
+		}
 	}
 
 	/**
@@ -88,13 +121,40 @@ public class Game {
 	 * @param player The player client.
 	 * @throws GameFullException When the game has already reached the max number of players.
 	 */
-	public void addPlayer(final Player player) throws GameFullException {
+	public synchronized void addPlayer(final Player player) throws GameFullException {
 		// Check to see that the game is not already full.
 		if (this.playerList.size() <= MAX_PLAYERS) {
 			this.playerList.add(player);
+			this.turnActionMap.put(player, new Runnable() {
+				@Override
+				public void run() {
+					// do nothing, this is a "null" action
+				}
+			});
 		} else {
 			throw new GameFullException();
 		}
+	}
+	
+	
+	/**
+	 * Adds a turn action to the {@link Game}'s turnActionMap.
+	 * 
+	 * @param player {@link Player}
+	 * @param action {@link Action}
+	 */
+	public void addTurnAction(final Player player, final Runnable runnable) {
+		this.turnActionMap.put(player, runnable);
+	}
+	
+	/*
+	 * 
+	 * @author Jenna
+	 *
+	 */
+	private class GameState {
+		
+		Map<Player, Character> playerCharacterMap = new ConcurrentHashMap<Player, Character>();
 	}
 
 }

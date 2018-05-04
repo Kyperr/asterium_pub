@@ -26,4 +26,7 @@ public class Player extends Client {
 		this.playerName = playerName;
 	}
 
+	public String getPlayerName() {
+		return playerName;
+	}
 }
