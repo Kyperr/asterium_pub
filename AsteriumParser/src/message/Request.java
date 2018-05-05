@@ -8,13 +8,15 @@ import actiondata.ActionData;
 
 /**
  * {@link Request}s are {@link Message}s sent in order to request a specific action.
+ * 
+ * @author Studio Toozo
  */
 public class Request extends Message {
 	
 	
 	/**
 	 * Creates and returns a new {@link Message} with the given {@link ActionData}.
-	 * @param actionData
+	 * @param actionData The {@link ActionData} associated with the {@link Message}. 
 	 */
 	public Request(final ActionData actionData) {
 		this(actionData, generateMessageID());
@@ -22,8 +24,8 @@ public class Request extends Message {
 	
 	/**
 	 * Creates and returns a new {@link Message} with the given {@link ActionData} and {@link UUID}.
-	 * @param actionData
-	 * @param messageID 
+	 * @param actionData The {@link ActionData} associated with the {@link Message}. 
+	 * @param messageID	The identifier for a {@link Message} for Responses to respond to the correct Request.
 	 */
 	public Request(final ActionData actionData, final UUID messageID) {
 		super(Message.MessageType.REQUEST, actionData, messageID);
@@ -40,7 +42,7 @@ public class Request extends Message {
 	
 	/**
 	 * 
-	 * @return	Random String that is the {@link Message} ID for Clients.
+	 * @return	{@link UUID} that is the {@link Message} ID for Clients.
 	 */
 	private static UUID generateMessageID() {
 		return UUID.randomUUID();

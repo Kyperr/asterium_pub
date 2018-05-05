@@ -7,7 +7,9 @@ import org.json.JSONObject;
 import actiondata.ActionData;
 
 /**
- * Abstract {@link Message} is a blueprint for messages sent to and from {@link Client}s and the server.
+ * Abstract {@link Message} is a blueprint for messages sent to and from {@link Client}'s and the server.
+ * 
+ * @author Studio Toozo
  */
 public abstract class Message {
 	
@@ -34,7 +36,6 @@ public abstract class Message {
 	 * Constants for all messages 
 	 */
 	public static final String ACTION_NAME = "action_name";
-	public static final int ID_LENGTH = 64;
 	public static final String MESSAGE_ID = "message_id";
 	
 	/*
@@ -57,6 +58,7 @@ public abstract class Message {
 	 * 
 	 * @param messageType Request or response {@link Message} type.
 	 * @param actionData The {@link ActionData} associated with the {@link Message}. 
+	 * @param messageID	The identifier for a {@link Message} for Responses to respond to the correct Request.
 	 */
 	protected Message(final MessageType messageType, final ActionData actionData, final UUID messageID) {
 		this.messageType = messageType;
@@ -72,7 +74,6 @@ public abstract class Message {
 	}
 
 	/**
-	 * 
 	 * @return The {@link Message} identifier.
 	 */
 	public UUID getMessageID() {

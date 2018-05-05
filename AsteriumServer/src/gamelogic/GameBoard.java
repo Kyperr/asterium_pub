@@ -3,9 +3,9 @@ package gamelogic;
 import sessionmanagement.SessionManager.Session;
 
 /**
- * {@link GameBoard} Clients are the central client for displaying the game state. A Game may have one or more.
+ * {@link GameBoard} Clients are the central client for displaying the game state. A {@link Game} may have one or more.
  * 
- * @author Daniel McBride, Jenna Hand, Bridgette Campbell, Greg Schmitt
+ * @author Studio Toozo
  */
 public class GameBoard extends Client {
 	

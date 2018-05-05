@@ -7,9 +7,9 @@ import java.util.List;
 import exceptions.GameFullException;
 
 /**
- * Game representing a single game state. 
+ * {@link Game} representing a single game state. 
  * 
- * @author Daniel McBride, Jenna Hand, Bridgette Campbell, Greg Schmitt
+ * @author Studio Toozo
  */
 public class Game {
 
@@ -77,7 +77,7 @@ public class Game {
 	}
 
 	/**
-	 * @return The game's lobby ID, used to allow players to join the game.
+	 * @return The {@link Game}'s lobby ID, used to allow players to join the game.
 	 */
 	public String getLobbyID() {
 		return lobbyID;

@@ -9,7 +9,7 @@ import message.Request;
 /**
  * The Example for AsteriumParser.
  * 
- * @author Bridgette Campbell, Jenna Hand, Daniel McBride, and Greg Schmitt
+ * @author Studio Toozo
  *
  */
 public class Example {

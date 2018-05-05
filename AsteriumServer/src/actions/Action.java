@@ -12,7 +12,9 @@ import message.Message;
 import sessionmanagement.SessionManager.Session;
 
 /**
- * Runnable Action representing an action which should be performed by the server.
+ * Runnable {@link Action} representing an action which should be performed by the server.
+ * 
+ * @author Studio Toozo
  */
 public abstract class Action implements Runnable {
 
@@ -30,7 +32,7 @@ public abstract class Action implements Runnable {
 	// ===================
 	
 	/**
-	 * Static map from an ActionData subclass to the function which should be performed.
+	 * Static map from an {@link ActionData} subclass to the function which should be performed.
 	 */
 	private final static Map<Class<? extends ActionData>, BiFunction<Session, Message, Action>> ACTION_LOOKUP = new HashMap<Class<? extends ActionData>, BiFunction<Session, Message, Action>>() {
 		/**
@@ -49,12 +51,12 @@ public abstract class Action implements Runnable {
 	};
 
 	/**
-	 * Static method to look up and call the function corresponding to actionData, 
+	 * Static method to look up and call the function corresponding to a {@link Message}, 
 	 * then returns the results.
 	 * 
-	 * @param sender The Session which is sending a message with actionData.
-	 * @param actionData The ActionData which should be 
-	 * @return The result returned from the function corresponding to actionData
+	 * @param sender The {@link Session} which is sending a message.
+	 * @param message	The {@link Message} to find the appropriate {@link Action} for.
+	 * @return The {@link Action} returned from the function corresponding to the message.
 	 */
 	public static Action getActionFor(final Session sender, final Message message) {
 		ActionData actionData = message.getActionData();
@@ -84,10 +86,11 @@ public abstract class Action implements Runnable {
 	private final Session callingSession;
 
 	/**
-	 * Abstract constructor to be called by subclasses of Action.
+	 * Abstract constructor to be called by subclasses of {@link Action}.
 	 * 
-	 * @param name the name of the Action (e.g. "create_game")
-	 * @param callingSession the Session which is using this Action.
+	 * @param name the name of the {@link Action} (e.g. "create_game")
+	 * @param callingSession the {@link Session} which is using this {@link Action}.
+	 * @param messageID	the identifier for a {@link Message} for {@link Responses} to respond to the correct {@link Request}.
 	 */
 	protected Action(final String name, final Session callingSession, final UUID messageID) {
 		this.name = name;
@@ -104,31 +107,31 @@ public abstract class Action implements Runnable {
 	}
 
 	/**
-	 * Get the name of this Action.
-	 * @return a String that is the name of this Action.
+	 * Get the name of this {@link Action}.
+	 * @return a String that is the name of this {@link Action}.
 	 */
 	public String getName() {
 		return this.name;
 	}
 
 	/**
-	 * Get the Session related to this Action.
-	 * @return the Session related to this Action.
+	 * Get the Session related to this {@link Action}.
+	 * @return the Session related to this {@link Action}.
 	 */
 	protected Session getCallingSession() {
 		return this.callingSession;
 	}
 	
 	/**
-	 * Get the message id related to this Action.
-	 * @return a UUID that is the message identifier
+	 * Get the message id related to this {@link Action}.
+	 * @return a {@link UUID} that is the {@link Message} identifier
 	 */
 	protected UUID getMessageID() {
 		return this.messageID;
 	}
 
 	/**
-	 * Abstract method which should perform the operations related to this Action.
+	 * Abstract method which should perform the operations related to this {@link Action}.
 	 */
 	protected abstract void doAction();
 

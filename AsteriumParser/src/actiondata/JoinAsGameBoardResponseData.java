@@ -4,11 +4,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * JoinAsPlayerResponseData is the representation of data
- * to be used in a Response to the Request to join a lobby
- * as a player.
+ * {@link JoinAsGameBoardResponseData} is the representation of data
+ * to be used in a {@link Response} to the {@link Request} to join a lobby
+ * as a game board.
  * 
- * @author Bridgette Campbell, Jenna Hand, Daniel McBride, and Greg Schmitt
+ * @author Studio Toozo
  *
  */
 public class JoinAsGameBoardResponseData extends AbstractActionData {
@@ -30,10 +30,10 @@ public class JoinAsGameBoardResponseData extends AbstractActionData {
 	}
 	
 	/**
-	 * Parses JSONObject into a {@link JoinAsGameBoardResponseData} object.
+	 * Parses {@link JSONObject} into a {@link JoinAsGameBoardResponseData} object.
 	 * 
-	 * @param jsonObj the JSONObject to be parsed
-	 * @return	the JoinAsPlayerResponseData object parsed from JSON
+	 * @param jsonObj the {@link JSONObject} to be parsed
+	 * @return	the {@link JoinAsGameBoardResponseData} object parsed from JSON
 	 * @throws JSONException
 	 */
 	public static JoinAsGameBoardResponseData parseArgs(final JSONObject jsonObj) throws JSONException {

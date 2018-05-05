@@ -21,10 +21,9 @@ import message.Request;
 import message.Response;
 
 /**
- * Parser changes a JSONObject into a Message with appropriate ActionData. 
+ * {@link Parser} changes a {@link JSONObject} into a {@link Message} with appropriate {@link ActionData}. 
  * 
- * @author Bridgette Campbell, Jenna Hand, Daniel McBride, and Greg Schmitt
- *
+ * @author Studio Toozo
  */
 public class Parser {
 	public static final boolean VERBOSE = false;
@@ -44,10 +43,10 @@ public class Parser {
 	}};
 
 	/**
-	 * Turn a JSON string into a Message.
+	 * Turn a JSON string into a {@link Message}.
 	 * 
 	 * @param msg	the JSON message to be parsed
-	 * @return	a Message representation of the JSON sent.
+	 * @return	a {@link Message} representation of the JSON sent.
 	 * @throws JSONException
 	 */
 	public Message parse(final String msg) throws JSONException {
@@ -56,6 +55,7 @@ public class Parser {
 		String[] fields;
 		Boolean isRequest;
 		String actionName;
+		UUID messageID;
 		
 		JSONObject jsonObj = new JSONObject(msg);
 
@@ -71,7 +71,8 @@ public class Parser {
 		
 		fields = JSONObject.getNames(innerJSONObj); // reassign fields to get object's keys
 		
-		actionName = innerJSONObj.get(Message.ACTION_NAME).toString();
+		actionName = innerJSONObj.get(Message.ACTION_NAME).toString();	
+		messageID = UUID.fromString(innerJSONObj.getString(Message.MESSAGE_ID));
 		
 		jsonObj = innerJSONObj.getJSONObject(actionName);
 		
@@ -85,7 +86,6 @@ public class Parser {
 		Message message;
 		
 		if(isRequest) {
-			UUID messageID = UUID.fromString(innerJSONObj.getString(Message.MESSAGE_ID));
 			message = new Request(actionData, messageID);
 		} else {
 			if (VERBOSE) {
@@ -94,7 +94,6 @@ public class Parser {
 			}
 			
 			Integer errorCode = innerJSONObj.getInt(Response.ERROR_CODE);
-			UUID messageID = UUID.fromString(innerJSONObj.getString(Message.MESSAGE_ID));
 			message = new Response(actionData, errorCode, messageID);
 		}
 		

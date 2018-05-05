@@ -13,7 +13,7 @@ import message.Response;
 import sessionmanagement.SessionManager.Session;
 
 /**
- * An Action which creates a new Game.
+ * A {@link RequestAction} which creates a new Game.
  * 
  * @author Studio Toozo
  */
@@ -22,10 +22,10 @@ public class CreateGameAction extends RequestAction {
 	private Optional<Game> game;
 
 	/**
-	 * Create a new CreateGameAction for callingSession.
-	 * @param callingSession the session for which the Game will be created.
+	 * Create a new {@link CreateGameAction} for callingSession.
+	 * @param callingSession the {@link Session} for which the {@link Game} will be created.
 	 */
-	public CreateGameAction(Session callingSession, final UUID messageID) {
+	public CreateGameAction(final Session callingSession, final UUID messageID) {
 		super(Action.CREATE_GAME, callingSession, messageID);
 	}
 
@@ -34,7 +34,7 @@ public class CreateGameAction extends RequestAction {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * Creates a new game and registers it with the GameManager.
+	 * Creates a new game and registers it with the {@link GameManager}.
 	 */
 	protected void doAction() {
 		// Attempt to create the game.
@@ -66,7 +66,14 @@ public class CreateGameAction extends RequestAction {
 		}
 	}
 
-	public static CreateGameAction fromMessage(Session sender, final Message message) {
+	/**
+	 * Get a {@link CreateGameAction} based on message.
+	 * 
+	 * @param sender the {@link Session} used for this {@link CreateGameACtion}.
+	 * @param message the {@link Message} containing the {@link CreateGameAction}.
+	 * @return a {@link CreateGameAction} containing the data from message.
+	 */
+	public static CreateGameAction fromMessage(final Session sender, final Message message) {
 		// This is not used here yet, but is here in case anything gets added later.
 		//CreateGameActionData action = CreateGameActionData.class.cast(actionData);
 
