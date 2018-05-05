@@ -15,7 +15,7 @@ import java.net.UnknownHostException;
 public class ServerConnection {
 
 	// Temporary JSON string
-	private final static String CREATE_TEST = "{“request”:{“action_name”:“create_game”,“create_game”:{}}}";
+	private final static String CREATE_TEST = "{\"request\":{\"action_name\":\"create_game\",\"create_game\":{}}}";
 
 	Socket connection;
 

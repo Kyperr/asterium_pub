@@ -96,5 +96,14 @@ public class Game {
 			throw new GameFullException();
 		}
 	}
+	
+	/**
+	 * Registers a new {@link GameBoard} in the {@link Game}. They are added to the {@link Game}'s list of GameBoards.
+	 * 
+	 * @param gameBoard The game board client.
+	 */
+	public void addGameBoard(final GameBoard gameBoard) {
+		this.gameBoardList.add(gameBoard);
+	}
 
 }
