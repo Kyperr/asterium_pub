@@ -10,8 +10,9 @@ import sockettools.ServerSocketListener;
  * @author Studio Toozo
  */
 public class Main {
+	public static final boolean VERBOSE = true;
 	// HARD-CODED, this should be dynamic.
-	private static int PORT = 25632;
+	private static final int PORT = 25632;
 
 	/**
 	 * Starts listening on PORT.
@@ -21,6 +22,10 @@ public class Main {
 		try {
 			// Create ServerSocketListener on PORT.
 			ServerSocketListener listener = new ServerSocketListener(PORT);
+			
+			if (VERBOSE) {
+				System.out.println("Server listening...");
+			}
 			
 			// Start listening.
 			listener.start();

@@ -10,12 +10,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import message.Message;
 
 /**
- * Creates a singleton that stores sessions and is used to acquire sessions.
+ * Creates a singleton that stores sessions and is used to acquire {@link Session}s.
  * 
- * @author Daniel
+ * @author Studio Toozo
  *
  */
 public final class SessionManager {
+	public static final boolean VERBOSE = false;
 
 	// The instance.
 	private static SessionManager sessionManager;
@@ -70,7 +71,7 @@ public final class SessionManager {
 	/**
 	 * An object that stores all relevant data about a client's connection
 	 * 
-	 * @author Daniel
+	 * @author Studio Toozo
 	 *
 	 */
 	public static final class Session {
@@ -86,13 +87,13 @@ public final class SessionManager {
 		private final PrintWriter printWriter;
 
 		/**
-		 * A secure string of characters used to authenticate a client.
+		 * A secure string of characters used to authenticate a {@link Client}.
 		 */
 		private final String authToken;
 
 		/**
 		 * 
-		 * Constructs a Session object. Generates an auth token and stores a reference
+		 * Constructs a {@link Session} object. Generates an auth token and stores a reference
 		 * to the socket's output stream.
 		 * 
 		 * @param socket - {@link Socket} 
@@ -122,7 +123,9 @@ public final class SessionManager {
 		}
 
 		public void sendMessage(Message message) throws IOException {
-			System.out.println("Sending message: " + message.jsonify().toString());
+			if (VERBOSE) {
+				System.out.println("Server sending message to client:\n" + message.jsonify().toString());
+			}
 			this.printWriter.println(message.jsonify().toString());
 			this.printWriter.flush();
 		}

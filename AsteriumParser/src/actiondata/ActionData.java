@@ -3,9 +3,9 @@ package actiondata;
 import org.json.JSONObject;
 
 /**
+ * The {@link ActionData} interface for creating a {@link Request} or {@link Response}.
  * 
- * 
- * @author Bridgette Campbell, Jenna Hand, Daniel McBride, and Greg Schmitt
+ * @author Studio Toozo
  *
  */
 public interface ActionData {

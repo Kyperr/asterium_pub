@@ -15,6 +15,7 @@ import message.Message;
  * input comes from the server, it will publish the input to it's subscribers.
  */
 public class ListenerThread extends Thread implements Publisher<Message> {
+	public static final boolean VERBOSE = false;
 	private boolean running;
 	private InputStreamReader isr;
 	private BufferedReader br;
@@ -71,10 +72,11 @@ public class ListenerThread extends Thread implements Publisher<Message> {
 			try {
 				json = this.br.readLine();
 				
-				System.out.println(json);
+				if (VERBOSE) {
+					System.out.println(json);
+				}
 				
 				Message data = this.parser.parse(json);
-				
 				
 				publish(data);
 				
@@ -91,8 +93,10 @@ public class ListenerThread extends Thread implements Publisher<Message> {
 	 */
 	private void publish(Message data) {
 		for (Subscriber<? super Message> s : this.subscribers) {
-			System.out.println("Subscriber");
-			System.out.println(s.toString());
+			if (VERBOSE) {
+				System.out.println("THREAD POOL:");
+				System.out.println(s.toString());
+			}
 			s.onNext(data);
 		}
 	}

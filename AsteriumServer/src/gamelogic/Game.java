@@ -10,9 +10,13 @@ import actions.Action;
 import exceptions.GameFullException;
 
 /**
+<<<<<<< HEAD
  * Game representing a single game state.
+=======
+ * {@link Game} representing a single game state. 
+>>>>>>> 3514cfc875e806649def7df390d98f746d9f3d41
  * 
- * @author Daniel McBride, Jenna Hand, Bridgette Campbell, Greg Schmitt
+ * @author Studio Toozo
  */
 public class Game extends Thread {
 
@@ -152,7 +156,7 @@ public class Game extends Thread {
 	}
 
 	/**
-	 * @return The game's lobby ID, used to allow players to join the game.
+	 * @return The {@link Game}'s lobby ID, used to allow players to join the game.
 	 */
 	public String getLobbyID() {
 		return lobbyID;

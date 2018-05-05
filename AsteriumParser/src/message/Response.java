@@ -9,10 +9,12 @@ import actiondata.ActionData;
 /**
  * {@link Response}s are {@link Message}s sent in order confirm success, indicate failure, 
  * or return information that has been requested.
+ * 
+ * @author Studio Toozo
  */
 public class Response  extends Message {
 	
-
+	/* Constants for Responses */
 	public static final String ERROR_CODE = "error_code";
 	
 	/*
@@ -22,8 +24,9 @@ public class Response  extends Message {
 	
 	/**
 	 * Creates and returns a {@link Response} with given {@link ActionData} and error code.
-	 * @param actionData
-	 * @param errorCode
+	 * @param actionData The {@link ActionData} associated with the {@link Message}. 
+	 * @param errorCode	The code for a specific error that was thrown
+	 * @param messageID	The identifier for a {@link Message} for Responses to respond to the correct Request.
 	 */
 	public Response(final ActionData actionData, final Integer errorCode, final UUID messageID) {
 		super(Message.MessageType.RESPONSE, actionData, messageID);
@@ -36,7 +39,7 @@ public class Response  extends Message {
 	 */
 	@Override
 	protected void addToJSONify(JSONObject jsonObject) {
-		jsonObject.put("error_code", this.errorCode.toString());
+		jsonObject.put(ERROR_CODE, this.errorCode.toString());
 	}
 
 }

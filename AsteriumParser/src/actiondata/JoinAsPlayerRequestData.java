@@ -4,11 +4,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * JoinAsPlayerRequestData is the representation of data
- * to be used in a Request from a player to join a lobby 
+ * {@link JoinAsPlayerRequestData} is the representation of data
+ * to be used in a {@link Request} from a player to join a lobby 
  * for a game.
  * 
- * @author Bridgette Campbell, Jenna Hand, Daniel McBride, and Greg Schmitt
+ * @author Studio Toozo
  *
  */
 public class JoinAsPlayerRequestData extends AbstractActionData {
@@ -43,10 +43,10 @@ public class JoinAsPlayerRequestData extends AbstractActionData {
 	}
 	
 	/**
-	 * Parses JSONObject into a {@link JoinAsPlayerRequestData} object.
+	 * Parses {@link JSONObject} into a {@link JoinAsPlayerRequestData} object.
 	 * 
 	 * @param jsonObj	the JSONObject to be parsed
-	 * @return	the JoinAsPlayerActionData object parsed from JSON
+	 * @return	the {@link JoinAsPlayerRequestData} object parsed from JSON
 	 * @throws JSONException
 	 */
 	public static JoinAsPlayerRequestData parseArgs(final JSONObject jsonObj) throws JSONException { 
@@ -69,10 +69,10 @@ public class JoinAsPlayerRequestData extends AbstractActionData {
 	}
 
 	/**
-	 * PlayerData is the representation of a player only for
+	 * {@link PlayerData} is the representation of a player only for
 	 * the purposes of joining a lobby, not for a game player.
 	 * 
-	 * @author Bridgette Campbell, Jenna Hand, Daniel McBride, and Greg Schmitt
+	 * @author Studio Toozo
 	 *
 	 */
 	public static class PlayerData {
@@ -89,7 +89,7 @@ public class JoinAsPlayerRequestData extends AbstractActionData {
 
 		/**
 		 * 
-		 * @return	JSONObject representation of the data.
+		 * @return	{@link JSONObject} representation of the data.
 		 */
 		public JSONObject jsonify() {
 			JSONObject data = new JSONObject();

@@ -1,9 +1,9 @@
 package actiondata;
 
 /**
+ * {@link AbstractActionData} is a blueprint for {@link ActionData} objects.
  * 
- * 
- * @author Bridgette Campbell, Jenna Hand, Daniel McBride, and Greg Schmitt
+ * @author Studio Toozo
  *
  */
 public abstract class AbstractActionData implements ActionData {
@@ -27,5 +27,11 @@ public abstract class AbstractActionData implements ActionData {
 		}
 	}
 	
+	/**
+	 * Compares the fields of this {@link AbstractActionData} and the {@link Object}.
+	 * 
+	 * @param other	The {@link Object} to be compared
+	 * @return	if the fields are equal
+	 */
 	protected abstract boolean fieldsEqual(final Object other);
 }
