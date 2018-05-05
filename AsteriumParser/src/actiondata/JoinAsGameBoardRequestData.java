@@ -4,10 +4,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * JoinAsGameBoardRequestData is the representation of data
- * to be used in a Request from a game board to join a game.
+ * {@link JoinAsGameBoardRequestData} is the representation of data
+ * to be used in a {@link Request} from a game board to join a game.
  * 
- * @author Greg Schmitt
+ * @author Studio Toozo
  */
 public class JoinAsGameBoardRequestData extends AbstractActionData {
 	private final String lobbyID;
@@ -40,10 +40,10 @@ public class JoinAsGameBoardRequestData extends AbstractActionData {
 	}
 	
 	/**
-	 * Parses JSONObject into a {@link JoinAsGameBoardRequestData} object.
+	 * Parses {@link JSONObject} into a {@link JoinAsGameBoardRequestData} object.
 	 * 
-	 * @param jsonObj - the JSONObject to be parsed
-	 * @return	the JoinAsGameBoardActionData object parsed from JSON
+	 * @param jsonObj - the {@link JSONObject} to be parsed
+	 * @return	the {@link JoinAsGameBoardRequestData} object parsed from JSON
 	 * @throws JSONException
 	 */
 	public static JoinAsGameBoardRequestData parseArgs(final JSONObject jsonObj) throws JSONException { 
@@ -64,12 +64,12 @@ public class JoinAsGameBoardRequestData extends AbstractActionData {
 	}
 
 	/**
-	 * JoinAsGameBoardRequestData.GameBoardData is the representation 
-	 * of a GameBoard used only for the purposes of joining a lobby.
+	 * {@link JoinAsGameBoardRequestData.GameBoardData} is the representation 
+	 * of a {@link GameBoard} used only for the purposes of joining a lobby.
 	 * 
-	 * Mostly hijacked from JoinAsPlayerRequestData.PlayerData.
+	 * Mostly hijacked from {@link JoinAsPlayerRequestData.PlayerData}.
 	 * 
-	 * @author Greg Schmitt
+	 * @author Studio Toozo
 	 */
 	public static class GameBoardData {
 		public GameBoardData() {

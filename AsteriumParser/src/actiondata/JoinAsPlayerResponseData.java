@@ -4,11 +4,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * JoinAsPlayerResponseData is the representation of data
- * to be used in a Response to the Request to join a lobby
- * as a player.
+ * {@link JoinAsPlayerResponseData} is the representation of data to be used in a
+ * {@link Response} to the {@link Request} to join a lobby as a player.
  * 
- * @author Bridgette Campbell, Jenna Hand, Daniel McBride, and Greg Schmitt
+ * @author Studio Toozo
  *
  */
 public class JoinAsPlayerResponseData extends AbstractActionData {

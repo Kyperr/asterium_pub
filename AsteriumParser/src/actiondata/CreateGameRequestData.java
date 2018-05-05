@@ -4,10 +4,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * CreateGameRequestData is the representation of data
- * to be used in a Request to create a game.
+ * {@link CreateGameRequestData} is the representation of data
+ * to be used in a {@link Request} to create a game.
  * 
- * @author Bridgette Campbell, Jenna Hand, Daniel McBride, and Greg Schmitt
+ * @author Studio Toozo
  *
  */
 public class CreateGameRequestData extends AbstractActionData {
@@ -23,10 +23,10 @@ public class CreateGameRequestData extends AbstractActionData {
 	}
 	
 	/**
-	 * Parses JSONObject into a {@link CreateGameRequestData} object.
+	 * Parses {@link JSONObject} into a {@link CreateGameRequestData} object.
 	 * 
-	 * @param jsonObj	the JSONObject to be parsed
-	 * @return	the CreateGameActionData object parsed from JSON
+	 * @param jsonObj	the {@link JSONObject} to be parsed
+	 * @return	the {@link CreateGameRequestData} object parsed from JSON
 	 * @throws JSONException
 	 */
 	public static CreateGameRequestData parseArgs(final JSONObject jsonObj) throws JSONException {

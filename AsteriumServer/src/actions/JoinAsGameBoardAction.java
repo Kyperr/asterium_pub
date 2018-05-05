@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Optional;
 import java.util.UUID;
 
-import actiondata.ActionData;
 import actiondata.ErroredResponseData;
 import actiondata.JoinAsGameBoardRequestData;
 import gamelogic.Game;
@@ -15,7 +14,7 @@ import message.Response;
 import sessionmanagement.SessionManager.Session;
 
 /**
- * An Action which associates a {@link GameBoard} to a {@link Game}.
+ * A {@link RequestAction} which associates a {@link GameBoard} to a {@link Game}.
  * 
  * @author Studio Toozo
  */
@@ -30,11 +29,11 @@ public class JoinAsGameBoardAction extends RequestAction {
 	Optional<JoinAsGameBoardRequestData.GameBoardData> gameBoardData;
 
 	/**
-	 * Construct a JoinAsGameBoardAction.
+	 * Construct a {@link JoinAsGameBoardAction}.
 	 * 
-	 * @param callingSession the session using this Action.
-	 * @param lobbyID the ID of the lobby of the game to which the GameBoard should be added.
-	 * @param gameBoardData the data of the GameBoard which should be added to the game.
+	 * @param callingSession the session using this {@link Action}.
+	 * @param lobbyID the ID of the lobby of the game to which the{@link GameBoard} should be added.
+	 * @param gameBoardData the data of the {@link GameBoard} which should be added to the game.
 	 */
 	public JoinAsGameBoardAction(final Session callingSession, final String lobbyID, 
 								 final JoinAsGameBoardRequestData.GameBoardData gameBoardData,
@@ -46,7 +45,7 @@ public class JoinAsGameBoardAction extends RequestAction {
 
 	@Override
 	/**
-	 * Constructs a GameBoard based on this.gameBoardData and adds it to the game.
+	 * Constructs a {@link GameBoard} based on this.gameBoardData and adds it to the game.
 	 */
 	protected void doAction() {
 		Game game;
@@ -92,13 +91,13 @@ public class JoinAsGameBoardAction extends RequestAction {
 	}
 
 	/**
-	 * Get a JoinAsGameBoardAction based on actionData.
+	 * Get a {@link JoinAsGameBoardAction} based on a message.
 	 * 
-	 * @param sender The session using this JoinAsGameBoardAction.
-	 * @param actionData The {@link ActionData} containing the JoinAsGameBoardAction.
-	 * @return a JoinAsGameBoardAction containing the data from actionData.
+	 * @param sender The {@link Session} using this {@link JoinAsGameBoardAction}.
+	 * @param message The {@link Message} containing the {@link JoinAsGameBoardAction}.
+	 * @return a {@link JoinAsGameBoardAction} containing the data from message.
 	 */
-	public static JoinAsGameBoardAction fromActionData(final Session sender, final Message message) {
+	public static JoinAsGameBoardAction fromMessage(final Session sender, final Message message) {
 		JoinAsGameBoardRequestData action = JoinAsGameBoardRequestData.class.cast(message.getActionData());
 		return new JoinAsGameBoardAction(sender, action.getLobbyID(), action.getGameBoardData(), message.getMessageID());
 	}

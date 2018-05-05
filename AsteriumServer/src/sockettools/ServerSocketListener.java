@@ -8,6 +8,7 @@ import java.net.Socket;
  * This object listens for new connections and buds a new thread to handle that
  * specific connection.
  * 
+ * @author Studio Toozo
  */
 public class ServerSocketListener {
 
@@ -20,7 +21,7 @@ public class ServerSocketListener {
 	private ServerSocket listener;
 
 	/**
-	 * Constructs a ServerSocketListener to listen on the port specified.
+	 * Constructs a {@link ServerSocketListener} to listen on the port specified.
 	 * 
 	 * @param port
 	 *            - {@link Integer}

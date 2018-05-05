@@ -3,10 +3,10 @@ package actiondata;
 import org.json.JSONObject;
 
 /**
- * ErroredResponseData is the representation of data
- * to be used in a Response to an action that erred.
+ * {@link ErroredResponseData} is the representation of data
+ * to be used in a {@link Response} to an action that erred.
  * 
- * @author Bridgette Campbell, Jenna Hand, Daniel McBride, and Greg Schmitt 
+ * @author Studio Toozo
  *
  */
 public class ErroredResponseData extends AbstractActionData{
