@@ -1,6 +1,7 @@
 package main;
 
 import actiondata.CreateGameRequestData;
+import actiondata.JoinAsGameBoardRequestData;
 import message.Request;
 /**
  * Main.
@@ -21,17 +22,20 @@ public class Main {
 	public static void main(String[] args) {
 		ClientConnectionHandler ccHandler = new ClientConnectionHandler(ADDRESS, PORT);
 		
-		CreateGameRequestData cgaData = new CreateGameRequestData();
-		
-		Request request = new Request(cgaData);
-		
+		// Create a game.
+		CreateGameRequestData cgData = new CreateGameRequestData();
+		Request request = new Request(cgData);
 		String msg = request.jsonify().toString();
-		
 		if (VERBOSE) {
 			System.out.println("Client sending message to server:\n" + msg);
 		}
-		
-		ccHandler.sendJSON(msg, (message) -> System.out.println("Game created!"));
+		ccHandler.sendJSON(msg, (message) -> {
+			String lobbyID = null;
+			JoinAsGameBoardRequestData.GameBoardData myData = new JoinAsGameBoardRequestData.GameBoardData();
+			System.out.println("Game created! Joining game as GameBoard...");
+			System.out.println("message: " + message.toString());
+			//JoinAsGameBoardRequestData jgbData = new JoinAsGameBoardRequestData(lobbyID, myData);
+		});
 		
 		while(true) {
 			

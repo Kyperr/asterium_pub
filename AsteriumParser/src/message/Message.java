@@ -108,9 +108,16 @@ public abstract class Message {
 	}
 	
 	/**
+	 * @return A String representation of this message in JSON format.
+	 */
+	public String toString() {
+		// Could be changed if we want a String that's not JSON.
+		return this.jsonify().toString();
+	}
+	
+	/**
 	 * Allows children to add additional information to their {@link JSONObject} representation.
 	 * @param jsonObject The {@link JSONObject} to add to JSONify.
 	 */
 	protected abstract void addToJSONify(JSONObject jsonObject);
-	
 }
