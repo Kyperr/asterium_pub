@@ -27,7 +27,8 @@ import message.Response;
  *
  */
 public class Parser {
-
+	public static final boolean VERBOSE = false;
+	
 	/* Map of action names to action functions */
 	private static HashMap<List<Object>, Function<JSONObject, ActionData>> actionDataLookup = new HashMap<List<Object>, Function<JSONObject, ActionData>>(){
 		private static final long serialVersionUID = 1L;
@@ -74,7 +75,10 @@ public class Parser {
 		
 		jsonObj = innerJSONObj.getJSONObject(actionName);
 		
-		System.out.println(actionDataLookup.get(Arrays.asList(isRequest, actionName)));
+		if (VERBOSE) {
+			System.out.print("actionDataLookup.get(" + isRequest + ", " + actionName + ") = ");
+			System.out.println(actionDataLookup.get(Arrays.asList(isRequest, actionName)));
+		}
 		actionData = actionDataLookup.get(Arrays.asList(isRequest, actionName)).apply(jsonObj);
 
 		
@@ -84,8 +88,11 @@ public class Parser {
 			UUID messageID = UUID.fromString(innerJSONObj.getString(Message.MESSAGE_ID));
 			message = new Request(actionData, messageID);
 		} else {
-			System.out.println("ActionData: " + jsonObj);
-			System.out.println("Inner: " + innerJSONObj);
+			if (VERBOSE) {
+				System.out.println("JSON Action Data: " + jsonObj);
+				System.out.println("innerJSONObj: " + innerJSONObj);
+			}
+			
 			Integer errorCode = innerJSONObj.getInt(Response.ERROR_CODE);
 			UUID messageID = UUID.fromString(innerJSONObj.getString(Message.MESSAGE_ID));
 			message = new Response(actionData, errorCode, messageID);
@@ -94,5 +101,14 @@ public class Parser {
 		return message;
 	}
 
+	/**
+	 * Gets the message ID of message.
+	 * 
+	 * @param message - The JSON string to be parsed.
+	 * @return The message ID (UUID) of message.
+	 */
+	public UUID getMessageID(final String message) {
+		return this.parse(message).getMessageID();
+	}
 
 }

@@ -17,9 +17,9 @@ import sessionmanagement.SessionManager.Session;
 /**
  * This object maintains a single connection with a client and listens for input
  * from the client. Any input is budded into a separate handling thread.
- *
  */
 public class ConnectionHandler extends Thread {
+	public static final boolean VERBOSE = false;
 
 	private static final int SOCKET_HANDLER_TIMEOUT = 60000;
 
@@ -69,26 +69,32 @@ public class ConnectionHandler extends Thread {
 			InputStreamReader isr = new InputStreamReader(this.session.getSocket().getInputStream());
 			BufferedReader br = new BufferedReader(isr);
 
-			String line = "";
-			while (run) {// is this needed?
-				while (br.ready()) {
+			String line;
+			while (run) {
+				line = br.readLine();
 
-					line = br.readLine();
-
+				if (line == null) {
+					if (VERBOSE) {
+						System.out.println("End of stream reached. Killing thread.");
+					}
+					
+					run = false;
+					this.interrupt();
+				} else {
 					handleMessage(line);
 				}
 			}
 
-			/*
-			 * If there has been a timeout, the user has been disconnected. Kill this
-			 * thread.
-			 */
+		/*
+		 * If there has been a timeout, the user has been disconnected. Kill this
+		 * thread.
+		 */
 		} catch (SocketTimeoutException e) {
 			run = false;
-			interrupt();
-
+			this.interrupt();
 		} catch (IOException e) {
-			// This probably need something additional.
+			// This needs something additional.
+			// Try to re-establish connection?
 			System.err.println("Did the internet drop?");
 			e.printStackTrace();
 		}

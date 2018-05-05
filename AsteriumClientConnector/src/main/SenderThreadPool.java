@@ -13,6 +13,7 @@ import message.Message;
  *
  */
 public class SenderThreadPool {
+	public static final boolean VERBOSE = false;
 	private Queue<SenderThread> idlePool;
 	private Queue<SenderThread> busyPool;
 	private Parser parser;

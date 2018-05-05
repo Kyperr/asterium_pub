@@ -16,6 +16,7 @@ import message.Message;
  *
  */
 public final class SessionManager {
+	public static final boolean VERBOSE = false;
 
 	// The instance.
 	private static SessionManager sessionManager;
@@ -122,7 +123,9 @@ public final class SessionManager {
 		}
 
 		public void sendMessage(Message message) throws IOException {
-			System.out.println("Sending message: " + message.jsonify().toString());
+			if (VERBOSE) {
+				System.out.println("Server sending message to client:\n" + message.jsonify().toString());
+			}
 			this.printWriter.println(message.jsonify().toString());
 			this.printWriter.flush();
 		}
