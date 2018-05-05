@@ -25,7 +25,7 @@ public class Request extends Message {
 	 * @param actionData
 	 * @param messageID 
 	 */
-	private Request(final ActionData actionData, final UUID messageID) {
+	public Request(final ActionData actionData, final UUID messageID) {
 		super(Message.MessageType.REQUEST, actionData, messageID);
 	}
 
