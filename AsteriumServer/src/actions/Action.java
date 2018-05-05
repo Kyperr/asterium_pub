@@ -30,6 +30,11 @@ public abstract class Action implements Runnable {
 
 	public static final String CREATE_GAME = "create_game";
 	public static final String CREATE_GAME_RESPONSE = "create_game_response";
+
+	public static final String READY_UP = "ready_up";
+	public static final String READY_UP_RESPONSE = "ready_up_response";
+	
+	
 	
 	public static final boolean VERBOSE = false;
 	// ===================

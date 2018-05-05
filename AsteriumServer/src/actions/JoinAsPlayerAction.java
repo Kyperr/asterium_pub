@@ -1,7 +1,6 @@
 package actions;
 
 import java.io.IOException;
-import java.util.Optional;
 import java.util.UUID;
 
 import actiondata.ErroredResponseData;
@@ -64,7 +63,7 @@ public class JoinAsPlayerAction extends RequestAction {
 		JoinAsPlayerRequestData.PlayerData data = this.playerData;
 
 		// Construct the player.
-		Player player = new Player(this.getCallingSession(), data.getName());
+		Player player = new Player(this.getCallingSession(), data.getName(), this.getCallingSession().getAuthToken());
 
 		// Try adding the player to the game.
 		try {

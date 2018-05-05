@@ -1,7 +1,6 @@
 package actions;
 
 import java.io.IOException;
-import java.util.Optional;
 import java.util.UUID;
 
 import actiondata.CreateGameResponseData;
@@ -70,9 +69,6 @@ public class CreateGameAction extends RequestAction {
 	 * @return a {@link CreateGameAction} containing the data from message.
 	 */
 	public static CreateGameAction fromMessage(final Session sender, final Message message) {
-		// This is not used here yet, but is here in case anything gets added later.
-		//CreateGameActionData action = CreateGameActionData.class.cast(actionData);
-
 		return new CreateGameAction(sender, message.getMessageID());
 	}
 

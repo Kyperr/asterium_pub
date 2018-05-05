@@ -2,8 +2,6 @@ package gamelogic;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * Singleton {@link GameManager} handles the creation and management of {@link Game} on the server.
@@ -22,6 +20,11 @@ public final class GameManager {
 	 */
 	private Map<String, Game> gameMap = new ConcurrentHashMap<String, Game>();
 	
+	/*
+	 * Maps player auth tokens to Game.
+	 */
+	private Map<String, Game> playerMap = new ConcurrentHashMap<String, Game>();
+	
 	/**
 	 * @return The single instance of {@link GameManager}.
 	 */
@@ -38,6 +41,7 @@ public final class GameManager {
 	
 	/**
 <<<<<<< HEAD
+<<<<<<< HEAD
 	 * When a new game is started, create a new {@link Game}.
 =======
 <<<<<<< HEAD
@@ -47,6 +51,10 @@ public final class GameManager {
 	 * When a new game is started, create a new {@link Game}.
 >>>>>>> 3514cfc875e806649def7df390d98f746d9f3d41
 >>>>>>> f7c21bc700243597b23bea06940de86087b86cf2
+=======
+	 * When a new game is started, create a new {@link Game} and return it
+	 * to the action that requested it. Starts the {@link Game} as a {@link Thread}.
+>>>>>>> 929dc8f4f779113fa060b8d15fa0ebb968d99d67
 	 * 
 	 * @return {@link Game}
 	 */
@@ -64,7 +72,7 @@ public final class GameManager {
 	 * 
 	 * @param game The {@link Game} to be registered.
 	 */
-	public void registerGame(Game game) {
+	public void registerGame(final Game game) {
 		// Put the Game in the game map. 
 		gameMap.put(game.getLobbyID(), game);
 	}
@@ -75,7 +83,7 @@ public final class GameManager {
 	 * @param lobbyID The lobby ID to be checked.
 	 * @return True if the lobby ID is in use, false otherwise.
 	 */
-	public boolean isLobbyIDUsed(String lobbyID) {
+	public boolean isLobbyIDUsed(final String lobbyID) {
 		return gameMap.containsKey(lobbyID);
 	}
 	
@@ -83,7 +91,19 @@ public final class GameManager {
 	 * @param lobbyID The lobbyID associated with a {@link Game}.
 	 * @return The {@link Game} associated with the given lobby ID.
 	 */
-	public Game getGame(String lobbyID) {
+	public Game getGame(final String lobbyID) {
 		return gameMap.get(lobbyID);
+	}
+	
+	/**
+	 * @param authToken the {@link Player}'s auth token
+	 * @return the {@link Game} associated with the {@link Player}'s auth token.
+	 */
+	public Game getGameForPlayer(final String authToken) {
+		if (playerMap.get(authToken) != null) {
+			return playerMap.get(authToken);
+		} else {
+			return null;
+		}
 	}
 }

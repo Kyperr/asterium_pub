@@ -9,7 +9,7 @@ import org.json.JSONObject;
  * @author Studio Toozo
  *
  */
-public class ErroredResponseData extends AbstractActionData{
+public class ErroredResponseData extends AbstractResponseActionData{
 	public ErroredResponseData(final String erroredActionName) {
 		super(erroredActionName);
 	}
@@ -19,9 +19,5 @@ public class ErroredResponseData extends AbstractActionData{
 		JSONObject data = new JSONObject();
 		return data;
 	}
-
-	@Override
-	protected boolean fieldsEqual(final Object other) {
-		return true;
-	}
+	
 }
