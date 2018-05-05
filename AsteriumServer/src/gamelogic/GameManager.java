@@ -2,6 +2,8 @@ package gamelogic;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Singleton {@link GameManager} handles the creation and management of {@link Game} on the server.
@@ -35,12 +37,18 @@ public final class GameManager {
 	}
 	
 	/**
+<<<<<<< HEAD
+	 * When a new game is started, create a new Game and return it
+	 * to the action that requested it. Starts the {@link Game} as a {@link Thread}.
+=======
 	 * When a new game is started, create a new {@link Game}.
+>>>>>>> 3514cfc875e806649def7df390d98f746d9f3d41
 	 * 
-	 * @return The new Game.
+	 * @return {@link Game}
 	 */
 	public Game createGame() {
 		Game game = new Game();
+		game.start();
 		
 		// Register the new game with the GameManager.
 		registerGame(game);
