@@ -21,13 +21,13 @@ import sessionmanagement.SessionManager.Session;
  */
 public class JoinAsGameBoardAction extends RequestAction {
 	// The Game to which the GameBoard will be added.
-	Optional<Game> game;
+	Game game;
 	
 	// The lobby ID of game.
-	Optional<String> lobby_id;
+	String lobby_id;
 	
 	// The GameBoard which is being added to game.
-	Optional<JoinAsGameBoardRequestData.GameBoardData> gameBoardData;
+	JoinAsGameBoardRequestData.GameBoardData gameBoardData;
 
 	/**
 	 * Construct a JoinAsGameBoardAction.
@@ -40,8 +40,8 @@ public class JoinAsGameBoardAction extends RequestAction {
 								 final JoinAsGameBoardRequestData.GameBoardData gameBoardData,
 								 final UUID messageID) {
 		super(Action.JOIN_AS_GAMEBOARD, callingSession, messageID);
-		this.lobby_id = Optional.of(lobbyID);
-		this.gameBoardData = Optional.of(gameBoardData);
+		this.lobby_id = lobbyID;
+		this.gameBoardData = gameBoardData;
 	}
 
 	@Override
@@ -53,18 +53,20 @@ public class JoinAsGameBoardAction extends RequestAction {
 		Message message;
 		
 		// If both fields exist...
-		if (this.lobby_id.isPresent() && this.gameBoardData.isPresent()) {
+//		if (this.lobby_id.isPresent() && this.gameBoardData.isPresent()) {
 			// Get the game that corresponds to lobby id.
-			game = GameManager.getInstance().getGame(this.lobby_id.get());
-			
-			// Use to get data for GameBoard constructor.
-			//JoinAsGameBoardRequestData.GameBoardData data = this.gameBoardData.get();
+			game = GameManager.getInstance().getGame(this.lobby_id);
+			if(game == null) {
+				sendError(SendErrorAction.NO_SUCH_LOBBY);
+				return;
+			}
 			
 			// Construct the GameBoard.
 			GameBoard gameBoard = new GameBoard(this.getCallingSession());
 			
 			// Add the game board to the game.
 			game.addGameBoard(gameBoard);
+			
 			// Construct success response.
 			JoinAsGameBoardRequestData jpaData = new JoinAsGameBoardRequestData(this.lobby_id.get(), this.gameBoardData.get());
 			message = new Response(jpaData, 0, this.getMessageID());
@@ -76,19 +78,6 @@ public class JoinAsGameBoardAction extends RequestAction {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} else { // If one or more of the fields were not provided...
-			// Create an error response.
-			ErroredResponseData ead = new ErroredResponseData(this.getName());
-			message = new Response(ead, SendErrorAction.EMPTY_FIELDS, this.getMessageID());
-			
-			// Try to send the error response
-			try {
-				this.getCallingSession().sendMessage(message);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 	}
 
 	/**

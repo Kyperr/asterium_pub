@@ -1,5 +1,6 @@
 package actions;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -7,8 +8,10 @@ import java.util.function.BiFunction;
 
 import actiondata.ActionData;
 import actiondata.CreateGameRequestData;
+import actiondata.ErroredResponseData;
 import actiondata.JoinAsPlayerRequestData;
 import message.Message;
+import message.Response;
 import sessionmanagement.SessionManager.Session;
 
 /**
@@ -131,5 +134,20 @@ public abstract class Action implements Runnable {
 	 * Abstract method which should perform the operations related to this Action.
 	 */
 	protected abstract void doAction();
+	
+	/**
+	 * Utility function for use with subclasses to send errors.
+	 */
+	protected void sendError(Integer errorCode) {
+		ErroredResponseData ead = new ErroredResponseData(this.getName());
+		Message message = new Response(ead, errorCode, this.getMessageID());
+		
+		// Try to send the error response
+		try {
+			this.getCallingSession().sendMessage(message);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 }

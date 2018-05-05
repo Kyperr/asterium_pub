@@ -18,8 +18,6 @@ import sessionmanagement.SessionManager.Session;
  * @author Studio Toozo
  */
 public class CreateGameAction extends RequestAction {
-	// The Game which is created by this CreateGameAction.
-	private Optional<Game> game;
 
 	/**
 	 * Create a new CreateGameAction for callingSession.
@@ -39,13 +37,11 @@ public class CreateGameAction extends RequestAction {
 	protected void doAction() {
 		// Attempt to create the game.
 		Game game = GameManager.getInstance().createGame();
-		this.game = Optional.of(game);
 
 		Message message;
 		// If game was created...
-		if (this.game.isPresent()) {
+		if (game != null) {
 			// Generate response data
-			game = this.game.get();
 			CreateGameResponseData cgrData = new CreateGameResponseData(game.getLobbyID(),
 					this.getCallingSession().getAuthToken());
 			
