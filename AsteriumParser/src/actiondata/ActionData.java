@@ -32,8 +32,8 @@ public interface ActionData {
 	public static final String LOBBY_ID = "lobby_id";
 	public static final String PLAYER_LIST = "player_list";
 	public static final String PLAYER_DATA = "player_data";
+	public static final String GAMEBOARD_DATA = "gameboard_data";
 	public static final String AUTH_TOKEN = "auth_token";
-	public static final String ERROR_CODE = "error_code";
 	
 	/**
 	 * 
@@ -44,4 +44,5 @@ public interface ActionData {
 	public String getName();
 	
 	public boolean equals(final Object other);
+	
 }

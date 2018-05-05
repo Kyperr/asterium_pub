@@ -3,6 +3,7 @@ package main;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import java.util.function.Function;
 
 import org.json.JSONException;
@@ -73,12 +74,14 @@ public class Parser {
 		Message message;
 		
 		if(isRequest) {
-			message = new Request(actionData);
+			UUID messageID = UUID.fromString(innerJSONObj.getString(Message.MESSAGE_ID));
+			message = new Request(actionData, messageID);
 		} else {
-			System.out.println(jsonObj);
-			System.out.println(innerJSONObj);
-			Integer errorCode = innerJSONObj.getInt(ActionData.ERROR_CODE);
-			message = new Response(actionData, errorCode);
+			System.out.println("ActionData: " + jsonObj);
+			System.out.println("Inner: " + innerJSONObj);
+			Integer errorCode = innerJSONObj.getInt(Response.ERROR_CODE);
+			UUID messageID = UUID.fromString(innerJSONObj.getString(Message.MESSAGE_ID));
+			message = new Response(actionData, errorCode, messageID);
 		}
 		
 		return message;

@@ -1,5 +1,7 @@
 package message;
 
+import java.util.UUID;
+
 import org.json.JSONObject;
 
 import actiondata.ActionData;
@@ -32,6 +34,8 @@ public abstract class Message {
 	 * Constants for all messages 
 	 */
 	public static final String ACTION_NAME = "action_name";
+	public static final int ID_LENGTH = 64;
+	public static final String MESSAGE_ID = "message_id";
 	
 	/*
 	 * Request or response.
@@ -43,15 +47,21 @@ public abstract class Message {
 	 */
 	private final ActionData actionData;	
 	
+	/*
+	 * The message identifier. Used for Clients to respond to correct messages. 
+	 */
+	protected final UUID messageID;
+	
 	/**
 	 * Creates and returns a new {@link Message} with given type and data.
 	 * 
 	 * @param messageType Request or response {@link Message} type.
 	 * @param actionData The {@link ActionData} associated with the {@link Message}. 
 	 */
-	protected Message(MessageType messageType, final ActionData actionData) {
+	protected Message(final MessageType messageType, final ActionData actionData, final UUID messageID) {
 		this.messageType = messageType;
 		this.actionData = actionData;
+		this.messageID = messageID;
 	}
 	
 	/**
@@ -59,6 +69,14 @@ public abstract class Message {
 	 */
 	public ActionData getActionData() {
 		return this.actionData;
+	}
+
+	/**
+	 * 
+	 * @return The {@link Message} identifier.
+	 */
+	public UUID getMessageID() {
+		return this.messageID;
 	}
 	
 	/**
@@ -83,6 +101,7 @@ public abstract class Message {
 		
 		thisJO.put(this.messageType.getJSONTag(), inner);
 		
+		inner.put(MESSAGE_ID, this.messageID);
 		
 		return thisJO;
 	}

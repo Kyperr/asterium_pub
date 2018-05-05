@@ -2,8 +2,8 @@ package actions;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.UUID;
 
-import actiondata.ActionData;
 import actiondata.CreateGameResponseData;
 import actiondata.ErroredResponseData;
 import gamelogic.Game;
@@ -25,8 +25,8 @@ public class CreateGameAction extends RequestAction {
 	 * Create a new CreateGameAction for callingSession.
 	 * @param callingSession the session for which the Game will be created.
 	 */
-	public CreateGameAction(Session callingSession) {
-		super(Action.CREATE_GAME, callingSession);
+	public CreateGameAction(Session callingSession, final UUID messageID) {
+		super(Action.CREATE_GAME, callingSession, messageID);
 	}
 
 
@@ -49,12 +49,12 @@ public class CreateGameAction extends RequestAction {
 			CreateGameResponseData cgrData = new CreateGameResponseData(game.getLobbyID(),
 					this.getCallingSession().getAuthToken());
 			
-			message = new Response(cgrData, 0);
+			message = new Response(cgrData, 0, this.getMessageID());
 
 		} else { // If game was not created...
 			// Generate error response
 			ErroredResponseData ead = new ErroredResponseData(this.getName());
-			message = new Response(ead, SendErrorAction.FAILED_TO_CREATE_GAME);
+			message = new Response(ead, SendErrorAction.FAILED_TO_CREATE_GAME, this.getMessageID());
 		}
 
 		// Send the response
@@ -66,11 +66,11 @@ public class CreateGameAction extends RequestAction {
 		}
 	}
 
-	public static CreateGameAction fromActionData(Session sender, ActionData actionData) {
+	public static CreateGameAction fromMessage(Session sender, final Message message) {
 		// This is not used here yet, but is here in case anything gets added later.
 		//CreateGameActionData action = CreateGameActionData.class.cast(actionData);
 
-		return new CreateGameAction(sender);
+		return new CreateGameAction(sender, message.getMessageID());
 	}
 
 }
