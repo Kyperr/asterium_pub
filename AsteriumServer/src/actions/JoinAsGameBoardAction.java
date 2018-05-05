@@ -67,7 +67,7 @@ public class JoinAsGameBoardAction extends RequestAction {
 			game.addGameBoard(gameBoard);
 			// Construct success response.
 			JoinAsGameBoardRequestData jpaData = new JoinAsGameBoardRequestData(this.lobby_id.get(), this.gameBoardData.get());
-			message = new Response(jpaData, 0, this.messageID);
+			message = new Response(jpaData, 0, this.getMessageID());
 
 			// Send the response back to the calling session.
 			try {
@@ -79,7 +79,7 @@ public class JoinAsGameBoardAction extends RequestAction {
 		} else { // If one or more of the fields were not provided...
 			// Create an error response.
 			ErroredResponseData ead = new ErroredResponseData(this.getName());
-			message = new Response(ead, SendErrorAction.EMPTY_FIELDS, this.messageID);
+			message = new Response(ead, SendErrorAction.EMPTY_FIELDS, this.getMessageID());
 			
 			// Try to send the error response
 			try {

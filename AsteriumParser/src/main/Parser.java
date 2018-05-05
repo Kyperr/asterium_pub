@@ -81,7 +81,8 @@ public class Parser {
 		Message message;
 		
 		if(isRequest) {
-			message = new Request(actionData);
+			UUID messageID = UUID.fromString(innerJSONObj.getString(Message.MESSAGE_ID));
+			message = new Request(actionData, messageID);
 		} else {
 			System.out.println("ActionData: " + jsonObj);
 			System.out.println("Inner: " + innerJSONObj);

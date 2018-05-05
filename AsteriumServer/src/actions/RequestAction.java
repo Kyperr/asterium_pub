@@ -9,7 +9,7 @@ import sessionmanagement.SessionManager.Session;
  */
 public abstract class RequestAction extends Action {
 
-	protected UUID messageID;
+	//protected UUID messageID;
 	
 	/**
 	 * Constructs a new RequestAction.
@@ -18,7 +18,7 @@ public abstract class RequestAction extends Action {
 	 */
 	public RequestAction(final String name, final Session callingSession, final UUID messageID) {
 		super(name, callingSession, messageID);
-		this.messageID = messageID;
+		//this.messageID = messageID;
 	}
 
 	@Override
