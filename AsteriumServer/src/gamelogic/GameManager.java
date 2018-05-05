@@ -40,21 +40,8 @@ public final class GameManager {
 	}
 	
 	/**
-<<<<<<< HEAD
-<<<<<<< HEAD
-	 * When a new game is started, create a new {@link Game}.
-=======
-<<<<<<< HEAD
-	 * When a new game is started, create a new Game and return it
-	 * to the action that requested it. Starts the {@link Game} as a {@link Thread}.
-=======
-	 * When a new game is started, create a new {@link Game}.
->>>>>>> 3514cfc875e806649def7df390d98f746d9f3d41
->>>>>>> f7c21bc700243597b23bea06940de86087b86cf2
-=======
 	 * When a new game is started, create a new {@link Game} and return it
 	 * to the action that requested it. Starts the {@link Game} as a {@link Thread}.
->>>>>>> 929dc8f4f779113fa060b8d15fa0ebb968d99d67
 	 * 
 	 * @return {@link Game}
 	 */

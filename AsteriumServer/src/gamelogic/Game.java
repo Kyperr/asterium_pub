@@ -10,19 +10,7 @@ import actions.Action;
 import exceptions.GameFullException;
 
 /**
-<<<<<<< HEAD
-<<<<<<< HEAD
  * {@link Game} representing a single game state. 
-=======
-<<<<<<< HEAD
- * Game representing a single game state.
-=======
- * {@link Game} representing a single game state. 
->>>>>>> 3514cfc875e806649def7df390d98f746d9f3d41
->>>>>>> f7c21bc700243597b23bea06940de86087b86cf2
-=======
- * {@link Game} representing a single game state. 
->>>>>>> 929dc8f4f779113fa060b8d15fa0ebb968d99d67
  * 
  * @author Studio Toozo
  */
