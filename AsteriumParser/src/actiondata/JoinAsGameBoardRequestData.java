@@ -9,7 +9,7 @@ import org.json.JSONObject;
  * 
  * @author Studio Toozo
  */
-public class JoinAsGameBoardRequestData extends AbstractActionData {
+public class JoinAsGameBoardRequestData extends AbstractRequestActionData {
 	private final String lobbyID;
 	private final JoinAsGameBoardRequestData.GameBoardData gameBoardData;
 
@@ -94,17 +94,6 @@ public class JoinAsGameBoardRequestData extends AbstractActionData {
 			} else {
 				return false;
 			}
-		}
-	}
-
-	@Override
-	protected boolean fieldsEqual(final Object other) {
-		if (other instanceof JoinAsGameBoardRequestData) {
-			JoinAsGameBoardRequestData otherData = (JoinAsGameBoardRequestData) other;
-			return (otherData.lobbyID.equals(this.lobbyID) && 
-				   otherData.gameBoardData.equals(this.gameBoardData));
-		} else {
-			return false;
 		}
 	}
 

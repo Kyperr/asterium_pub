@@ -10,7 +10,7 @@ import org.json.JSONObject;
  * @author Studio Toozo
  *
  */
-public class CreateGameRequestData extends AbstractActionData {
+public class CreateGameRequestData extends AbstractRequestActionData {
 
 	public CreateGameRequestData() {
 		super(CREATE_GAME);
@@ -34,11 +34,4 @@ public class CreateGameRequestData extends AbstractActionData {
 		return new CreateGameRequestData();
 
 	}
-
-	@Override
-	protected boolean fieldsEqual(final Object other) {
-		return true;
-	}
-	
-	
 }

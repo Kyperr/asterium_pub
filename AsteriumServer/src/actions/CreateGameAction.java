@@ -1,7 +1,6 @@
 package actions;
 
 import java.io.IOException;
-import java.util.Optional;
 import java.util.UUID;
 
 import actiondata.CreateGameResponseData;
@@ -18,8 +17,6 @@ import sessionmanagement.SessionManager.Session;
  * @author Studio Toozo
  */
 public class CreateGameAction extends RequestAction {
-	// The Game which is created by this CreateGameAction.
-	private Optional<Game> game;
 
 	/**
 	 * Create a new {@link CreateGameAction} for callingSession.
@@ -39,13 +36,11 @@ public class CreateGameAction extends RequestAction {
 	protected void doAction() {
 		// Attempt to create the game.
 		Game game = GameManager.getInstance().createGame();
-		this.game = Optional.of(game);
 
 		Message message;
 		// If game was created...
-		if (this.game.isPresent()) {
+		if (game != null) {
 			// Generate response data
-			game = this.game.get();
 			CreateGameResponseData cgrData = new CreateGameResponseData(game.getLobbyID(),
 					this.getCallingSession().getAuthToken());
 			
@@ -74,9 +69,6 @@ public class CreateGameAction extends RequestAction {
 	 * @return a {@link CreateGameAction} containing the data from message.
 	 */
 	public static CreateGameAction fromMessage(final Session sender, final Message message) {
-		// This is not used here yet, but is here in case anything gets added later.
-		//CreateGameActionData action = CreateGameActionData.class.cast(actionData);
-
 		return new CreateGameAction(sender, message.getMessageID());
 	}
 

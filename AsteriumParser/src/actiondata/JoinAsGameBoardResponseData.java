@@ -11,7 +11,7 @@ import org.json.JSONObject;
  * @author Studio Toozo
  *
  */
-public class JoinAsGameBoardResponseData extends AbstractActionData {
+public class JoinAsGameBoardResponseData extends AbstractResponseActionData {
 	
 	private final String authToken;
 
@@ -43,16 +43,6 @@ public class JoinAsGameBoardResponseData extends AbstractActionData {
 		//Construct and return
 		return new JoinAsGameBoardResponseData(authToken);
 
-	}
-
-	@Override
-	protected boolean fieldsEqual(final Object other) {
-		if (other instanceof JoinAsGameBoardResponseData) {
-			JoinAsGameBoardResponseData data = JoinAsGameBoardResponseData.class.cast(other);
-			return (data.authToken.equals(this.authToken));
-		} else {
-			return false;
-		}
 	}
 
 }

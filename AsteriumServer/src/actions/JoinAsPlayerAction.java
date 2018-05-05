@@ -1,7 +1,6 @@
 package actions;
 
 import java.io.IOException;
-import java.util.Optional;
 import java.util.UUID;
 
 import actiondata.ErroredResponseData;
@@ -21,13 +20,13 @@ import sessionmanagement.SessionManager.Session;
  */
 public class JoinAsPlayerAction extends RequestAction {
 	// The Game to which the Player will be added.
-	Optional<Game> game;
-	
+	Game game;
+
 	// The lobby ID of game.
-	Optional<String> lobby_id;
-	
+	String lobby_id;
+
 	// The Player which is being added to game.
-	Optional<JoinAsPlayerRequestData.PlayerData> playerData;
+	JoinAsPlayerRequestData.PlayerData playerData;
 
 	/**
 	 * Construct a {@link JoinAsPlayerAction}.
@@ -41,8 +40,8 @@ public class JoinAsPlayerAction extends RequestAction {
 							  final JoinAsPlayerRequestData.PlayerData playerData, 
 							  final UUID messageID) {
 		super(Action.JOIN_AS_PLAYER, callingSession, messageID);
-		this.lobby_id = Optional.of(lobbyID);
-		this.playerData = Optional.of(playerData);
+		this.lobby_id = lobbyID;
+		this.playerData = playerData;
 	}
 
 	@Override
@@ -52,49 +51,40 @@ public class JoinAsPlayerAction extends RequestAction {
 	protected void doAction() {
 		Game game;
 		Message message;
-		
-		// If both fields exist...
-		if (this.lobby_id.isPresent() && this.playerData.isPresent()) {
-			// Get the game that corresponds to lobby id.
-			game = GameManager.getInstance().getGame(this.lobby_id.get());
-			JoinAsPlayerRequestData.PlayerData data = this.playerData.get();
-			
-			// Construct the player.
-			Player player = new Player(this.getCallingSession(), data.getName());
-			
-			// Try adding the player to the game.
-			try {
-				game.addPlayer(player);
-				// Construct success response.
-				JoinAsPlayerRequestData jpaData = new JoinAsPlayerRequestData(this.lobby_id.get(), 
-																			  this.playerData.get());
-				message = new Response(jpaData, 0, this.getMessageID());
-			} catch (final GameFullException ex) { // If game is full...
-				// Construct game full response.
-				ErroredResponseData ead = new ErroredResponseData(this.getName());
-				message = new Response(ead, SendErrorAction.GAME_FULL, this.getMessageID());
-			}
 
-			// Send the response back to the calling session.
-			try {
-				this.getCallingSession().sendMessage(message);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} else { // If one or more of the fields were not provided...
-			// Create an error response.
-			ErroredResponseData ead = new ErroredResponseData(this.getName());
-			message = new Response(ead, SendErrorAction.EMPTY_FIELDS, this.getMessageID());
-			
-			// Try to send the error response
-			try {
-				this.getCallingSession().sendMessage(message);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		// Get the game that corresponds to lobby id.
+		game = GameManager.getInstance().getGame(this.lobby_id);
+
+		if (game == null) {
+			sendError(SendErrorAction.NO_SUCH_LOBBY);
+			return;
 		}
+
+		JoinAsPlayerRequestData.PlayerData data = this.playerData;
+
+		// Construct the player.
+		Player player = new Player(this.getCallingSession(), data.getName(), this.getCallingSession().getAuthToken());
+
+		// Try adding the player to the game.
+		try {
+			game.addPlayer(player);
+			// Construct success response.
+			JoinAsPlayerRequestData jpaData = new JoinAsPlayerRequestData(this.lobby_id, this.playerData);
+			message = new Response(jpaData, 0, this.getMessageID());
+		} catch (final GameFullException ex) { // If game is full...
+			// Construct game full response.
+			ErroredResponseData ead = new ErroredResponseData(this.getName());
+			message = new Response(ead, SendErrorAction.GAME_FULL, this.getMessageID());
+		}
+
+		// Send the response back to the calling session.
+		try {
+			this.getCallingSession().sendMessage(message);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	/**

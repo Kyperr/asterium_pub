@@ -40,7 +40,8 @@ public final class GameManager {
 	}
 	
 	/**
-	 * When a new game is started, create a new {@link Game}.
+	 * When a new game is started, create a new {@link Game} and return it
+	 * to the action that requested it. Starts the {@link Game} as a {@link Thread}.
 	 * 
 	 * @return {@link Game}
 	 */
@@ -86,6 +87,10 @@ public final class GameManager {
 	 * @return the {@link Game} associated with the {@link Player}'s auth token.
 	 */
 	public Game getGameForPlayer(final String authToken) {
-		return playerMap.get(authToken);
+		if (playerMap.get(authToken) != null) {
+			return playerMap.get(authToken);
+		} else {
+			return null;
+		}
 	}
 }
