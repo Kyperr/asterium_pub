@@ -13,8 +13,8 @@ public class Main {
 	private static String ADDRESS = "localhost"; 
 	
 	/**
-	 * The main method. Starts the gameboard. Duh.
-	 * @param args
+	 * Creates a game.
+	 * @param args Command line arguments.
 	 */
 	public static void main(String[] args) {
 

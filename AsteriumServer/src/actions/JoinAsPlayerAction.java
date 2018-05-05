@@ -7,7 +7,6 @@ import java.util.UUID;
 import actiondata.ActionData;
 import actiondata.ErroredResponseData;
 import actiondata.JoinAsPlayerRequestData;
-import actiondata.JoinAsPlayerRequestData.PlayerData;
 import exceptions.GameFullException;
 import gamelogic.Game;
 import gamelogic.GameManager;
@@ -29,7 +28,7 @@ public class JoinAsPlayerAction extends RequestAction {
 	Optional<String> lobby_id;
 	
 	// The Player which is being added to game.
-	Optional<PlayerData> playerData;
+	Optional<JoinAsPlayerRequestData.PlayerData> playerData;
 
 	/**
 	 * Construct a JoinAsPlayerAction.
@@ -39,7 +38,7 @@ public class JoinAsPlayerAction extends RequestAction {
 	 * @param playerData the data of the player which should be added to the game.
 	 * @param messageID 
 	 */
-	public JoinAsPlayerAction(final Session callingSession, final String lobbyID, final PlayerData playerData, final UUID messageID) {
+	public JoinAsPlayerAction(final Session callingSession, final String lobbyID, final JoinAsPlayerRequestData.PlayerData playerData, final UUID messageID) {
 		super(Action.JOIN_AS_PLAYER, callingSession, messageID);
 		this.lobby_id = Optional.of(lobbyID);
 		this.playerData = Optional.of(playerData);
@@ -57,7 +56,7 @@ public class JoinAsPlayerAction extends RequestAction {
 		if (this.lobby_id.isPresent() && this.playerData.isPresent()) {
 			// Get the game that corresponds to lobby id.
 			game = GameManager.getInstance().getGame(this.lobby_id.get());
-			PlayerData data = this.playerData.get();
+			JoinAsPlayerRequestData.PlayerData data = this.playerData.get();
 			
 			// Construct the player.
 			Player player = new Player(this.getCallingSession(), data.getName());
