@@ -17,6 +17,9 @@ public interface ActionData {
 	public static final String JOIN_AS_GAMEBOARD = "join_as_gameboard";
 	public static final String JOIN_AS_GAMEBOARD_RESPONSE = "join_as_gameboard_response";
 
+	public static final String READY_UP = "ready_up";
+	public static final String READY_UP_RESPONSE = "ready_up_response";
+	
 	public static final String CREATE_GAME = "create_game";
 	public static final String CREATE_GAME_RESPONSE = "create_game_response";
 
