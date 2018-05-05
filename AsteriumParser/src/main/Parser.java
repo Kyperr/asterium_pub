@@ -11,7 +11,11 @@ import org.json.JSONObject;
 
 import actiondata.ActionData;
 import actiondata.CreateGameRequestData;
+import actiondata.CreateGameResponseData;
+import actiondata.JoinAsGameBoardRequestData;
+import actiondata.JoinAsGameBoardResponseData;
 import actiondata.JoinAsPlayerRequestData;
+import actiondata.JoinAsPlayerResponseData;
 import message.Message;
 import message.Request;
 import message.Response;
@@ -29,10 +33,13 @@ public class Parser {
 		private static final long serialVersionUID = 1L;
 	{
 		put(Arrays.asList(true, ActionData.CREATE_GAME), CreateGameRequestData::parseArgs);
-		put(Arrays.asList(false, ActionData.CREATE_GAME_RESPONSE), CreateGameRequestData::parseArgs);
+		put(Arrays.asList(false, ActionData.CREATE_GAME_RESPONSE), CreateGameResponseData::parseArgs);
 		
 		put(Arrays.asList(true, ActionData.JOIN_AS_PLAYER), JoinAsPlayerRequestData::parseArgs);
-		put(Arrays.asList(false, ActionData.JOIN_AS_PLAYER_RESPONSE), JoinAsPlayerRequestData::parseArgs);
+		put(Arrays.asList(false, ActionData.JOIN_AS_PLAYER_RESPONSE), JoinAsPlayerResponseData::parseArgs);
+		
+		put(Arrays.asList(true, ActionData.JOIN_AS_GAMEBOARD), JoinAsGameBoardRequestData::parseArgs);
+		put(Arrays.asList(false, ActionData.JOIN_AS_GAMEBOARD_RESPONSE), JoinAsGameBoardResponseData::parseArgs);
 	}};
 
 	/**
