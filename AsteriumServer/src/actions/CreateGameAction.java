@@ -49,12 +49,12 @@ public class CreateGameAction extends RequestAction {
 			CreateGameResponseData cgrData = new CreateGameResponseData(game.getLobbyID(),
 					this.getCallingSession().getAuthToken());
 			
-			message = new Response(cgrData, 0, this.messageID);
+			message = new Response(cgrData, 0, this.getMessageID());
 
 		} else { // If game was not created...
 			// Generate error response
 			ErroredResponseData ead = new ErroredResponseData(this.getName());
-			message = new Response(ead, SendErrorAction.FAILED_TO_CREATE_GAME, this.messageID);
+			message = new Response(ead, SendErrorAction.FAILED_TO_CREATE_GAME, this.getMessageID());
 		}
 
 		// Send the response

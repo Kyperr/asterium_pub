@@ -67,11 +67,11 @@ public class JoinAsPlayerAction extends RequestAction {
 				game.addPlayer(player);
 				// Construct success response.
 				JoinAsPlayerRequestData jpaData = new JoinAsPlayerRequestData(this.lobby_id.get(), this.playerData.get());
-				message = new Response(jpaData, 0, this.messageID);
+				message = new Response(jpaData, 0, this.getMessageID());
 			} catch (final GameFullException ex) { // If game is full...
 				// Construct game full response.
 				ErroredResponseData ead = new ErroredResponseData(this.getName());
-				message = new Response(ead, SendErrorAction.GAME_FULL, this.messageID);
+				message = new Response(ead, SendErrorAction.GAME_FULL, this.getMessageID());
 			}
 
 			// Send the response back to the calling session.
@@ -84,7 +84,7 @@ public class JoinAsPlayerAction extends RequestAction {
 		} else { // If one or more of the fields were not provided...
 			// Create an error response.
 			ErroredResponseData ead = new ErroredResponseData(this.getName());
-			message = new Response(ead, SendErrorAction.EMPTY_FIELDS, this.messageID);
+			message = new Response(ead, SendErrorAction.EMPTY_FIELDS, this.getMessageID());
 			
 			// Try to send the error response
 			try {
