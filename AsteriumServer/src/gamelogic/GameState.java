@@ -26,7 +26,7 @@ public class GameState {
 		}
 		return true;
 	}
-
+	
 	public boolean toggleReady(final String authToken) {
 		return !playerReadyMap.get(playerCharacterMap.get(authToken));
 	}
