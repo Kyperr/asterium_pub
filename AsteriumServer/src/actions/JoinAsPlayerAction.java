@@ -2,6 +2,7 @@ package actions;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.UUID;
 
 import actiondata.ActionData;
 import actiondata.ErroredResponseData;
@@ -35,9 +36,10 @@ public class JoinAsPlayerAction extends RequestAction {
 	 * @param callingSession the session using this Action.
 	 * @param lobbyID the ID of the lobby of the game which the player should be added to.
 	 * @param playerData the data of the player which should be added to the game.
+	 * @param messageID 
 	 */
-	public JoinAsPlayerAction(final Session callingSession, final String lobbyID, final JoinAsPlayerRequestData.PlayerData playerData) {
-		super(Action.JOIN_AS_PLAYER, callingSession);
+	public JoinAsPlayerAction(final Session callingSession, final String lobbyID, final JoinAsPlayerRequestData.PlayerData playerData, final UUID messageID) {
+		super(Action.JOIN_AS_PLAYER, callingSession, messageID);
 		this.lobby_id = Optional.of(lobbyID);
 		this.playerData = Optional.of(playerData);
 	}
@@ -64,11 +66,11 @@ public class JoinAsPlayerAction extends RequestAction {
 				game.addPlayer(player);
 				// Construct success response.
 				JoinAsPlayerRequestData jpaData = new JoinAsPlayerRequestData(this.lobby_id.get(), this.playerData.get());
-				message = new Response(jpaData, 0);
+				message = new Response(jpaData, 0, this.messageID);
 			} catch (final GameFullException ex) { // If game is full...
 				// Construct game full response.
 				ErroredResponseData ead = new ErroredResponseData(this.getName());
-				message = new Response(ead, SendErrorAction.GAME_FULL);
+				message = new Response(ead, SendErrorAction.GAME_FULL, this.messageID);
 			}
 
 			// Send the response back to the calling session.
@@ -81,7 +83,7 @@ public class JoinAsPlayerAction extends RequestAction {
 		} else { // If one or more of the fields were not provided...
 			// Create an error response.
 			ErroredResponseData ead = new ErroredResponseData(this.getName());
-			message = new Response(ead, SendErrorAction.EMPTY_FIELDS);
+			message = new Response(ead, SendErrorAction.EMPTY_FIELDS, this.messageID);
 			
 			// Try to send the error response
 			try {
@@ -100,9 +102,9 @@ public class JoinAsPlayerAction extends RequestAction {
 	 * @param actionData The {@link ActionData} containing the JoinAsPlayerAction.
 	 * @return a JoinAsPlayerAction containing the data from actionData.
 	 */
-	public static JoinAsPlayerAction fromActionData(Session sender, ActionData actionData) {
-		JoinAsPlayerRequestData action = JoinAsPlayerRequestData.class.cast(actionData);
-		return new JoinAsPlayerAction(sender, action.getLobbyID(), action.getPlayerData());
+	public static JoinAsPlayerAction fromMessage(Session sender, final Message message) {
+		JoinAsPlayerRequestData action = JoinAsPlayerRequestData.class.cast(message.getActionData());
+		return new JoinAsPlayerAction(sender, action.getLobbyID(), action.getPlayerData(), message.getMessageID());
 
 	}
 

@@ -1,5 +1,7 @@
 package actions;
 
+import java.util.UUID;
+
 import sessionmanagement.SessionManager.Session;
 
 /**
@@ -9,11 +11,11 @@ public abstract class ResponseAction extends Action {
 
 	/**
 	 * Constructs a new ResponseAction.
-	 * @param name The name of the ResponseAction.
+	 * @param name The name of the Response.
 	 * @param callingSession The session using this ResponseAction.
 	 */
-	public ResponseAction(String name, Session callingSession) {
-		super(name, callingSession);
+	public ResponseAction(final String name, final Session callingSession, final Integer errorCode, final UUID messageID) {
+		super(name, callingSession, messageID);
 	}
 
 	@Override

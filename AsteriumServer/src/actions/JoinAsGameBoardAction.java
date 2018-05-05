@@ -2,6 +2,7 @@ package actions;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.UUID;
 
 import actiondata.ActionData;
 import actiondata.ErroredResponseData;
@@ -36,8 +37,9 @@ public class JoinAsGameBoardAction extends RequestAction {
 	 * @param gameBoardData the data of the GameBoard which should be added to the game.
 	 */
 	public JoinAsGameBoardAction(final Session callingSession, final String lobbyID, 
-								 final JoinAsGameBoardRequestData.GameBoardData gameBoardData) {
-		super(Action.JOIN_AS_GAMEBOARD, callingSession);
+								 final JoinAsGameBoardRequestData.GameBoardData gameBoardData,
+								 final UUID messageID) {
+		super(Action.JOIN_AS_GAMEBOARD, callingSession, messageID);
 		this.lobby_id = Optional.of(lobbyID);
 		this.gameBoardData = Optional.of(gameBoardData);
 	}
@@ -65,7 +67,7 @@ public class JoinAsGameBoardAction extends RequestAction {
 			game.addGameBoard(gameBoard);
 			// Construct success response.
 			JoinAsGameBoardRequestData jpaData = new JoinAsGameBoardRequestData(this.lobby_id.get(), this.gameBoardData.get());
-			message = new Response(jpaData, 0);
+			message = new Response(jpaData, 0, this.messageID);
 
 			// Send the response back to the calling session.
 			try {
@@ -77,7 +79,7 @@ public class JoinAsGameBoardAction extends RequestAction {
 		} else { // If one or more of the fields were not provided...
 			// Create an error response.
 			ErroredResponseData ead = new ErroredResponseData(this.getName());
-			message = new Response(ead, SendErrorAction.EMPTY_FIELDS);
+			message = new Response(ead, SendErrorAction.EMPTY_FIELDS, this.messageID);
 			
 			// Try to send the error response
 			try {
@@ -96,9 +98,9 @@ public class JoinAsGameBoardAction extends RequestAction {
 	 * @param actionData The {@link ActionData} containing the JoinAsGameBoardAction.
 	 * @return a JoinAsGameBoardAction containing the data from actionData.
 	 */
-	public static JoinAsGameBoardAction fromActionData(Session sender, ActionData actionData) {
-		JoinAsGameBoardRequestData action = JoinAsGameBoardRequestData.class.cast(actionData);
-		return new JoinAsGameBoardAction(sender, action.getLobbyID(), action.getGameBoardData());
+	public static JoinAsGameBoardAction fromActionData(final Session sender, final Message message) {
+		JoinAsGameBoardRequestData action = JoinAsGameBoardRequestData.class.cast(message.getActionData());
+		return new JoinAsGameBoardAction(sender, action.getLobbyID(), action.getGameBoardData(), message.getMessageID());
 	}
 
 }

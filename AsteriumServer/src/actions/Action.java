@@ -2,11 +2,13 @@ package actions;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.BiFunction;
 
 import actiondata.ActionData;
 import actiondata.CreateGameRequestData;
 import actiondata.JoinAsPlayerRequestData;
+import message.Message;
 import sessionmanagement.SessionManager.Session;
 
 /**
@@ -30,7 +32,7 @@ public abstract class Action implements Runnable {
 	/**
 	 * Static map from an ActionData subclass to the function which should be performed.
 	 */
-	private final static Map<Class<? extends ActionData>, BiFunction<Session, ActionData, Action>> ACTION_LOOKUP = new HashMap<Class<? extends ActionData>, BiFunction<Session, ActionData, Action>>() {
+	private final static Map<Class<? extends ActionData>, BiFunction<Session, Message, Action>> ACTION_LOOKUP = new HashMap<Class<? extends ActionData>, BiFunction<Session, Message, Action>>() {
 		/**
 		 * Auto-generated unique identifier for ACTION_LOOKUP
 		 */
@@ -41,8 +43,8 @@ public abstract class Action implements Runnable {
 		 * As new Actions are written, their corresponding functions should be added here.
 		 */
 		{
-			put(JoinAsPlayerRequestData.class, JoinAsPlayerAction::fromActionData);
-			put(CreateGameRequestData.class, CreateGameAction::fromActionData);
+			put(JoinAsPlayerRequestData.class, JoinAsPlayerAction::fromMessage);
+			put(CreateGameRequestData.class, CreateGameAction::fromMessage);
 		}
 	};
 
@@ -54,7 +56,8 @@ public abstract class Action implements Runnable {
 	 * @param actionData The ActionData which should be 
 	 * @return The result returned from the function corresponding to actionData
 	 */
-	public static Action getActionFor(Session sender, ActionData actionData) {
+	public static Action getActionFor(final Session sender, final Message message) {
+		ActionData actionData = message.getActionData();
 		try {
 			if (VERBOSE) {
 				System.out.println("class: " + actionData.getClass());
@@ -64,14 +67,17 @@ public abstract class Action implements Runnable {
 			}
 			
 			// Look up the function that corresponds to actionData's class and call it.
-			return ACTION_LOOKUP.get(actionData.getClass()).apply(sender, actionData);
+			return ACTION_LOOKUP.get(actionData.getClass()).apply(sender, message);
 		} catch (ClassCastException e) {
-			return new SendErrorAction(sender, actionData.getName(), SendErrorAction.INCORRECT_ACTION_MAPPING);
+			return new SendErrorAction(actionData.getName(), sender, SendErrorAction.INCORRECT_ACTION_MAPPING, message.getMessageID());
 		}
 	}
 
 	// The name of the Action (e.g. "create_game")
 	private final String name;
+	
+	// The message ID to respond to
+	private final UUID messageID;
 	
 	// The session which is using this Action.
 	// Uses include tracking which game needs to be modified by Action's call.
@@ -83,9 +89,10 @@ public abstract class Action implements Runnable {
 	 * @param name the name of the Action (e.g. "create_game")
 	 * @param callingSession the Session which is using this Action.
 	 */
-	protected Action(String name, Session callingSession) {
+	protected Action(final String name, final Session callingSession, final UUID messageID) {
 		this.name = name;
 		this.callingSession = callingSession;
+		this.messageID = messageID;
 	}
 
 	/**
@@ -110,6 +117,14 @@ public abstract class Action implements Runnable {
 	 */
 	protected Session getCallingSession() {
 		return this.callingSession;
+	}
+	
+	/**
+	 * Get the message id related to this Action.
+	 * @return a UUID that is the message identifier
+	 */
+	protected UUID getMessageID() {
+		return this.messageID;
 	}
 
 	/**
