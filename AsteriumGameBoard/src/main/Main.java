@@ -7,18 +7,18 @@ import message.Request;
  *
  */
 public class Main {
+	public static final boolean VERBOSE = true;
 
-	private static int PORT = 25632;
+	private static final int PORT = 25632;
 	
 	private static String ADDRESS = "localhost"; 
 	
 	/**
 	 * Creates a game.
+	 * 
 	 * @param args Command line arguments.
 	 */
 	public static void main(String[] args) {
-
-		
 		ClientConnectionHandler ccHandler = new ClientConnectionHandler(ADDRESS, PORT);
 		
 		CreateGameRequestData cgaData = new CreateGameRequestData();
@@ -26,7 +26,10 @@ public class Main {
 		Request request = new Request(cgaData);
 		
 		String msg = request.jsonify().toString();
-		System.out.println("Message in main: " + msg);
+		
+		if (VERBOSE) {
+			System.out.println("Client sending message to server:\n" + msg);
+		}
 		
 		ccHandler.sendJSON(msg, (message) -> System.out.println("Game created!"));
 		

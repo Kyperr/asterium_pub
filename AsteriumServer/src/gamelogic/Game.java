@@ -10,7 +10,15 @@ import actions.Action;
 import exceptions.GameFullException;
 
 /**
+<<<<<<< HEAD
  * {@link Game} representing a single game state. 
+=======
+<<<<<<< HEAD
+ * Game representing a single game state.
+=======
+ * {@link Game} representing a single game state. 
+>>>>>>> 3514cfc875e806649def7df390d98f746d9f3d41
+>>>>>>> f7c21bc700243597b23bea06940de86087b86cf2
  * 
  * @author Studio Toozo
  */
@@ -19,21 +27,14 @@ public class Game extends Thread {
 	// TODO: turn into complex enum?
 	private enum GamePhase {
 		
-		PLAYERS_JOINING(game -> {
-			if (game.getGameState().allCharactersReady()) {
-				// Here is where we would validate game state to make sure everything is ready
-				// to start.
-				// if(validateGameState()){
-				game.setGamePhase(/* Next Phase */);
-				// }
-			}
-		}),
+		PLAYERS_JOINING(Game::playerJoining),
+
 		
-		START_SUMMARY(game -> {
+		GAME_INITIALIZING(game -> {
 			
 		}),
 		
-		GAME_INITIALIZING(game -> {
+		START_SUMMARY(game -> {
 			
 		}),
 		
@@ -195,7 +196,7 @@ public class Game extends Thread {
 	 * @param gameBoard The game board client.
 	 */
 	public void addGameBoard(final GameBoard gameBoard) {
-		this.gameBoardList.add(gameBoard);
+		this.gameBoardList.put(gameBoard.getSession().getAuthToken(), gameBoard);
 	}
 
 	/**
@@ -225,4 +226,16 @@ public class Game extends Thread {
 	public GameState getGameState() {
 		return gameState;
 	}
+	
+	//============Static <Game> Consumers to be used===================================
+	private static final void playerJoining(Game game){
+		if (game.getGameState().allCharactersReady()) {
+			// Here is where we would validate game state to make sure everything is ready
+			// to start.
+			// if(validateGameState()){
+			game.setGamePhase(GamePhase.GAME_INITIALIZING);
+			// }
+		}
+	}
+	
 }
