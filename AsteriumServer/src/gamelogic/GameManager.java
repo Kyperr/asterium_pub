@@ -8,7 +8,7 @@ import java.util.concurrent.Executors;
 /**
  * Singleton {@link GameManager} handles the creation and management of {@link Game} on the server.
  * 
- *  @author Daniel McBride, Jenna Hand, Bridgette Campbell, Greg Schmitt
+ *  @author Studio Toozo
  */
 public final class GameManager {
 
@@ -23,7 +23,7 @@ public final class GameManager {
 	private Map<String, Game> gameMap = new ConcurrentHashMap<String, Game>();
 	
 	/**
-	 * @return The single instance of GameManager.
+	 * @return The single instance of {@link GameManager}.
 	 */
 	public static synchronized GameManager getInstance() {
 		if (gameManager == null) {
@@ -37,8 +37,7 @@ public final class GameManager {
 	}
 	
 	/**
-	 * When a new game is started, create a new Game and return it
-	 * to the action that requested it. Starts the {@link Game} as a {@link Thread}.
+	 * When a new game is started, create a new {@link Game}.
 	 * 
 	 * @return {@link Game}
 	 */
@@ -52,7 +51,7 @@ public final class GameManager {
 	}
 	
 	/**
-	 * Register a new {@link Game} with the GameManager.
+	 * Register a new {@link Game} with the {@link GameManager}.
 	 * 
 	 * @param game The {@link Game} to be registered.
 	 */

@@ -2,11 +2,10 @@ package actions;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.UUID;
 
-import actiondata.ActionData;
 import actiondata.ErroredResponseData;
 import actiondata.JoinAsPlayerRequestData;
-import actiondata.JoinAsPlayerRequestData.PlayerData;
 import exceptions.GameFullException;
 import gamelogic.Game;
 import gamelogic.GameManager;
@@ -16,7 +15,7 @@ import message.Response;
 import sessionmanagement.SessionManager.Session;
 
 /**
- * An Action which adds a Player to a Game.
+ * A {@link RequestAction} which adds a {@link Player} to a {@link Game}.
  * 
  * @author Studio Toozo
  */
@@ -28,24 +27,27 @@ public class JoinAsPlayerAction extends RequestAction {
 	Optional<String> lobby_id;
 	
 	// The Player which is being added to game.
-	Optional<PlayerData> playerData;
+	Optional<JoinAsPlayerRequestData.PlayerData> playerData;
 
 	/**
-	 * Construct a JoinAsPlayerAction.
+	 * Construct a {@link JoinAsPlayerAction}.
 	 * 
-	 * @param callingSession the session using this Action.
-	 * @param lobbyID the ID of the lobby of the game which the player should be added to.
-	 * @param playerData the data of the player which should be added to the game.
+	 * @param callingSession the {@link Session} using this {@link Action}.
+	 * @param lobbyID the ID of the lobby of the {@link Game} which the {@link Player} should be added to.
+	 * @param playerData the data of the {@link Player} which should be added to the {@link Game}.
+	 * @param messageID the {@link Message}'s id.
 	 */
-	public JoinAsPlayerAction(final Session callingSession, final String lobbyID, final PlayerData playerData) {
-		super(Action.JOIN_AS_PLAYER, callingSession);
+	public JoinAsPlayerAction(final Session callingSession, final String lobbyID, 
+							  final JoinAsPlayerRequestData.PlayerData playerData, 
+							  final UUID messageID) {
+		super(Action.JOIN_AS_PLAYER, callingSession, messageID);
 		this.lobby_id = Optional.of(lobbyID);
 		this.playerData = Optional.of(playerData);
 	}
 
 	@Override
 	/**
-	 * Constructs a Player based on this.playerData and adds it to the game.
+	 * Constructs a {@link Player} based on this.playerData and adds it to the {@link Game}.
 	 */
 	protected void doAction() {
 		Game game;
@@ -55,7 +57,7 @@ public class JoinAsPlayerAction extends RequestAction {
 		if (this.lobby_id.isPresent() && this.playerData.isPresent()) {
 			// Get the game that corresponds to lobby id.
 			game = GameManager.getInstance().getGame(this.lobby_id.get());
-			PlayerData data = this.playerData.get();
+			JoinAsPlayerRequestData.PlayerData data = this.playerData.get();
 			
 			// Construct the player.
 			Player player = new Player(this.getCallingSession(), data.getName());
@@ -64,12 +66,13 @@ public class JoinAsPlayerAction extends RequestAction {
 			try {
 				game.addPlayer(player);
 				// Construct success response.
-				JoinAsPlayerRequestData jpaData = new JoinAsPlayerRequestData(this.lobby_id.get(), this.playerData.get());
-				message = new Response(jpaData, 0);
+				JoinAsPlayerRequestData jpaData = new JoinAsPlayerRequestData(this.lobby_id.get(), 
+																			  this.playerData.get());
+				message = new Response(jpaData, 0, this.getMessageID());
 			} catch (final GameFullException ex) { // If game is full...
 				// Construct game full response.
 				ErroredResponseData ead = new ErroredResponseData(this.getName());
-				message = new Response(ead, SendErrorAction.GAME_FULL);
+				message = new Response(ead, SendErrorAction.GAME_FULL, this.getMessageID());
 			}
 
 			// Send the response back to the calling session.
@@ -82,7 +85,7 @@ public class JoinAsPlayerAction extends RequestAction {
 		} else { // If one or more of the fields were not provided...
 			// Create an error response.
 			ErroredResponseData ead = new ErroredResponseData(this.getName());
-			message = new Response(ead, SendErrorAction.EMPTY_FIELDS);
+			message = new Response(ead, SendErrorAction.EMPTY_FIELDS, this.getMessageID());
 			
 			// Try to send the error response
 			try {
@@ -95,15 +98,15 @@ public class JoinAsPlayerAction extends RequestAction {
 	}
 
 	/**
-	 * Get a JoinAsPlayerAction based on actionData.
+	 * Get a {@link JoinAsPlayerAction} based on actionData.
 	 * 
-	 * @param sender The session using this JoinAsPlayerAction.
-	 * @param actionData The {@link ActionData} containing the JoinAsPlayerAction.
-	 * @return a JoinAsPlayerAction containing the data from actionData.
+	 * @param sender The {@link Session} using this {@link JoinAsPlayerAction}.
+	 * @param message The {@link Message} containing the {@link JoinAsPlayerAction}.
+	 * @return a {@link JoinAsPlayerAction} containing the data from message.
 	 */
-	public static JoinAsPlayerAction fromActionData(Session sender, ActionData actionData) {
-		JoinAsPlayerRequestData action = JoinAsPlayerRequestData.class.cast(actionData);
-		return new JoinAsPlayerAction(sender, action.getLobbyID(), action.getPlayerData());
+	public static JoinAsPlayerAction fromMessage(Session sender, final Message message) {
+		JoinAsPlayerRequestData action = JoinAsPlayerRequestData.class.cast(message.getActionData());
+		return new JoinAsPlayerAction(sender, action.getLobbyID(), action.getPlayerData(), message.getMessageID());
 
 	}
 

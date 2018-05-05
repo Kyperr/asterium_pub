@@ -4,20 +4,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * JoinAsPlayerRequestData is the representation of data
- * to be used in a Request from a player to join a lobby 
+ * {@link JoinAsPlayerRequestData} is the representation of data
+ * to be used in a {@link Request} from a player to join a lobby 
  * for a game.
  * 
- * @author Bridgette Campbell, Jenna Hand, Daniel McBride, and Greg Schmitt
+ * @author Studio Toozo
  *
  */
 public class JoinAsPlayerRequestData extends AbstractActionData {
 
 	private final String lobbyID;
-	private final PlayerData playerData;
+	private final JoinAsPlayerRequestData.PlayerData playerData;
 
-	public JoinAsPlayerRequestData(final String lobbyID, final PlayerData playerData) {
-		super(JOIN_AS_PLAYER);
+	public JoinAsPlayerRequestData(final String lobbyID, final JoinAsPlayerRequestData.PlayerData playerData) {
+		super(ActionData.JOIN_AS_PLAYER);
 		this.lobbyID = lobbyID;
 		this.playerData = playerData;
 	}
@@ -27,9 +27,9 @@ public class JoinAsPlayerRequestData extends AbstractActionData {
 
 		JSONObject data = new JSONObject();
 
-		data.put("lobby_id", this.lobbyID);
+		data.put(ActionData.JOIN_AS_PLAYER, this.lobbyID);
 
-		data.put("player_data", this.playerData.jsonify());
+		data.put(ActionData.PLAYER_DATA, this.playerData.jsonify());
 
 		return data;
 	}
@@ -38,27 +38,27 @@ public class JoinAsPlayerRequestData extends AbstractActionData {
 		return this.lobbyID;
 	}
 	
-	public PlayerData getPlayerData() {
+	public JoinAsPlayerRequestData.PlayerData getPlayerData() {
 		return this.playerData;
 	}
 	
 	/**
-	 * Parses JSONObject into a {@link JoinAsPlayerRequestData} object.
+	 * Parses {@link JSONObject} into a {@link JoinAsPlayerRequestData} object.
 	 * 
 	 * @param jsonObj	the JSONObject to be parsed
-	 * @return	the JoinAsPlayerActionData object parsed from JSON
+	 * @return	the {@link JoinAsPlayerRequestData} object parsed from JSON
 	 * @throws JSONException
 	 */
 	public static JoinAsPlayerRequestData parseArgs(final JSONObject jsonObj) throws JSONException { 
 		
 		//Getting lobby id
-		String lobbyID = jsonObj.getString(LOBBY_ID); 
+		String lobbyID = jsonObj.getString(ActionData.LOBBY_ID); 
 		
 		//Get Player Data object
-		JSONObject playerData = jsonObj.getJSONObject(PLAYER_DATA);
+		JSONObject playerData = jsonObj.getJSONObject(ActionData.PLAYER_DATA);
 		
 		//Get player data name
-		String playerDataName = playerData.getString(NAME); 
+		String playerDataName = playerData.getString(ActionData.NAME); 
 		
 		/* Create Player object */
 		PlayerData pData = new PlayerData(playerDataName);
@@ -69,10 +69,10 @@ public class JoinAsPlayerRequestData extends AbstractActionData {
 	}
 
 	/**
-	 * PlayerData is the representation of a player only for
+	 * {@link PlayerData} is the representation of a player only for
 	 * the purposes of joining a lobby, not for a game player.
 	 * 
-	 * @author Bridgette Campbell, Jenna Hand, Daniel McBride, and Greg Schmitt
+	 * @author Studio Toozo
 	 *
 	 */
 	public static class PlayerData {
@@ -89,11 +89,11 @@ public class JoinAsPlayerRequestData extends AbstractActionData {
 
 		/**
 		 * 
-		 * @return	JSONObject representation of the data.
+		 * @return	{@link JSONObject} representation of the data.
 		 */
 		public JSONObject jsonify() {
 			JSONObject data = new JSONObject();
-			data.put("name", this.name);
+			data.put(ActionData.NAME, this.name);
 			return data;
 		}
 		

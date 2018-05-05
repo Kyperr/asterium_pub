@@ -1,11 +1,15 @@
 package message;
 
+import java.util.UUID;
+
 import org.json.JSONObject;
 
 import actiondata.ActionData;
 
 /**
- * Abstract {@link Message} is a blueprint for messages sent to and from {@link Client}s and the server.
+ * Abstract {@link Message} is a blueprint for messages sent to and from {@link Client}'s and the server.
+ * 
+ * @author Studio Toozo
  */
 public abstract class Message {
 	
@@ -32,6 +36,7 @@ public abstract class Message {
 	 * Constants for all messages 
 	 */
 	public static final String ACTION_NAME = "action_name";
+	public static final String MESSAGE_ID = "message_id";
 	
 	/*
 	 * Request or response.
@@ -43,15 +48,22 @@ public abstract class Message {
 	 */
 	private final ActionData actionData;	
 	
+	/*
+	 * The message identifier. Used for Clients to respond to correct messages. 
+	 */
+	protected final UUID messageID;
+	
 	/**
 	 * Creates and returns a new {@link Message} with given type and data.
 	 * 
 	 * @param messageType Request or response {@link Message} type.
 	 * @param actionData The {@link ActionData} associated with the {@link Message}. 
+	 * @param messageID	The identifier for a {@link Message} for Responses to respond to the correct Request.
 	 */
-	protected Message(MessageType messageType, final ActionData actionData) {
+	protected Message(final MessageType messageType, final ActionData actionData, final UUID messageID) {
 		this.messageType = messageType;
 		this.actionData = actionData;
+		this.messageID = messageID;
 	}
 	
 	/**
@@ -59,6 +71,13 @@ public abstract class Message {
 	 */
 	public ActionData getActionData() {
 		return this.actionData;
+	}
+
+	/**
+	 * @return The {@link Message} identifier.
+	 */
+	public UUID getMessageID() {
+		return this.messageID;
 	}
 	
 	/**
@@ -83,6 +102,7 @@ public abstract class Message {
 		
 		thisJO.put(this.messageType.getJSONTag(), inner);
 		
+		inner.put(MESSAGE_ID, this.messageID);
 		
 		return thisJO;
 	}

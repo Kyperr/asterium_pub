@@ -10,9 +10,9 @@ import actions.Action;
 import exceptions.GameFullException;
 
 /**
- * Game representing a single game state.
+ * {@link Game} representing a single game state. 
  * 
- * @author Daniel McBride, Jenna Hand, Bridgette Campbell, Greg Schmitt
+ * @author Studio Toozo
  */
 public class Game extends Thread {
 
@@ -159,7 +159,7 @@ public class Game extends Thread {
 	}
 
 	/**
-	 * @return The game's lobby ID, used to allow players to join the game.
+	 * @return The {@link Game}'s lobby ID, used to allow players to join the game.
 	 */
 	public String getLobbyID() {
 		return lobbyID;
@@ -187,6 +187,15 @@ public class Game extends Thread {
 		} else {
 			throw new GameFullException();
 		}
+	}
+	
+	/**
+	 * Registers a new {@link GameBoard} in the {@link Game}. They are added to the {@link Game}'s list of GameBoards.
+	 * 
+	 * @param gameBoard The game board client.
+	 */
+	public void addGameBoard(final GameBoard gameBoard) {
+		this.gameBoardList.add(gameBoard);
 	}
 
 	/**

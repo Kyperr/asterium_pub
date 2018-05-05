@@ -2,8 +2,8 @@ package actions;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.UUID;
 
-import actiondata.ActionData;
 import actiondata.CreateGameResponseData;
 import actiondata.ErroredResponseData;
 import gamelogic.Game;
@@ -13,7 +13,7 @@ import message.Response;
 import sessionmanagement.SessionManager.Session;
 
 /**
- * An Action which creates a new Game.
+ * A {@link RequestAction} which creates a new Game.
  * 
  * @author Studio Toozo
  */
@@ -22,11 +22,11 @@ public class CreateGameAction extends RequestAction {
 	private Optional<Game> game;
 
 	/**
-	 * Create a new CreateGameAction for callingSession.
-	 * @param callingSession the session for which the Game will be created.
+	 * Create a new {@link CreateGameAction} for callingSession.
+	 * @param callingSession the {@link Session} for which the {@link Game} will be created.
 	 */
-	public CreateGameAction(Session callingSession) {
-		super(Action.CREATE_GAME, callingSession);
+	public CreateGameAction(final Session callingSession, final UUID messageID) {
+		super(Action.CREATE_GAME, callingSession, messageID);
 	}
 
 
@@ -34,7 +34,7 @@ public class CreateGameAction extends RequestAction {
 	/**
 	 * {@inheritDoc}
 	 * 
-	 * Creates a new game and registers it with the GameManager.
+	 * Creates a new game and registers it with the {@link GameManager}.
 	 */
 	protected void doAction() {
 		// Attempt to create the game.
@@ -49,12 +49,12 @@ public class CreateGameAction extends RequestAction {
 			CreateGameResponseData cgrData = new CreateGameResponseData(game.getLobbyID(),
 					this.getCallingSession().getAuthToken());
 			
-			message = new Response(cgrData, 0);
+			message = new Response(cgrData, 0, this.getMessageID());
 
 		} else { // If game was not created...
 			// Generate error response
 			ErroredResponseData ead = new ErroredResponseData(this.getName());
-			message = new Response(ead, SendErrorAction.FAILED_TO_CREATE_GAME);
+			message = new Response(ead, SendErrorAction.FAILED_TO_CREATE_GAME, this.getMessageID());
 		}
 
 		// Send the response
@@ -66,11 +66,18 @@ public class CreateGameAction extends RequestAction {
 		}
 	}
 
-	public static CreateGameAction fromActionData(Session sender, ActionData actionData) {
+	/**
+	 * Get a {@link CreateGameAction} based on message.
+	 * 
+	 * @param sender the {@link Session} used for this {@link CreateGameACtion}.
+	 * @param message the {@link Message} containing the {@link CreateGameAction}.
+	 * @return a {@link CreateGameAction} containing the data from message.
+	 */
+	public static CreateGameAction fromMessage(final Session sender, final Message message) {
 		// This is not used here yet, but is here in case anything gets added later.
 		//CreateGameActionData action = CreateGameActionData.class.cast(actionData);
 
-		return new CreateGameAction(sender);
+		return new CreateGameAction(sender, message.getMessageID());
 	}
 
 }

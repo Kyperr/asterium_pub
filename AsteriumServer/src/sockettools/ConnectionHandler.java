@@ -8,7 +8,6 @@ import java.net.SocketTimeoutException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import actiondata.ActionData;
 import actions.Action;
 import main.Parser;
 import message.Message;
@@ -19,6 +18,7 @@ import sessionmanagement.SessionManager.Session;
  * This object maintains a single connection with a client and listens for input
  * from the client. Any input is budded into a separate handling thread.
  *
+ * @author Studio Toozo
  */
 public class ConnectionHandler extends Thread {
 
@@ -106,9 +106,7 @@ public class ConnectionHandler extends Thread {
 
 		Message message = this.parser.parse(messageString);
 
-		ActionData actionData = message.getActionData();
-
-		Action action = Action.getActionFor(this.session, actionData);
+		Action action = Action.getActionFor(this.session, message);
 
 		threadPoolExec.execute(action);
 	}
