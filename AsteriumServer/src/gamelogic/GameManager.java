@@ -38,7 +38,7 @@ public final class GameManager {
 	
 	/**
 	 * When a new game is started, create a new Game and return it
-	 * to the action that requested it. Starts the {@link Game} as {@link Thread}.
+	 * to the action that requested it. Starts the {@link Game} as a {@link Thread}.
 	 * 
 	 * @return {@link Game}
 	 */
