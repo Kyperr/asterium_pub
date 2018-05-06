@@ -176,7 +176,9 @@ public class Game extends Thread {
 				public void run() {
 					// do nothing, this is a "null" action
 				}
+				
 			});
+			this.gameState.addPlayer(player.getAuthToken());
 		} else {
 			throw new GameFullException();
 		}

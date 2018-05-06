@@ -37,7 +37,10 @@ public class GameState {
 	 * @param playerAuth The player's auth token
 	 * @param character The new character
 	 */
-	public void addPlayer(final String playerAuth, final Character character) {
+	public void addPlayer(final String playerAuth) {
+		Character character = new Character();
+		
 		this.playerCharacterMap.put(playerAuth, character);
+		this.playerReadyMap.put(character, false);
 	}
 }
