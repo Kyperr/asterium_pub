@@ -18,8 +18,8 @@ public class Request extends Message {
 	 * Creates and returns a new {@link Message} with the given {@link ActionData}.
 	 * @param actionData The {@link ActionData} associated with the {@link Message}. 
 	 */
-	public Request(final ActionData actionData) {
-		this(actionData, generateMessageID());
+	public Request(final ActionData actionData, final String authToken) {
+		this(actionData, generateMessageID(), authToken);
 	}
 	
 	/**
@@ -27,8 +27,8 @@ public class Request extends Message {
 	 * @param actionData The {@link ActionData} associated with the {@link Message}. 
 	 * @param messageID	The identifier for a {@link Message} for Responses to respond to the correct Request.
 	 */
-	public Request(final ActionData actionData, final UUID messageID) {
-		super(Message.MessageType.REQUEST, actionData, messageID);
+	public Request(final ActionData actionData, final UUID messageID, final String authToken) {
+		super(Message.MessageType.REQUEST, actionData, messageID, authToken);
 	}
 
 	/**

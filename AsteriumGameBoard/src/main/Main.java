@@ -23,7 +23,7 @@ public class Main {
 		
 		CreateGameRequestData cgaData = new CreateGameRequestData();
 		
-		Request request = new Request(cgaData);
+		Request request = new Request(cgaData, "");
 		
 		String msg = request.jsonify().toString();
 		

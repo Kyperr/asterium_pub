@@ -148,7 +148,7 @@ public abstract class Action implements Runnable {
 	 */
 	protected void sendError(Integer errorCode) {
 		ErroredResponseData ead = new ErroredResponseData(this.getName());
-		Message message = new Response(ead, errorCode, this.getMessageID());
+		Message message = new Response(ead, errorCode, this.getMessageID(), this.getCallingSession().getAuthToken());
 		
 		// Try to send the error response
 		try {

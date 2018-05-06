@@ -56,6 +56,7 @@ public class Parser {
 		Boolean isRequest;
 		String actionName;
 		UUID messageID;
+		String authToken;
 		
 		JSONObject jsonObj = new JSONObject(msg);
 
@@ -71,7 +72,8 @@ public class Parser {
 		
 		fields = JSONObject.getNames(innerJSONObj); // reassign fields to get object's keys
 		
-		actionName = innerJSONObj.get(Message.ACTION_NAME).toString();	
+		authToken = innerJSONObj.getString(Message.AUTH_TOKEN);
+		actionName = innerJSONObj.getString(Message.ACTION_NAME);	
 		messageID = UUID.fromString(innerJSONObj.getString(Message.MESSAGE_ID));
 		
 		jsonObj = innerJSONObj.getJSONObject(actionName);
@@ -86,7 +88,7 @@ public class Parser {
 		Message message;
 		
 		if(isRequest) {
-			message = new Request(actionData, messageID);
+			message = new Request(actionData, messageID, authToken);
 		} else {
 			if (VERBOSE) {
 				System.out.println("JSON Action Data: " + jsonObj);
@@ -94,7 +96,7 @@ public class Parser {
 			}
 			
 			Integer errorCode = innerJSONObj.getInt(Response.ERROR_CODE);
-			message = new Response(actionData, errorCode, messageID);
+			message = new Response(actionData, errorCode, messageID, authToken);
 		}
 		
 		return message;

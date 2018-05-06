@@ -30,7 +30,7 @@ public class Example {
 		JoinAsPlayerRequestData.PlayerData pd = new PlayerData("Daniel");
 		ActionData joinAsPlayer = new JoinAsPlayerRequestData("abcd", pd);
 
-		Message message = new Request(joinAsPlayer);
+		Message message = new Request(joinAsPlayer, "");
 		System.out.println(message.jsonify().toString());
 
 	}

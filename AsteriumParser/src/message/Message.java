@@ -37,6 +37,7 @@ public abstract class Message {
 	 */
 	public static final String ACTION_NAME = "action_name";
 	public static final String MESSAGE_ID = "message_id";
+	public static final String AUTH_TOKEN = "auth_token";
 	
 	/*
 	 * Request or response.
@@ -53,6 +54,8 @@ public abstract class Message {
 	 */
 	protected final UUID messageID;
 	
+	protected final String authToken;
+	
 	/**
 	 * Creates and returns a new {@link Message} with given type and data.
 	 * 
@@ -60,10 +63,11 @@ public abstract class Message {
 	 * @param actionData The {@link ActionData} associated with the {@link Message}. 
 	 * @param messageID	The identifier for a {@link Message} for Responses to respond to the correct Request.
 	 */
-	protected Message(final MessageType messageType, final ActionData actionData, final UUID messageID) {
+	protected Message(final MessageType messageType, final ActionData actionData, final UUID messageID, final String authToken) {
 		this.messageType = messageType;
 		this.actionData = actionData;
 		this.messageID = messageID;
+		this.authToken = authToken;
 	}
 	
 	/**
@@ -80,6 +84,10 @@ public abstract class Message {
 		return this.messageID;
 	}
 	
+	public String getAuthToken() {
+		return this.authToken;
+	}
+	
 	/**
 	 * Generates a {@link JSONObject} representation of the {@link Message} which can be sent.
 	 * Cannot be overridden.
@@ -93,6 +101,7 @@ public abstract class Message {
 		
 		//Add extra fields
 		addToJSONify(inner);
+		inner.put(AUTH_TOKEN, this.authToken);
 		
 		//Add action name
 		inner.put(ACTION_NAME, this.actionData.getName());

@@ -28,8 +28,8 @@ public class Response  extends Message {
 	 * @param errorCode	The code for a specific error that was thrown
 	 * @param messageID	The identifier for a {@link Message} for Responses to respond to the correct Request.
 	 */
-	public Response(final ActionData actionData, final Integer errorCode, final UUID messageID) {
-		super(Message.MessageType.RESPONSE, actionData, messageID);
+	public Response(final ActionData actionData, final Integer errorCode, final UUID messageID, final String authToken) {
+		super(Message.MessageType.RESPONSE, actionData, messageID, authToken);
 		this.errorCode = errorCode;
 	}
 
