@@ -30,4 +30,14 @@ public class GameState {
 	public boolean toggleReady(final String authToken) {
 		return !playerReadyMap.get(playerCharacterMap.get(authToken));
 	}
+	
+	/**
+	 * Add a {@link Player} to the {@link GameState} when they join the {@link Game}.
+	 * 
+	 * @param playerAuth The player's auth token
+	 * @param character The new character
+	 */
+	public void addPlayer(final String playerAuth, final Character character) {
+		this.playerCharacterMap.put(playerAuth, character);
+	}
 }
