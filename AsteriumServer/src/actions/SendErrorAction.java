@@ -16,6 +16,7 @@ public class SendErrorAction extends ResponseAction {
 	public static final Integer EMPTY_FIELDS = 12;
 	public static final Integer NO_SUCH_LOBBY = 13;
 	public static final Integer FAILED_TO_CREATE_GAME = 20;
+	public static final Integer GAME_NOT_FOUND = 22;
 	public static final Integer GAME_FULL = 30;
 	
 	/**

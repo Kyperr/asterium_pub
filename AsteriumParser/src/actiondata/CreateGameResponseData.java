@@ -13,7 +13,7 @@ import message.Response;
  * @author Studio Toozo
  *
  */
-public class CreateGameResponseData extends AbstractActionData {
+public class CreateGameResponseData extends AbstractResponseActionData {
 
 	private final String lobbyID;
 	private final String authToken;
@@ -60,18 +60,5 @@ public class CreateGameResponseData extends AbstractActionData {
 		
 		//Construct and return
 		return new CreateGameResponseData(lobbyID, authToken);
-
-	}
-
-	@Override
-	protected boolean fieldsEqual(final Object other) {
-		if (other instanceof CreateGameResponseData) {
-			CreateGameResponseData data = CreateGameResponseData.class.cast(other);
-			return (data.lobbyID.equals(this.lobbyID) && data.authToken.equals(this.authToken));
-		} else {
-			return false;
-		}
-	}
-	
-	
+	}	
 }

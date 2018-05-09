@@ -10,11 +10,7 @@ import actions.Action;
 import exceptions.GameFullException;
 
 /**
-<<<<<<< HEAD
- * Game representing a single game state.
-=======
  * {@link Game} representing a single game state. 
->>>>>>> 3514cfc875e806649def7df390d98f746d9f3d41
  * 
  * @author Studio Toozo
  */
@@ -180,7 +176,9 @@ public class Game extends Thread {
 				public void run() {
 					// do nothing, this is a "null" action
 				}
+				
 			});
+			this.gameState.addPlayer(player.getAuthToken());
 		} else {
 			throw new GameFullException();
 		}

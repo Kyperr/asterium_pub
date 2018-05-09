@@ -11,7 +11,7 @@ import org.json.JSONObject;
  * @author Studio Toozo
  *
  */
-public class JoinAsPlayerRequestData extends AbstractActionData {
+public class JoinAsPlayerRequestData extends AbstractRequestActionData {
 
 	private final String lobbyID;
 	private final JoinAsPlayerRequestData.PlayerData playerData;
@@ -104,17 +104,6 @@ public class JoinAsPlayerRequestData extends AbstractActionData {
 			} else {
 				return false;
 			}
-		}
-	}
-
-	@Override
-	protected boolean fieldsEqual(final Object other) {
-		if (other instanceof JoinAsPlayerRequestData) {
-			JoinAsPlayerRequestData otherData = (JoinAsPlayerRequestData) other;
-			return (otherData.lobbyID.equals(this.lobbyID) && 
-				   otherData.playerData.equals(this.playerData));
-		} else {
-			return false;
 		}
 	}
 

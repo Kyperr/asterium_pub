@@ -20,6 +20,11 @@ public final class GameManager {
 	 */
 	private Map<String, Game> gameMap = new ConcurrentHashMap<String, Game>();
 	
+	/*
+	 * Maps player auth tokens to Game.
+	 */
+	private Map<String, Game> playerMap = new ConcurrentHashMap<String, Game>();
+	
 	/**
 	 * @return The single instance of {@link GameManager}.
 	 */
@@ -35,12 +40,8 @@ public final class GameManager {
 	}
 	
 	/**
-<<<<<<< HEAD
-	 * When a new game is started, create a new Game and return it
+	 * When a new game is started, create a new {@link Game} and return it
 	 * to the action that requested it. Starts the {@link Game} as a {@link Thread}.
-=======
-	 * When a new game is started, create a new {@link Game}.
->>>>>>> 3514cfc875e806649def7df390d98f746d9f3d41
 	 * 
 	 * @return {@link Game}
 	 */
@@ -58,7 +59,7 @@ public final class GameManager {
 	 * 
 	 * @param game The {@link Game} to be registered.
 	 */
-	public void registerGame(Game game) {
+	public void registerGame(final Game game) {
 		// Put the Game in the game map. 
 		gameMap.put(game.getLobbyID(), game);
 	}
@@ -69,7 +70,7 @@ public final class GameManager {
 	 * @param lobbyID The lobby ID to be checked.
 	 * @return True if the lobby ID is in use, false otherwise.
 	 */
-	public boolean isLobbyIDUsed(String lobbyID) {
+	public boolean isLobbyIDUsed(final String lobbyID) {
 		return gameMap.containsKey(lobbyID);
 	}
 	
@@ -77,7 +78,19 @@ public final class GameManager {
 	 * @param lobbyID The lobbyID associated with a {@link Game}.
 	 * @return The {@link Game} associated with the given lobby ID.
 	 */
-	public Game getGame(String lobbyID) {
+	public Game getGame(final String lobbyID) {
 		return gameMap.get(lobbyID);
+	}
+	
+	/**
+	 * @param authToken the {@link Player}'s auth token
+	 * @return the {@link Game} associated with the {@link Player}'s auth token.
+	 */
+	public Game getGameForPlayer(final String authToken) {
+		if (playerMap.get(authToken) != null) {
+			return playerMap.get(authToken);
+		} else {
+			return null;
+		}
 	}
 }
