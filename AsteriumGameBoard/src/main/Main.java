@@ -1,8 +1,10 @@
 package main;
 
 import actiondata.CreateGameRequestData;
+import actiondata.CreateGameResponseData;
 import actiondata.JoinAsGameBoardRequestData;
 import message.Request;
+import message.Response;
 /**
  * Main.
  *
@@ -20,8 +22,8 @@ public class Main {
 	 * @param args Command line arguments.
 	 */
 	public static void main(String[] args) {
-		ClientConnectionHandler ccHandler = new ClientConnectionHandler(ADDRESS, PORT);
-		
+		SingletonSender ccHandler = new SingletonSender(ADDRESS, PORT);
+
 		// Create a game.
 		CreateGameRequestData cgData = new CreateGameRequestData();
 		Request request = new Request(cgData);
@@ -29,12 +31,23 @@ public class Main {
 		if (VERBOSE) {
 			System.out.println("Client sending message to server:\n" + msg);
 		}
-		ccHandler.sendJSON(msg, (message) -> {
-			String lobbyID = null;
-			JoinAsGameBoardRequestData.GameBoardData myData = new JoinAsGameBoardRequestData.GameBoardData();
-			System.out.println("Game created! Joining game as GameBoard...");
+		ccHandler.send(msg, (message) -> {
+			// Join the lobby.
 			System.out.println("message: " + message.toString());
-			//JoinAsGameBoardRequestData jgbData = new JoinAsGameBoardRequestData(lobbyID, myData);
+			
+			// Get lobby ID
+			CreateGameResponseData cgrData = CreateGameResponseData.fromMessage(message);
+			String lobbyID = cgrData.getLobbyID();
+			
+			// Get GameBoardData
+			JoinAsGameBoardRequestData.GameBoardData myData = new JoinAsGameBoardRequestData.GameBoardData();
+			
+			// Send JoinAsGameBoardRequest
+			System.out.println("Game created! Joining game as GameBoard...");
+			JoinAsGameBoardRequestData jgbData = new JoinAsGameBoardRequestData(lobbyID, myData);
+			Request joinRequest = new Request(jgbData);
+			String joinMessage = joinRequest.jsonify().toString();
+			ccHandler.send(joinMessage, (joinResponse) -> System.out.println("Joined!"));
 		});
 		
 		while(true) {

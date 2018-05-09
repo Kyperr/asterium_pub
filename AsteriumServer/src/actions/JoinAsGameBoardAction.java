@@ -1,10 +1,8 @@
 package actions;
 
 import java.io.IOException;
-import java.util.Optional;
 import java.util.UUID;
 
-import actiondata.ErroredResponseData;
 import actiondata.JoinAsGameBoardRequestData;
 import actiondata.JoinAsGameBoardResponseData;
 import gamelogic.Game;

@@ -12,23 +12,23 @@ import message.Message;
 public class ClientConnectionHandler {
 
 	private static int PORT = 25632;
-	private static int NUMBER_OF_SENDER_THREADS = 1;
+	private static int NUMBER_OF_SENDER_THREADS = 10;
 
 	private ServerConnection serverConnection;
 	private Parser parser;
-	private ListenerThread listener;
+	private ListenerThread_old listener;
 	private SenderThreadPool senders;
 
 	/**
 	 * Creates a ClientConnectionHandler. This creates a {@link ServerConnection}, a
-	 * {@link Parser}, a {@link ListenerThread}, and a {@link SenderThreadPool}.
+	 * {@link Parser}, a {@link ListenerThread_old}, and a {@link SenderThreadPool}.
 	 */
 	public ClientConnectionHandler(final String address, int port) {
 
 		this.serverConnection = new ServerConnection(address, port);
 		this.parser = new Parser();
 
-		this.listener = new ListenerThread(serverConnection, parser);
+		this.listener = new ListenerThread_old(serverConnection, parser);
 
 		this.senders = new SenderThreadPool(serverConnection, parser, listener, NUMBER_OF_SENDER_THREADS);
 
@@ -44,6 +44,7 @@ public class ClientConnectionHandler {
 	 * @param responseAction
 	 */
 	public void sendJSON(final String json, final Consumer<Message> responseAction) {
+		System.err.println("sendJSON");
 		this.senders.send(json, responseAction);
 	}
 }

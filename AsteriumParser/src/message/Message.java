@@ -107,6 +107,10 @@ public abstract class Message {
 		return thisJO;
 	}
 	
+	public boolean isResponse() {
+		return this.messageType.equals(Message.MessageType.RESPONSE);
+	}
+	
 	/**
 	 * @return A String representation of this message in JSON format.
 	 */

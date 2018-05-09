@@ -9,7 +9,7 @@ import message.Message;
 /**
  * Creates a pool of threads for {@link SenderThread}.
  * 
- * @author Daniel
+ * @author Greg Schmitt, and only Greg Schmitt
  *
  */
 public class SenderThreadPool {
@@ -17,7 +17,7 @@ public class SenderThreadPool {
 	private Queue<SenderThread> idlePool;
 	private Queue<SenderThread> busyPool;
 	private Parser parser;
-	private ListenerThread listener;
+	private ListenerThread_old listener;
 	private ServerConnection connection;
 	private int numberOfThreads;
 
@@ -30,12 +30,13 @@ public class SenderThreadPool {
 	 * @param parser
 	 *            - {@link Parser}
 	 * @param listenerThread
-	 *            - {@link ListenerThread}
+	 *            - {@link ListenerThread_old}
 	 * @param numberOfThreads
 	 *            - {@link Integer}
 	 */
-	public SenderThreadPool(ServerConnection connection, Parser parser, ListenerThread listenerThread,
-			int numberOfThreads) {
+	public SenderThreadPool(ServerConnection connection, Parser parser, 
+							ListenerThread_old listenerThread,
+							int numberOfThreads) {
 		this.idlePool = new LinkedList<SenderThread>();
 		this.busyPool = new LinkedList<SenderThread>();
 
@@ -64,6 +65,7 @@ public class SenderThreadPool {
 		if (!idlePool.isEmpty()) {
 			thread = this.idlePool.remove();
 			this.busyPool.add(thread);
+			System.err.println("Called!");
 			thread.send(json, action);
 		} else {
 			// Repopulate pool

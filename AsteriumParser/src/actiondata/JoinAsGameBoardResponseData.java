@@ -16,7 +16,7 @@ public class JoinAsGameBoardResponseData extends AbstractActionData {
 	private final String authToken;
 
 	public JoinAsGameBoardResponseData(final String authToken) {
-		super(JOIN_AS_PLAYER_RESPONSE);
+		super(ActionData.JOIN_AS_GAMEBOARD);
 		this.authToken = authToken;
 	}
 

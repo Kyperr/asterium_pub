@@ -2,8 +2,6 @@ package gamelogic;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * Singleton {@link GameManager} handles the creation and management of {@link Game} on the server.
