@@ -68,6 +68,7 @@ public class ListenerThread extends Thread {
 		String json;
 		while (running) {
 			try {
+				// Read message from server
 				json = this.br.readLine();
 				
 				if (VERBOSE) {
@@ -77,6 +78,7 @@ public class ListenerThread extends Thread {
 				Message message = this.parser.parse(json);
 				
 				if (message.isResponse()) {
+					// Handle responses
 					threadPool.execute(() -> {
 						UUID id = message.getMessageID();
 						Consumer<Message> callback = ListenerThread.this.callbacks.remove(id);
