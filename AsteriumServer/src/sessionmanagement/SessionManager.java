@@ -47,6 +47,7 @@ public final class SessionManager {
 	 * collection of sessions.
 	 */
 	public Session createSession(Socket socket) throws IOException {
+		System.out.println("Session created.");
 		// Make a session
 		Session session = new Session(socket);
 

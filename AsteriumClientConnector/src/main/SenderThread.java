@@ -3,8 +3,6 @@ package main;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.UUID;
-import java.util.concurrent.Flow.Subscriber;
-import java.util.concurrent.Flow.Subscription;
 import java.util.function.Consumer;
 
 import message.Message;
@@ -14,7 +12,7 @@ import message.Message;
  * work. It will send the input and wait to handle the response.
  *
  */
-public class SenderThread extends Thread implements Subscriber<Message> {
+public class SenderThread extends Thread {
 	public static final boolean VERBOSE = false;
 	
 	private UUID sentMessageID;
@@ -80,56 +78,6 @@ public class SenderThread extends Thread implements Subscriber<Message> {
 		return this.isWaiting;
 	}
 
-	@Override
-	/**
-	 * Called by the publisher. You shouldn't be calling this. It reacts to the
-	 * input as specified.
-	 */
-	public void onNext(Message item) {
-		// Check if the published ActionData is the subscribed
-		// data, and call response method if it is.
-		if (VERBOSE) {
-			System.out.println("SenderThread received publication. Checking for equality...");
-		}
-		
-		if (item.getMessageID().equals(sentMessageID)) {
-			if (VERBOSE) {
-				System.out.println("SenderThread ActionData is equal. Idling and calling responseMethod...");
-			}
-			this.responseMethod.accept(item);
-			this.isWaiting = false;
-		}
-	}
-
-	/*
-	 * Unused methods from Subscriber
-	 */
-	@Override
-	/**
-	 * Does nothing.
-	 */
-	public void onSubscribe(Subscription subscription) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	/**
-	 * Does nothing.
-	 */
-	public void onError(Throwable throwable) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	/**
-	 * Does nothing.
-	 */
-	public void onComplete() {
-		// TODO Auto-generated method stub
-
-	}
 	
 	@Override
 	public String toString() {
