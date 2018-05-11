@@ -47,13 +47,16 @@ public final class SessionManager {
 	 * collection of sessions.
 	 */
 	public Session createSession(Socket socket) throws IOException {
-		System.out.println("Session created.");
 		// Make a session
 		Session session = new Session(socket);
 
 		// Put it in the map
 		sessions.put(session.getAuthToken(), session);
 
+		if (VERBOSE) {
+			System.out.println("Session created.");
+		}
+		
 		return session;
 	}
 

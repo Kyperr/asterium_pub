@@ -27,10 +27,12 @@ public class Main {
 		
 		Request request = new Request(cgaData, "");
 		String msg = request.jsonify().toString();
+		
 		if (VERBOSE) {
 			System.out.println("Client sending message to server:\n" + msg);
 		}
-		ccHandler.concurrentSend(msg, (message) -> {
+		
+		ccHandler.send(msg, (message) -> {
 			// Join the lobby.
 			System.out.println("message: " + message.toString());
 			
@@ -46,12 +48,8 @@ public class Main {
 			JoinAsGameBoardRequestData jgbData = new JoinAsGameBoardRequestData(lobbyID, myData);
 			Request joinRequest = new Request(jgbData, "");
 			String joinMessage = joinRequest.jsonify().toString();
-			ccHandler.concurrentSend(joinMessage, (joinResponse) -> System.out.println("Joined!"));
+			ccHandler.send(joinMessage, (joinResponse) -> System.out.println("Joined!"));
 		});
-		
-		while(true) {
-			
-		}
 	}
 
 }
