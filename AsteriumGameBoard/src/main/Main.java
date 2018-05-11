@@ -4,7 +4,7 @@ import actiondata.CreateGameRequestData;
 import actiondata.CreateGameResponseData;
 import actiondata.JoinAsGameBoardRequestData;
 import message.Request;
-import message.Response;
+
 /**
  * Main.
  *
@@ -22,7 +22,7 @@ public class Main {
 	 * @param args Command line arguments.
 	 */
 	public static void main(String[] args) {
-		SingletonSender ccHandler = new SingletonSender(ADDRESS, PORT);
+		ClientConnectionHandler ccHandler = new ClientConnectionHandler(ADDRESS, PORT);
 
 		// Create a game.
 		CreateGameRequestData cgData = new CreateGameRequestData();

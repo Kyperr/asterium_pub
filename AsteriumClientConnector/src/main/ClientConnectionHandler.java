@@ -11,7 +11,7 @@ import java.util.function.Consumer;
 
 import message.Message;
 
-public final class SingletonSender {
+public class ClientConnectionHandler {
 	private static ExecutorService threadPool = Executors.newCachedThreadPool();
 	
 	private final Map<UUID, Consumer<Message>> callbacks;
@@ -20,7 +20,7 @@ public final class SingletonSender {
 	private PrintWriter output;
 	private ServerConnection connection;
 	
-	public SingletonSender(final String address, final int port) {
+	public ClientConnectionHandler(final String address, final int port) {
 		// Establish connection with server
 		this.connection = new ServerConnection(address, port);
 		
@@ -34,19 +34,19 @@ public final class SingletonSender {
 		// Instantiate instance variables
 		this.parser = new Parser();
 		this.callbacks = new HashMap<UUID, Consumer<Message>>();
-		this.listener = new ListenerThread(this.connection, this.parser, this.callbacks, SingletonSender.threadPool);
+		this.listener = new ListenerThread(this.connection, this.parser, this.callbacks, ClientConnectionHandler.threadPool);
 		this.listener.start();
 	}
 	
 	public void send(final String json, final Consumer<Message> responseAction) {
 		threadPool.execute(() -> {
 			// Put the responseAction in callbacks, keyed off of the message ID.
-			System.out.println(SingletonSender.this.parser.toString());
-			SingletonSender.this.callbacks.put(SingletonSender.this.parser.getMessageID(json), responseAction);
+			System.out.println(ClientConnectionHandler.this.parser.toString());
+			ClientConnectionHandler.this.callbacks.put(ClientConnectionHandler.this.parser.getMessageID(json), responseAction);
 			
 			// Send json to server
-			SingletonSender.this.output.println(json);
-			SingletonSender.this.output.flush();
+			ClientConnectionHandler.this.output.println(json);
+			ClientConnectionHandler.this.output.flush();
 		});
 	}
 }
