@@ -38,15 +38,19 @@ public class ClientConnectionHandler {
 		this.listener.start();
 	}
 	
-	public void send(final String json, final Consumer<Message> responseAction) {
+	public void sequentialSend(final String json) {
+		ClientConnectionHandler.this.output.println(json);
+		ClientConnectionHandler.this.output.flush();
+	}
+	
+	public void concurrentSend(final String json, final Consumer<Message> responseAction) {
 		threadPool.execute(() -> {
 			// Put the responseAction in callbacks, keyed off of the message ID.
 			System.out.println(ClientConnectionHandler.this.parser.toString());
 			ClientConnectionHandler.this.callbacks.put(ClientConnectionHandler.this.parser.getMessageID(json), responseAction);
 			
 			// Send json to server
-			ClientConnectionHandler.this.output.println(json);
-			ClientConnectionHandler.this.output.flush();
+			sequentialSend(json);
 		});
 	}
 }

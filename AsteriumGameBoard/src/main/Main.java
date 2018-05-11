@@ -31,7 +31,7 @@ public class Main {
 		if (VERBOSE) {
 			System.out.println("Client sending message to server:\n" + msg);
 		}
-		ccHandler.send(msg, (message) -> {
+		ccHandler.concurrentSend(msg, (message) -> {
 			// Join the lobby.
 			System.out.println("message: " + message.toString());
 			
@@ -47,7 +47,7 @@ public class Main {
 			JoinAsGameBoardRequestData jgbData = new JoinAsGameBoardRequestData(lobbyID, myData);
 			Request joinRequest = new Request(jgbData);
 			String joinMessage = joinRequest.jsonify().toString();
-			ccHandler.send(joinMessage, (joinResponse) -> System.out.println("Joined!"));
+			ccHandler.concurrentSend(joinMessage, (joinResponse) -> System.out.println("Joined!"));
 		});
 		
 		while(true) {
