@@ -30,19 +30,9 @@ public class JoinAsGameBoardAction extends RequestAction {
 	/**
 	 * Construct a {@link JoinAsGameBoardAction}.
 	 * 
-<<<<<<< HEAD
-	 * @param callingSession
-	 *            the session using this Action.
-	 * @param lobbyID
-	 *            the ID of the lobby of the game to which the GameBoard should be
-	 *            added.
-	 * @param gameBoardData
-	 *            the data of the GameBoard which should be added to the game.
-=======
 	 * @param callingSession the session using this {@link Action}.
 	 * @param lobbyID the ID of the lobby of the game to which the{@link GameBoard} should be added.
 	 * @param gameBoardData the data of the {@link GameBoard} which should be added to the game.
->>>>>>> 3514cfc875e806649def7df390d98f746d9f3d41
 	 */
 	public JoinAsGameBoardAction(final Session callingSession, final String lobbyID,
 			final JoinAsGameBoardRequestData.GameBoardData gameBoardData, final UUID messageID) {
@@ -74,7 +64,7 @@ public class JoinAsGameBoardAction extends RequestAction {
 
 		// Construct success response.
 		JoinAsGameBoardResponseData jpaData = new JoinAsGameBoardResponseData(getCallingSession().getAuthToken());
-		message = new Response(jpaData, 0, this.getMessageID());
+		message = new Response(jpaData, 0, this.getMessageID(), this.getCallingSession().getAuthToken());
 
 		// Send the response back to the calling session.
 		try {

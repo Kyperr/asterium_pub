@@ -40,10 +40,10 @@ public class ReadyUpAction extends RequestAction {
 			GameState state = game.getGameState();
 			state.toggleReady(auth);
 			ReadyUpResponseData data = new ReadyUpResponseData();
-			message = new Response(data, 0, this.getMessageID());
+			message = new Response(data, 0, this.getMessageID(), this.getCallingSession().getAuthToken());
 		} else {
 			ErroredResponseData ead = new ErroredResponseData(this.getName());
-			message = new Response(ead, SendErrorAction.GAME_NOT_FOUND, this.getMessageID());
+			message = new Response(ead, SendErrorAction.GAME_NOT_FOUND, this.getMessageID(), this.getCallingSession().getAuthToken());
 		}
 		// Send the response back to the calling session.
 		try {

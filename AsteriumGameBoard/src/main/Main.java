@@ -23,10 +23,9 @@ public class Main {
 	 */
 	public static void main(String[] args) {
 		ClientConnectionHandler ccHandler = new ClientConnectionHandler(ADDRESS, PORT);
-
-		// Create a game.
-		CreateGameRequestData cgData = new CreateGameRequestData();
-		Request request = new Request(cgData);
+		CreateGameRequestData cgaData = new CreateGameRequestData();
+		
+		Request request = new Request(cgaData, "");
 		String msg = request.jsonify().toString();
 		if (VERBOSE) {
 			System.out.println("Client sending message to server:\n" + msg);
@@ -45,7 +44,7 @@ public class Main {
 			// Send JoinAsGameBoardRequest
 			System.out.println("Game created! Joining game as GameBoard...");
 			JoinAsGameBoardRequestData jgbData = new JoinAsGameBoardRequestData(lobbyID, myData);
-			Request joinRequest = new Request(jgbData);
+			Request joinRequest = new Request(jgbData, "");
 			String joinMessage = joinRequest.jsonify().toString();
 			ccHandler.concurrentSend(joinMessage, (joinResponse) -> System.out.println("Joined!"));
 		});

@@ -70,11 +70,11 @@ public class JoinAsPlayerAction extends RequestAction {
 			game.addPlayer(player);
 			// Construct success response.
 			JoinAsPlayerRequestData jpaData = new JoinAsPlayerRequestData(this.lobby_id, this.playerData);
-			message = new Response(jpaData, 0, this.getMessageID());
+			message = new Response(jpaData, 0, this.getMessageID(), this.getCallingSession().getAuthToken());
 		} catch (final GameFullException ex) { // If game is full...
 			// Construct game full response.
 			ErroredResponseData ead = new ErroredResponseData(this.getName());
-			message = new Response(ead, SendErrorAction.GAME_FULL, this.getMessageID());
+			message = new Response(ead, SendErrorAction.GAME_FULL, this.getMessageID(), this.getCallingSession().getAuthToken());
 		}
 
 		// Send the response back to the calling session.

@@ -11,18 +11,13 @@ import org.json.JSONObject;
 public interface ActionData {
 
 	//Action Name Constants
-	public static final String JOIN_AS_PLAYER = "join_as_player";
-	
+	public static final String JOIN_AS_PLAYER = "join_as_player";	
 	public static final String JOIN_AS_GAMEBOARD = "join_as_gameboard";
-
-	public static final String READY_UP = "ready_up";
-	public static final String READY_UP_RESPONSE = "ready_up_response";
-	
+	public static final String READY_UP = "ready_up";	
 	public static final String CREATE_GAME = "create_game";
-
 	public static final String PLAYER_SYNC = "player_sync";
-
-	public static final String ALLOCATE_STATS = "allocate_stats";
+	public static final String ALLOCATE_STATS = "allocate_stats";	
+	public static final String TURN = "turn";
 	
 	//Field Constants
 	public static final String ACTION_NAME = "action_name";
@@ -30,8 +25,13 @@ public interface ActionData {
 	public static final String LOBBY_ID = "lobby_id";
 	public static final String PLAYER_LIST = "player_list";
 	public static final String PLAYER_DATA = "player_data";
+	public static final String STATS = "stats";
 	public static final String GAMEBOARD_DATA = "gameboard_data";
 	public static final String AUTH_TOKEN = "auth_token";
+	public static final String ACTIVITY = "activity";
+	public static final String ACTIVITY_NAME = "activity_name";
+	public static final String LOCATION = "location";
+	public static final String ROOM_ID = "room_id"; 
 	
 	/**
 	 * 

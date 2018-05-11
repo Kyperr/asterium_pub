@@ -5,7 +5,7 @@ import org.json.JSONObject;
 public class ReadyUpResponseData extends AbstractResponseActionData{
 
 	public ReadyUpResponseData() {
-		super(READY_UP_RESPONSE);
+		super(READY_UP);
 	}
 
 	@Override
@@ -14,7 +14,7 @@ public class ReadyUpResponseData extends AbstractResponseActionData{
 		return data;
 	}
 	
-	public static ReadyUpResponseData parseArgs() {
+	public static ReadyUpResponseData parseArgs(final JSONObject jsonObj) {
 		return new ReadyUpResponseData();
 	}
 
