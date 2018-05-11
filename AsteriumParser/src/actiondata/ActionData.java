@@ -29,6 +29,9 @@ public interface ActionData {
 	public static final String ALLOCATE_STATS = "allocate_stats";
 	public static final String ALLOCATE_STATS_RESPONSE = "allocate_stats_response";
 	
+	public static final String TURN = "turn";
+	public static final String TURN_RESPONSE = "turn_response";
+	
 	//Field Constants
 	public static final String ACTION_NAME = "action_name";
 	public static final String NAME = "name";

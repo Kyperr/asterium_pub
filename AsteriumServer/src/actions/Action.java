@@ -33,6 +33,15 @@ public abstract class Action implements Runnable {
 
 	public static final String READY_UP = "ready_up";
 	public static final String READY_UP_RESPONSE = "ready_up_response";
+
+	public static final String PLAYER_SYNC = "player_sync";
+	public static final String PLAYER_SYNC_RESPONSE = "player_sync_response";
+
+	public static final String ALLOCATE_STATS = "allocate_stats";
+	public static final String ALLOCATE_STATS_RESPONSE = "allocate_stats_response";
+	
+	public static final String TURN = "turn";
+	public static final String TURN_RESPONSE = "turn_response";
 	
 	
 	
