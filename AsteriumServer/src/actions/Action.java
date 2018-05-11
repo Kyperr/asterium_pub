@@ -9,6 +9,7 @@ import java.util.function.BiFunction;
 import actiondata.ActionData;
 import actiondata.CreateGameRequestData;
 import actiondata.ErroredResponseData;
+import actiondata.JoinAsGameBoardRequestData;
 import actiondata.JoinAsPlayerRequestData;
 import message.Message;
 import message.Response;
@@ -63,6 +64,7 @@ public abstract class Action implements Runnable {
 		 */
 		{
 			put(JoinAsPlayerRequestData.class, JoinAsPlayerAction::fromMessage);
+			put(JoinAsGameBoardRequestData.class, JoinAsGameBoardAction::fromMessage);
 			put(CreateGameRequestData.class, CreateGameAction::fromMessage);
 		}
 	};

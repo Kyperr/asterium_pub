@@ -3,25 +3,22 @@ package main;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.Flow.Publisher;
-import java.util.concurrent.Flow.Subscriber;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.function.Consumer;
 
 import message.Message;
 
-/**
- * This is an object that, as a client, listens for input from the server. As
- * input comes from the server, it will publish the input to it's subscribers.
- */
-public class ListenerThread extends Thread implements Publisher<Message> {
+public class ListenerThread extends Thread {
 	public static final boolean VERBOSE = false;
 	private boolean running;
 	private InputStreamReader isr;
 	private BufferedReader br;
 	private Parser parser;
-	private List<Subscriber<? super Message>> subscribers;
-
+	private final Map<UUID, Consumer<Message>> callbacks;
+	private ExecutorService threadPool;
+	
 	/**
 	 * Constructs a ListenerThread. Requires a connection and a parser. This also
 	 * creates a reference to the connection's input stream.
@@ -31,20 +28,21 @@ public class ListenerThread extends Thread implements Publisher<Message> {
 	 * @param parser
 	 *            - {@link Parser}
 	 */
-	public ListenerThread(ServerConnection connection, Parser parser) {
-
+	public ListenerThread(ServerConnection connection, Parser parser, 
+					      Map<UUID, Consumer<Message>> callbacks,
+					      ExecutorService threadPool) {
 		this.parser = parser;
+		this.callbacks = callbacks;
+		this.threadPool = threadPool;
 		this.running = false;
-		this.subscribers = new LinkedList<Subscriber<? super Message>>();
 		try {
 			this.isr = new InputStreamReader(connection.getSocket().getInputStream());
 			this.br = new BufferedReader(isr);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 	}
-
+	
 	@Override
 	/**
 	 * Sets running and starts this thread.
@@ -70,16 +68,27 @@ public class ListenerThread extends Thread implements Publisher<Message> {
 		String json;
 		while (running) {
 			try {
+				// Read message from server
 				json = this.br.readLine();
 				
 				if (VERBOSE) {
-					System.out.println(json);
+					System.out.println("ListenerThread received message: " + json);
 				}
 				
-				Message data = this.parser.parse(json);
+				Message message = this.parser.parse(json);
 				
-				publish(data);
-				
+				if (message.isResponse()) {
+					// Handle responses
+					threadPool.execute(() -> {
+						UUID id = message.getMessageID();
+						Consumer<Message> callback = ListenerThread.this.callbacks.remove(id);
+						if (callback != null) {
+							callback.accept(message);
+						}
+					});
+				} else {
+					// TODO Handle requests
+				}
 			} catch (IOException e) {
 				System.err.println("This breaks as part of a loop and just goes back to listening.");
 				e.printStackTrace();
@@ -87,25 +96,4 @@ public class ListenerThread extends Thread implements Publisher<Message> {
 		}
 	}
 
-	/**
-	 * Publishes input to subscriber.
-	 * @param data
-	 */
-	private void publish(Message data) {
-		for (Subscriber<? super Message> s : this.subscribers) {
-			if (VERBOSE) {
-				System.out.println("THREAD POOL:");
-				System.out.println(s.toString());
-			}
-			s.onNext(data);
-		}
-	}
-
-	@Override
-	/**
-	 * Adds as a subscriber to be send publications.
-	 */
-	public void subscribe(Subscriber<? super Message> subscriber) {
-		this.subscribers.add(subscriber);
-	}
 }

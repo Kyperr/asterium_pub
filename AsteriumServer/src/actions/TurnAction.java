@@ -8,7 +8,6 @@ public class TurnAction extends RequestAction {
 
 	public TurnAction(Session callingSession, UUID messageID) {
 		super(Action.TURN, callingSession, messageID);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

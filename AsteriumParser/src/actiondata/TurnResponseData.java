@@ -5,7 +5,7 @@ import org.json.JSONObject;
 public class TurnResponseData extends AbstractResponseActionData {
 
 	public TurnResponseData() {
-		super(ActionData.TURN_RESPONSE);
+		super(ActionData.TURN);
 	}
 
 	@Override

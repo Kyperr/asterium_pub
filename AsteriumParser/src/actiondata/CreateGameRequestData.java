@@ -13,7 +13,7 @@ import org.json.JSONObject;
 public class CreateGameRequestData extends AbstractRequestActionData {
 
 	public CreateGameRequestData() {
-		super(CREATE_GAME);
+		super(ActionData.CREATE_GAME);
 	}
 
 	@Override

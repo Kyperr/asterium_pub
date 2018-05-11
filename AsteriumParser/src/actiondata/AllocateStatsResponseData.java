@@ -5,7 +5,7 @@ import org.json.JSONObject;
 public class AllocateStatsResponseData extends AbstractResponseActionData {
 
 	public AllocateStatsResponseData() {
-		super(ALLOCATE_STATS_RESPONSE);
+		super(ActionData.ALLOCATE_STATS);
 	}
 
 	@Override

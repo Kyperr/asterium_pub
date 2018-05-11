@@ -31,10 +31,12 @@ public class TurnRequestData extends AbstractRequestActionData {
 	}
 
 	public class Location {
+		private String roomID;
 
 	}
 
 	public class Activity {
+		private String name;
 
 	}
 }

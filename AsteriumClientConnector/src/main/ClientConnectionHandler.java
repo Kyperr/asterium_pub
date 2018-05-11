@@ -1,49 +1,52 @@
 package main;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
 import message.Message;
 
-/**
- * An object that is used to establish and maintain a connection to the server as well as send messages.
- * 
- *
- */
 public class ClientConnectionHandler {
-
-	private static int PORT = 25632;
-	private static int NUMBER_OF_SENDER_THREADS = 1;
-
-	private ServerConnection serverConnection;
-	private Parser parser;
+	private static ExecutorService threadPool = Executors.newCachedThreadPool();
+	
+	private final Map<UUID, Consumer<Message>> callbacks;
 	private ListenerThread listener;
-	private SenderThreadPool senders;
-
-	/**
-	 * Creates a ClientConnectionHandler. This creates a {@link ServerConnection}, a
-	 * {@link Parser}, a {@link ListenerThread}, and a {@link SenderThreadPool}.
-	 */
-	public ClientConnectionHandler(final String address, int port) {
-
-		this.serverConnection = new ServerConnection(address, port);
+	private Parser parser;
+	private PrintWriter output;
+	private ServerConnection connection;
+	
+	public ClientConnectionHandler(final String address, final int port) {
+		// Establish connection with server
+		this.connection = new ServerConnection(address, port);
+		
+		// Establish socket with server
+		try {
+			this.output = new PrintWriter(connection.getSocket().getOutputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		// Instantiate instance variables
 		this.parser = new Parser();
-
-		this.listener = new ListenerThread(serverConnection, parser);
-
-		this.senders = new SenderThreadPool(serverConnection, parser, listener, NUMBER_OF_SENDER_THREADS);
-
+		this.callbacks = new HashMap<UUID, Consumer<Message>>();
+		this.listener = new ListenerThread(this.connection, this.parser, this.callbacks, ClientConnectionHandler.threadPool);
 		this.listener.start();
 	}
-
-	/**
-	 * This method will send the {@link String} to the connection specified in the
-	 * constructor. The {@link Consumer} that is specified will be registered and
-	 * called upon response from the server.
-	 * 
-	 * @param json
-	 * @param responseAction
-	 */
-	public void sendJSON(final String json, final Consumer<Message> responseAction) {
-		this.senders.send(json, responseAction);
+	
+	public void send(final String json, final Consumer<Message> responseAction) {
+		threadPool.execute(() -> {
+			// Put the responseAction in callbacks, keyed off of the message ID.
+			System.out.println(ClientConnectionHandler.this.parser.toString());
+			ClientConnectionHandler.this.callbacks.put(ClientConnectionHandler.this.parser.getMessageID(json), responseAction);
+			
+			// Send json to server
+			ClientConnectionHandler.this.output.println(json);
+			ClientConnectionHandler.this.output.flush();
+		});
 	}
 }
