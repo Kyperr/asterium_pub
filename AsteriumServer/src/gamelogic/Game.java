@@ -116,6 +116,7 @@ public class Game extends Thread {
 	 * The game's map of turn actions. Maps players to their turn action(s).
 	 */
 	private final Map<Player, Runnable> turnActionMap = new ConcurrentHashMap<Player, Runnable>() {
+		private static final long serialVersionUID = 1L;
 
 		@Override
 		public Runnable put(Player player, Runnable runnable) {

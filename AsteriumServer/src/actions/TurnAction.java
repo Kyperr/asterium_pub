@@ -6,7 +6,7 @@ import sessionmanagement.SessionManager.Session;
 
 public class TurnAction extends RequestAction {
 
-	public TurnAction(Session callingSession, UUID messageID) {
+	public TurnAction(final Session callingSession, final UUID messageID) {
 		super(Action.TURN, callingSession, messageID);
 	}
 

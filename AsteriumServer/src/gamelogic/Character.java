@@ -18,6 +18,10 @@ public class Character {
 		return this.characterName;
 	}
 	
+	public final Stats getStats() {
+		return stats;
+	}
+	
 	public void setCharacterName(final String name) {
 		this.characterName = name;
 	}
@@ -32,9 +36,7 @@ public class Character {
 		private int intuition;
 		
 		public Stats() {
-			this.luck = DEFAULT_STARTING_STAT;
-			this.stamina = DEFAULT_STARTING_STAT;
-			this.intuition = DEFAULT_STARTING_STAT;
+			this(DEFAULT_STARTING_STAT, DEFAULT_STARTING_STAT, DEFAULT_STARTING_STAT);
 		}
 		
 		public Stats(final int luck, final int stamina, final int intuition) {
@@ -66,7 +68,7 @@ public class Character {
 			this.stamina = stamina;
 		}
 		
-		public void setIntuition(final int inuition) {
+		public void setIntuition(final int intuition) {
 			this.intuition = intuition;
 		}
 		

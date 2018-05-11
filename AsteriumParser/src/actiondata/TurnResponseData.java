@@ -10,8 +10,12 @@ public class TurnResponseData extends AbstractResponseActionData {
 
 	@Override
 	public JSONObject jsonify() {
-		// TODO Auto-generated method stub
-		return null;
+		JSONObject data = new JSONObject();
+		return data;
+	}
+	
+	public static TurnResponseData parseArgs(final JSONObject jsonObj) {
+		return new TurnResponseData();
 	}
 
 }

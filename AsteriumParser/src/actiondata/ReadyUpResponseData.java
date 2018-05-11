@@ -14,7 +14,7 @@ public class ReadyUpResponseData extends AbstractResponseActionData{
 		return data;
 	}
 	
-	public static ReadyUpResponseData parseArgs() {
+	public static ReadyUpResponseData parseArgs(final JSONObject jsonObj) {
 		return new ReadyUpResponseData();
 	}
 

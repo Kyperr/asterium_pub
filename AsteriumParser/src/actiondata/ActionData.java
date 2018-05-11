@@ -28,6 +28,10 @@ public interface ActionData {
 	public static final String STATS = "stats";
 	public static final String GAMEBOARD_DATA = "gameboard_data";
 	public static final String AUTH_TOKEN = "auth_token";
+	public static final String ACTIVITY = "activity";
+	public static final String ACTIVITY_NAME = "activity_name";
+	public static final String LOCATION = "location";
+	public static final String ROOM_ID = "room_id"; 
 	
 	/**
 	 * 
