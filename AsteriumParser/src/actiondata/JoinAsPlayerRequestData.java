@@ -27,7 +27,7 @@ public class JoinAsPlayerRequestData extends AbstractRequestActionData {
 
 		JSONObject data = new JSONObject();
 
-		data.put(ActionData.JOIN_AS_PLAYER, this.lobbyID);
+		data.put(ActionData.LOBBY_ID, this.lobbyID);
 
 		data.put(ActionData.PLAYER_DATA, this.playerData.jsonify());
 
