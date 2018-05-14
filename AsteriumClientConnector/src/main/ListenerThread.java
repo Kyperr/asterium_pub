@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 
@@ -13,10 +14,9 @@ import message.Message;
 public class ListenerThread extends Thread {
 	public static final boolean VERBOSE = false;
 	private boolean running;
-	private InputStreamReader isr;
-	private BufferedReader br;
 	private Parser parser;
-	private final Map<UUID, Consumer<Message>> callbacks;
+	private final Map<String, Consumer<Message>> requestCallbacks;
+	private final Map<UUID, Consumer<Message>> responseCallbacks;
 	private ExecutorService threadPool;
 	
 	/**
@@ -28,19 +28,15 @@ public class ListenerThread extends Thread {
 	 * @param parser
 	 *            - {@link Parser}
 	 */
-	public ListenerThread(ServerConnection connection, Parser parser, 
-					      Map<UUID, Consumer<Message>> callbacks,
+	public ListenerThread(WebsocketClientEndpoint connection, Parser parser, 
+		      			  ConcurrentHashMap<String, Consumer<Message>> requestCallbacks,
+					      ConcurrentHashMap<UUID, Consumer<Message>> responseCallbacks,
 					      ExecutorService threadPool) {
 		this.parser = parser;
-		this.callbacks = callbacks;
+		this.responseCallbacks = responseCallbacks;
+		this.requestCallbacks = requestCallbacks;
 		this.threadPool = threadPool;
 		this.running = false;
-		try {
-			this.isr = new InputStreamReader(connection.getSocket().getInputStream());
-			this.br = new BufferedReader(isr);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	@Override
@@ -81,13 +77,24 @@ public class ListenerThread extends Thread {
 					// Handle responses
 					threadPool.execute(() -> {
 						UUID id = message.getMessageID();
-						Consumer<Message> callback = ListenerThread.this.callbacks.remove(id);
+						Consumer<Message> callback = ListenerThread.this.responseCallbacks.remove(id);
 						if (callback != null) {
 							callback.accept(message);
+						} else {
+							System.err.println("Error: Response received, but callback not found!");
 						}
 					});
 				} else {
-					// TODO Handle requests
+					// Handle requests
+					threadPool.execute(() -> {
+						String actionName = message.getActionData().getName();
+						Consumer<Message> callback = ListenerThread.this.requestCallbacks.remove(actionName);
+						if (callback != null) {
+							callback.accept(message);
+						} else {
+							System.err.println("Error: Request received, but callback not found!");
+						}
+					});
 				}
 			} catch (IOException e) {
 				System.err.println("This breaks as part of a loop and just goes back to listening.");
