@@ -3,6 +3,14 @@ package actiondata;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import message.Request;
+
+/**
+ * {@link AllocateStatsRequestData} is the representation of data
+ * to be used in a {@link Request} to allocate a character's stats.
+ * 
+ * @author Studio Toozo
+ */
 public class AllocateStatsRequestData extends AbstractRequestActionData {
 
 	private static final String STAMINA = "stamina";
@@ -43,6 +51,13 @@ public class AllocateStatsRequestData extends AbstractRequestActionData {
 		return this.intuition;
 	}
 	
+	/**
+	 * Parses {@link JSONObject} into a {@link AllocateStatsRequestData} object
+	 * 
+	 * @param jsonObj the {@link JSONObject} to be parsed
+	 * @return the {@link AllocateStatsRequestData} object parsed from JSON. 
+	 * @throws JSONException
+	 */
 	public static AllocateStatsRequestData parseArgs(JSONObject jsonObj) throws JSONException{
 		
 		jsonObj = jsonObj.getJSONObject(ActionData.STATS);

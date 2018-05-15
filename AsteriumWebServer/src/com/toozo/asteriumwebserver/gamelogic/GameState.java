@@ -1,7 +1,10 @@
 package com.toozo.asteriumwebserver.gamelogic;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import com.toozo.asteriumwebserver.gamelogic.Character;
 
 /**
  * 
@@ -17,7 +20,17 @@ public class GameState {
 	public GameState() {
 
 	}
-
+	
+	/**
+	 * Gets a {@link Collection} of the {@link Character}s in the game.
+	 * WARNING: Modifications to this Collection will affect the GameState's list of Characters.
+	 * 
+	 * @return Collection<Character> containing the game's Characters.
+	 */
+	public Collection<Character> getCharacters() {
+		return this.playerCharacterMap.values();
+	}
+	
 	public boolean allCharactersReady() {
 		for (Boolean bool : playerReadyMap.values()) {
 			if (!bool) {
@@ -29,6 +42,10 @@ public class GameState {
 	
 	public boolean toggleReady(final String authToken) {
 		return !playerReadyMap.get(playerCharacterMap.get(authToken));
+	}
+	
+	public Character getCharacter(final String auth) {
+		return playerCharacterMap.get(auth);
 	}
 	
 	/**
