@@ -3,6 +3,14 @@ package actiondata;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import message.Request;
+
+/**
+ * {@link TurnRequestData} is the representation of data to 
+ * be used in a {@link Request} from a player to take a turn.
+ * 
+ * @author Studio Toozo
+ */
 public class TurnRequestData extends AbstractRequestActionData {
 
 	private String authToken;
@@ -50,6 +58,13 @@ public class TurnRequestData extends AbstractRequestActionData {
 		return data;
 	}
 
+	/**
+	 * Parses {@link JSONObject} into a {@link TurnRequestData} object
+	 * 
+	 * @param jsonObj the {@link JSONObject} to be parsed
+	 * @return the {@link TurnRequestData} object parsed from JSON. 
+	 * @throws JSONException
+	 */
 	public static TurnRequestData parseArgs(final JSONObject jsonObj) throws JSONException {
 
 		// Getting authToken
@@ -57,7 +72,7 @@ public class TurnRequestData extends AbstractRequestActionData {
 
 		// Get Location object
 		JSONObject locationObj = jsonObj.getJSONObject(ActionData.LOCATION);
-		String roomID = locationObj.getString(ActionData.ROOM_ID);
+		String roomID = locationObj.getString(ActionData.LOCATION_ID);
 		Location location = new Location(roomID);
 
 		// Get activity name
@@ -71,37 +86,57 @@ public class TurnRequestData extends AbstractRequestActionData {
 
 	}
 
+	/**
+	 * {@link Location} is the representation of a Location only for the purpose
+	 * of taking a turn, not for game logic.
+	 * 
+	 * @author Studio Toozo
+	 */
 	public static class Location {
-		private String roomID;
+		private String locationID;
 
-		public Location(final String roomID) {
-			this.roomID = roomID;
+		public Location(final String locationID) {
+			this.locationID = locationID;
+		}
+		
+		public String getLocationID() {
+			return this.locationID;
 		}
 
-		public final String getRoomID() {
-			return roomID;
-		}
-
+		/**
+		 * 
+		 * @return	JSONObject representation of the data.
+		 */
 		public JSONObject jsonify() {
 			JSONObject data = new JSONObject();
 
-			data.put(ActionData.ROOM_ID, this.roomID);
+			data.put(ActionData.LOCATION_ID, this.locationID);
 
 			return data;
 		}
 	}
 
+	/**
+	 * {@link Activity} is the representation of an Activity only for
+	 * the purpose of taking a turn, not for game logic.
+	 * 
+	 * @author Studio Toozo
+	 */
 	public static class Activity {
 		private String name;
 
 		public Activity(final String name) {
 			this.name = name;
 		}
-
-		public final String getName() {
-			return name;
+		
+		public String getActivityName() {
+			return this.name;
 		}
 
+		/**
+		 * 
+		 * @return	JSONObject representation of the data.
+		 */
 		public JSONObject jsonify() {
 			JSONObject data = new JSONObject();
 

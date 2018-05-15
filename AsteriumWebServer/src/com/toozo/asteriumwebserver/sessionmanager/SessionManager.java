@@ -1,15 +1,10 @@
 package com.toozo.asteriumwebserver.sessionmanager;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.Socket;
 import java.security.SecureRandom;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.websocket.Session;
-
-import message.Message;
 
 /**
  * Creates a singleton that stores sessions and is used to acquire {@link Session}s.
