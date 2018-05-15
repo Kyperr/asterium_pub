@@ -1,6 +1,8 @@
 package com.toozo.asteriumwebserver.gamelogic;
 
+import java.awt.Color;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -9,8 +11,10 @@ import java.util.function.Consumer;
 import com.toozo.asteriumwebserver.actions.Action;
 import com.toozo.asteriumwebserver.exceptions.GameFullException;
 
+import actiondata.DisplayBoardRequestData;
+
 /**
- * {@link Game} representing a single game state. 
+ * {@link Game} representing a single game state.
  * 
  * @author Studio Toozo
  */
@@ -18,32 +22,25 @@ public class Game extends Thread {
 
 	// TODO: turn into complex enum?
 	private enum GamePhase {
-		
+
 		PLAYERS_JOINING(Game::playerJoining),
 
-		
 		GAME_INITIALIZING(game -> {
-			
+
 		}),
-		
-		START_SUMMARY(game -> {
-			
-		}),
-		
-		PLAYER_TURNS(game -> {
-			
-		}),
-		
+
+		PLAYER_TURNS(Game::initiatePlayerTurns),
+
 		TURN_RESOLVE(game -> {
-			
+
 		}),
-		
+
 		TURN_SUMMARY(game -> {
-			
+
 		}),
 
 		END_SUMMARY(game -> {
-			
+
 		});
 
 		private final Consumer<Game> phaseSequence;
@@ -177,18 +174,20 @@ public class Game extends Thread {
 				public void run() {
 					// do nothing, this is a "null" action
 				}
-				
+
 			});
 			this.gameState.addPlayer(player.getAuthToken());
 		} else {
 			throw new GameFullException();
 		}
 	}
-	
+
 	/**
-	 * Registers a new {@link GameBoard} in the {@link Game}. They are added to the {@link Game}'s list of GameBoards.
+	 * Registers a new {@link GameBoard} in the {@link Game}. They are added to the
+	 * {@link Game}'s list of GameBoards.
 	 * 
-	 * @param gameBoard The game board client.
+	 * @param gameBoard
+	 *            The game board client.
 	 */
 	public void addGameBoard(final GameBoard gameBoard) {
 		this.gameBoardList.put(gameBoard.getAuthToken(), gameBoard);
@@ -209,6 +208,10 @@ public class Game extends Thread {
 	public Collection<Player> getPlayers() {
 		return playerList.values();
 	}
+	
+	public Collection<GameBoard> getGameBoards() {
+		return this.gameBoardList.values();
+	}
 
 	public Player getPlayer(String authToken) {
 		return playerList.get(authToken);
@@ -221,9 +224,10 @@ public class Game extends Thread {
 	public GameState getGameState() {
 		return gameState;
 	}
-	
-	//============Static <Game> Consumers to be used===================================
-	private static final void playerJoining(Game game){
+
+	// ============Static <Game> Consumers to be
+	// used===================================
+	private static final void playerJoining(Game game) {
 		if (game.getGameState().allCharactersReady()) {
 			// Here is where we would validate game state to make sure everything is ready
 			// to start.
@@ -232,5 +236,39 @@ public class Game extends Thread {
 			// }
 		}
 	}
-	
+
+	private static final void initializeGame(Game game) {
+		// TODO Initialize game
+		game.setGamePhase(GamePhase.PLAYER_TURNS);
+	}
+
+	private static final void initiatePlayerTurns(Game game) {
+		// Construct collection of LocationData
+		Collection<DisplayBoardRequestData.LocationData> locationDatas = new ArrayList<DisplayBoardRequestData.LocationData>();
+		DisplayBoardRequestData.LocationData location;
+		/*
+		for (final Location l : game.getGameState()) {
+			
+		}
+		*/
+		// Construct collection of PlayerData
+		Collection<DisplayBoardRequestData.PlayerData> playerDatas = new ArrayList<DisplayBoardRequestData.PlayerData>();
+		DisplayBoardRequestData.PlayerData player;
+		for (final Character c : game.getGameState().getCharacters()) {
+			player = new DisplayBoardRequestData.PlayerData(c.getCharacterName(), 
+															Color.WHITE, 
+															1);
+		}
+		// Construct collection of VictoryData
+		// ActionData displayBoardRequestData = new DisplayBoardRequestData();
+		// Message displayBoardMessage = new Request(displayBoardRequestData,
+		// "DanielSaysToLeaveTheAuthTokenBlank");
+
+		for (GameBoard gameBoard : game.getGameBoards()) {
+			// gameBoard.getSession().sendMessage(displayBoardMessage);
+		}
+		// TODO Send DisplayOptions to all players
+		game.setGamePhase(GamePhase.TURN_RESOLVE);
+	}
+
 }

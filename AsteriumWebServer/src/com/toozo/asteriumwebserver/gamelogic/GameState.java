@@ -1,5 +1,6 @@
 package com.toozo.asteriumwebserver.gamelogic;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -42,5 +43,9 @@ public class GameState {
 		
 		this.playerCharacterMap.put(playerAuth, character);
 		this.playerReadyMap.put(character, false);
+	}
+	
+	public Collection<Character> getCharacters() {
+		return this.playerCharacterMap.values();
 	}
 }
