@@ -1,5 +1,6 @@
 package com.toozo.asteriumwebserver.gamelogic;
 
+import java.awt.Color;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,8 +12,7 @@ import java.util.function.Consumer;
 import com.toozo.asteriumwebserver.actions.Action;
 import com.toozo.asteriumwebserver.exceptions.GameFullException;
 
-//import actiondata.DisplayBoardRequestData;
-import javafx.scene.paint.Color;
+import actiondata.DisplayBoardRequestData;
 
 /**
  * {@link Game} representing a single game state.
@@ -25,7 +25,7 @@ public class Game extends Thread {
 	private enum GamePhase {
 
 		PLAYERS_JOINING(Game::playerJoining),
-
+		
 		GAME_INITIALIZING(Game::initializeGame),
 
 		PLAYER_TURNS(Game::initiatePlayerTurns),
@@ -230,7 +230,7 @@ public class Game extends Thread {
 	public Collection<Player> getPlayers() {
 		return playerList.values();
 	}
-
+	
 	public Collection<GameBoard> getGameBoards() {
 		return this.gameBoardList.values();
 	}
@@ -269,22 +269,30 @@ public class Game extends Thread {
 	
 	private static final void initiatePlayerTurns(Game game) {
 		// Construct collection of LocationData
-		
+		Collection<DisplayBoardRequestData.LocationData> locationDatas = new ArrayList<DisplayBoardRequestData.LocationData>();
+		DisplayBoardRequestData.LocationData location;
+		/*
+		for (final Location l : game.getGameState()) {
+			
+		}
+		*/
 		// Construct collection of PlayerData
-		/*Collection<DisplayBoardRequestData.PlayerData> playerDatas = new ArrayList<DisplayBoardRequestData.PlayerData>();
+		Collection<DisplayBoardRequestData.PlayerData> playerDatas = new ArrayList<DisplayBoardRequestData.PlayerData>();
 		DisplayBoardRequestData.PlayerData player;
 		for (final Character c : game.getGameState().getCharacters()) {
-			player = new DisplayBoardRequestData.PlayerData(c.getCharacterName(),
-															Color.rgb(255, 255, 255),
+			player = new DisplayBoardRequestData.PlayerData(c.getCharacterName(), 
+															Color.WHITE, 
 															1);
-		}*/
-		// Construct collection of VictoryData
-		//ActionData displayBoardRequestData = new DisplayBoardRequestData();
-		//Message displayBoardMessage = new Request(displayBoardRequestData, "DanielSaysToLeaveTheAuthTokenBlank");
-		
-		for (GameBoard gameBoard : game.getGameBoards()) {
-			//gameBoard.getSession().sendMessage(displayBoardMessage);
 		}
+		// Construct collection of VictoryData
+		// ActionData displayBoardRequestData = new DisplayBoardRequestData();
+		// Message displayBoardMessage = new Request(displayBoardRequestData,
+		// "DanielSaysToLeaveTheAuthTokenBlank");
+
+		for (GameBoard gameBoard : game.getGameBoards()) {
+			// gameBoard.getSession().sendMessage(displayBoardMessage);
+		}
+		
 		// TODO Send DisplayOptions to all players
 		game.setGamePhase(GamePhase.TURN_RESOLVE);
 	}

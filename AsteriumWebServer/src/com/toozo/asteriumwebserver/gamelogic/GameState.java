@@ -60,4 +60,8 @@ public class GameState {
 		this.playerCharacterMap.put(playerAuth, character);
 		this.playerReadyMap.put(character, false);
 	}
+	
+	public Collection<Character> getCharacters() {
+		return this.playerCharacterMap.values();
+	}
 }

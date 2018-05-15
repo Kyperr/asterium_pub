@@ -39,9 +39,9 @@ public interface ActionData {
 	public static final String ACTIVITY_NAME = "activity_name";
 	public static final String LOCATION = "location";
 	public static final String LOCATIONS = "locations";
-	public static final String LOCATION_ID = "location_id";
 	public static final String MAP_LOCATION = "map_location";
 	public static final String TYPE = "type";
+	public static final String LOCATION_ID = "location_id";
 	public static final String ROOM_ID = "room_id"; 
 	public static final String CURRENT_VALUE = "current_value";
 	public static final String MAX_VALUE = "max_value";

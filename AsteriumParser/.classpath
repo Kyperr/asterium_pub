@@ -17,6 +17,9 @@
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
+		<accessrules>
+			<accessrule kind="accessible" pattern="javafx/scene/paint/**;"/>
+		</accessrules>
 	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
