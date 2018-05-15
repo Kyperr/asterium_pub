@@ -31,6 +31,7 @@ socket.onmessage = function (message) {
 };
 
 
+
 //**********SENDING FUNCTIONS**********
 
 function joinAsPlayer() {
@@ -65,7 +66,6 @@ function joinAsPlayer() {
         } else {
             console.log("Failed to join lobby, error_code: " + response.error_code);
         }
-        location.reload();
     }
 
     socket.send(JSON.stringify(message));
