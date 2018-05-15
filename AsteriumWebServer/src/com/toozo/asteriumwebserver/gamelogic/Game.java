@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
@@ -24,10 +25,8 @@ public class Game extends Thread {
 	private enum GamePhase {
 
 		PLAYERS_JOINING(Game::playerJoining),
-
-		GAME_INITIALIZING(game -> {
-
-		}),
+		
+		GAME_INITIALIZING(Game::initializeGame),
 
 		PLAYER_TURNS(Game::initiatePlayerTurns),
 
@@ -40,6 +39,10 @@ public class Game extends Thread {
 		}),
 
 		END_SUMMARY(game -> {
+
+		}),
+
+		START_SUMMARY(game -> {
 
 		});
 
@@ -56,6 +59,25 @@ public class Game extends Thread {
 	}
 
 	// ===================Static Vars========================================
+	/*
+	 * The locations that make up the game map
+	 */
+	private static Map<String, Location> locations = new HashMap<String, Location>();
+
+	// Initialize the locations
+	{
+		// Make a new location
+		Location home = new Location(Location.LocationType.CONTROL_ROOM);
+		// Make a new room with a room id and location
+		locations.put("1", home);
+
+		Location med_bay = new Location(Location.LocationType.MED_BAY);
+		med_bay.addActivity(Activity.SEARCH, Activity.searchActivity);
+
+		locations.put("2", med_bay);
+		locations.put("3", med_bay);
+	};
+
 	/*
 	 * The character set used to generate random strings.
 	 */
@@ -213,6 +235,10 @@ public class Game extends Thread {
 		return this.gameBoardList.values();
 	}
 
+	public Location getLocation(String locationID) {
+		return Game.locations.get(locationID);
+	}
+
 	public Player getPlayer(String authToken) {
 		return playerList.get(authToken);
 	}
@@ -225,8 +251,7 @@ public class Game extends Thread {
 		return gameState;
 	}
 
-	// ============Static <Game> Consumers to be
-	// used===================================
+	//============Static <Game> Consumers to be used===================================
 	private static final void playerJoining(Game game) {
 		if (game.getGameState().allCharactersReady()) {
 			// Here is where we would validate game state to make sure everything is ready
@@ -236,12 +261,12 @@ public class Game extends Thread {
 			// }
 		}
 	}
-
+	
 	private static final void initializeGame(Game game) {
 		// TODO Initialize game
 		game.setGamePhase(GamePhase.PLAYER_TURNS);
 	}
-
+	
 	private static final void initiatePlayerTurns(Game game) {
 		// Construct collection of LocationData
 		Collection<DisplayBoardRequestData.LocationData> locationDatas = new ArrayList<DisplayBoardRequestData.LocationData>();
@@ -267,6 +292,7 @@ public class Game extends Thread {
 		for (GameBoard gameBoard : game.getGameBoards()) {
 			// gameBoard.getSession().sendMessage(displayBoardMessage);
 		}
+		
 		// TODO Send DisplayOptions to all players
 		game.setGamePhase(GamePhase.TURN_RESOLVE);
 	}

@@ -3,35 +3,33 @@ package com.toozo.asteriumwebserver.actions;
 import java.io.IOException;
 import java.util.UUID;
 
-import actiondata.ErroredResponseData;
-import actiondata.ReadyUpResponseData;
+import com.toozo.asteriumwebserver.gamelogic.Character;
+import com.toozo.asteriumwebserver.gamelogic.Character.Stats;
 import com.toozo.asteriumwebserver.gamelogic.Game;
 import com.toozo.asteriumwebserver.gamelogic.GameManager;
 import com.toozo.asteriumwebserver.gamelogic.GameState;
-import com.toozo.asteriumwebserver.gamelogic.Player;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
+import actiondata.AllocateStatsResponseData;
+import actiondata.ErroredResponseData;
 import message.Message;
 import message.Response;
 
-/**
- * Action which allows a {@link Player} to indicate that their {@link Character} is ready, and
- * they are ready for the {@link Game} to start. Performed in the PLAYERS_JOINING phase.
- * 
- * @author Studio Toozo
- */
-public class ReadyUpAction extends RequestAction {
+public class AllocateStatsAction extends RequestAction {
 
-	public ReadyUpAction(final String authToken, final UUID messageID) {
-		super(Action.READY_UP, authToken, messageID);
+	private Integer stamina;
+	private Integer luck;
+	private Integer intuition;
+	
+	public AllocateStatsAction(final String authToken, final UUID messageID, 
+							   final Integer stamina, final Integer luck, final Integer intuition) {
+		super(Action.ALLOCATE_STATS, authToken, messageID);
+		this.stamina = stamina;
+		this.luck = luck;
+		this.intuition = intuition;
 	}
 
 	@Override
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * Toggles the ready status for a {@link Player}.
-	 */
 	protected void doAction() {
 		String auth = getCallingAuthToken();
 		Game game = GameManager.getInstance().getGameForPlayer(auth);
@@ -39,8 +37,12 @@ public class ReadyUpAction extends RequestAction {
 		// Check to see if the player auth token was invalid / they are not a real player
 		if (game != null) {
 			GameState state = game.getGameState();
-			state.toggleReady(auth);
-			ReadyUpResponseData data = new ReadyUpResponseData();
+			
+			Character character = state.getCharacter(auth);
+			Stats stats = new Stats(this.stamina, this.luck, this.intuition);
+			character.setStats(stats);
+			
+			AllocateStatsResponseData data = new AllocateStatsResponseData();			
 			message = new Response(data, 0, this.getMessageID(), this.getCallingAuthToken());
 		} else {
 			ErroredResponseData ead = new ErroredResponseData(this.getName());
@@ -56,14 +58,8 @@ public class ReadyUpAction extends RequestAction {
 		}
 	}
 	
-	/**
-	 * Get a {@link ReadyUpAction} based on message.
-	 * 
-	 * @param message the {@link Message} containing the {@link ReadyUpAction}.
-	 * @return a {@link ReadyUpAction} containing the data from message.
-	 */
-	public static ReadyUpAction fromMessage(final Message message) {
-		return new ReadyUpAction(message.getAuthToken(), message.getMessageID());
+	public static AllocateStatsAction fromMessage(final Message message) {
+		return null;
 	}
 
 }
