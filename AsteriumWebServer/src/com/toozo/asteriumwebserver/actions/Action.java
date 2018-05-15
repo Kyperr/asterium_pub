@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import javax.websocket.Session;
+import javax.xml.ws.soap.AddressingFeature.Responses;
 
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
@@ -17,6 +17,7 @@ import actiondata.ErroredResponseData;
 import actiondata.JoinAsGameBoardRequestData;
 import actiondata.JoinAsPlayerRequestData;
 import message.Message;
+import message.Request;
 import message.Response;
 
 /**
@@ -29,25 +30,13 @@ public abstract class Action implements Runnable {
 
 	// ==== CONSTANTS ====
 	public static final String JOIN_AS_PLAYER = "join_as_player";
-	public static final String JOIN_AS_PLAYER_RESPONSE = "join_as_player_response";
-
 	public static final String JOIN_AS_GAMEBOARD = "join_as_gameboard";
-	public static final String JOIN_AS_GAMEBOARD_RESPONSE = "join_as_gameboard_response";
-
 	public static final String CREATE_GAME = "create_game";
-	public static final String CREATE_GAME_RESPONSE = "create_game_response";
-
 	public static final String READY_UP = "ready_up";
-	public static final String READY_UP_RESPONSE = "ready_up_response";
-
 	public static final String PLAYER_SYNC = "player_sync";
-	public static final String PLAYER_SYNC_RESPONSE = "player_sync_response";
-
 	public static final String ALLOCATE_STATS = "allocate_stats";
-	public static final String ALLOCATE_STATS_RESPONSE = "allocate_stats_response";
-
 	public static final String TURN = "turn";
-	public static final String TURN_RESPONSE = "turn_response";
+	public static final String SYNC_LOCATIONS = "sync_locations";
 
 	public static final boolean VERBOSE = true;
 	// ===================

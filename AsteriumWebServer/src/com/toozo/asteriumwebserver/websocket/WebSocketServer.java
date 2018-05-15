@@ -14,13 +14,10 @@ import javax.websocket.server.ServerEndpoint;
 import org.json.JSONException;
 
 import com.toozo.asteriumwebserver.actions.Action;
-import com.toozo.asteriumwebserver.actions.SendErrorAction;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
-import actiondata.ErroredResponseData;
 import main.Parser;
 import message.Message;
-import message.Response;
 
 @ServerEndpoint("/Game")
 public class WebSocketServer {
