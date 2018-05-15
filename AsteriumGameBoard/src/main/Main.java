@@ -15,7 +15,7 @@ import message.Request;
 public class Main {
 	public static final boolean VERBOSE = true;
 
-	private static final String SERVER_ADDRESS = "ws://localhost:8080/AsteriumWebServer/Game";
+	private static final String SERVER_ADDRESS = "ws://localhost:8080/AsteriumWebServer/Game/";
 	
 	/**
 	 * Creates a game.
