@@ -32,11 +32,17 @@ public interface ActionData {
 	public static final String PLAYER_DATA = "player_data";
 	public static final String PLAYERS = "players";
 	public static final String STATS = "stats";
+	public static final String HEALTH = "health";
+	public static final String STAMINA = "stamina";
+	public static final String LUCK = "luck";
+	public static final String INTUITION = "intuition";	
 	public static final String GAMEBOARD_DATA = "gameboard_data";
 	public static final String AUTH_TOKEN = "auth_token";
 	public static final String ACTIVITY = "activity";
 	public static final String ACTIVITIES = "activities";
 	public static final String ACTIVITY_NAME = "activity_name";
+	public static final String CHARACTER = "character";
+	public static final String CHARACTER_NAME = "character_name";
 	public static final String LOCATION = "location";
 	public static final String LOCATIONS = "locations";
 	public static final String MAP_LOCATION = "map_location";

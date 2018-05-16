@@ -3,14 +3,15 @@ package com.toozo.asteriumwebserver.actions;
 import java.io.IOException;
 import java.util.UUID;
 
-import actiondata.ErroredResponseData;
-import actiondata.ReadyUpResponseData;
 import com.toozo.asteriumwebserver.gamelogic.Game;
 import com.toozo.asteriumwebserver.gamelogic.GameManager;
 import com.toozo.asteriumwebserver.gamelogic.GameState;
 import com.toozo.asteriumwebserver.gamelogic.Player;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
+import actiondata.ActionData;
+import actiondata.ErroredResponseData;
+import actiondata.SuccessResponseData;
 import message.Message;
 import message.Response;
 
@@ -40,7 +41,7 @@ public class ReadyUpAction extends RequestAction {
 		if (game != null) {
 			GameState state = game.getGameState();
 			state.toggleReady(auth);
-			ReadyUpResponseData data = new ReadyUpResponseData();
+			SuccessResponseData data = new SuccessResponseData(ActionData.READY_UP);
 			message = new Response(data, 0, this.getMessageID(), this.getCallingAuthToken());
 		} else {
 			ErroredResponseData ead = new ErroredResponseData(this.getName());

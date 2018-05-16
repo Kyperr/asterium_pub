@@ -10,8 +10,9 @@ import com.toozo.asteriumwebserver.gamelogic.GameManager;
 import com.toozo.asteriumwebserver.gamelogic.GameState;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
-import actiondata.AllocateStatsResponseData;
+import actiondata.ActionData;
 import actiondata.ErroredResponseData;
+import actiondata.SuccessResponseData;
 import message.Message;
 import message.Response;
 
@@ -42,7 +43,7 @@ public class AllocateStatsAction extends RequestAction {
 			Stats stats = new Stats(this.stamina, this.luck, this.intuition);
 			character.setStats(stats);
 			
-			AllocateStatsResponseData data = new AllocateStatsResponseData();			
+			SuccessResponseData data = new SuccessResponseData(ActionData.ALLOCATE_STATS);			
 			message = new Response(data, 0, this.getMessageID(), this.getCallingAuthToken());
 		} else {
 			ErroredResponseData ead = new ErroredResponseData(this.getName());
