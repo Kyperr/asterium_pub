@@ -96,15 +96,6 @@ public class JoinAsPlayerRequestData extends AbstractRequestActionData {
 			data.put(ActionData.NAME, this.name);
 			return data;
 		}
-		
-		public boolean equals(final Object other) {
-			if (other instanceof PlayerData) {
-				PlayerData otherPlayerData = (PlayerData) other;
-				return otherPlayerData.name.equals(this.name);
-			} else {
-				return false;
-			}
-		}
 	}
 
 }

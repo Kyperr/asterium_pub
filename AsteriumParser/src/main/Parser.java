@@ -16,6 +16,8 @@ import actiondata.JoinAsGameBoardRequestData;
 import actiondata.JoinAsGameBoardResponseData;
 import actiondata.JoinAsPlayerRequestData;
 import actiondata.JoinAsPlayerResponseData;
+import actiondata.QueryIsInGameRequestData;
+import actiondata.QueryIsInGameResponseData;
 import message.Message;
 import message.Request;
 import message.Response;
@@ -40,6 +42,9 @@ public class Parser {
 		
 		put(Arrays.asList(true, ActionData.JOIN_AS_GAMEBOARD), JoinAsGameBoardRequestData::parseArgs);
 		put(Arrays.asList(false, ActionData.JOIN_AS_GAMEBOARD), JoinAsGameBoardResponseData::parseArgs);
+
+		put(Arrays.asList(true, ActionData.QUERY_IS_IN_GAME), QueryIsInGameRequestData::parseArgs);
+		put(Arrays.asList(false, ActionData.QUERY_IS_IN_GAME), QueryIsInGameResponseData::parseArgs);
 	}};
 
 	/**
