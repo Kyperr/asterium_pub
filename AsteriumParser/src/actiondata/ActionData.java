@@ -17,10 +17,12 @@ public interface ActionData {
 	public static final String CREATE_GAME = "create_game";
 	public static final String PLAYER_SYNC = "player_sync";
 	public static final String SYNC_LOCATIONS = "sync_locations";
-	public static final String SYNC_PLAYER_LIST = "sync_player_list";
 	public static final String ALLOCATE_STATS = "allocate_stats";
 	public static final String DISPLAY_BOARD = "display_board";
 	public static final String TURN = "turn";
+	
+	//Query action constants
+	public static final String QUERY_IS_IN_GAME = "query_is_in_game";
 	
 	//Field Constants
 	public static final String ACTION_NAME = "action_name";

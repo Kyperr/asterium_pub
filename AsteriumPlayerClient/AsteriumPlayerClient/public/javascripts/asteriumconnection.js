@@ -3,11 +3,7 @@ var socket = new WebSocket("ws://localhost:8080/AsteriumWebServer/Game");
 var responseActions = {};
 var requestActions = {};
 
-
-
-
 socket.onmessage = function (message) {
-
     var jsonObj = JSON.parse(message.data);
     console.log(jsonObj);
     if (jsonObj.hasOwnProperty("response")) {
@@ -30,7 +26,9 @@ socket.onmessage = function (message) {
 
 };
 
-
+socket.onopen = function () {
+    checkIfIsInGame(displayIfIsInGame);
+}
 
 //**********SENDING FUNCTIONS**********
 
@@ -59,10 +57,10 @@ function joinAsPlayer() {
         }
 
     responseActions[uuid] = function (response) {
-
         if (response.error_code == 0) {
             localStorage.setItem("auth_token", response.auth_token);
             console.log("AuthToken acquired: " + localStorage.getItem("auth_token"));
+            checkIfIsInGame(displayIfIsInGame);
         } else {
             console.log("Failed to join lobby, error_code: " + response.error_code);
         }
@@ -72,6 +70,29 @@ function joinAsPlayer() {
 
 }
 
+function checkIfIsInGame(doIfIsInGame){
+    var uuid = genUUID();
+    message =
+        {
+            "request":
+                {
+                    "action_name": "query_is_in_game",
+                    "query_is_in_game":
+                        {},
+                    "auth_token": localStorage.getItem("auth_token"),
+                    "message_id": uuid
+                }
+        }
+    socket.send(JSON.stringify(message));
+    responseActions[uuid] = doIfIsInGame;
+}
+
+//***Server Response Handlers***
+
+//***Server Request Handlers***
+function syncPlayerClientDataRequest(actionData) {
+
+}
 
 //***Utils***
 

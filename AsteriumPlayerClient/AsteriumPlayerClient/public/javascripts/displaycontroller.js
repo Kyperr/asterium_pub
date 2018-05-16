@@ -1,14 +1,16 @@
 
 
-window.onload = function () {
-    var authToken = localStorage.getItem("auth_token");
-    if (authToken == null) {
+
+function displayIfIsInGame(request) {
+    console.log("Checking if is in game.");
+    var isInGame = request.query_is_in_game.is_in_game;
+    if (isInGame) {
+        console.log("test2");
+        document.getElementById("centralDiv").innerHTML = "<p>You are currently in a game!";
+    } else {
         console.log("test1");
         document.getElementById("centralDiv").innerHTML = "<p>You should join a lobby.";
         addJoinLobby(document.getElementById("centralDiv"));
-    } else {
-        console.log("test2");
-        document.getElementById("centralDiv").innerHTML = "<p>There is an auth_token: " + authToken;
     }
 };
 
