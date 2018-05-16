@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.toozo.asteriumwebserver.gamelogic.Character;
+import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 
 /**
  * 
@@ -13,21 +13,21 @@ import com.toozo.asteriumwebserver.gamelogic.Character;
 public class GameState {
 
 	/* Map of player auth token to character */
-	private Map<String, Character> playerCharacterMap = new ConcurrentHashMap<String, Character>();
+	private Map<String, PlayerCharacter> playerCharacterMap = new ConcurrentHashMap<String, PlayerCharacter>();
 
-	private Map<Character, Boolean> playerReadyMap = new ConcurrentHashMap<Character, Boolean>();
+	private Map<PlayerCharacter, Boolean> playerReadyMap = new ConcurrentHashMap<PlayerCharacter, Boolean>();
 
 	public GameState() {
 
 	}
 	
 	/**
-	 * Gets a {@link Collection} of the {@link Character}s in the game.
+	 * Gets a {@link Collection} of the {@link PlayerCharacter}s in the game.
 	 * WARNING: Modifications to this Collection will affect the GameState's list of Characters.
 	 * 
 	 * @return Collection<Character> containing the game's Characters.
 	 */
-	public Collection<Character> getCharacters() {
+	public Collection<PlayerCharacter> getCharacters() {
 		return this.playerCharacterMap.values();
 	}
 	
@@ -44,7 +44,7 @@ public class GameState {
 		return !playerReadyMap.get(playerCharacterMap.get(authToken));
 	}
 	
-	public Character getCharacter(final String auth) {
+	public PlayerCharacter getCharacter(final String auth) {
 		return playerCharacterMap.get(auth);
 	}
 	
@@ -55,13 +55,9 @@ public class GameState {
 	 * @param character The new character
 	 */
 	public void addPlayer(final String playerAuth) {
-		Character character = new Character();
+		PlayerCharacter character = new PlayerCharacter();
 		
 		this.playerCharacterMap.put(playerAuth, character);
 		this.playerReadyMap.put(character, false);
-	}
-	
-	public Collection<Character> getCharacters() {
-		return this.playerCharacterMap.values();
 	}
 }
