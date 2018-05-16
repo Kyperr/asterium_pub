@@ -21,6 +21,9 @@ public interface ActionData {
 	public static final String DISPLAY_BOARD = "display_board";
 	public static final String TURN = "turn";
 	
+	//Query action constants
+	public static final String QUERY_IS_IN_GAME = "query_is_in_game";
+	
 	//Field Constants
 	public static final String ACTION_NAME = "action_name";
 	public static final String NAME = "name";
