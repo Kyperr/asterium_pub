@@ -26,12 +26,16 @@ public class Character {
 		this.characterName = name;
 	}
 	
-	private class Stats {
+	public void setStats(final Stats stats) {
+		this.stats = stats;
+	}
+	
+	public static class Stats {
 		private int health = DEFAULT_HEALTH;
 		
-		private int luck;
-		
 		private int stamina;
+		
+		private int luck;
 		
 		private int intuition;
 		
@@ -39,18 +43,18 @@ public class Character {
 			this(DEFAULT_STARTING_STAT, DEFAULT_STARTING_STAT, DEFAULT_STARTING_STAT);
 		}
 		
-		public Stats(final int luck, final int stamina, final int intuition) {
-			this.luck = luck;
+		public Stats(final int stamina, final int luck, final int intuition) {
 			this.stamina = stamina;
+			this.luck = luck;
 			this.intuition = intuition;
-		}
-		
-		public int getLuck() {
-			return this.luck;
 		}
 		
 		public int getStamina() {
 			return this.stamina;
+		}
+		
+		public int getLuck() {
+			return this.luck;
 		}
 		
 		public int getIntuition() {
@@ -61,11 +65,12 @@ public class Character {
 			return this.health;
 		}
 		
-		public void setLuck(final int luck) {
-			this.luck = luck;
-		}
 		public void setStamina(final int stamina) {
 			this.stamina = stamina;
+		}
+		
+		public void setLuck(final int luck) {
+			this.luck = luck;
 		}
 		
 		public void setIntuition(final int intuition) {

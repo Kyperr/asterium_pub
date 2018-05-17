@@ -1,12 +1,12 @@
 extend layout
 block content
 
+  script(src='javascripts/displaycontroller.js')
   script(src='javascripts/gamestate.js')
   script(src='javascripts/asteriumconnection.js')
 
-  
-  include ./joinlobbyform.jade
-              
+  div(id='centralDiv')
+    <p>Loading...
 
 block sidebar
   .widget
