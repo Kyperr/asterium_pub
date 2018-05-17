@@ -1,5 +1,6 @@
 package actiondata;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
@@ -7,9 +8,6 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import actiondata.JoinAsPlayerRequestData.PlayerData;
-import javafx.scene.paint.Color;
 
 /**
  * {@link DisplayBoardRequestData} is the representation of data
@@ -112,7 +110,7 @@ public class DisplayBoardRequestData extends AbstractRequestActionData {
 		for (int i = 0; i < playerArray.length(); i++) {
 			playerObject = playerArray.getJSONObject(i);
 			player = new DisplayBoardRequestData.PlayerData(playerObject.getString(ActionData.NAME), 
-															Color.valueOf(playerObject.getString(ActionData.COLOR)), 
+															Color.getColor(playerObject.getString(ActionData.COLOR)), 
 															playerObject.getInt(ActionData.MAP_LOCATION));
 			players.add(player);
 		}

@@ -27,7 +27,7 @@ public class JoinAsPlayerRequestData extends AbstractRequestActionData {
 
 		JSONObject data = new JSONObject();
 
-		data.put(ActionData.JOIN_AS_PLAYER, this.lobbyID);
+		data.put(ActionData.LOBBY_ID, this.lobbyID);
 
 		data.put(ActionData.PLAYER_DATA, this.playerData.jsonify());
 
@@ -95,15 +95,6 @@ public class JoinAsPlayerRequestData extends AbstractRequestActionData {
 			JSONObject data = new JSONObject();
 			data.put(ActionData.NAME, this.name);
 			return data;
-		}
-		
-		public boolean equals(final Object other) {
-			if (other instanceof PlayerData) {
-				PlayerData otherPlayerData = (PlayerData) other;
-				return otherPlayerData.name.equals(this.name);
-			} else {
-				return false;
-			}
 		}
 	}
 
