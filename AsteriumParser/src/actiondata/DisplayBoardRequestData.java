@@ -97,7 +97,7 @@ public class DisplayBoardRequestData extends AbstractRequestActionData {
 		DisplayBoardRequestData.LocationData location;
 		for (int i = 0; i < locationArray.length(); i++) {
 			locationObject = locationArray.getJSONObject(i);
-			location = new DisplayBoardRequestData.LocationData(locationObject.getInt(ActionData.MAP_LOCATION), 
+			location = new DisplayBoardRequestData.LocationData(locationObject.getString(ActionData.MAP_LOCATION), 
 																locationObject.getString(ActionData.TYPE));
 			locations.add(location);
 		}
@@ -197,15 +197,15 @@ public class DisplayBoardRequestData extends AbstractRequestActionData {
 	 *
 	 */
 	public static class LocationData {
-		private final Integer mapLocation;
+		private final String mapLocation;
 		private final String type;
 
-		public LocationData(final Integer mapLocation, final String type) {
+		public LocationData(final String mapLocation, final String type) {
 			this.mapLocation = mapLocation;
 			this.type = type;
 		}
 		
-		public Integer getMapLocation() {
+		public String getMapLocation() {
 			return this.mapLocation;
 		}
 		

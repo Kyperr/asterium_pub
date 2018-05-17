@@ -1,4 +1,4 @@
-package com.toozo.asteriumwebserver.gamelogic;
+package gamelogic;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +24,7 @@ public class Location {
 		this.activities.put(name, activity);
 	}
 	
-	public void doActivity(String name, Game game, PlayerCharacter character) throws IllegalArgumentException{
+	public void doActivity(String name, Game game, Character character) throws IllegalArgumentException{
 		activities.get(name).doActivity(game, character, this);
 	}
 }
