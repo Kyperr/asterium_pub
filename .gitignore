@@ -22,5 +22,5 @@
 hs_err_pid*
 
 # Maven meta-information
-*/target/classes/META-INF/*
+*/META-INF/*
 /.metadata/

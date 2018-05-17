@@ -1,5 +1,8 @@
 package gamelogic;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -17,7 +20,17 @@ public class GameState {
 	public GameState() {
 
 	}
-
+	
+	/**
+	 * Gets a {@link Collection} of the {@link Character}s in the game.
+	 * WARNING: Modifications to this Collection will affect the GameState's list of Characters.
+	 * 
+	 * @return Collection<Character> containing the game's Characters.
+	 */
+	public Collection<Character> getCharacters() {
+		return this.playerCharacterMap.values();
+	}
+	
 	public boolean allCharactersReady() {
 		for (Boolean bool : playerReadyMap.values()) {
 			if (!bool) {
@@ -43,4 +56,6 @@ public class GameState {
 		this.playerCharacterMap.put(playerAuth, character);
 		this.playerReadyMap.put(character, false);
 	}
+	
+	
 }
