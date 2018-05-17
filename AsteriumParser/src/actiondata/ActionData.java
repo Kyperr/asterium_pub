@@ -18,7 +18,7 @@ public interface ActionData {
 	public static final String PLAYER_SYNC = "player_sync";
 	public static final String SYNC_LOCATIONS = "sync_locations";
 	public static final String ALLOCATE_STATS = "allocate_stats";
-	public static final String DISPLAY_BOARD = "display_board";
+	public static final String SYNC_GAME_BOARD_DATA = "sync_game_board_data";
 	public static final String TURN = "turn";
 	
 	//Query action constants
@@ -49,6 +49,7 @@ public interface ActionData {
 	public static final String LOCATION = "location";
 	public static final String LOCATIONS = "locations";
 	public static final String MAP_LOCATION = "map_location";
+	public static final String COMMUNAL_INVENTORY = "communal_inventory";
 	public static final String TYPE = "type";
 	public static final String LOCATION_ID = "location_id";
 	public static final String ROOM_ID = "room_id"; 

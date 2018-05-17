@@ -63,6 +63,14 @@ public class ClientConnectionHandler {
 		this.responseCallbacks = new ConcurrentHashMap<UUID, Consumer<Message>>();
 	}
 	
+	/**
+	 * Registers a callback function which should be called when a {@link Request} with
+	 * actionName.
+	 * 
+	 * @param actionName The name of the {@link Request} action.
+	 * @param callback The {@link Consumer} which should be called when a 
+	 * 				   request with actionName is received.
+	 */
 	public void registerRequestCallback(String actionName, Consumer<Message> callback) {
 		this.requestCallbacks.put(actionName, callback);
 	}

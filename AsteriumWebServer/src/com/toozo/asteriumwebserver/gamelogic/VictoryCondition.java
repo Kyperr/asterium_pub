@@ -12,6 +12,7 @@ import java.util.function.Function;
 public class VictoryCondition {
 	// ===== CONSTANTS =====
 	public static final String DEFAULT_NAME = "";
+	public static final double COMPLETE_THRESHOLD = 1.0;
 	// =====================
 	
 	// ===== FIELDS =====
@@ -90,9 +91,9 @@ public class VictoryCondition {
 	 * @param game The {@link GameState} which will determine the progress.
 	 * @return The progress of this victory condition, or -1 if progressFunction is null.
 	 */
-	public double getProgress(GameState game) {
+	public double getProgress(GameState state) {
 		if (this.progressFunction != null) {
-			return progressFunction.apply(game);
+			return progressFunction.apply(state);
 		} else {
 			return -1.0;
 		}
@@ -103,6 +104,18 @@ public class VictoryCondition {
 	 */
 	public boolean isActive() {
 		return this.active;
+	}
+	
+	/**
+	 * Note: This method's computational expense is determined by the progressFunction.
+	 * If this value will be reused, store it instead of calling this method repeatedly.
+	 * 
+	 * @param game The {@link GameState} which will determine completion.
+	 * @return True if progressFunction is not null and this 
+	 * 		   VictoryCondition is complete, false otherwise.
+	 */
+	public boolean isComplete(GameState state) {
+		return this.progressFunction != null && this.getProgress(state) >= COMPLETE_THRESHOLD;
 	}
 	// ===================
 	
