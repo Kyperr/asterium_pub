@@ -238,6 +238,10 @@ public class Game extends Thread {
 	public Location getLocation(String locationID) {
 		return Game.locations.get(locationID);
 	}
+	
+	public Collection<Location> getLocations() {
+		return Game.locations.values();
+	}
 
 	public Player getPlayer(String authToken) {
 		return playerList.get(authToken);
@@ -271,26 +275,29 @@ public class Game extends Thread {
 		// Construct collection of LocationData
 		Collection<DisplayBoardRequestData.LocationData> locationDatas = new ArrayList<DisplayBoardRequestData.LocationData>();
 		DisplayBoardRequestData.LocationData location;
-		/*
-		for (final Location l : game.getGameState()) {
-			
+		for (String mapLocation : Game.locations.keySet()) {
+			location = new DisplayBoardRequestData.LocationData(mapLocation, 
+																Game.locations.get(mapLocation).getType().toString());
+			locationDatas.add(location);
 		}
-		*/
+		
 		// Construct collection of PlayerData
 		Collection<DisplayBoardRequestData.PlayerData> playerDatas = new ArrayList<DisplayBoardRequestData.PlayerData>();
 		DisplayBoardRequestData.PlayerData player;
-		for (final Character c : game.getGameState().getCharacters()) {
+		for (final PlayerCharacter c : game.getGameState().getCharacters()) {
 			player = new DisplayBoardRequestData.PlayerData(c.getCharacterName(), 
 															Color.WHITE, 
 															1);
+			playerDatas.add(player);
 		}
+		
 		// Construct collection of VictoryData
 		// ActionData displayBoardRequestData = new DisplayBoardRequestData();
 		// Message displayBoardMessage = new Request(displayBoardRequestData,
 		// "DanielSaysToLeaveTheAuthTokenBlank");
 
 		for (GameBoard gameBoard : game.getGameBoards()) {
-			// gameBoard.getSession().sendMessage(displayBoardMessage);
+			//gameBoard.getSession().sendMessage(displayBoardMessage);
 		}
 		
 		// TODO Send DisplayOptions to all players

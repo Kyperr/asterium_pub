@@ -3,8 +3,8 @@ package com.toozo.asteriumwebserver.actions;
 import java.io.IOException;
 import java.util.UUID;
 
-import com.toozo.asteriumwebserver.gamelogic.Character;
-import com.toozo.asteriumwebserver.gamelogic.Character.Stats;
+import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
+import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter.Stats;
 import com.toozo.asteriumwebserver.gamelogic.Game;
 import com.toozo.asteriumwebserver.gamelogic.GameManager;
 import com.toozo.asteriumwebserver.gamelogic.GameState;
@@ -39,7 +39,7 @@ public class AllocateStatsAction extends RequestAction {
 		if (game != null) {
 			GameState state = game.getGameState();
 			
-			Character character = state.getCharacter(auth);
+			PlayerCharacter character = state.getCharacter(auth);
 			Stats stats = new Stats(this.stamina, this.luck, this.intuition);
 			character.setStats(stats);
 			
