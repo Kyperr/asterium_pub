@@ -10,7 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * {@link DisplayBoardRequestData} is the representation of data
+ * {@link SyncGameBoardDataRequestData} is the representation of data
  * to be used in a {@link Request} to display the game board.
  * 
  * Look on my works, ye mighty, and despair
@@ -18,12 +18,13 @@ import org.json.JSONObject;
  * @author Greg Schmitt
  *
  */
-public class DisplayBoardRequestData extends AbstractRequestActionData {
+public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 	private Integer food;
 	private Integer fuel;
-	private Collection<DisplayBoardRequestData.LocationData> locations;
-	private Collection<DisplayBoardRequestData.PlayerData> players;
-	private Collection<DisplayBoardRequestData.VictoryData> victoryConditions;
+	private Collection<SyncGameBoardDataRequestData.LocationData> locations;
+	private Collection<SyncGameBoardDataRequestData.PlayerData> players;
+	private Collection<SyncGameBoardDataRequestData.VictoryData> victoryConditions;
+	private Collection<SyncGameBoardDataRequestData.ItemData> communalInventory;
 	
 	/**
 	 * Assemble the data for a DisplayBoardRequest.
@@ -34,11 +35,11 @@ public class DisplayBoardRequestData extends AbstractRequestActionData {
 	 * @param players The players to display.
 	 * @param victoryConditions The victory conditions.
 	 */
-	public DisplayBoardRequestData(Integer food, Integer fuel,
-								   Collection<DisplayBoardRequestData.LocationData> locations, 
-								   Collection<DisplayBoardRequestData.PlayerData> players,
-								   Collection<DisplayBoardRequestData.VictoryData> victoryConditions) {
-		super(ActionData.DISPLAY_BOARD);
+	public SyncGameBoardDataRequestData(Integer food, Integer fuel,
+								   Collection<SyncGameBoardDataRequestData.LocationData> locations, 
+								   Collection<SyncGameBoardDataRequestData.PlayerData> players,
+								   Collection<SyncGameBoardDataRequestData.VictoryData> victoryConditions) {
+		super(ActionData.SYNC_GAME_BOARD_DATA);
 		this.food = food;
 		this.fuel = fuel;
 		this.locations = locations;
@@ -56,60 +57,65 @@ public class DisplayBoardRequestData extends AbstractRequestActionData {
 		
 		// Add players to data
 		JSONArray players = new JSONArray();
-		for (DisplayBoardRequestData.PlayerData player : this.players) {
+		for (SyncGameBoardDataRequestData.PlayerData player : this.players) {
 			players.put(player.jsonify());
 		}
 		data.put(ActionData.PLAYERS, players);
 		
 		// Add locations to data
 		JSONArray locations = new JSONArray();
-		for (DisplayBoardRequestData.LocationData location : this.locations) {
+		for (SyncGameBoardDataRequestData.LocationData location : this.locations) {
 			locations.put(location.jsonify());
 		}
 		data.put(ActionData.LOCATIONS, locations);
 		
 		// Add victory conditions to data
 		JSONArray victoryConditions = new JSONArray();
-		for (DisplayBoardRequestData.VictoryData victoryCondition : this.victoryConditions) {
+		for (SyncGameBoardDataRequestData.VictoryData victoryCondition : this.victoryConditions) {
 			victoryConditions.put(victoryCondition.jsonify());
 		}
 		data.put(ActionData.VICTORY_CONDITIONS, victoryConditions);
+		
+		// Add communal inventory to data
+		JSONArray communalInventory = new JSONArray();
+		data.put(ActionData.COMMUNAL_INVENTORY, communalInventory);
+		
 		
 		return data;
 	}
 	
 	/**
-	 * Parses {@link JSONObject} into a {@link DisplayBoardRequestData} object.
+	 * Parses {@link JSONObject} into a {@link SyncGameBoardDataRequestData} object.
 	 * 
 	 * @param jsonObj	the {@link JSONObject} to be parsed
-	 * @return	the {@link DisplayBoardRequestData} object parsed from JSON
+	 * @return	the {@link SyncGameBoardDataRequestData} object parsed from JSON
 	 * @throws JSONException
 	 */
-	public static DisplayBoardRequestData parseArgs(final JSONObject jsonObj) throws JSONException {
+	public static SyncGameBoardDataRequestData parseArgs(final JSONObject jsonObj) throws JSONException {
 		// Parse resources
 		Integer food = jsonObj.getInt(ActionData.FOOD);
 		Integer fuel = jsonObj.getInt(ActionData.FUEL);
 		
 		// Parse array of locations
 		JSONArray locationArray = jsonObj.getJSONArray(ActionData.LOCATIONS);
-		Collection<DisplayBoardRequestData.LocationData> locations = new ArrayList<DisplayBoardRequestData.LocationData>();
+		Collection<SyncGameBoardDataRequestData.LocationData> locations = new ArrayList<SyncGameBoardDataRequestData.LocationData>();
 		JSONObject locationObject;
-		DisplayBoardRequestData.LocationData location;
+		SyncGameBoardDataRequestData.LocationData location;
 		for (int i = 0; i < locationArray.length(); i++) {
 			locationObject = locationArray.getJSONObject(i);
-			location = new DisplayBoardRequestData.LocationData(locationObject.getString(ActionData.MAP_LOCATION), 
+			location = new SyncGameBoardDataRequestData.LocationData(locationObject.getString(ActionData.MAP_LOCATION), 
 																locationObject.getString(ActionData.TYPE));
 			locations.add(location);
 		}
 		
 		// Parse array of players
 		JSONArray playerArray = jsonObj.getJSONArray(ActionData.PLAYERS);
-		Collection<DisplayBoardRequestData.PlayerData> players = new ArrayList<DisplayBoardRequestData.PlayerData>();
+		Collection<SyncGameBoardDataRequestData.PlayerData> players = new ArrayList<SyncGameBoardDataRequestData.PlayerData>();
 		JSONObject playerObject;
-		DisplayBoardRequestData.PlayerData player;
+		SyncGameBoardDataRequestData.PlayerData player;
 		for (int i = 0; i < playerArray.length(); i++) {
 			playerObject = playerArray.getJSONObject(i);
-			player = new DisplayBoardRequestData.PlayerData(playerObject.getString(ActionData.NAME), 
+			player = new SyncGameBoardDataRequestData.PlayerData(playerObject.getString(ActionData.NAME), 
 															Color.getColor(playerObject.getString(ActionData.COLOR)), 
 															playerObject.getInt(ActionData.MAP_LOCATION));
 			players.add(player);
@@ -118,19 +124,19 @@ public class DisplayBoardRequestData extends AbstractRequestActionData {
 		// Parse array of victory conditions
 		// TODO
 		JSONArray victoryArray = jsonObj.getJSONArray(ActionData.VICTORY_CONDITIONS);
-		Collection<DisplayBoardRequestData.VictoryData> victories = new ArrayList<DisplayBoardRequestData.VictoryData>();
+		Collection<SyncGameBoardDataRequestData.VictoryData> victories = new ArrayList<SyncGameBoardDataRequestData.VictoryData>();
 		JSONObject victoryObject;
-		DisplayBoardRequestData.VictoryData victory;
+		SyncGameBoardDataRequestData.VictoryData victory;
 		for (int i = 0; i < victoryArray.length(); i++) {
 			victoryObject = victoryArray.getJSONObject(i);
-			victory = new DisplayBoardRequestData.VictoryData(victoryObject.getString(ActionData.NAME), 
+			victory = new SyncGameBoardDataRequestData.VictoryData(victoryObject.getString(ActionData.NAME), 
 															  victoryObject.getInt(ActionData.CURRENT_VALUE), 
 															  victoryObject.getInt(ActionData.MAX_VALUE));
 			victories.add(victory);
 		}
 		
 		// Construct and return
-		return new DisplayBoardRequestData(food, fuel, locations, players, victories);
+		return new SyncGameBoardDataRequestData(food, fuel, locations, players, victories);
 	}
 	
 	// ===== PLAYER DATA INNER CLASS =====
@@ -224,8 +230,8 @@ public class DisplayBoardRequestData extends AbstractRequestActionData {
 		}
 		
 		public boolean equals(final Object other) {
-			if (other instanceof DisplayBoardRequestData.LocationData) {
-				DisplayBoardRequestData.LocationData otherLocationData = (DisplayBoardRequestData.LocationData) other;
+			if (other instanceof SyncGameBoardDataRequestData.LocationData) {
+				SyncGameBoardDataRequestData.LocationData otherLocationData = (SyncGameBoardDataRequestData.LocationData) other;
 				return otherLocationData.mapLocation.equals(this.mapLocation) &&
 					   otherLocationData.type.equals(this.type);
 			} else {
@@ -278,8 +284,8 @@ public class DisplayBoardRequestData extends AbstractRequestActionData {
 		}
 		
 		public boolean equals(final Object other) {
-			if (other instanceof DisplayBoardRequestData.VictoryData) {
-				DisplayBoardRequestData.VictoryData otherVictoryData = (DisplayBoardRequestData.VictoryData) other;
+			if (other instanceof SyncGameBoardDataRequestData.VictoryData) {
+				SyncGameBoardDataRequestData.VictoryData otherVictoryData = (SyncGameBoardDataRequestData.VictoryData) other;
 				return otherVictoryData.conditionName.equals(this.conditionName) &&
 					   otherVictoryData.currentValue.equals(this.currentValue) &&
 					   otherVictoryData.maxValue.equals(this.maxValue);
@@ -289,4 +295,36 @@ public class DisplayBoardRequestData extends AbstractRequestActionData {
 		}
 	}
 	// =====================================
+	
+	// ===== ITEM DATA INNER CLASS =====
+	public static class ItemData {
+		private final String name;
+		
+		public ItemData(String name) {
+			this.name = name;
+		}
+		
+		public String getName() {
+			return this.name;
+		}
+		
+		/**
+		 * @return	{@link JSONObject} representation of the data.
+		 */
+		public JSONObject jsonify() {
+			JSONObject data = new JSONObject();
+			data.put(ActionData.NAME, this.name);
+			return data;
+		}
+		
+		public boolean equals(final Object other) {
+			if (other instanceof SyncGameBoardDataRequestData.ItemData) {
+				SyncGameBoardDataRequestData.ItemData otherItem = (SyncGameBoardDataRequestData.ItemData) other;
+				return otherItem.name.equals(this.name);
+			} else {
+				return false;
+			}
+		}
+	}
+	// =================================
 }

@@ -1,6 +1,8 @@
-package com.toozo.asteriumwebserver.gamelogic;
+package com.toozo.asteriumwebserver.gamelogic.statuseffects;
 
 import java.util.function.Function;
+
+import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 
 public abstract class StatusEffect {
 	private Function<PlayerCharacter, PlayerCharacter> effect;
