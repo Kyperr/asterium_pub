@@ -15,8 +15,7 @@ import main.ClientConnectionHandler;
  */
 public class GameResources {
 	
-	private static final int PORT = 25632;
-	private static final String LOCAL_HOST = "localhost";	
+	private static final String URI = "ws://localhost:8080/AsteriumWebServer/Game/";	
 	
 	private static String lobbyId = "";
 
@@ -27,7 +26,7 @@ public class GameResources {
 	private static boolean gameWonStatus;
 	
 	public GameResources() {
-		ccHandler = new ClientConnectionHandler(LOCAL_HOST, PORT);
+		ccHandler = new ClientConnectionHandler(URI);
 	}
 	
 	public static void setLobbyId(String id) {
