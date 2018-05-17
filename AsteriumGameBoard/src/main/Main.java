@@ -1,5 +1,8 @@
 package main;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import actiondata.CreateGameRequestData;
 import actiondata.CreateGameResponseData;
 import actiondata.JoinAsGameBoardRequestData;

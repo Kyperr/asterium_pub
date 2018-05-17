@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" 
+		spacing="8.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+		fx:controller="com.toozo.asterium.asteriumgameboard.MenuController">
+   <children>
+        <Button layoutX="50" layoutY="90" text="Get lobby ID" onAction="#handleLobbyIdButtonAction" fx:id="LobbyIdButton" />
+        <Label layoutX="100" layoutY="120" minHeight="16" minWidth="69" fx:id="label" />
+    </children>
+</VBox>
+
+
