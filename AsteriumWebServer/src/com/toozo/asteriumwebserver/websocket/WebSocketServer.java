@@ -14,6 +14,7 @@ import javax.websocket.server.ServerEndpoint;
 import org.json.JSONException;
 
 import com.toozo.asteriumwebserver.actions.Action;
+import com.toozo.asteriumwebserver.gamelogic.GameManager;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
 import main.Parser;
@@ -36,13 +37,15 @@ public class WebSocketServer {
 	public void onMessage(Session session, String message){
 		
 		System.out.println(message);
-		try {
 		Message parsedMessage = new Parser().parse(message);
+		try {
 
 		if(parsedMessage.getAuthToken().isEmpty()) {
 			String authToken = SessionManager.getInstance().registerNewSession(session);
 			parsedMessage.setAuthToken(authToken);
 		}
+
+		SessionManager.getInstance().remapSession(parsedMessage.getAuthToken(), session);
 		
 		Action action = Action.getActionFor(parsedMessage);
 

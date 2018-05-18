@@ -94,4 +94,8 @@ public final class GameManager {
 			return null;
 		}
 	}
+	
+	public Game registerPlayerToGame(final String authToken, Game game) {
+		return playerMap.put(authToken, game);
+	}
 }
