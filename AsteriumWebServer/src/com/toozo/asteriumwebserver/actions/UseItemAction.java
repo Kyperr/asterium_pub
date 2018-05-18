@@ -35,7 +35,7 @@ public class UseItemAction extends Action {
 
 	public UseItemAction(final String authToken, final UUID messageID, final PlayerCharacterData user,
 			final Collection<PlayerCharacterData> targets, final ItemData item, final boolean isCommunal) {
-		super(Action.USE_PERSONAL_ITEM, authToken, messageID);
+		super(Action.USE_ITEM, authToken, messageID);
 		this.userData = user;
 		this.targetsData = targets;
 		this.itemData = item;
@@ -60,16 +60,16 @@ public class UseItemAction extends Action {
 			Item item = Item.getItem(this.itemData.getItemID());
 			if (user != null && item != null && user.getInventory().contains(item)) {
 				item.use(state, user, targets, this.isCommunal);
-				SuccessResponseData data = new SuccessResponseData(Action.USE_PERSONAL_ITEM);
+				SuccessResponseData data = new SuccessResponseData(Action.USE_ITEM);
 				message = new Response(data, 0, this.getMessageID(), auth);
 			} else {
 				// No Such Item In Personal Inventory Error
-				ErroredResponseData data = new ErroredResponseData(Action.USE_PERSONAL_ITEM);
+				ErroredResponseData data = new ErroredResponseData(Action.USE_ITEM);
 				message = new Response(data, SendErrorAction.NO_SUCH_ITEM_IN_PERSONAL_INVENTORY, this.getMessageID(),
 						auth);
 			}
 		} else {
-			ErroredResponseData data = new ErroredResponseData(Action.USE_PERSONAL_ITEM);
+			ErroredResponseData data = new ErroredResponseData(Action.USE_ITEM);
 			message = new Response(data, SendErrorAction.GAME_NOT_FOUND, this.getMessageID(), auth);
 		}
 		// Send the response back to the calling session.

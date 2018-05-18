@@ -20,8 +20,7 @@ public interface ActionData {
 	public static final String ALLOCATE_STATS = "allocate_stats";
 	public static final String SYNC_GAME_BOARD_DATA = "sync_game_board_data";
 	public static final String TURN = "turn";
-	public static final String USE_PERSONAL_ITEM = "use_personal_item";
-	public static final String USE_COMMUNAL_ITEM = "use_communal_item";
+	public static final String USE_ITEM = "use_item";
 	
 	//Query action constants
 	public static final String QUERY_IS_IN_GAME = "query_is_in_game";

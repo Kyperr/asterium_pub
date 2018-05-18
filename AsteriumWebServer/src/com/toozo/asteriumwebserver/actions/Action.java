@@ -43,7 +43,7 @@ public abstract class Action implements Runnable {
 	public static final String ALLOCATE_STATS = "allocate_stats";
 	public static final String TURN = "turn";
 	public static final String SYNC_LOCATIONS = "sync_locations";
-	public static final String USE_PERSONAL_ITEM = "use_personal_item";
+	public static final String USE_ITEM = "use_item";
 
 	public static final boolean VERBOSE = true;
 	// ===================

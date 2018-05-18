@@ -24,7 +24,7 @@ public class UseItemRequestData extends AbstractRequestActionData {
 
 	public UseItemRequestData(final PlayerCharacterData user, final Collection<PlayerCharacterData> targets,
 			final ItemData item, final boolean isCommunal) {
-		super(ActionData.USE_PERSONAL_ITEM);
+		super(ActionData.USE_ITEM);
 		this.user = user;
 		this.targets = targets;
 		this.item = item;
