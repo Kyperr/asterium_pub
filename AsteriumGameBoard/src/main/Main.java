@@ -1,5 +1,8 @@
 package main;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import actiondata.CreateGameRequestData;
 import actiondata.CreateGameResponseData;
 import actiondata.JoinAsGameBoardRequestData;
@@ -12,7 +15,7 @@ import message.Request;
 public class Main {
 	public static final boolean VERBOSE = true;
 
-	private static final String SERVER_ADDRESS = "ws://localhost:8080/AsteriumWebServer/Game";
+	private static final String SERVER_ADDRESS = "ws://localhost:8080/AsteriumWebServer/Game/";
 	
 	/**
 	 * Creates a game.

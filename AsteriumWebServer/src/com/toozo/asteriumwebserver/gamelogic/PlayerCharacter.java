@@ -3,6 +3,8 @@ package com.toozo.asteriumwebserver.gamelogic;
 import java.util.Collection;
 import java.util.HashSet;
 
+import com.toozo.asteriumwebserver.gamelogic.statuseffects.StatusEffect;
+
 public class PlayerCharacter {
 	// ===== CONSTANTS =====
 	private static final int DEFAULT_HEALTH = 10;

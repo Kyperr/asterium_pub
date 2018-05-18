@@ -1,13 +1,19 @@
 package gamelogic;
 
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
+import actiondata.ActionData;
+import actiondata.DisplayBoardRequestData;
 import actions.Action;
 import exceptions.GameFullException;
+import javafx.scene.paint.Color;
+import message.Message;
+import message.Request;
 
 /**
  * {@link Game} representing a single game state. 
@@ -20,19 +26,10 @@ public class Game extends Thread {
 	private enum GamePhase {
 		
 		PLAYERS_JOINING(Game::playerJoining),
-
 		
-		GAME_INITIALIZING(game -> {
-			
-		}),
+		GAME_INITIALIZING(Game::initializeGame),
 		
-		START_SUMMARY(game -> {
-			
-		}),
-		
-		PLAYER_TURNS(game -> {
-			
-		}),
+		PLAYER_TURNS(Game::initiatePlayerTurns),
 		
 		TURN_RESOLVE(game -> {
 			
@@ -209,6 +206,10 @@ public class Game extends Thread {
 	public Collection<Player> getPlayers() {
 		return playerList.values();
 	}
+	
+	public Collection<GameBoard> getGameBoards() {
+		return this.gameBoardList.values();
+	}
 
 	public Player getPlayer(String authToken) {
 		return playerList.get(authToken);
@@ -231,6 +232,33 @@ public class Game extends Thread {
 			game.setGamePhase(GamePhase.GAME_INITIALIZING);
 			// }
 		}
+	}
+	
+	private static final void initializeGame(Game game) {
+		// TODO Initialize game
+		game.setGamePhase(GamePhase.PLAYER_TURNS);
+	}
+	
+	private static final void initiatePlayerTurns(Game game) {
+		// Construct collection of LocationData
+		
+		// Construct collection of PlayerData
+		Collection<DisplayBoardRequestData.PlayerData> playerDatas = new ArrayList<DisplayBoardRequestData.PlayerData>();
+		DisplayBoardRequestData.PlayerData player;
+		for (final Character c : game.getGameState().getCharacters()) {
+			player = new DisplayBoardRequestData.PlayerData(c.getCharacterName(),
+															Color.rgb(255, 255, 255),
+															1);
+		}
+		// Construct collection of VictoryData
+		//ActionData displayBoardRequestData = new DisplayBoardRequestData();
+		//Message displayBoardMessage = new Request(displayBoardRequestData, "DanielSaysToLeaveTheAuthTokenBlank");
+		
+		for (GameBoard gameBoard : game.getGameBoards()) {
+			//gameBoard.getSession().sendMessage(displayBoardMessage);
+		}
+		// TODO Send DisplayOptions to all players
+		game.setGamePhase(GamePhase.TURN_RESOLVE);
 	}
 	
 }
