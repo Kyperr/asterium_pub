@@ -75,8 +75,8 @@ public abstract class AbstractItem {
 	
 	// ===== METHODS =====
 	
-	public static AbstractItem getItem(final String itemName) {		
-		return AbstractItem.ITEM_LOOKUP.get(itemName).get();
+	public static Item getItem(final String itemName) {		
+		return Item.ITEM_LOOKUP.get(itemName).get();
 	}
 	
 	/**
