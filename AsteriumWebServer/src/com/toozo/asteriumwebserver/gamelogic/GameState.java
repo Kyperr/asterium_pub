@@ -30,7 +30,7 @@ public class GameState {
 		this.communalInventory = new Inventory();
 	}
 	// ========================
-	
+
 	// ===== GETTERS =====
 	public PlayerCharacter getCharacter(final String auth) {
 		return playerCharacterMap.get(auth);
@@ -58,6 +58,13 @@ public class GameState {
 	 */
 	public Collection<VictoryCondition> getVictoryConditions() {
 		return this.victoryConditions;
+	}
+	
+	/** 
+	 * @return the communal {@link Inventory} that all players can access.
+	 */
+	public final Inventory getCommunalInventory() {
+		return this.communalInventory;
 	}
 	
 	/**
@@ -90,7 +97,7 @@ public class GameState {
 	 * @param authToken The auth token of the {@link Player}
 	 */
 	public synchronized boolean toggleReady(final String authToken) {
-			Player player = this.game.getPlayer(authToken);
+			//Player player = this.game.getPlayer(authToken);
 			boolean isReady = !playerReadyMap.get(authToken);
 			this.playerReadyMap.put(authToken, isReady);
 			game.executePhase();
@@ -104,7 +111,7 @@ public class GameState {
 	 * @param character The new character
 	 */
 	public void addPlayer(final String playerAuth) {
-		Player player = this.game.getPlayer(playerAuth);
+		//Player player = this.game.getPlayer(playerAuth);
 		PlayerCharacter character = new PlayerCharacter();
 		
 		this.playerCharacterMap.put(playerAuth, character);
