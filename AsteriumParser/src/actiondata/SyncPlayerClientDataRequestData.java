@@ -1,7 +1,9 @@
 package actiondata;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,7 +24,7 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 	private Character character;
 
 	public SyncPlayerClientDataRequestData(final List<LocationData> locations, final Character character) {
-		super(ActionData.SYNC_LOCATIONS);
+		super(ActionData.SYNC_PLAYER_CLIENT_DATA);
 		this.locations = locations;
 		this.character = character;
 	}
@@ -67,14 +69,15 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		for (int i = 0; i < locationsArray.length(); i++) {
 			locationObject = locationsArray.getJSONObject(i);
 			String locationID = locationObject.getString(ActionData.LOCATION_ID);
-			List<String> activities = new ArrayList<String>();
+			String locationType = locationObject.getString(ActionData.LOCATION_TYPE);
+			Set<String> activities = new HashSet<String>();
 			JSONArray activitiesArray = locationObject.getJSONArray(ActionData.ACTIVITIES);			
 			for (int j = 0; j < activitiesArray.length(); j++) {
 				String activity = String.class.cast(activitiesArray.getJSONObject(j));
 				activities.add(activity);
 			}
 			
-			location = new LocationData(locationID, activities);
+			location = new LocationData(locationID, locationType, activities);
 			locations.add(location);
 		}
 
@@ -90,9 +93,9 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 	public static class LocationData {
 
 		private String locationID;
-		private List<String> activities;
+		private Set<String> activities;
 
-		public LocationData(final String locationID, final List<String> activities) {
+		public LocationData(final String locationID, final String locationType, final Set<String> activities) {
 			this.locationID = locationID;
 			this.activities = activities;
 		}

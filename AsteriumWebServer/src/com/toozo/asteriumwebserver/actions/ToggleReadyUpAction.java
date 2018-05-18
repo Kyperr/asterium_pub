@@ -12,6 +12,7 @@ import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 import actiondata.ActionData;
 import actiondata.ErroredResponseData;
 import actiondata.SuccessResponseData;
+import actiondata.ToggleReadyUpResponseData;
 import message.Message;
 import message.Response;
 
@@ -40,8 +41,7 @@ public class ToggleReadyUpAction extends RequestAction {
 		// Check to see if the player auth token was invalid / they are not a real player
 		if (game != null) {
 			GameState state = game.getGameState();
-			state.toggleReady(auth);
-			SuccessResponseData data = new SuccessResponseData(ActionData.TOGGLE_READY_UP);
+			ToggleReadyUpResponseData data = new ToggleReadyUpResponseData(state.toggleReady(auth));
 			message = new Response(data, 0, this.getMessageID(), this.getCallingAuthToken());
 		} else {
 			ErroredResponseData ead = new ErroredResponseData(this.getName());

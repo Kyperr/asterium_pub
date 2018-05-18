@@ -3,12 +3,6 @@
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-<<<<<<< HEAD
-        <dependent-module archiveName="AsteriumParser.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/AsteriumParser/AsteriumParser">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-=======
->>>>>>> 2bf3f056469a661c623d842533a2eed6b82909c7
         <property name="context-root" value="AsteriumWebServer"/>
         <property name="java-output-path" value="/AsteriumWebServer/build/classes"/>
     </wb-module>

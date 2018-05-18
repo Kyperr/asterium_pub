@@ -33,12 +33,10 @@ public class QueryIsInGameAction extends RequestAction {
 		Message message;
 
 		if (game != null) {
-			QueryIsInGameResponseData qiigData = new QueryIsInGameResponseData(true);
-			SuccessResponseData data = new SuccessResponseData(ActionData.QUERY_IS_IN_GAME);
+			QueryIsInGameResponseData data = new QueryIsInGameResponseData(true);
 			message = new Response(data, 0, this.getMessageID(), this.getCallingAuthToken());
 		} else {
-			QueryIsInGameResponseData qiigData = new QueryIsInGameResponseData(false);
-			SuccessResponseData data = new SuccessResponseData(ActionData.QUERY_IS_IN_GAME);
+			QueryIsInGameResponseData data = new QueryIsInGameResponseData(false);
 			message = new Response(data, 0, this.getMessageID(), this.getCallingAuthToken());
 		}
 		// Send the response back to the calling session.

@@ -16,7 +16,7 @@ public class GameState {
 	/* Map of player auth token to character */
 	private Game game;
 	private Map<String, PlayerCharacter> playerCharacterMap;
-	private Map<Player, Boolean> playerReadyMap;
+	private Map<String, Boolean> playerReadyMap;
 	private Collection<VictoryCondition> victoryConditions;
 	private Inventory communalInventory;
 	// ==================
@@ -25,7 +25,7 @@ public class GameState {
 	public GameState(Game game) {
 		this.game = game;
 		this.playerCharacterMap = new ConcurrentHashMap<String, PlayerCharacter>();
-		this.playerReadyMap = new ConcurrentHashMap<Player, Boolean>();
+		this.playerReadyMap = new ConcurrentHashMap<String, Boolean>();
 		this.victoryConditions = new ArrayList<VictoryCondition>();
 		this.communalInventory = new Inventory();
 	}
@@ -70,6 +70,7 @@ public class GameState {
 	public Collection<PlayerCharacter> getCharacters() {
 		return this.playerCharacterMap.values();
 	}
+	
 	// ===================
 	
 	// ===== METHODS =====
@@ -88,9 +89,12 @@ public class GameState {
 	 * 
 	 * @param authToken The auth token of the {@link Player}
 	 */
-	public void toggleReady(final String authToken) {
-		Player player = this.game.getPlayer(authToken);
-		this.playerReadyMap.put(player, !playerReadyMap.get(player));
+	public synchronized boolean toggleReady(final String authToken) {
+			Player player = this.game.getPlayer(authToken);
+			boolean isReady = !playerReadyMap.get(authToken);
+			this.playerReadyMap.put(authToken, isReady);
+			game.executePhase();
+			return isReady;
 	}
 	
 	/**
@@ -104,7 +108,7 @@ public class GameState {
 		PlayerCharacter character = new PlayerCharacter();
 		
 		this.playerCharacterMap.put(playerAuth, character);
-		this.playerReadyMap.put(player, false);
+		this.playerReadyMap.put(playerAuth, false);
 	}
 	
 	/**
@@ -116,4 +120,10 @@ public class GameState {
 		this.communalInventory.add(item);
 	}
 	// ===================
+
+	public void setAllCharactersNotReady() {
+		for(String auth : playerReadyMap.keySet()) {
+			playerReadyMap.put(auth, false);
+		}
+	}
 }

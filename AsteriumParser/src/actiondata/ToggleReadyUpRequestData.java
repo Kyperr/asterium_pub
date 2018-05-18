@@ -12,12 +12,9 @@ import message.Request;
  * @author Studio Toozo
  */
 public class ToggleReadyUpRequestData extends AbstractRequestActionData {
-
-	private final String authToken;
 	
-	public ToggleReadyUpRequestData(final String authToken) {
+	public ToggleReadyUpRequestData() {
 		super(TOGGLE_READY_UP);
-		this.authToken = authToken;
 	}
 
 	@Override
@@ -26,9 +23,6 @@ public class ToggleReadyUpRequestData extends AbstractRequestActionData {
 		return data;
 	}
 	
-	public String getAuthToken() {
-		return this.authToken;
-	}
 	
 	/**
 	 * Parses {@link JSONObject} into a {@link ToggleReadyUpRequestData} object
@@ -38,8 +32,7 @@ public class ToggleReadyUpRequestData extends AbstractRequestActionData {
 	 * @throws JSONException
 	 */
 	public static ToggleReadyUpRequestData parseArgs(final JSONObject jsonObj) throws JSONException {
-		String authToken = jsonObj.getString(AUTH_TOKEN);
-		return new ToggleReadyUpRequestData(authToken);
+		return new ToggleReadyUpRequestData();
 	}
 
 }

@@ -23,19 +23,26 @@ function addJoinLobby(div) {
 }
 
 function displayWaitingForPlayers(div) {
-    div.innerHTML = "Waiting for other players:";
+    div.innerHTML = "Waiting for players to be ready...";
 
     div.appendChild(document.createElement("br"));
 
     var btn = document.createElement("BUTTON");
 
     if (playerIsReady) {
-        btn.innerHTML = 'READY';
-    } else {
         btn.innerHTML = 'UNREADY';
+    } else {
+        btn.innerHTML = 'READY';
     }
 
     btn.setAttribute("onClick", "toggleReady()");
 
     div.appendChild(btn);
+}
+
+function displayLocations(div){
+    div.innerHTML = "Please Select A Location...";
+
+    
+
 }

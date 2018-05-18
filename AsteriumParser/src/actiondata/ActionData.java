@@ -15,10 +15,11 @@ public interface ActionData {
 	public static final String JOIN_AS_GAMEBOARD = "join_as_gameboard";
 	public static final String TOGGLE_READY_UP = "toggle_ready_up";	
 	public static final String CREATE_GAME = "create_game";
+	public static final String ALLOCATE_STATS = "allocate_stats";
 	public static final String PLAYER_SYNC = "player_sync";
 	public static final String SYNC_LOCATIONS = "sync_locations";
-	public static final String ALLOCATE_STATS = "allocate_stats";
 	public static final String SYNC_GAME_BOARD_DATA = "sync_game_board_data";
+	public static final String SYNC_PLAYER_CLIENT_DATA = "sync_player_client_data";
 	public static final String TURN = "turn";
 	public static final String USE_ITEM = "use_item";
 	
@@ -59,6 +60,7 @@ public interface ActionData {
 	public static final String TARGETS = "targets";
 	public static final String ITEM_ID = "item_id";
 	public static final String LOCATION_ID = "location_id";
+	public static final String LOCATION_TYPE = "location_type";
 	public static final String ROOM_ID = "room_id"; 
 	public static final String CURRENT_VALUE = "current_value";
 	public static final String MAX_VALUE = "max_value";
