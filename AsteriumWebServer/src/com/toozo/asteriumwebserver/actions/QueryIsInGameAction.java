@@ -6,25 +6,19 @@ import java.util.UUID;
 import com.toozo.asteriumwebserver.gamelogic.Game;
 import com.toozo.asteriumwebserver.gamelogic.GameManager;
 import com.toozo.asteriumwebserver.gamelogic.GameState;
-import com.toozo.asteriumwebserver.gamelogic.Player;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
 import actiondata.ActionData;
 import actiondata.ErroredResponseData;
+import actiondata.QueryIsInGameResponseData;
 import actiondata.SuccessResponseData;
 import message.Message;
 import message.Response;
 
-/**
- * Action which allows a {@link Player} to indicate that their {@link Character} is ready, and
- * they are ready for the {@link Game} to start. Performed in the PLAYERS_JOINING phase.
- * 
- * @author Studio Toozo
- */
-public class ToggleReadyUpAction extends RequestAction {
+public class QueryIsInGameAction extends RequestAction {
 
-	public ToggleReadyUpAction(final String authToken, final UUID messageID) {
-		super(Action.TOGGLE_READY_UP, authToken, messageID);
+	public QueryIsInGameAction(final String authToken, final UUID messageID) {
+		super(Action.QUERY_IS_IN_GAME, authToken, messageID);
 	}
 
 	@Override
@@ -37,15 +31,15 @@ public class ToggleReadyUpAction extends RequestAction {
 		String auth = getCallingAuthToken();
 		Game game = GameManager.getInstance().getGameForPlayer(auth);
 		Message message;
-		// Check to see if the player auth token was invalid / they are not a real player
+
 		if (game != null) {
-			GameState state = game.getGameState();
-			state.toggleReady(auth);
-			SuccessResponseData data = new SuccessResponseData(ActionData.TOGGLE_READY_UP);
+			QueryIsInGameResponseData qiigData = new QueryIsInGameResponseData(true);
+			SuccessResponseData data = new SuccessResponseData(ActionData.QUERY_IS_IN_GAME);
 			message = new Response(data, 0, this.getMessageID(), this.getCallingAuthToken());
 		} else {
-			ErroredResponseData ead = new ErroredResponseData(this.getName());
-			message = new Response(ead, SendErrorAction.GAME_NOT_FOUND, this.getMessageID(), this.getCallingAuthToken());
+			QueryIsInGameResponseData qiigData = new QueryIsInGameResponseData(false);
+			SuccessResponseData data = new SuccessResponseData(ActionData.QUERY_IS_IN_GAME);
+			message = new Response(data, 0, this.getMessageID(), this.getCallingAuthToken());
 		}
 		// Send the response back to the calling session.
 		try {
@@ -63,8 +57,8 @@ public class ToggleReadyUpAction extends RequestAction {
 	 * @param message the {@link Message} containing the {@link ToggleReadyUpAction}.
 	 * @return a {@link ToggleReadyUpAction} containing the data from message.
 	 */
-	public static ToggleReadyUpAction fromMessage(final Message message) {
-		return new ToggleReadyUpAction(message.getAuthToken(), message.getMessageID());
+	public static QueryIsInGameAction fromMessage(final Message message) {
+		return new QueryIsInGameAction(message.getAuthToken(), message.getMessageID());
 	}
 
 }

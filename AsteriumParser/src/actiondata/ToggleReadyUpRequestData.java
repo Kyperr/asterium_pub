@@ -6,17 +6,17 @@ import org.json.JSONObject;
 import message.Request;
 
 /**
- * {@link ReadyUpRequestData} is the representation of data to 
+ * {@link ToggleReadyUpRequestData} is the representation of data to 
  * be used in a {@link Request} to ready up as a player.
  * 
  * @author Studio Toozo
  */
-public class ReadyUpRequestData extends AbstractRequestActionData {
+public class ToggleReadyUpRequestData extends AbstractRequestActionData {
 
 	private final String authToken;
 	
-	public ReadyUpRequestData(final String authToken) {
-		super(READY_UP);
+	public ToggleReadyUpRequestData(final String authToken) {
+		super(TOGGLE_READY_UP);
 		this.authToken = authToken;
 	}
 
@@ -31,15 +31,15 @@ public class ReadyUpRequestData extends AbstractRequestActionData {
 	}
 	
 	/**
-	 * Parses {@link JSONObject} into a {@link ReadyUpRequestData} object
+	 * Parses {@link JSONObject} into a {@link ToggleReadyUpRequestData} object
 	 * 
 	 * @param jsonObj the {@link JSONObject} to be parsed
-	 * @return the {@link ReadyUpRequestData} object parsed from JSON. 
+	 * @return the {@link ToggleReadyUpRequestData} object parsed from JSON. 
 	 * @throws JSONException
 	 */
-	public static ReadyUpRequestData parseArgs(final JSONObject jsonObj) throws JSONException {
+	public static ToggleReadyUpRequestData parseArgs(final JSONObject jsonObj) throws JSONException {
 		String authToken = jsonObj.getString(AUTH_TOKEN);
-		return new ReadyUpRequestData(authToken);
+		return new ToggleReadyUpRequestData(authToken);
 	}
 
 }

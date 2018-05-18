@@ -16,6 +16,8 @@ import actiondata.CreateGameRequestData;
 import actiondata.ErroredResponseData;
 import actiondata.JoinAsGameBoardRequestData;
 import actiondata.JoinAsPlayerRequestData;
+import actiondata.QueryIsInGameRequestData;
+import actiondata.ToggleReadyUpRequestData;
 import message.Message;
 import message.Request;
 import message.Response;
@@ -32,7 +34,8 @@ public abstract class Action implements Runnable {
 	public static final String JOIN_AS_PLAYER = "join_as_player";
 	public static final String JOIN_AS_GAMEBOARD = "join_as_gameboard";
 	public static final String CREATE_GAME = "create_game";
-	public static final String READY_UP = "ready_up";
+	public static final String TOGGLE_READY_UP = "toggle_ready_up";
+	public static final String QUERY_IS_IN_GAME = "query_is_in_game";
 	public static final String PLAYER_SYNC = "player_sync";
 	public static final String ALLOCATE_STATS = "allocate_stats";
 	public static final String TURN = "turn";
@@ -59,6 +62,8 @@ public abstract class Action implements Runnable {
 			put(JoinAsPlayerRequestData.class, JoinAsPlayerAction::fromMessage);
 			put(JoinAsGameBoardRequestData.class, JoinAsGameBoardAction::fromMessage);
 			put(CreateGameRequestData.class, CreateGameAction::fromMessage);
+			put(QueryIsInGameRequestData.class, QueryIsInGameAction::fromMessage);
+			put(ToggleReadyUpRequestData.class, ToggleReadyUpAction::fromMessage);
 		}
 	};
 

@@ -13,7 +13,7 @@ public interface ActionData {
 	//Action Name Constants
 	public static final String JOIN_AS_PLAYER = "join_as_player";	
 	public static final String JOIN_AS_GAMEBOARD = "join_as_gameboard";
-	public static final String READY_UP = "ready_up";	
+	public static final String TOGGLE_READY_UP = "toggle_ready_up";	
 	public static final String CREATE_GAME = "create_game";
 	public static final String PLAYER_SYNC = "player_sync";
 	public static final String SYNC_LOCATIONS = "sync_locations";
