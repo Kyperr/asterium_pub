@@ -21,10 +21,10 @@ import message.Response;
  * 
  * @author Studio Toozo
  */
-public class ReadyUpAction extends RequestAction {
+public class ToggleReadyUpAction extends RequestAction {
 
-	public ReadyUpAction(final String authToken, final UUID messageID) {
-		super(Action.READY_UP, authToken, messageID);
+	public ToggleReadyUpAction(final String authToken, final UUID messageID) {
+		super(Action.TOGGLE_READY_UP, authToken, messageID);
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public class ReadyUpAction extends RequestAction {
 		if (game != null) {
 			GameState state = game.getGameState();
 			state.toggleReady(auth);
-			SuccessResponseData data = new SuccessResponseData(ActionData.READY_UP);
+			SuccessResponseData data = new SuccessResponseData(ActionData.TOGGLE_READY_UP);
 			message = new Response(data, 0, this.getMessageID(), this.getCallingAuthToken());
 		} else {
 			ErroredResponseData ead = new ErroredResponseData(this.getName());
@@ -58,13 +58,13 @@ public class ReadyUpAction extends RequestAction {
 	}
 	
 	/**
-	 * Get a {@link ReadyUpAction} based on message.
+	 * Get a {@link ToggleReadyUpAction} based on message.
 	 * 
-	 * @param message the {@link Message} containing the {@link ReadyUpAction}.
-	 * @return a {@link ReadyUpAction} containing the data from message.
+	 * @param message the {@link Message} containing the {@link ToggleReadyUpAction}.
+	 * @return a {@link ToggleReadyUpAction} containing the data from message.
 	 */
-	public static ReadyUpAction fromMessage(final Message message) {
-		return new ReadyUpAction(message.getAuthToken(), message.getMessageID());
+	public static ToggleReadyUpAction fromMessage(final Message message) {
+		return new ToggleReadyUpAction(message.getAuthToken(), message.getMessageID());
 	}
 
 }

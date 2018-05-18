@@ -1,8 +1,8 @@
 
 var responseActions = {};
 
-function processQueryIsInGameResponse(request) {
-    var isInGame = request.query_is_in_game.is_in_game;
+function processQueryIsInGameResponse(response) {
+    var isInGame = response.query_is_in_game.is_in_game;
     if (isInGame) {
         document.getElementById("centralDiv").innerHTML = "<p>You are currently in a game!";
     } else {
@@ -10,7 +10,7 @@ function processQueryIsInGameResponse(request) {
     }
 };
 
-function processJoinAsPlayerResponse(request) {
+function processJoinAsPlayerResponse(response) {
     if (response.error_code == 0) {
         localStorage.setItem("auth_token", response.auth_token);
         console.log("AuthToken acquired: " + localStorage.getItem("auth_token"));
@@ -20,7 +20,7 @@ function processJoinAsPlayerResponse(request) {
     }
 }
 
-function processToggleReadyUpResponse(request){
+function processToggleReadyUpResponse(response){
     if (response.error_code == 0) {
         playerIsReady = request.toggle_ready_up.is_ready;
         displayWaitingForPlayers(document.getElementById("centralDiv"));
