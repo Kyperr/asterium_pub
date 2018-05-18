@@ -1,0 +1,32 @@
+package com.toozo.asteriumwebserver.gamelogic.items.equipment;
+
+import java.util.Collection;
+
+public class Equipment {
+	// ===== FIELDS =====
+	private AbstractEquipmentItem head;
+	private AbstractEquipmentItem torso;
+	private AbstractEquipmentItem arms;
+	private AbstractEquipmentItem legs;
+	// ==================
+	
+	// ===== CONSTRUCTORS =====
+	public Equipment() {
+		
+	}
+	
+	public Equipment(AbstractEquipmentItem starterItem) {
+		
+	}
+	
+	public Equipment(Collection<AbstractEquipmentItem> starterItems) {
+		
+	}
+	// ========================
+	
+	// ===== GETTERS =====
+	// ===================
+	
+	// ===== SETTERS =====
+	// ===================
+}

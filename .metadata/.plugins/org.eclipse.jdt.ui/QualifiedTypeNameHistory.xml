@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="java.awt.Color"/>
+<fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.Game"/>
+<fullyQualifiedTypeName name="actiondata.DisplayBoardRequestData.PlayerData"/>
+<fullyQualifiedTypeName name="actiondata.DisplayBoardRequestData"/>
+<fullyQualifiedTypeName name="actiondata.DisplayBoardRequestData.LocationData"/>
+<fullyQualifiedTypeName name="java.util.function.Supplier"/>
+<fullyQualifiedTypeName name="java.util.function.BiConsumer"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.GameState"/>
+<fullyQualifiedTypeName name="java.util.function.Function"/>
+<fullyQualifiedTypeName name="java.util.HashSet"/>
+<fullyQualifiedTypeName name="java.util.Collection"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="message.Request"/>
+<fullyQualifiedTypeName name="actiondata.SyncGameBoardDataRequestData"/>
+<fullyQualifiedTypeName name="actiondata.SyncGameBoardDataRequestData.ItemData"/>
+<fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.items.Item"/>
+</qualifiedTypeNameHistroy>

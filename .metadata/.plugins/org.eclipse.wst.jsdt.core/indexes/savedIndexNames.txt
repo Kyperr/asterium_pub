@@ -1,0 +1,2 @@
+INDEX VERSION 1.4+/home/gpschmitt/git/asterium2/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
+3726599210.index

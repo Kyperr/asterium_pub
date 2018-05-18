@@ -1,0 +1,125 @@
+package com.toozo.asteriumwebserver.gamelogic;
+
+import java.util.function.Function;
+
+public class VictoryCondition {
+	private String name;
+	private Function<GameState, Double> progressFunction;
+	private boolean active;
+	
+	// ===== CONSTRUCTORS =====
+	/**
+	 * Constructs a new VictoryAction.
+	 * 
+	 * @param name The name of this action.
+
+	 */
+	public VictoryCondition(String name, final Function<GameState, Double> progressFunction, boolean isActive) {
+		setName(name);
+		setProgressFunction(progressFunction);
+		setActive(isActive);
+	}
+	
+	/**
+	 * Constructs an active VictoryAction.
+	 * 
+	 * @param name The name of this action.
+	 * @param progressFunction A function which takes a {@link GameState} 
+	 * 						   and returns a progress percentage.
+	 */
+	public VictoryCondition(String name, Function<GameState, Double> progressFunction) {
+		this(name, progressFunction, true);
+	}
+	
+	/**
+	 * Constructs a nameless VictoryAction.
+	 * 
+	 * @param progressFunction A function which takes a {@link GameState} 
+	 * 						   and returns a progress percentage.
+	 * @param isActive Whether or not this is an active action.
+	 */
+	public VictoryCondition(Function<GameState, Double> progressFunction, boolean isActive) {
+		this("", progressFunction, isActive);
+	}
+	
+	/**
+	 * Constructs a nameless, active VictoryAction.
+	 * 
+	 * @param progressFunction A function which takes a {@link GameState} 
+	 * 						   and returns a progress percentage.
+	 */
+	public VictoryCondition(Function<GameState, Double> progressFunction) {
+		this("", progressFunction, true);
+	}
+	// ========================
+	
+	// ===== GETTERS =====
+	/** 
+	 * @return The name of this VictoryCondition, or an empty {@link String} if nameless.
+	 */
+	public String getName() {
+		if (this.name != null) {
+			return this.name;
+		} else {
+			return "";
+		}
+	}
+
+	/**
+	 * Note: This method's computational expense is determined by the progressFunction.
+	 * If this value will be reused, store it instead of calling this method repeatedly.
+	 * 
+	 * @param game The {@link GameState} which will determine the progress.
+	 * @return The progress of this victory condition, or -1 if progressFunction is null.
+	 */
+	public double getProgress(GameState game) {
+		if (this.progressFunction != null) {
+			return progressFunction.apply(game);
+		} else {
+			return -1.0;
+		}
+	}
+	
+	/**
+	 * @return Whether this VictoryCondition is active.
+	 */
+	public boolean isActive() {
+		return this.active;
+	}
+	// ===================
+	
+	// ===== SETTERS =====
+	/**
+	 * Changes the name of this VictoryCondition.
+	 * @param newName The new name. If null, the name will be an empty {@link String}.
+	 */
+	public void setName(String newName) {
+		if (newName != null) {
+			this.name = newName;
+		} else {
+			this.name = "";
+		}
+	}
+	
+	public void setProgressFunction(Function<GameState, Double> newFunction) {
+		this.progressFunction = newFunction;
+	}
+	
+	public void setActive() {
+		this.active = true;
+	}
+	
+	public void setInactive() {
+		this.active = false;
+	}
+	
+	public void setActive(boolean isActive) {
+		this.active = isActive;
+	}
+
+	public void toggleActive() {
+		this.active = !this.active;
+	}
+	// ===================
+	
+}

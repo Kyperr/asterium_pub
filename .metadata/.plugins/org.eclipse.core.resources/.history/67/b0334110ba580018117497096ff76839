@@ -1,0 +1,27 @@
+package com.toozo.asteriumwebserver.gamelogic.items;
+
+import java.util.List;
+import java.util.function.BiConsumer;
+
+import com.toozo.asteriumwebserver.gamelogic.Character;
+import com.toozo.asteriumwebserver.gamelogic.GameState;
+
+public abstract class Item {
+	private String name;
+	
+	// ===== CONSTRUCTORS =====
+	protected Item(String name) {
+		this.name = name;
+	}
+	// ========================
+	
+	// ===== GETTERS =====
+	public String getName() {
+		if (this.name != null) {
+			return this.name;
+		} else {
+			return "";
+		}
+	}
+	// ===================
+}

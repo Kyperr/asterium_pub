@@ -3,6 +3,7 @@ package com.toozo.asteriumwebserver.gamelogic;
 import java.util.Collection;
 import java.util.HashSet;
 
+import com.toozo.asteriumwebserver.gamelogic.items.equipment.Equipment;
 import com.toozo.asteriumwebserver.gamelogic.statuseffects.StatusEffect;
 
 public class PlayerCharacter {
@@ -16,6 +17,7 @@ public class PlayerCharacter {
 	private Stats stats;
 	private Inventory inventory;
 	private Collection<StatusEffect> effects;
+	private Equipment equipment;
 	// ==================
 	
 	// ===== CONSTRUCTORS =====
@@ -23,6 +25,7 @@ public class PlayerCharacter {
 		this.stats = new Stats();
 		this.inventory = new Inventory();
 		this.effects = new HashSet<StatusEffect>();
+		this.equipment = new Equipment(this);
 	}
 	// ========================
 	
@@ -35,18 +38,20 @@ public class PlayerCharacter {
 	 * @return The stats of this player after all its StatusEffects are applied.
 	 */
 	public Stats getEffectiveStats() {
-		PlayerCharacter affectedCharacter = this;
+		PlayerCharacter.Stats stats = this.getBaseStats();
+		
 		for (StatusEffect condition : this.getStatusEffects()) {
-			affectedCharacter = condition.apply(affectedCharacter);
+			stats = condition.affectStats(stats);
 		}
-		return affectedCharacter.stats;	
+		
+		return stats;	
 	}
 	
 	/**
 	 * @return The stats of this player before any of its StatusEffects are applied.
 	 */
 	public Stats getBaseStats() {
-		return this.stats;
+		return this.stats.deepCopy();
 	}
 	
 	public Collection<StatusEffect> getStatusEffects() {
@@ -58,6 +63,10 @@ public class PlayerCharacter {
 	 */
 	public Inventory getInventory() {
 		return this.inventory;
+	}
+	
+	public Equipment getEquipment() {
+		return this.equipment;
 	}
 	// ===================
 	
@@ -83,11 +92,8 @@ public class PlayerCharacter {
 	
 	// ===== INNER CLASSES =====
 	public static class Stats {
-		// ===== CONSTANTS =====
-		private int health = DEFAULT_HEALTH;
-		// =====================
-
 		// ===== FIELDS =====
+		private int health = DEFAULT_HEALTH;
 		private int stamina;
 		private int luck;
 		private int intuition;
@@ -99,9 +105,14 @@ public class PlayerCharacter {
 		}
 		
 		public Stats(final int stamina, final int luck, final int intuition) {
+			this(stamina, luck, intuition, DEFAULT_HEALTH);
+		}
+		
+		public Stats(final int stamina, final int luck, final int intuition, final int health) {
 			this.stamina = stamina;
 			this.luck = luck;
 			this.intuition = intuition;
+			this.health = health;
 		}
 		// ========================
 		
@@ -138,6 +149,12 @@ public class PlayerCharacter {
 		
 		public void setHealth(final int health) {
 			this.health = health;
+		}
+		// ===================
+		
+		// ===== METHODS =====
+		public Stats deepCopy() {
+			return new Stats(this.stamina, this.luck, this.intuition, this.health);
 		}
 		// ===================
 	}

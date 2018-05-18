@@ -9,7 +9,7 @@ public interface Activity {
 	public static Activity searchActivity = new Activity() {
 		@Override
 		public void doActivity(Game game, PlayerCharacter character, Location location) {
-			// TODO Auto-generated method stub
+			// TODO Implement the search activity
 			
 		}
 	};

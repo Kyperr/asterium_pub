@@ -21,6 +21,7 @@ public interface ActionData {
 	public static final String SYNC_GAME_BOARD_DATA = "sync_game_board_data";
 	public static final String SYNC_PLAYER_CLIENT_DATA = "sync_player_client_data";
 	public static final String TURN = "turn";
+	public static final String USE_ITEM = "use_item";
 	
 	//Query action constants
 	public static final String QUERY_IS_IN_GAME = "query_is_in_game";
@@ -34,6 +35,7 @@ public interface ActionData {
 	public static final String LOBBY_ID = "lobby_id";
 	public static final String PLAYER_LIST = "player_list";
 	public static final String PLAYER_DATA = "player_data";
+	public static final String PLAYER_CHARACTER_DATA = "player_character_data";
 	public static final String PLAYERS = "players";
 	public static final String STATS = "stats";
 	public static final String HEALTH = "health";
@@ -52,6 +54,11 @@ public interface ActionData {
 	public static final String MAP_LOCATION = "map_location";
 	public static final String COMMUNAL_INVENTORY = "communal_inventory";
 	public static final String TYPE = "type";
+	public static final String ITEM = "item";
+	public static final String IS_COMMUNAL = "is_communal";
+	public static final String USER = "user";
+	public static final String TARGETS = "targets";
+	public static final String ITEM_ID = "item_id";
 	public static final String LOCATION_ID = "location_id";
 	public static final String LOCATION_TYPE = "location_type";
 	public static final String ROOM_ID = "room_id"; 

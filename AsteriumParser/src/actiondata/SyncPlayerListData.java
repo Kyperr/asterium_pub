@@ -2,10 +2,7 @@ package actiondata;
 
 import java.util.List;
 
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import actiondata.JoinAsPlayerRequestData.PlayerData;
 
 public class SyncPlayerListData extends AbstractResponseActionData {
 

@@ -1,0 +1,19 @@
+package com.toozo.asteriumwebserver.gamelogic.items.equipment;
+
+public class Equipment {
+	// ===== FIELDS =====
+	private AbstractEquipmentItem head;
+	private AbstractEquipmentItem torso;
+	private AbstractEquipmentItem arms;
+	private AbstractEquipmentItem legs;
+	// ==================
+	
+	// ===== CONSTRUCTORS =====
+	// ========================
+	
+	// ===== GETTERS =====
+	// ===================
+	
+	// ===== SETTERS =====
+	// ===================
+}

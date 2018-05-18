@@ -23,7 +23,7 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 	private Integer food;
 	private Integer fuel;
 	private Collection<SyncGameBoardDataRequestData.LocationData> locations;
-	private Collection<SyncGameBoardDataRequestData.PlayerData> players;
+	private Collection<SyncGameBoardDataRequestData.PlayerCharacterData> players;
 	private Collection<SyncGameBoardDataRequestData.VictoryData> victoryConditions;
 	private Collection<SyncGameBoardDataRequestData.ItemData> communalInventory;
 	
@@ -38,14 +38,16 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 	 */
 	public SyncGameBoardDataRequestData(Integer food, Integer fuel,
 								   Collection<SyncGameBoardDataRequestData.LocationData> locations, 
-								   Collection<SyncGameBoardDataRequestData.PlayerData> players,
-								   Collection<SyncGameBoardDataRequestData.VictoryData> victoryConditions) {
+								   Collection<SyncGameBoardDataRequestData.PlayerCharacterData> players,
+								   Collection<SyncGameBoardDataRequestData.VictoryData> victoryConditions,
+								   Collection<SyncGameBoardDataRequestData.ItemData> communalInventory) {
 		super(ActionData.SYNC_GAME_BOARD_DATA);
 		this.food = food;
 		this.fuel = fuel;
 		this.locations = locations;
 		this.players = players;
 		this.victoryConditions = victoryConditions;
+		this.communalInventory = communalInventory;
 	}
 
 	@Override
@@ -58,7 +60,7 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 		
 		// Add players to data
 		JSONArray players = new JSONArray();
-		for (SyncGameBoardDataRequestData.PlayerData player : this.players) {
+		for (SyncGameBoardDataRequestData.PlayerCharacterData player : this.players) {
 			players.put(player.jsonify());
 		}
 		data.put(ActionData.PLAYERS, players);
@@ -79,6 +81,9 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 		
 		// Add communal inventory to data
 		JSONArray communalInventory = new JSONArray();
+		for (SyncGameBoardDataRequestData.ItemData item : this.communalInventory) {
+			communalInventory.put(item.jsonify());
+		}
 		data.put(ActionData.COMMUNAL_INVENTORY, communalInventory);
 		
 		
@@ -111,19 +116,18 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 		
 		// Parse array of players
 		JSONArray playerArray = jsonObj.getJSONArray(ActionData.PLAYERS);
-		Collection<SyncGameBoardDataRequestData.PlayerData> players = new ArrayList<SyncGameBoardDataRequestData.PlayerData>();
+		Collection<SyncGameBoardDataRequestData.PlayerCharacterData> players = new ArrayList<SyncGameBoardDataRequestData.PlayerCharacterData>();
 		JSONObject playerObject;
-		SyncGameBoardDataRequestData.PlayerData player;
+		SyncGameBoardDataRequestData.PlayerCharacterData player;
 		for (int i = 0; i < playerArray.length(); i++) {
 			playerObject = playerArray.getJSONObject(i);
-			player = new SyncGameBoardDataRequestData.PlayerData(playerObject.getString(ActionData.NAME), 
+			player = new SyncGameBoardDataRequestData.PlayerCharacterData(playerObject.getString(ActionData.NAME), 
 															Color.getColor(playerObject.getString(ActionData.COLOR)), 
-															playerObject.getInt(ActionData.MAP_LOCATION));
+															playerObject.getString(ActionData.MAP_LOCATION));
 			players.add(player);
 		}
 		
 		// Parse array of victory conditions
-		// TODO
 		JSONArray victoryArray = jsonObj.getJSONArray(ActionData.VICTORY_CONDITIONS);
 		Collection<SyncGameBoardDataRequestData.VictoryData> victories = new ArrayList<SyncGameBoardDataRequestData.VictoryData>();
 		JSONObject victoryObject;
@@ -136,24 +140,35 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 			victories.add(victory);
 		}
 		
+		// Parse array of items (communalInventory)
+		JSONArray communalInventoryArray = jsonObj.getJSONArray(ActionData.COMMUNAL_INVENTORY);
+		Collection<SyncGameBoardDataRequestData.ItemData> communalInventory = new ArrayList<SyncGameBoardDataRequestData.ItemData>();
+		JSONObject itemObject;
+		SyncGameBoardDataRequestData.ItemData item;
+		for (int i = 0; i < communalInventoryArray.length(); i++) {
+			itemObject = communalInventoryArray.getJSONObject(i);
+			item = new SyncGameBoardDataRequestData.ItemData(itemObject.getString(ActionData.NAME));
+			communalInventory.add(item);
+		}
+		
 		// Construct and return
-		return new SyncGameBoardDataRequestData(food, fuel, locations, players, victories);
+		return new SyncGameBoardDataRequestData(food, fuel, locations, players, victories, communalInventory);
 	}
 	
 	// ===== PLAYER DATA INNER CLASS =====
 	/**
-	 * {@link PlayerData} is the representation of a player
+	 * {@link PlayerCharacterData} is the representation of a player
 	 * for the purposes of displaying the board.
 	 * 
 	 * @author Greg Schmitt
 	 *
 	 */
-	public static class PlayerData {
+	public static class PlayerCharacterData {
 		private final String name;
 		private final Color color;
-		private final Integer mapLocation;
+		private final String mapLocation;
 
-		public PlayerData(final String name, final Color color, final Integer location) {
+		public PlayerCharacterData(final String name, final Color color, final String location) {
 			this.name = name;
 			this.color = color;
 			this.mapLocation = location;
@@ -167,7 +182,7 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 			return this.color;
 		}
 		
-		public Integer getLocation() {
+		public String getLocation() {
 			return this.mapLocation;
 		}
 
@@ -183,8 +198,8 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 		}
 		
 		public boolean equals(final Object other) {
-			if (other instanceof PlayerData) {
-				PlayerData otherPlayerData = (PlayerData) other;
+			if (other instanceof PlayerCharacterData) {
+				PlayerCharacterData otherPlayerData = (PlayerCharacterData) other;
 				return otherPlayerData.name.equals(this.name) &&
 					   otherPlayerData.color.equals(this.color) &&
 					   otherPlayerData.mapLocation.equals(this.mapLocation);

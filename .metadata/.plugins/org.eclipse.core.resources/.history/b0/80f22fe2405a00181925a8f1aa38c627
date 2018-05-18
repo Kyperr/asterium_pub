@@ -1,0 +1,29 @@
+package com.toozo.asteriumwebserver.gamelogic.items.equipment;
+
+import java.util.Collection;
+
+public class Equipment {
+	// ===== FIELDS =====
+	private Map<EquipmentSlot, > 
+	// ==================
+	
+	// ===== CONSTRUCTORS =====
+	public Equipment() {
+		
+	}
+	
+	public Equipment(AbstractEquipmentItem starterItem) {
+		
+	}
+	
+	public Equipment(Collection<AbstractEquipmentItem> starterItems) {
+		
+	}
+	// ========================
+	
+	// ===== GETTERS =====
+	// ===================
+	
+	// ===== SETTERS =====
+	// ===================
+}

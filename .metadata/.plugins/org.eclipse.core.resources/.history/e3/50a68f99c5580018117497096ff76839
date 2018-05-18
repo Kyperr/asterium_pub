@@ -1,0 +1,90 @@
+package com.toozo.asteriumwebserver.gamelogic;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+
+import com.toozo.asteriumwebserver.gamelogic.items.Item;
+
+public class Inventory {
+	// ===== FIELDS =====
+	private Collection<Item> inventory;
+	// ==================
+	
+	// ===== CONSTRUCTORS =====
+	public Inventory() {
+		this.inventory = new ArrayList<Item>();
+	}
+	// ========================
+
+	// ===== METHODS =====
+	/**
+	 * @return The number of {@link Item}s in this Inventory.
+	 */
+	public int size() {
+		return this.inventory.size();
+	}
+
+	/**
+	 * @return True if there are no {@link Item}s in this Inventory, false otherwise.
+	 */
+	public boolean isEmpty() {
+		return this.inventory.isEmpty();
+	}
+
+	/**
+	 * @param item The item you want to check for.
+	 * @return True if item is in this Inventory, false otherwise.
+	 */
+	public boolean contains(Item item) {
+		return this.inventory.contains(item);
+	}
+
+	/**
+	 * Adds item to this Inventory and returns whether it was added.
+	 * 
+	 * @param item The {@link Item} which should be added to this Inventory.
+	 * @return True if the item was added successfully, false otherwise.
+	 */
+	public boolean add(Item item) {
+		this.inventory.add(item);
+		return this.inventory.contains(item);
+	}
+
+	@Override
+	public boolean remove(Object o) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean containsAll(Collection<?> c) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean addAll(Collection<? extends Item> c) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean removeAll(Collection<?> c) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean retainAll(Collection<?> c) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void clear() {
+		// TODO Auto-generated method stub
+		
+	}
+	// ===================
+}

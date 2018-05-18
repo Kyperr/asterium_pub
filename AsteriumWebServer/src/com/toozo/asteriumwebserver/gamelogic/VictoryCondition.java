@@ -13,6 +13,7 @@ public class VictoryCondition {
 	// ===== CONSTANTS =====
 	public static final String DEFAULT_NAME = "";
 	public static final double COMPLETE_THRESHOLD = 1.0;
+	public static final double ERROR_VALUE = -1.0;
 	// =====================
 	
 	// ===== FIELDS =====
@@ -89,13 +90,13 @@ public class VictoryCondition {
 	 * If this value will be reused, store it instead of calling this method repeatedly.
 	 * 
 	 * @param game The {@link GameState} which will determine the progress.
-	 * @return The progress of this victory condition, or -1 if progressFunction is null.
+	 * @return The progress of this victory condition, or ERROR_VALUE if progressFunction is null.
 	 */
 	public double getProgress(GameState state) {
 		if (this.progressFunction != null) {
 			return progressFunction.apply(state);
 		} else {
-			return -1.0;
+			return ERROR_VALUE;
 		}
 	}
 	

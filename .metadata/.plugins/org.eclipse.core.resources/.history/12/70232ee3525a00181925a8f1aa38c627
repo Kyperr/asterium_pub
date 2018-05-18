@@ -1,0 +1,70 @@
+package com.toozo.asteriumwebserver.gamelogic.statuseffects;
+
+import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
+
+/**
+ * Status Effect which can be active on a {@link PlayerCharacter}.
+ * Can have any or all of a myriad of different effects,
+ * including modifying stats, exposure gained, et cetera.
+ * 
+ * @author Greg Schmitt
+ */
+public abstract class StatusEffect {
+	// ===== FIELDS =====
+	private String name;
+	// ==================
+	
+	// ===== CONSTRUCTORS =====
+	/**
+	 * Construct a StatusEffect with a given name.
+	 * 
+	 * @param name The name of the StatusEffect.
+	 */
+	public StatusEffect(String name) {
+		this.name = name;
+	}
+	// ========================
+	
+	// ===== GETTERS =====
+	public String getName() {
+		return this.name;
+	}
+	// ===================
+	
+	// ===== SETTERS =====
+	public void changeName(String newName) {
+		this.name = newName;
+	}
+	// ===================
+	
+	// ===== METHODS =====
+	/**
+	 * Default method to affect a {@link PlayerCharacter}'s {@link PlayerCharacter.Stats}.
+	 * Does not modify stats by default.
+	 * 
+	 * Should be overridden in the implemented StatusEffect 
+	 * if the implemented StatusEffect should affect stats.
+	 * 
+	 * @param stats The {@link PlayerCharacter.Stats} which will be affected.
+	 * @return An affected copy of stats.
+	 */
+	public PlayerCharacter.Stats affectStats(PlayerCharacter.Stats stats) {
+		return stats.deepCopy();
+	}
+	
+	/**
+	 * Default method to affect a {@link PlayerCharacter}'s {@link PlayerCharacter.Stats}.
+	 * Does not modify stats by default.
+	 * 
+	 * Should be overridden in the implemented StatusEffect 
+	 * if the implemented StatusEffect should affect stats.
+	 * 
+	 * @param stats The {@link PlayerCharacter.Stats} which will be affected.
+	 * @return An affected copy of stats.
+	 */
+	public int affectExposureGained(int unmodifiedExposureGained) {
+		return unmodifiedExposureGained;
+	}
+	// ===================
+	
+}

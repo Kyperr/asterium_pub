@@ -349,10 +349,12 @@ public class Game extends Thread {
 		}
 
 		// Construct collection of PlayerData
-		Collection<SyncGameBoardDataRequestData.PlayerData> playerDatas = new ArrayList<SyncGameBoardDataRequestData.PlayerData>();
-		SyncGameBoardDataRequestData.PlayerData player;
+		Collection<SyncGameBoardDataRequestData.PlayerCharacterData> playerDatas = new ArrayList<SyncGameBoardDataRequestData.PlayerCharacterData>();
+		SyncGameBoardDataRequestData.PlayerCharacterData player;
 		for (final PlayerCharacter c : game.getGameState().getCharacters()) {
-			player = new SyncGameBoardDataRequestData.PlayerData(c.getCharacterName(), Color.WHITE, 1);
+			player = new SyncGameBoardDataRequestData.PlayerCharacterData(c.getCharacterName(), 
+															Color.WHITE, 
+															"home_base");
 			playerDatas.add(player);
 		}
 

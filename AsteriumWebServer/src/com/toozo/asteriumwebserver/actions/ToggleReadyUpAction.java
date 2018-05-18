@@ -52,7 +52,7 @@ public class ToggleReadyUpAction extends RequestAction {
 			SessionManager.getInstance().getSession(getCallingAuthToken()).getBasicRemote()
 			.sendText(message.jsonify().toString());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			// Error cannot be sent, so display in console
 			e.printStackTrace();
 		}
 	}
