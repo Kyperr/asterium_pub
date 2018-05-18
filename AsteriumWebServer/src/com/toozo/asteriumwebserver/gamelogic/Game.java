@@ -287,7 +287,7 @@ public class Game extends Thread {
 		for (final PlayerCharacter c : game.getGameState().getCharacters()) {
 			player = new SyncGameBoardDataRequestData.PlayerCharacterData(c.getCharacterName(), 
 															Color.WHITE, 
-															1);
+															"home_base");
 			playerDatas.add(player);
 		}
 		

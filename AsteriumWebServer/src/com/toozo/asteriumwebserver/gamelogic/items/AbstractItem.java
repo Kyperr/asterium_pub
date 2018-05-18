@@ -5,7 +5,7 @@ import java.util.Collection;
 import com.toozo.asteriumwebserver.gamelogic.GameState;
 import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 
-public abstract class Item {
+public abstract class AbstractItem {
 	// ===== CONSTANTS =====
 	public static final String DEFAULT_NAME = "";
 	// =====================
@@ -15,11 +15,11 @@ public abstract class Item {
 	// ==================
 	
 	// ===== CONSTRUCTORS =====
-	protected Item(String name) {
+	protected AbstractItem(String name) {
 		this.name = name;
 	}
 	
-	protected Item() {
+	protected AbstractItem() {
 		this.name = DEFAULT_NAME;
 	}
 	// ========================
@@ -59,7 +59,21 @@ public abstract class Item {
 	 * @param state The state of the game which may be changed by this item's effect.
 	 * @param user The {@link PlayerCharacter} which is using this item.
 	 * @param targets The {@link PlayerCharacter}s which this item may affects.
+	 * @param fromCommunalInventory True if this item is in the communal inventory,
+	 * 								false if it's in user's inventory.
 	 */
-	public abstract void use(GameState state, PlayerCharacter user, Collection<PlayerCharacter> targets);
+	public abstract void use(GameState state, 
+							 PlayerCharacter user, 
+							 Collection<PlayerCharacter> targets,
+							 boolean fromCommunalInventory);
+	
+	/**
+	 * Apply the effect of this item.
+	 * 
+	 * @param state The state of the game which may be changed by this item's effect.
+	 * @param user The {@link PlayerCharacter} which is using this item.
+	 * @param targets The {@link PlayerCharacter}s which this item may affects.
+	 */
+	public abstract void applyEffect(GameState state, PlayerCharacter user, Collection<PlayerCharacter> targets);
 	// ===================
 }
