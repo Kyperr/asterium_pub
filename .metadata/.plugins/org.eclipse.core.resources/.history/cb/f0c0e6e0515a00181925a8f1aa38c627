@@ -1,0 +1,17 @@
+package com.toozo.asteriumwebserver.gamelogic.statuseffects;
+
+import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
+
+public abstract class StatusEffect {
+	private String name;
+	
+	public StatusEffect(String name) {
+		this.name = name;
+	}
+	
+	public PlayerCharacter.Stats affectStats(PlayerCharacter.Stats stats) {
+		PlayerCharacter.Stats result = stats.deepCopy();
+		
+		return result;
+	}
+}

@@ -1,0 +1,18 @@
+package com.toozo.asteriumwebserver.gamelogic.items.consumables;
+
+import java.util.Collection;
+
+import com.toozo.asteriumwebserver.gamelogic.Character;
+import com.toozo.asteriumwebserver.gamelogic.GameState;
+import com.toozo.asteriumwebserver.gamelogic.items.Item;
+
+public abstract class Consumable extends Item {
+
+	@Override
+	public void use(GameState state, Character user, Collection<Character> targets) {
+		
+	}
+
+	public void removeFromInventory(Character user) {
+	}
+}

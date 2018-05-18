@@ -1,6 +1,9 @@
 package com.toozo.asteriumwebserver.gamelogic.items;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Supplier;
 
 import com.toozo.asteriumwebserver.gamelogic.GameState;
 import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
@@ -8,6 +11,27 @@ import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 public abstract class AbstractItem {
 	// ===== CONSTANTS =====
 	public static final String DEFAULT_NAME = "";
+	
+	private static final Map<String, Supplier<Item>> ITEM_LOOKUP = new HashMap<String, Supplier<Item>> (){
+		/**
+		 * Auto-generated unique identifier for ITEM_LOOKUP
+		 */
+		private static final long serialVersionUID = 3292064164504904735L;
+		
+		/*
+		 * Static block in which ITEM_LOOKUP is populated. As new Items are written,
+		 * their corresponding constructors should be added here.
+		 */
+		{
+			//something like: 
+			//put("Medkit", Medkit::new Medkit);
+		}
+
+	{
+	
+	}
+	};
+	
 	// =====================
 	
 	// ===== FIELDS =====
@@ -50,6 +74,11 @@ public abstract class AbstractItem {
 	// ===================
 	
 	// ===== METHODS =====
+	
+	public static Item getItem(final String itemName) {		
+		return Item.ITEM_LOOKUP.get(itemName).get();
+	}
+	
 	/**
 	 * Use this item.
 	 * 

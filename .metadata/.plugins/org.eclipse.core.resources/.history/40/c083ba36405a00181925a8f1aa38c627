@@ -1,0 +1,8 @@
+package com.toozo.asteriumwebserver.gamelogic.items.equipment;
+
+public class Equipment {
+	private AbstractEquipmentItem head;
+	private AbstractEquipmentItem torso;
+	private AbstractEquipmentItem arms;
+	private AbstractEquipmentItem legs;
+}

@@ -1,0 +1,11 @@
+package com.toozo.asteriumwebserver.gamelogic.items;
+
+import java.util.List;
+import java.util.function.BiConsumer;
+
+import com.toozo.asteriumwebserver.gamelogic.Character;
+import com.toozo.asteriumwebserver.gamelogic.GameState;
+
+public class Item {
+	private String name;
+}

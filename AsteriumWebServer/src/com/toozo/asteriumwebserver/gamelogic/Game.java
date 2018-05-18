@@ -191,14 +191,8 @@ public class Game extends Thread {
 		// Check to see that the game is not already full.
 		if (this.playerList.size() <= MAX_PLAYERS) {
 			this.playerList.put(player.getAuthToken(), player);
-			this.turnActionMap.put(player, new Runnable() {
-				@Override
-				public void run() {
-					// do nothing, this is a "null" action
-				}
-
-			});
 			this.gameState.addPlayer(player.getAuthToken());
+			GameManager.getInstance().registerPlayerToGame(player.getAuthToken(), this);
 		} else {
 			throw new GameFullException();
 		}

@@ -1,0 +1,19 @@
+package com.toozo.asteriumwebserver.gamelogic;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+
+import com.toozo.asteriumwebserver.gamelogic.items.Item;
+
+public class Inventory implements Collection<Item>{
+	private Collection<Item> inventory;
+	
+	public Inventory() {
+		this.inventory = new ArrayList<Item>();
+	}
+	
+	public void addItem() {
+		
+	}
+}

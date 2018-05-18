@@ -12,10 +12,15 @@ import javax.xml.ws.soap.AddressingFeature.Responses;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
 import actiondata.ActionData;
+import actiondata.AllocateStatsRequestData;
 import actiondata.CreateGameRequestData;
 import actiondata.ErroredResponseData;
 import actiondata.JoinAsGameBoardRequestData;
 import actiondata.JoinAsPlayerRequestData;
+import actiondata.TurnRequestData;
+import actiondata.UseItemRequestData;
+import actiondata.QueryIsInGameRequestData;
+import actiondata.ToggleReadyUpRequestData;
 import message.Message;
 import message.Request;
 import message.Response;
@@ -32,11 +37,13 @@ public abstract class Action implements Runnable {
 	public static final String JOIN_AS_PLAYER = "join_as_player";
 	public static final String JOIN_AS_GAMEBOARD = "join_as_gameboard";
 	public static final String CREATE_GAME = "create_game";
-	public static final String READY_UP = "ready_up";
+	public static final String TOGGLE_READY_UP = "toggle_ready_up";
+	public static final String QUERY_IS_IN_GAME = "query_is_in_game";
 	public static final String PLAYER_SYNC = "player_sync";
 	public static final String ALLOCATE_STATS = "allocate_stats";
 	public static final String TURN = "turn";
 	public static final String SYNC_LOCATIONS = "sync_locations";
+	public static final String USE_ITEM = "use_item";
 
 	public static final boolean VERBOSE = true;
 	// ===================
@@ -59,6 +66,13 @@ public abstract class Action implements Runnable {
 			put(JoinAsPlayerRequestData.class, JoinAsPlayerAction::fromMessage);
 			put(JoinAsGameBoardRequestData.class, JoinAsGameBoardAction::fromMessage);
 			put(CreateGameRequestData.class, CreateGameAction::fromMessage);
+			
+			put(AllocateStatsRequestData.class, AllocateStatsAction::fromMessage);
+			put(TurnRequestData.class, TurnAction::fromMessage);
+			put(UseItemRequestData.class, UseItemAction::fromMessage);
+			
+			put(QueryIsInGameRequestData.class, QueryIsInGameAction::fromMessage);
+			put(ToggleReadyUpRequestData.class, ToggleReadyUpAction::fromMessage);
 		}
 	};
 
