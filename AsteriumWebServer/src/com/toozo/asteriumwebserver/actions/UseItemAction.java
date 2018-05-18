@@ -15,29 +15,31 @@ import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
 import actiondata.ErroredResponseData;
 import actiondata.SuccessResponseData;
-import actiondata.UsePersonalItemRequestData;
-import actiondata.UsePersonalItemRequestData.ItemData;
-import actiondata.UsePersonalItemRequestData.PlayerCharacterData;
+import actiondata.UseItemRequestData;
+import actiondata.UseItemRequestData.ItemData;
+import actiondata.UseItemRequestData.PlayerCharacterData;
 import message.Message;
 import message.Response;
 
 /**
- * A {@link RequestAction} which uses an {@link Item} from a 
- * {@link PlayerCharacter}'s personal {@link Inventory}. 
+ * A {@link RequestAction} from a {@link PlayerCharacter} 
+ * which uses an {@link Item} from an {@link Inventory}. 
  * @author Studio Toozo
  */
-public class UsePersonalItemAction extends Action {
+public class UseItemAction extends Action {
 
 	private PlayerCharacterData userData;
 	private Collection<PlayerCharacterData> targetsData;
 	private ItemData itemData;
+	private boolean isCommunal;
 
-	public UsePersonalItemAction(final String authToken, final UUID messageID, final PlayerCharacterData user,
-			final Collection<PlayerCharacterData> targets, final ItemData item) {
+	public UseItemAction(final String authToken, final UUID messageID, final PlayerCharacterData user,
+			final Collection<PlayerCharacterData> targets, final ItemData item, final boolean isCommunal) {
 		super(Action.USE_PERSONAL_ITEM, authToken, messageID);
 		this.userData = user;
 		this.targetsData = targets;
 		this.itemData = item;
+		this.isCommunal = isCommunal;
 	}
 
 	@Override
@@ -47,17 +49,17 @@ public class UsePersonalItemAction extends Action {
 		Message message = null;
 		if (game != null) {
 			GameState state = game.getGameState();
-			PlayerCharacter user = state.getCharacter(userData.getAuthToken());
+			PlayerCharacter user = state.getCharacter(this.userData.getAuthToken());
 			Collection<PlayerCharacter> targets = new HashSet<PlayerCharacter>();
 
-			for (PlayerCharacterData targetData : targetsData) {
+			for (PlayerCharacterData targetData : this.targetsData) {
 				PlayerCharacter target = state.getCharacter(targetData.getAuthToken());
 				targets.add(target);
 			}
 
-			Item item = Item.getItem(itemData.getItemID());
+			Item item = Item.getItem(this.itemData.getItemID());
 			if (user != null && item != null && user.getInventory().contains(item)) {
-				item.use(state, user, targets, false);
+				item.use(state, user, targets, this.isCommunal);
 				SuccessResponseData data = new SuccessResponseData(Action.USE_PERSONAL_ITEM);
 				message = new Response(data, 0, this.getMessageID(), auth);
 			} else {
@@ -81,16 +83,16 @@ public class UsePersonalItemAction extends Action {
 	}
 
 	/**
-	 * Get a {@link UsePersonalItemAction} based on actionData.
+	 * Get a {@link UseItemAction} based on actionData.
 	 * 
 	 * @param message
-	 *            The {@link Message} containing the {@link UsePersonalItemAction}.
-	 * @return a {@link UsePersonalItemAction} containing the data from message.
+	 *            The {@link Message} containing the {@link UseItemAction}.
+	 * @return a {@link UseItemAction} containing the data from message.
 	 */
-	public static UsePersonalItemAction fromMessage(final Message message) {
-		UsePersonalItemRequestData data = UsePersonalItemRequestData.class.cast(message.getActionData());
-		return new UsePersonalItemAction(message.getAuthToken(), message.getMessageID(), data.getUser(),
-				data.getTargets(), data.getItem());
+	public static UseItemAction fromMessage(final Message message) {
+		UseItemRequestData data = UseItemRequestData.class.cast(message.getActionData());
+		return new UseItemAction(message.getAuthToken(), message.getMessageID(), data.getUser(),
+				data.getTargets(), data.getItem(), data.getIsCommunal());
 
 	}
 

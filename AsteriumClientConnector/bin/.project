@@ -18,14 +18,11 @@
 		</buildCommand>
 		<buildCommand>
 			<name>org.eclipse.wst.validation.validationbuilder</name>
-<<<<<<< HEAD
 			<arguments>
 			</arguments>
 		</buildCommand>
 		<buildCommand>
 			<name>org.eclipse.m2e.core.maven2Builder</name>
-=======
->>>>>>> 5bb07730c5323231e3258f899126caadf24ce24a
 			<arguments>
 			</arguments>
 		</buildCommand>

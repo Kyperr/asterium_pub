@@ -18,7 +18,7 @@ import actiondata.ErroredResponseData;
 import actiondata.JoinAsGameBoardRequestData;
 import actiondata.JoinAsPlayerRequestData;
 import actiondata.TurnRequestData;
-import actiondata.UsePersonalItemRequestData;
+import actiondata.UseItemRequestData;
 import actiondata.QueryIsInGameRequestData;
 import actiondata.ToggleReadyUpRequestData;
 import message.Message;
@@ -69,7 +69,7 @@ public abstract class Action implements Runnable {
 			
 			put(AllocateStatsRequestData.class, AllocateStatsAction::fromMessage);
 			put(TurnRequestData.class, TurnAction::fromMessage);
-			put(UsePersonalItemRequestData.class, UsePersonalItemAction::fromMessage);
+			put(UseItemRequestData.class, UseItemAction::fromMessage);
 			
 			put(QueryIsInGameRequestData.class, QueryIsInGameAction::fromMessage);
 			put(ToggleReadyUpRequestData.class, ToggleReadyUpAction::fromMessage);

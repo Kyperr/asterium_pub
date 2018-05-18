@@ -10,23 +10,25 @@ import org.json.JSONObject;
 import message.Request;
 
 /**
- * {@link UsePersonalItemRequestData} is the representation of data to be used
- * in a {@link Request} to use an Item from a personal Inventory.
+ * {@link UseItemRequestData} is the representation of data to be used
+ * in a {@link Request} from a PlayerCharacter to use an Item from an Inventory.
  * 
  * @author Studio Toozo
  */
-public class UsePersonalItemRequestData extends AbstractRequestActionData {
+public class UseItemRequestData extends AbstractRequestActionData {
 
 	private PlayerCharacterData user;
 	private Collection<PlayerCharacterData> targets;
 	private ItemData item;
+	private boolean isCommunal;
 
-	public UsePersonalItemRequestData(final PlayerCharacterData user, final Collection<PlayerCharacterData> targets,
-			final ItemData item) {
+	public UseItemRequestData(final PlayerCharacterData user, final Collection<PlayerCharacterData> targets,
+			final ItemData item, final boolean isCommunal) {
 		super(ActionData.USE_PERSONAL_ITEM);
 		this.user = user;
 		this.targets = targets;
 		this.item = item;
+		this.isCommunal = isCommunal;
 	}
 
 	public final PlayerCharacterData getUser() {
@@ -39,6 +41,10 @@ public class UsePersonalItemRequestData extends AbstractRequestActionData {
 
 	public final ItemData getItem() {
 		return this.item;
+	}
+	
+	public final boolean getIsCommunal() {
+		return this.isCommunal;
 	}
 
 	@Override
@@ -53,19 +59,21 @@ public class UsePersonalItemRequestData extends AbstractRequestActionData {
 		data.put(ActionData.TARGETS, targetsArray);
 
 		data.put(ActionData.ITEM, this.item.jsonify());
+		
+		data.put(ActionData.IS_COMMUNAL, this.isCommunal);
 
 		return data;
 	}
 
 	/**
-	 * Parses {@link JSONObject} into a {@link UsePersonalItemRequestData} object
+	 * Parses {@link JSONObject} into a {@link UseItemRequestData} object
 	 * 
 	 * @param jsonObj
 	 *            the {@link JSONObject} to be parsed
-	 * @return the {@link UsePersonalItemRequestData} object parsed from JSON.
+	 * @return the {@link UseItemRequestData} object parsed from JSON.
 	 * @throws JSONException
 	 */
-	public static UsePersonalItemRequestData parseArgs(final JSONObject jsonObj) throws JSONException {
+	public static UseItemRequestData parseArgs(final JSONObject jsonObj) throws JSONException {
 		PlayerCharacterData user = PlayerCharacterData.parseArgs(jsonObj.getJSONObject(ActionData.USER));
 
 		JSONArray targetsArray = jsonObj.getJSONArray(ActionData.TARGETS);
@@ -77,12 +85,14 @@ public class UsePersonalItemRequestData extends AbstractRequestActionData {
 		JSONObject itemObject = jsonObj.getJSONObject(ActionData.ITEM);
 		String itemID = itemObject.getString(ActionData.ITEM_ID);
 		ItemData item = new ItemData(itemID);
+		
+		boolean isCommunal = jsonObj.getBoolean(ActionData.IS_COMMUNAL);
 
-		return new UsePersonalItemRequestData(user, targets, item);
+		return new UseItemRequestData(user, targets, item, isCommunal);
 	}
 
 	/**
-	 * {@link PlayerCharacterData} is an inner class of {@link UsePersonalItemRequestData}
+	 * {@link PlayerCharacterData} is an inner class of {@link UseItemRequestData}
 	 * that holds data for a player character only for the purpose of using
 	 * an item from a player character's personal inventory.
 	 * 
@@ -125,7 +135,7 @@ public class UsePersonalItemRequestData extends AbstractRequestActionData {
 	}
 
 	/**
-	 * {@link ItemData} is an inner class of {@link UsePersonalItemRequestData}
+	 * {@link ItemData} is an inner class of {@link UseItemRequestData}
 	 * that holds data for an item only for the purpose of using it 
 	 * from a player character's personal inventory.
 	 * 
