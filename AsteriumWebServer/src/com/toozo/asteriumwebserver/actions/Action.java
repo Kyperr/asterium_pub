@@ -12,10 +12,14 @@ import javax.xml.ws.soap.AddressingFeature.Responses;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
 import actiondata.ActionData;
+import actiondata.AllocateStatsRequestData;
 import actiondata.CreateGameRequestData;
 import actiondata.ErroredResponseData;
 import actiondata.JoinAsGameBoardRequestData;
 import actiondata.JoinAsPlayerRequestData;
+import actiondata.ReadyUpRequestData;
+import actiondata.TurnRequestData;
+import actiondata.UsePersonalItemRequestData;
 import message.Message;
 import message.Request;
 import message.Response;
@@ -37,6 +41,7 @@ public abstract class Action implements Runnable {
 	public static final String ALLOCATE_STATS = "allocate_stats";
 	public static final String TURN = "turn";
 	public static final String SYNC_LOCATIONS = "sync_locations";
+	public static final String USE_PERSONAL_ITEM = "use_personal_item";
 
 	public static final boolean VERBOSE = true;
 	// ===================
@@ -59,6 +64,10 @@ public abstract class Action implements Runnable {
 			put(JoinAsPlayerRequestData.class, JoinAsPlayerAction::fromMessage);
 			put(JoinAsGameBoardRequestData.class, JoinAsGameBoardAction::fromMessage);
 			put(CreateGameRequestData.class, CreateGameAction::fromMessage);
+			put(ReadyUpRequestData.class, ReadyUpAction::fromMessage);
+			put(AllocateStatsRequestData.class, AllocateStatsAction::fromMessage);
+			put(TurnRequestData.class, TurnAction::fromMessage);
+			put(UsePersonalItemRequestData.class, UsePersonalItemAction::fromMessage);
 		}
 	};
 

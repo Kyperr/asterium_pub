@@ -3,11 +3,12 @@ package actiondata;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import message.Request;
 
 /**
  * {@link DisplayBoardRequestData} is the representation of data

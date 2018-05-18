@@ -9,8 +9,12 @@ import com.toozo.asteriumwebserver.gamelogic.items.Item;
 public abstract class Equipment extends Item {
 
 	@Override
-	public void use(GameState state, PlayerCharacter user, Collection<PlayerCharacter> targets) {
-		// TODO Equip this item.
+	public void use(final GameState state, final PlayerCharacter user, 
+			final Collection<PlayerCharacter> targets, 
+			final boolean communalInventory) {
+		// TODO Equip this item and move it from the inventory to the user's equipment
+		// TODO Apply affect of item to user
+		
 	}
 
 }
