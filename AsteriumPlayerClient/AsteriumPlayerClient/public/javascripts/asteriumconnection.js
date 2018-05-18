@@ -76,8 +76,8 @@ function checkIfIsInGame(doIfIsInGame){
         {
             "request":
                 {
-                    "action_name": "query_is_in_game",
-                    "query_is_in_game":
+                    "action_name": "ready_up",
+                    "ready_up":
                         {},
                     "auth_token": localStorage.getItem("auth_token"),
                     "message_id": uuid
@@ -87,12 +87,24 @@ function checkIfIsInGame(doIfIsInGame){
     responseActions[uuid] = doIfIsInGame;
 }
 
+function toggleReady() {
+    var uuid = genUUID();
+    message =
+        {
+            "request":
+                {
+                    "action_name": "query_is_in_game",
+                    "query_is_in_game":
+                        {},
+                    "auth_token": localStorage.getItem("auth_token"),
+                    "message_id": uuid
+                }
+        }
+}
+
 //***Server Response Handlers***
 
 //***Server Request Handlers***
-function syncPlayerClientDataRequest(actionData) {
-
-}
 
 //***Utils***
 
