@@ -1,8 +1,5 @@
 var socket = new WebSocket("ws://localhost:8080/AsteriumWebServer/Game");
 
-var responseActions = {};
-var requestActions = {};
-
 socket.onmessage = function (message) {
     var jsonObj = JSON.parse(message.data);
     console.log(jsonObj);
@@ -27,7 +24,7 @@ socket.onmessage = function (message) {
 };
 
 socket.onopen = function () {
-    checkIfIsInGame(displayIfIsInGame);
+    checkIfIsInGame();
 }
 
 //**********SENDING FUNCTIONS**********
@@ -56,38 +53,13 @@ function joinAsPlayer() {
                 }
         }
 
-    responseActions[uuid] = function (response) {
-        if (response.error_code == 0) {
-            localStorage.setItem("auth_token", response.auth_token);
-            console.log("AuthToken acquired: " + localStorage.getItem("auth_token"));
-            checkIfIsInGame(displayIfIsInGame);
-        } else {
-            console.log("Failed to join lobby, error_code: " + response.error_code);
-        }
-    }
+    responseActions[uuid] = processJoinAsPlayerResponse;
 
     socket.send(JSON.stringify(message));
 
 }
 
-function checkIfIsInGame(doIfIsInGame){
-    var uuid = genUUID();
-    message =
-        {
-            "request":
-                {
-                    "action_name": "ready_up",
-                    "ready_up":
-                        {},
-                    "auth_token": localStorage.getItem("auth_token"),
-                    "message_id": uuid
-                }
-        }
-    socket.send(JSON.stringify(message));
-    responseActions[uuid] = doIfIsInGame;
-}
-
-function toggleReady() {
+function checkIfIsInGame() {
     var uuid = genUUID();
     message =
         {
@@ -96,15 +68,30 @@ function toggleReady() {
                     "action_name": "query_is_in_game",
                     "query_is_in_game":
                         {},
-                    "auth_token": localStorage.getItem("auth_token"),
+                    "auth_token": getAuthToken(),
                     "message_id": uuid
                 }
         }
+    socket.send(JSON.stringify(message));
+    responseActions[uuid] = processQueryIsInGameResponse;
 }
 
-//***Server Response Handlers***
-
-//***Server Request Handlers***
+function toggleReady() {
+    var uuid = genUUID();
+    message =
+        {
+            "request":
+                {
+                    "action_name": "toggle_ready_up",
+                    "toggle_ready_up":
+                        {},
+                    "auth_token": getAuthToken(),
+                    "message_id": uuid
+                }
+        }
+    socket.send(JSON.stringify(message));
+    responseActions[uuid] = displayIfIsInGame;
+}
 
 //***Utils***
 

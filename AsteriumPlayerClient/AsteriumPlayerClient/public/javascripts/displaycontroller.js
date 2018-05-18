@@ -1,17 +1,4 @@
 
-
-
-function displayIfIsInGame(request) {
-    console.log("Checking if is in game.");
-    var isInGame = request.query_is_in_game.is_in_game;
-    if (isInGame) {
-        document.getElementById("centralDiv").innerHTML = "<p>You are currently in a game!";
-    } else {
-        document.getElementById("centralDiv").innerHTML = "<p>You should join a lobby.";
-        addJoinLobby(document.getElementById("centralDiv"));
-    }
-};
-
 function addJoinLobby(div) {
 
     var name = document.createElement("input");
@@ -35,16 +22,20 @@ function addJoinLobby(div) {
 
 }
 
-function playerReadyChanged(request) {
+function displayWaitingForPlayers(div) {
+    div.innerHTML = "Waiting for other players:";
 
-    if (gameIsStarted) {
-        var isReady = request.ready_up.player_is_ready;
+    div.appendChild(document.createElement("br"));
 
-        if (isReady) {
-            
-        } else {
+    var btn = document.createElement("BUTTON");
 
-        }
+    if (playerIsReady) {
+        btn.innerHTML = 'READY';
+    } else {
+        btn.innerHTML = 'UNREADY';
     }
 
+    btn.setAttribute("onClick", "toggleReady()");
+
+    div.appendChild(btn);
 }
