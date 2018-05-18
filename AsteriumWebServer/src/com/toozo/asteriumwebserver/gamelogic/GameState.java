@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
+import com.toozo.asteriumwebserver.gamelogic.items.Item;
 
 /**
  * @author Studio Toozo
@@ -104,6 +105,15 @@ public class GameState {
 		
 		this.playerCharacterMap.put(playerAuth, character);
 		this.playerReadyMap.put(player, false);
+	}
+	
+	/**
+	 * Add an item to the communal inventory.
+	 * 
+	 * @param item the {@link Item} which should be added to the communal {@link Inventory}.
+	 */
+	public void addCommunalItem(final Item item) {
+		this.communalInventory.add(item);
 	}
 	// ===================
 }

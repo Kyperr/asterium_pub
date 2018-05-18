@@ -39,7 +39,8 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 	public SyncGameBoardDataRequestData(Integer food, Integer fuel,
 								   Collection<SyncGameBoardDataRequestData.LocationData> locations, 
 								   Collection<SyncGameBoardDataRequestData.PlayerData> players,
-								   Collection<SyncGameBoardDataRequestData.VictoryData> victoryConditions) {
+								   Collection<SyncGameBoardDataRequestData.VictoryData> victoryConditions,
+								   Collection<SyncGameBoardDataRequestData.ItemData> communalInventory) {
 		super(ActionData.SYNC_GAME_BOARD_DATA);
 		this.food = food;
 		this.fuel = fuel;
@@ -79,6 +80,9 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 		
 		// Add communal inventory to data
 		JSONArray communalInventory = new JSONArray();
+		for (SyncGameBoardDataRequestData.ItemData item : this.communalInventory) {
+			communalInventory.put(item.jsonify());
+		}
 		data.put(ActionData.COMMUNAL_INVENTORY, communalInventory);
 		
 		
@@ -123,7 +127,6 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 		}
 		
 		// Parse array of victory conditions
-		// TODO
 		JSONArray victoryArray = jsonObj.getJSONArray(ActionData.VICTORY_CONDITIONS);
 		Collection<SyncGameBoardDataRequestData.VictoryData> victories = new ArrayList<SyncGameBoardDataRequestData.VictoryData>();
 		JSONObject victoryObject;
@@ -136,8 +139,19 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 			victories.add(victory);
 		}
 		
+		// Parse array of items (communalInventory)
+		JSONArray communalInventoryArray = jsonObj.getJSONArray(ActionData.COMMUNAL_INVENTORY);
+		Collection<SyncGameBoardDataRequestData.ItemData> communalInventory = new ArrayList<SyncGameBoardDataRequestData.ItemData>();
+		JSONObject itemObject;
+		SyncGameBoardDataRequestData.ItemData item;
+		for (int i = 0; i < communalInventoryArray.length(); i++) {
+			itemObject = communalInventoryArray.getJSONObject(i);
+			item = new SyncGameBoardDataRequestData.ItemData(itemObject.getString(ActionData.NAME));
+			communalInventory.add(item);
+		}
+		
 		// Construct and return
-		return new SyncGameBoardDataRequestData(food, fuel, locations, players, victories);
+		return new SyncGameBoardDataRequestData(food, fuel, locations, players, victories, communalInventory);
 	}
 	
 	// ===== PLAYER DATA INNER CLASS =====
