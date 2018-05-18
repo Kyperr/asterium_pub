@@ -72,7 +72,7 @@ public class JoinAsPlayerAction extends RequestAction {
 		JoinAsPlayerRequestData.PlayerData data = this.playerData;
 
 		// Construct the player.
-		Player player = new Player(data.getName(), this.getCallingAuthToken());
+		Player player = new Player(this.getCallingAuthToken(), data.getName());
 
 		// Try adding the player to the game.
 		try {

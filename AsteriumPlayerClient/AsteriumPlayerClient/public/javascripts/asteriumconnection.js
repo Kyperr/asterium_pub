@@ -77,6 +77,7 @@ function checkIfIsInGame() {
 }
 
 function toggleReady() {
+    console.log("Toggling ready!");
     var uuid = genUUID();
     message =
         {
@@ -90,7 +91,7 @@ function toggleReady() {
                 }
         }
     socket.send(JSON.stringify(message));
-    responseActions[uuid] = displayIfIsInGame;
+    responseActions[uuid] = processToggleReadyUpResponse;
 }
 
 //***Utils***

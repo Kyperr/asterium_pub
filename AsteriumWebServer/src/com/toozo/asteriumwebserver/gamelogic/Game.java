@@ -1,18 +1,26 @@
 package com.toozo.asteriumwebserver.gamelogic;
 
 import java.awt.Color;
+import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
+import javax.websocket.Session;
+
 import com.toozo.asteriumwebserver.actions.Action;
 import com.toozo.asteriumwebserver.exceptions.GameFullException;
+import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
 import actiondata.SyncGameBoardDataRequestData;
+import actiondata.SyncPlayerClientDataRequestData;
+import message.Request;
 
 /**
  * {@link Game} representing a single game state.
@@ -25,10 +33,10 @@ public class Game extends Thread {
 	private enum GamePhase {
 
 		PLAYERS_JOINING(Game::playerJoining),
-		
+
 		GAME_INITIALIZING(Game::initializeGame),
 
-		PLAYER_TURNS(Game::initiatePlayerTurns),
+		PLAYER_TURNS(Game::initiatePlayerTurnPhase),
 
 		TURN_RESOLVE(game -> {
 
@@ -163,11 +171,18 @@ public class Game extends Thread {
 				synchronized (this) {
 					wait();
 				}
+				System.err.println("Executing game phase.");
 				this.gamePhase.executePhase(this);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+	}
+
+	public synchronized void executePhase() {
+		synchronized (this) {
+			notify();
 		}
 	}
 
@@ -224,7 +239,7 @@ public class Game extends Thread {
 	public Collection<Player> getPlayers() {
 		return playerList.values();
 	}
-	
+
 	public Collection<GameBoard> getGameBoards() {
 		return this.gameBoardList.values();
 	}
@@ -232,9 +247,13 @@ public class Game extends Thread {
 	public Location getLocation(String locationID) {
 		return Game.locations.get(locationID);
 	}
-	
-	public Collection<Location> getLocations() {
-		return Game.locations.values();
+
+	public Set<String> getMapLocations() {
+		return Game.locations.keySet();
+	}
+
+	public Location getAtMapLocation(String mapLocation) {
+		return Game.locations.get(mapLocation);
 	}
 
 	public Player getPlayer(String authToken) {
@@ -249,56 +268,108 @@ public class Game extends Thread {
 		return gameState;
 	}
 
-	//============Static <Game> Consumers to be used===================================
+	// ============Static <Game> Consumers to be
+	// used===================================
 	private static final void playerJoining(Game game) {
+		System.err.println("Running Player Joining Phase.");
 		if (game.getGameState().allCharactersReady()) {
 			// Here is where we would validate game state to make sure everything is ready
 			// to start.
 			// if(validateGameState()){
 			game.setGamePhase(GamePhase.GAME_INITIALIZING);
+			game.gamePhase.executePhase(game);
+			game.getGameState().setAllCharactersNotReady();
 			// }
 		}
 	}
-	
+
 	private static final void initializeGame(Game game) {
+		System.err.println("Initializing Game.");
 		// TODO Initialize game
 		game.setGamePhase(GamePhase.PLAYER_TURNS);
+		game.gamePhase.executePhase(game);
 	}
-	
-	private static final void initiatePlayerTurns(Game game) {
+
+	private static final void initiatePlayerTurnPhase(Game game) {
+		syncPlayerClients(game);
+		syncGameBoards(game);
+	}
+
+	private static final void syncPlayerClients(Game game) {
+		System.err.println("Sending player client sync.");
+		List<SyncPlayerClientDataRequestData.LocationData> loc = new ArrayList<>();
+
+		for (String s : game.getMapLocations()) {
+			Location l = game.getAtMapLocation(s);
+			// if(l.distance <= player.stamina)//pseudocode
+
+			SyncPlayerClientDataRequestData.LocationData locData = new SyncPlayerClientDataRequestData.LocationData(s,
+					l.getType().getJSONVersion(), l.getActivityNames());
+
+			loc.add(locData);
+		}
+
+		for (Player p : game.getPlayers()) {
+			String auth = p.getAuthToken();
+
+			PlayerCharacter pChar = game.getGameState().getCharacter(auth);
+
+			SyncPlayerClientDataRequestData.Character.Stats stat = new SyncPlayerClientDataRequestData.Character.Stats(
+					pChar.getEffectiveStats().getHealth(),
+					pChar.getEffectiveStats().getStamina(),
+					pChar.getEffectiveStats().getLuck(),
+					pChar.getEffectiveStats().getIntuition());
+
+			SyncPlayerClientDataRequestData.Character dChar = new SyncPlayerClientDataRequestData.Character(pChar.getCharacterName(), stat);
+
+			
+			SyncPlayerClientDataRequestData data = new SyncPlayerClientDataRequestData(loc, dChar);
+			
+			Request request = new Request(data, auth);
+			
+			try {
+				SessionManager.getInstance().getSession(auth).getBasicRemote().sendText(request.jsonify().toString());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+
+	}
+
+	private static final void syncGameBoards(Game game) {
 		// Construct collection of LocationData
 		Collection<SyncGameBoardDataRequestData.LocationData> locationDatas = new ArrayList<SyncGameBoardDataRequestData.LocationData>();
 		SyncGameBoardDataRequestData.LocationData location;
 		for (String mapLocation : Game.locations.keySet()) {
-			location = new SyncGameBoardDataRequestData.LocationData(mapLocation, 
-																Game.locations.get(mapLocation).getType().toString());
+			location = new SyncGameBoardDataRequestData.LocationData(mapLocation,
+					Game.locations.get(mapLocation).getType().toString());
 			locationDatas.add(location);
 		}
-		
+
 		// Construct collection of PlayerData
 		Collection<SyncGameBoardDataRequestData.PlayerData> playerDatas = new ArrayList<SyncGameBoardDataRequestData.PlayerData>();
 		SyncGameBoardDataRequestData.PlayerData player;
 		for (final PlayerCharacter c : game.getGameState().getCharacters()) {
-			player = new SyncGameBoardDataRequestData.PlayerData(c.getCharacterName(), 
-															Color.WHITE, 
-															1);
+			player = new SyncGameBoardDataRequestData.PlayerData(c.getCharacterName(), Color.WHITE, 1);
 			playerDatas.add(player);
 		}
-		
+
 		// Construct collection of VictoryData
 		// TODO
-		
+
 		// Get inventory data
 		// TODO
-		
+
 		// ActionData displayBoardRequestData = new DisplayBoardRequestData();
 		// Message displayBoardMessage = new Request(displayBoardRequestData,
 		// "DanielSaysToLeaveTheAuthTokenBlank");
 
 		for (GameBoard gameBoard : game.getGameBoards()) {
-			//gameBoard.getSession().sendMessage(displayBoardMessage);
+			// gameBoard.getSession().sendMessage(displayBoardMessage);
 		}
-		
+
 		// TODO Send DisplayOptions to all players
 		game.setGamePhase(GamePhase.TURN_RESOLVE);
 	}

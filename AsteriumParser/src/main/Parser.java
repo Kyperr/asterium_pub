@@ -18,6 +18,8 @@ import actiondata.JoinAsPlayerRequestData;
 import actiondata.JoinAsPlayerResponseData;
 import actiondata.QueryIsInGameRequestData;
 import actiondata.QueryIsInGameResponseData;
+import actiondata.ToggleReadyUpRequestData;
+import actiondata.ToggleReadyUpResponseData;
 import message.Message;
 import message.Request;
 import message.Response;
@@ -45,6 +47,9 @@ public class Parser {
 
 		put(Arrays.asList(true, ActionData.QUERY_IS_IN_GAME), QueryIsInGameRequestData::parseArgs);
 		put(Arrays.asList(false, ActionData.QUERY_IS_IN_GAME), QueryIsInGameResponseData::parseArgs);
+
+		put(Arrays.asList(true, ActionData.TOGGLE_READY_UP), ToggleReadyUpRequestData::parseArgs);
+		put(Arrays.asList(false, ActionData.TOGGLE_READY_UP), ToggleReadyUpResponseData::parseArgs);
 	}};
 
 	/**
@@ -87,6 +92,7 @@ public class Parser {
 			System.out.print("actionDataLookup.get(" + isRequest + ", " + actionName + ") = ");
 			System.out.println(actionDataLookup.get(Arrays.asList(isRequest, actionName)));
 		}
+
 		actionData = actionDataLookup.get(Arrays.asList(isRequest, actionName)).apply(jsonObj);
 
 		
