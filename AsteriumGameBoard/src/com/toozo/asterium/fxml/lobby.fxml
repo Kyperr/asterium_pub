@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane id="BorderPane" prefHeight="500" prefWidth="720"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="com.toozo.asterium.asteriumgameboard.LobbyController">
+	<top>
+	<Label minHeight="16" minWidth="69" fx:id="label" />
+	</top>
+	<center>
+		<ListView fx:id="playerListView"/>
+	</center>
+	<bottom>
+	<Button text="Back" onAction="#handleBackButtonAction" fx:id="backButton" />
+	<Button text = "Ready" onAction="#handleReadyButttonAction" fx:id="readyButton" />
+	</bottom>
+
+</BorderPane>

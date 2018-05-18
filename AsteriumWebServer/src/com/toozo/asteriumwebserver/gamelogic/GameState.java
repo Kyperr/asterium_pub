@@ -1,36 +1,77 @@
 package com.toozo.asteriumwebserver.gamelogic;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.toozo.asteriumwebserver.gamelogic.Character;
+import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 
 /**
- * 
  * @author Studio Toozo
  */
 public class GameState {
-
+	// ===== FIELDS =====
 	/* Map of player auth token to character */
-	private Map<String, Character> playerCharacterMap = new ConcurrentHashMap<String, Character>();
-
-	private Map<Character, Boolean> playerReadyMap = new ConcurrentHashMap<Character, Boolean>();
-
-	public GameState() {
-
+	private Game game;
+	private Map<String, PlayerCharacter> playerCharacterMap;
+	private Map<Player, Boolean> playerReadyMap;
+	private Collection<VictoryCondition> victoryConditions;
+	private Inventory communalInventory;
+	// ==================
+	
+	// ===== CONSTRUCTORS =====
+	public GameState(Game game) {
+		this.game = game;
+		this.playerCharacterMap = new ConcurrentHashMap<String, PlayerCharacter>();
+		this.playerReadyMap = new ConcurrentHashMap<Player, Boolean>();
+		this.victoryConditions = new ArrayList<VictoryCondition>();
+		this.communalInventory = new Inventory();
+	}
+	// ========================
+	
+	// ===== GETTERS =====
+	public PlayerCharacter getCharacter(final String auth) {
+		return playerCharacterMap.get(auth);
 	}
 	
 	/**
-	 * Gets a {@link Collection} of the {@link Character}s in the game.
-	 * WARNING: Modifications to this Collection will affect the GameState's list of Characters.
+	 * @return a {@link Collection} of references to all complete 
+	 * 		   {@link VictoryCondition}s in this GameState.
+	 */
+	public Collection<VictoryCondition> getCompleteVictoryConditions() {
+		Collection<VictoryCondition> result = new ArrayList<VictoryCondition>();
+		
+		// Add all complete victory conditions
+		for (VictoryCondition vc : this.victoryConditions) {
+			if (vc.isComplete(this)) {
+				result.add(vc);
+			}
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * @return a {@link Collection} of references to this GameState's {@link VictoryCondition}s.
+	 */
+	public Collection<VictoryCondition> getVictoryConditions() {
+		return this.victoryConditions;
+	}
+	
+	/**
+	 * Gets a {@link Collection} of the {@link PlayerCharacter}s in the game.
+	 * WARNING: Modifications to this Collection will affect 
+	 * 			the GameState's map of {@link PlayerCharacter}s.
 	 * 
 	 * @return Collection<Character> containing the game's Characters.
 	 */
-	public Collection<Character> getCharacters() {
+	public Collection<PlayerCharacter> getCharacters() {
 		return this.playerCharacterMap.values();
 	}
+	// ===================
 	
+	// ===== METHODS =====
 	public boolean allCharactersReady() {
 		for (Boolean bool : playerReadyMap.values()) {
 			if (!bool) {
@@ -40,12 +81,15 @@ public class GameState {
 		return true;
 	}
 	
-	public boolean toggleReady(final String authToken) {
-		return !playerReadyMap.get(playerCharacterMap.get(authToken));
-	}
-	
-	public Character getCharacter(final String auth) {
-		return playerCharacterMap.get(auth);
+	/**
+	 * Toggles whether the {@link PlayerCharacter} belonging
+	 * to the {@link Player} with authToken is ready or not.
+	 * 
+	 * @param authToken The auth token of the {@link Player}
+	 */
+	public void toggleReady(final String authToken) {
+		Player player = this.game.getPlayer(authToken);
+		this.playerReadyMap.put(player, !playerReadyMap.get(player));
 	}
 	
 	/**
@@ -55,13 +99,11 @@ public class GameState {
 	 * @param character The new character
 	 */
 	public void addPlayer(final String playerAuth) {
-		Character character = new Character();
+		Player player = this.game.getPlayer(playerAuth);
+		PlayerCharacter character = new PlayerCharacter();
 		
 		this.playerCharacterMap.put(playerAuth, character);
-		this.playerReadyMap.put(character, false);
+		this.playerReadyMap.put(player, false);
 	}
-	
-	public Collection<Character> getCharacters() {
-		return this.playerCharacterMap.values();
-	}
+	// ===================
 }

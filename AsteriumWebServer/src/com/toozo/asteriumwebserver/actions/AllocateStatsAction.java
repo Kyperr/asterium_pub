@@ -3,15 +3,16 @@ package com.toozo.asteriumwebserver.actions;
 import java.io.IOException;
 import java.util.UUID;
 
-import com.toozo.asteriumwebserver.gamelogic.Character;
-import com.toozo.asteriumwebserver.gamelogic.Character.Stats;
+import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
+import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter.Stats;
 import com.toozo.asteriumwebserver.gamelogic.Game;
 import com.toozo.asteriumwebserver.gamelogic.GameManager;
 import com.toozo.asteriumwebserver.gamelogic.GameState;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
-import actiondata.AllocateStatsResponseData;
+import actiondata.ActionData;
 import actiondata.ErroredResponseData;
+import actiondata.SuccessResponseData;
 import message.Message;
 import message.Response;
 
@@ -38,11 +39,11 @@ public class AllocateStatsAction extends RequestAction {
 		if (game != null) {
 			GameState state = game.getGameState();
 			
-			Character character = state.getCharacter(auth);
+			PlayerCharacter character = state.getCharacter(auth);
 			Stats stats = new Stats(this.stamina, this.luck, this.intuition);
 			character.setStats(stats);
 			
-			AllocateStatsResponseData data = new AllocateStatsResponseData();			
+			SuccessResponseData data = new SuccessResponseData(ActionData.ALLOCATE_STATS);			
 			message = new Response(data, 0, this.getMessageID(), this.getCallingAuthToken());
 		} else {
 			ErroredResponseData ead = new ErroredResponseData(this.getName());

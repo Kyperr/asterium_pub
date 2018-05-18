@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?scenebuilder-stylesheet vista.css?>
+
+<VBox prefHeight="200.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml" 
+		fx:controller="com.toozo.asterium.asteriumgameboard.GameBoardController">
+  <children>
+    <Label maxWidth="1.7976931348623157E308" text="Asterium" VBox.vgrow="NEVER" />
+    <StackPane fx:id="nodeHolder" VBox.vgrow="ALWAYS" />
+  </children>
+</VBox>

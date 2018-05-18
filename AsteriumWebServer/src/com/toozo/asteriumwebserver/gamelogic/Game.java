@@ -12,7 +12,7 @@ import java.util.function.Consumer;
 import com.toozo.asteriumwebserver.actions.Action;
 import com.toozo.asteriumwebserver.exceptions.GameFullException;
 
-import actiondata.DisplayBoardRequestData;
+import actiondata.SyncGameBoardDataRequestData;
 
 /**
  * {@link Game} representing a single game state.
@@ -153,7 +153,7 @@ public class Game extends Thread {
 	public Game() {
 		lobbyID = generateLobbyID();
 		gamePhase = GamePhase.PLAYERS_JOINING;
-		gameState = new GameState();
+		gameState = new GameState(this);
 	}
 
 	@Override
@@ -238,6 +238,10 @@ public class Game extends Thread {
 	public Location getLocation(String locationID) {
 		return Game.locations.get(locationID);
 	}
+	
+	public Collection<Location> getLocations() {
+		return Game.locations.values();
+	}
 
 	public Player getPlayer(String authToken) {
 		return playerList.get(authToken);
@@ -269,28 +273,36 @@ public class Game extends Thread {
 	
 	private static final void initiatePlayerTurns(Game game) {
 		// Construct collection of LocationData
-		Collection<DisplayBoardRequestData.LocationData> locationDatas = new ArrayList<DisplayBoardRequestData.LocationData>();
-		DisplayBoardRequestData.LocationData location;
-		/*
-		for (final Location l : game.getGameState()) {
-			
+		Collection<SyncGameBoardDataRequestData.LocationData> locationDatas = new ArrayList<SyncGameBoardDataRequestData.LocationData>();
+		SyncGameBoardDataRequestData.LocationData location;
+		for (String mapLocation : Game.locations.keySet()) {
+			location = new SyncGameBoardDataRequestData.LocationData(mapLocation, 
+																Game.locations.get(mapLocation).getType().toString());
+			locationDatas.add(location);
 		}
-		*/
+		
 		// Construct collection of PlayerData
-		Collection<DisplayBoardRequestData.PlayerData> playerDatas = new ArrayList<DisplayBoardRequestData.PlayerData>();
-		DisplayBoardRequestData.PlayerData player;
-		for (final Character c : game.getGameState().getCharacters()) {
-			player = new DisplayBoardRequestData.PlayerData(c.getCharacterName(), 
+		Collection<SyncGameBoardDataRequestData.PlayerData> playerDatas = new ArrayList<SyncGameBoardDataRequestData.PlayerData>();
+		SyncGameBoardDataRequestData.PlayerData player;
+		for (final PlayerCharacter c : game.getGameState().getCharacters()) {
+			player = new SyncGameBoardDataRequestData.PlayerData(c.getCharacterName(), 
 															Color.WHITE, 
 															1);
+			playerDatas.add(player);
 		}
+		
 		// Construct collection of VictoryData
+		// TODO
+		
+		// Get inventory data
+		// TODO
+		
 		// ActionData displayBoardRequestData = new DisplayBoardRequestData();
 		// Message displayBoardMessage = new Request(displayBoardRequestData,
 		// "DanielSaysToLeaveTheAuthTokenBlank");
 
 		for (GameBoard gameBoard : game.getGameBoards()) {
-			// gameBoard.getSession().sendMessage(displayBoardMessage);
+			//gameBoard.getSession().sendMessage(displayBoardMessage);
 		}
 		
 		// TODO Send DisplayOptions to all players

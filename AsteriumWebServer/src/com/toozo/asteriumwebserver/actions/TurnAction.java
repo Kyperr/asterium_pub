@@ -3,7 +3,7 @@ package com.toozo.asteriumwebserver.actions;
 import java.io.IOException;
 import java.util.UUID;
 
-import com.toozo.asteriumwebserver.gamelogic.Character;
+import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 import com.toozo.asteriumwebserver.gamelogic.Game;
 import com.toozo.asteriumwebserver.gamelogic.GameManager;
 import com.toozo.asteriumwebserver.gamelogic.GameState;
@@ -11,9 +11,10 @@ import com.toozo.asteriumwebserver.gamelogic.Location;
 import com.toozo.asteriumwebserver.gamelogic.Player;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
+import actiondata.ActionData;
 import actiondata.ErroredResponseData;
+import actiondata.SuccessResponseData;
 import actiondata.TurnRequestData;
-import actiondata.TurnResponseData;
 import message.Message;
 import message.Response;
 
@@ -47,7 +48,7 @@ public class TurnAction extends RequestAction {
 			String activityName = this.activityName;
 			if (state != null) {
 				// use character to search (uses their stats)
-				Character character = state.getCharacter(auth);
+				PlayerCharacter character = state.getCharacter(auth);
 				if (character != null) {
 					Runnable runnable = new Runnable() {
 						@Override
@@ -60,7 +61,7 @@ public class TurnAction extends RequestAction {
 						}
 					};
 					game.addTurnAction(player, runnable);
-					TurnResponseData data = new TurnResponseData();
+					SuccessResponseData data = new SuccessResponseData(ActionData.TURN);
 					message = new Response(data, 0, this.getMessageID(), auth);
 				}
 			}
