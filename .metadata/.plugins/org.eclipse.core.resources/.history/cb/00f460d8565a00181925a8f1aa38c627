@@ -12,7 +12,7 @@ public abstract class AbstractItem {
 	// ===== CONSTANTS =====
 	public static final String DEFAULT_NAME = "";
 	
-	private static final Map<String, Supplier<AbstractItem>> ITEM_LOOKUP = new HashMap<String, Supplier<AbstractItem>>() {
+	private static final Map<String, Supplier<Item>> ITEM_LOOKUP = new HashMap<String, Supplier<Item>> (){
 		/**
 		 * Auto-generated unique identifier for ITEM_LOOKUP
 		 */
@@ -75,8 +75,8 @@ public abstract class AbstractItem {
 	
 	// ===== METHODS =====
 	
-	public static AbstractItem getItem(final String itemName) {		
-		return AbstractItem.ITEM_LOOKUP.get(itemName).get();
+	public static Item getItem(final String itemName) {		
+		return Item.ITEM_LOOKUP.get(itemName).get();
 	}
 	
 	/**
