@@ -3,7 +3,6 @@ package com.toozo.asteriumwebserver.gamelogic.items.equipment;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.toozo.asteriumwebserver.gamelogic.Inventory;
@@ -52,20 +51,18 @@ public class Loadout {
 	 * @param starterItems a list of items which should be equipped if possible.
 	 */
 	public Loadout(PlayerCharacter owner, Collection<AbstractEquipmentItem> starterItems) {
-		this.owner = Objects.requireNonNull(owner, OWNER_ERROR);
+		this.owner = Objects.requireNonNull(owner, "NULL OWNER PASSED TO LOADOUT CONSTRUCTOR");
 		this.slots = new ConcurrentHashMap<EquipmentSlot, AbstractEquipmentItem>();
 		
 		// Put items into slots
 		EquipmentSlot type;
-		if (starterItems != null) {
-			for (AbstractEquipmentItem item : starterItems) {
-				type = item.getType();
-				boolean canEquip =  slotEmpty(type);
-				item.setEquipped(canEquip);
-				if (canEquip) {
-					// Equip it
-					this.slots.put(type, item);
-				}
+		for (AbstractEquipmentItem item : starterItems) {
+			type = item.getType();
+			boolean canEquip =  slotEmpty(type);
+			item.setEquipped(canEquip);
+			if (canEquip) {
+				// Equip it
+				this.slots.put(type, item);
 			}
 		}
 	}

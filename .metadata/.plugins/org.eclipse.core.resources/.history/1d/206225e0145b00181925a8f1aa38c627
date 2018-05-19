@@ -57,15 +57,13 @@ public class Loadout {
 		
 		// Put items into slots
 		EquipmentSlot type;
-		if (starterItems != null) {
-			for (AbstractEquipmentItem item : starterItems) {
-				type = item.getType();
-				boolean canEquip =  slotEmpty(type);
-				item.setEquipped(canEquip);
-				if (canEquip) {
-					// Equip it
-					this.slots.put(type, item);
-				}
+		for (AbstractEquipmentItem item : starterItems) {
+			type = item.getType();
+			boolean canEquip =  slotEmpty(type);
+			item.setEquipped(canEquip);
+			if (canEquip) {
+				// Equip it
+				this.slots.put(type, item);
 			}
 		}
 	}

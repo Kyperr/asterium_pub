@@ -3,7 +3,6 @@ package com.toozo.asteriumwebserver.gamelogic.items.equipment;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.toozo.asteriumwebserver.gamelogic.Inventory;
@@ -15,10 +14,6 @@ import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
  * @author Greg Schmitt
  */
 public class Loadout {
-	// ===== CONSTANTS =====
-	public static final String OWNER_ERROR = "NULL OWNER PASSED TO LOADOUT CONSTRUCTOR";
-	// =====================
-	
 	// ===== FIELDS =====
 	private Map<EquipmentSlot, AbstractEquipmentItem> slots;
 	private PlayerCharacter owner;
@@ -52,20 +47,23 @@ public class Loadout {
 	 * @param starterItems a list of items which should be equipped if possible.
 	 */
 	public Loadout(PlayerCharacter owner, Collection<AbstractEquipmentItem> starterItems) {
-		this.owner = Objects.requireNonNull(owner, OWNER_ERROR);
+		this.owner = owner;
 		this.slots = new ConcurrentHashMap<EquipmentSlot, AbstractEquipmentItem>();
+		
+		// Instantiate slots
+		for (EquipmentSlot slot : EquipmentSlot.values()) {
+			this.slots.put(slot, null);
+		}
 		
 		// Put items into slots
 		EquipmentSlot type;
-		if (starterItems != null) {
-			for (AbstractEquipmentItem item : starterItems) {
-				type = item.getType();
-				boolean canEquip =  slotEmpty(type);
-				item.setEquipped(canEquip);
-				if (canEquip) {
-					// Equip it
-					this.slots.put(type, item);
-				}
+		for (AbstractEquipmentItem item : starterItems) {
+			type = item.getType();
+			boolean canEquip =  slotEmpty(type);
+			item.setEquipped(canEquip);
+			if (canEquip) {
+				// Equip it
+				this.slots.put(type, item);
 			}
 		}
 	}
@@ -77,7 +75,7 @@ public class Loadout {
 	 * @return True if the equipmentSlot is already occupied, false otherwise.
 	 */
 	public boolean slotFull(EquipmentSlot slot) {
-		return !slotEmpty(slot);
+		return this.slots.get(slot) == null;
 	}
 	
 	/**
@@ -85,7 +83,7 @@ public class Loadout {
 	 * @return True if the equipmentSlot is unoccupied, false otherwise.
 	 */
 	public boolean slotEmpty(EquipmentSlot slot) {
-		return this.slots.containsKey(slot);
+		return !slotFull(slot);
 	}
 	
 	/**
@@ -99,7 +97,7 @@ public class Loadout {
 	
 	// ===== METHODS =====
 	/**
-	 * If item is non-null and the owner of this Loadout has item, equips item to owner's 
+	 * If item is non-null and equipper has item, equips item to the 
 	 * appropriate slot, otherwise does nothing. If equipper already has 
 	 * an equipment item in that slot, swaps them.
 	 * 
@@ -107,10 +105,11 @@ public class Loadout {
 	 * @param equipper The {@link PlayerCharacter} to whom this item should be equipped.
 	 */
 	public void equip(AbstractEquipmentItem item) {
+		EquipmentSlot type = item.getType();
 		Inventory ownerInventory = owner.getInventory();
+		
 		// Make sure that equipper has the item.
-		if (item != null && ownerInventory.contains(item)) {
-			EquipmentSlot type = item.getType();
+		if (ownerInventory.contains(item)) {
 			ownerInventory.remove(item);
 			
 			if (owner.getEquipment().slotFull(type)) {
