@@ -3,6 +3,8 @@ var gameIsStarted = false;
 
 var playerIsReady = false;
 
+var gamePhase = "PLAYERS_JOINING";
+
 var locations = [];
 
 function getAuthToken(){

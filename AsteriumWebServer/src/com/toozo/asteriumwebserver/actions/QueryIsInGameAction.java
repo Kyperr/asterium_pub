@@ -39,6 +39,7 @@ public class QueryIsInGameAction extends RequestAction {
 			QueryIsInGameResponseData data = new QueryIsInGameResponseData(false);
 			message = new Response(data, 0, this.getMessageID(), this.getCallingAuthToken());
 		}
+				
 		// Send the response back to the calling session.
 		try {
 			SessionManager.getInstance().getSession(getCallingAuthToken()).getBasicRemote()

@@ -4,11 +4,7 @@ var responseActions = {};
 function processQueryIsInGameResponse(response) {
     var isInGame = response.query_is_in_game.is_in_game;
     if (isInGame) {
-        if(gameIsStarted){
-
-        } else {
-            waitingForPlayersDisplayController.display(document.getElementById("centralDiv"));
-        }
+        waitingForPlayersDisplayController.display(document.getElementById("centralDiv"));
     } else {
         joinAsLobbyDisplayController.display(document.getElementById("centralDiv"));
     }
@@ -24,12 +20,22 @@ function processJoinAsPlayerResponse(response) {
     }
 }
 
-function processToggleReadyUpResponse(response){
+function processToggleReadyUpResponse(response) {
     if (response.error_code == 0) {
         playerIsReady = response.toggle_ready_up.player_is_ready;
-        waitingForPlayersDisplayController.display(document.getElementById("centralDiv"));
+
+        if (playerIsReady) {
+            waitingForPlayersDisplayController.btn.innerHTML = 'UNREADY';
+        } else {
+            waitingForPlayersDisplayController.btn.innerHTML = 'READY';
+        }
+
     } else {
         console.log("Failed to toggle ready up status, error_code: " + response.error_code);
     }
+}
+
+function process(response){
+
 }
 

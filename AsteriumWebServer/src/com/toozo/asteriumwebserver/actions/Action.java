@@ -102,12 +102,6 @@ public abstract class Action implements Runnable {
 	public static Action getActionFor(final Message message) {
 		ActionData actionData = message.getActionData();
 		try {
-			if (VERBOSE) {
-				System.out.println("class: " + actionData.getClass());
-				for (Class<? extends ActionData> c : ACTION_LOOKUP.keySet()) {
-					System.out.println("class2: " + c.getName());
-				}
-			}
 
 			// Look up the function that corresponds to actionData's class and call it.
 			return ACTION_LOOKUP.get(actionData.getClass()).apply(message);

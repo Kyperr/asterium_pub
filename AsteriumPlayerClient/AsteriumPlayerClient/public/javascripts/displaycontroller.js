@@ -32,7 +32,7 @@ function JoinLobbyDisplayController() {
     this.init();
 }
 
-JoinLobbyDisplayController.prototype = Object.create(JoinLobbyDisplayController.prototype);
+JoinLobbyDisplayController.prototype = Object.create(AbstractDisplayController.prototype);
 JoinLobbyDisplayController.prototype.constructor = JoinLobbyDisplayController;
 
 
@@ -72,7 +72,7 @@ function WaitingForPlayersDisplayController() {
     this.init();
 }
 
-WaitingForPlayersDisplayController.prototype = Object.create(WaitingForPlayersDisplayController.prototype);
+WaitingForPlayersDisplayController.prototype = Object.create(AbstractDisplayController.prototype);
 WaitingForPlayersDisplayController.prototype.constructor = WaitingForPlayersDisplayController;
 
 
@@ -87,12 +87,6 @@ WaitingForPlayersDisplayController.prototype.display = function (div) {
 
     div.appendChild(document.createElement("br"));
 
-    if (playerIsReady) {
-        this.btn.innerHTML = 'UNREADY';
-    } else {
-        this.btn.innerHTML = 'READY';
-    }
-
     div.appendChild(this.btn);
 }
 
@@ -103,20 +97,25 @@ var waitingForPlayersDisplayController = new WaitingForPlayersDisplayController(
 //==========MovementDisplayController
 //
 
-function MovementDisplayController() {
-    this.btnExplore = document.createElement("EXPLORE");
-    this.btnStay = document.createElement("STAY");
-    this.btnInventory = document.createElement("INVENTORY");
+function ActionDisplayController() {
+    this.btnExplore = document.createElement("BUTTON");
+    this.btnStay = document.createElement("BUTTON");
+    this.btnInventory = document.createElement("BUTTON");
 }
 
-ActionDisplayController.prototype = Object.create(ActionDisplayController.prototype);
+ActionDisplayController.prototype = Object.create(AbstractDisplayController.prototype);
 ActionDisplayController.prototype.constructor = ActionDisplayController;
 
 
 ActionDisplayController.prototype.init = function () {
     this.btnExplore.setAttribute("onClick", "toggleReady()");
+    this.btnExplore.innerHTML = "EXPLORE";
+
     this.btnStay.setAttribute("onClick", "toggleReady()");
+    this.btnStay.innerHTML = "STAY";
+
     this.btnInventory.setAttribute("onClick", "toggleReady()");
+    this.btnInventory.innerHTML = "INVENTORY";
 }
 
 ActionDisplayController.prototype.display = function (div) {
@@ -132,5 +131,5 @@ ActionDisplayController.prototype.display = function (div) {
 }
 
 //Static instance. USE THIS ONE!
-var movementDisplayController = new ActionDisplayController();
+var actionDisplayController = new ActionDisplayController();
 
