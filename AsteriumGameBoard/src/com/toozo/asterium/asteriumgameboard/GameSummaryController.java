@@ -3,15 +3,11 @@ package com.toozo.asterium.asteriumgameboard;
 import com.toozo.asterium.util.GameResources;
 import com.toozo.asterium.util.NodeNavigator;
 
-import actiondata.CreateGameRequestData;
-import actiondata.CreateGameResponseData;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import main.ClientConnectionHandler;
-import message.Request;
+import javafx.scene.layout.Pane;
 
 public class GameSummaryController {
 

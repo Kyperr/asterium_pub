@@ -4,6 +4,7 @@ import com.toozo.asterium.util.NodeNavigator;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.Pane;
 
 public class MapController {
 

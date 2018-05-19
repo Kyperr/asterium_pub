@@ -24,7 +24,7 @@ import main.ClientConnectionHandler;
  */
 public class GameResources {
 	
-	private static final String URI = "ws://localhost:8080/AsteriumWebServer/Game/";	
+	private static final String URI = "ws://localhost:8080/AsteriumWebServer/Game";	
 	
 	private static String lobbyId = "no lobby id";
 
@@ -50,7 +50,7 @@ public class GameResources {
 	
 	public GameResources() {
 		ccHandler = new ClientConnectionHandler(URI);
-		//registerCallbacks();
+//		registerCallbacks();
 	}
 	
 	public static void setLobbyId(String id) {
@@ -142,6 +142,7 @@ public class GameResources {
 				
 			});
 		});
+		
 	}
 	
 }

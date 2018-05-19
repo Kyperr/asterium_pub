@@ -3,6 +3,11 @@ package com.toozo.asterium.util;
 import java.io.IOException;
 
 import com.toozo.asterium.asteriumgameboard.GameBoardController;
+import com.toozo.asterium.asteriumgameboard.GameSummaryController;
+import com.toozo.asterium.asteriumgameboard.LobbyController;
+import com.toozo.asterium.asteriumgameboard.MapController;
+import com.toozo.asterium.asteriumgameboard.MenuController;
+import com.toozo.asterium.asteriumgameboard.TurnSummaryController;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -24,13 +29,20 @@ public class NodeNavigator {
     /* The main application layout controller. */
     private static GameBoardController mainController;
     
+    /* Layout nodes */
+    private static Node menuLayout;
+    private static Node lobbyLayout;
+    private static Node mapLayout;
+    private static Node turnSummaryLayout;
+    private static Node gameSummaryLayout;
+    
     /* Layout controllers */
-    private static Node menuController;
-    private static Node lobbyController;
-    private static Node mapController;
-    private static Node turnSummaryController;
-    private static Node gameSummaryController;
-
+    private static MenuController menuController;
+    private static LobbyController lobbyController;
+    private static MapController mapController;
+    private static TurnSummaryController turnSummaryController;
+    private static GameSummaryController gameSummaryController;
+    
     /**
      * Stores the main controller for later use in navigation tasks.
      *
@@ -43,11 +55,21 @@ public class NodeNavigator {
     public void setChildControllers() {
     	
 		try {
-			menuController = new FXMLLoader().load(ClassLoader.class.getResourceAsStream(MENU));
-			lobbyController = new FXMLLoader().load(ClassLoader.class.getResourceAsStream(LOBBY));
-			mapController = new FXMLLoader().load(ClassLoader.class.getResourceAsStream(NodeNavigator.MAP));
-			turnSummaryController = new FXMLLoader().load(ClassLoader.class.getResourceAsStream(TURN_SUMMARY));
-			gameSummaryController = new FXMLLoader().load(ClassLoader.class.getResourceAsStream(GAME_SUMMARY));
+			FXMLLoader loader = new FXMLLoader();
+			menuLayout = loader.load(ClassLoader.class.getResourceAsStream(MENU));
+			menuController = loader.getController();
+			loader = new FXMLLoader();
+			lobbyLayout = loader.load(ClassLoader.class.getResourceAsStream(LOBBY));
+			lobbyController = loader.getController();
+			loader = new FXMLLoader();
+			mapLayout = new FXMLLoader().load(ClassLoader.class.getResourceAsStream(NodeNavigator.MAP));
+			mapController = loader.getController();
+			loader = new FXMLLoader();
+			turnSummaryLayout = new FXMLLoader().load(ClassLoader.class.getResourceAsStream(TURN_SUMMARY));
+			turnSummaryController = loader.getController();
+			loader = new FXMLLoader();
+			gameSummaryLayout = new FXMLLoader().load(ClassLoader.class.getResourceAsStream(GAME_SUMMARY));
+			gameSummaryController = loader.getController();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -67,23 +89,24 @@ public class NodeNavigator {
     }
     
     public static void loadMenu() {
-       mainController.setNode(menuController);
+       mainController.setNode(menuLayout);
     }
     
     public static void loadLobby() {
-        mainController.setNode(lobbyController);
+    	lobbyController.update();
+        mainController.setNode(lobbyLayout);
      }
     
     public static void loadMap() {
-        mainController.setNode(mapController);
+        mainController.setNode(mapLayout);
      }
     
     public static void loadTurnSummary() {
-        mainController.setNode(turnSummaryController);
+        mainController.setNode(turnSummaryLayout);
      }
     
     public static void loadGameSummary() {
-        mainController.setNode(turnSummaryController);
+        mainController.setNode(gameSummaryLayout);
      }
 
     public static GameBoardController getMainController() {

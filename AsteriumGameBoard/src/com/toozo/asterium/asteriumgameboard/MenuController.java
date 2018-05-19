@@ -1,8 +1,5 @@
 package com.toozo.asterium.asteriumgameboard;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import com.toozo.asterium.util.GameResources;
 import com.toozo.asterium.util.NodeNavigator;
 
@@ -11,10 +8,9 @@ import actiondata.CreateGameResponseData;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import main.ClientConnectionHandler;
+import javafx.scene.layout.Pane;
 import message.Request;
 
 /**
@@ -31,13 +27,13 @@ public class MenuController {
     
     @FXML
     private void handleLobbyIdButtonAction(ActionEvent event) {
-    	NodeNavigator.loadLobby();
-    	//CreateGameRequestData cgrData = new CreateGameRequestData();
+    	
+    	CreateGameRequestData cgrData = new CreateGameRequestData();
     	    	
-        //Request request = new Request(cgrData, "");
+        Request request = new Request(cgrData, "");
         
         //Here, we say that once we get the message back, run the lambda...
-    	/*GameResources.getClientConnectionHandler().send(request.jsonify().toString(), (message) -> {
+    	GameResources.getClientConnectionHandler().send(request.jsonify().toString(), (message) -> {
     		
     		//... and now that we have a message response from the server, we need to set the text
     		//of the label, however, that needs to be done on the UI thread, so we use 
@@ -56,7 +52,7 @@ public class MenuController {
                 }
             });
     		
-    	});*/
+    	});
     }
     
     @FXML

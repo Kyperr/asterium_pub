@@ -6,6 +6,7 @@ import com.toozo.asterium.util.NodeNavigator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 
 /**
  * Controller for lobby layout.
