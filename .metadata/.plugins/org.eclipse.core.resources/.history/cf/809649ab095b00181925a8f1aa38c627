@@ -146,11 +146,11 @@ public class GameState {
 
 			PlayerCharacter pChar = state.getCharacter(auth);
 
-			SyncPlayerClientDataRequestData.PlayerCharacterData.Stats stat = new SyncPlayerClientDataRequestData.PlayerCharacterData.Stats(
+			SyncPlayerClientDataRequestData.Character.Stats stat = new SyncPlayerClientDataRequestData.Character.Stats(
 					pChar.getEffectiveStats().getHealth(), pChar.getEffectiveStats().getStamina(),
 					pChar.getEffectiveStats().getLuck(), pChar.getEffectiveStats().getIntuition());
 
-			SyncPlayerClientDataRequestData.PlayerCharacterData dChar = new SyncPlayerClientDataRequestData.PlayerCharacterData(
+			SyncPlayerClientDataRequestData.Character dChar = new SyncPlayerClientDataRequestData.Character(
 					pChar.getCharacterName(), stat);
 
 			SyncPlayerClientDataRequestData data = new SyncPlayerClientDataRequestData(loc, dChar);
@@ -215,7 +215,7 @@ public class GameState {
 		Message syncGBMessage = new Request(syncGBRequestData,
 												  "DanielSaysToLeaveTheAuthTokenBlank");
 
-		// Send sync to all GameBoards
+		// Send sync to all GameBoards.
 		for (GameBoard gameBoard : state.game.getGameBoards()) {
 			SessionManager.getInstance().getSession(gameBoard.getAuthToken()).getAsyncRemote().sendText(syncGBMessage.jsonify().toString());
 		}
