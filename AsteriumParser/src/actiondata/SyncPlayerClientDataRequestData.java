@@ -9,7 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import actiondata.SyncPlayerClientDataRequestData.Character.Stats;
+import actiondata.SyncPlayerClientDataRequestData.PlayerCharacterData.Stats;
 import message.Request;
 
 /**
@@ -21,9 +21,10 @@ import message.Request;
 public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 
 	private List<LocationData> locations;
-	private Character character;
+	private PlayerCharacterData character;
+	//private String gameState;
 
-	public SyncPlayerClientDataRequestData(final List<LocationData> locations, final Character character) {
+	public SyncPlayerClientDataRequestData(final List<LocationData> locations, final PlayerCharacterData character) {
 		super(ActionData.SYNC_PLAYER_CLIENT_DATA);
 		this.locations = locations;
 		this.character = character;
@@ -51,7 +52,7 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 	 * @throws JSONException
 	 */
 	public static SyncPlayerClientDataRequestData parseArgs(final JSONObject jsonObj) throws JSONException {
-		Character character;
+		PlayerCharacterData character;
 		JSONObject characterObj = jsonObj.getJSONObject(ActionData.CHARACTER);
 		String characterName = characterObj.getString(ActionData.CHARACTER_NAME);
 		JSONObject statsObj = characterObj.getJSONObject(ActionData.STATS);
@@ -60,7 +61,7 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		Integer luck = statsObj.getInt(ActionData.LUCK);
 		Integer intuition = statsObj.getInt(ActionData.INTUITION);
 		Stats stats = new Stats(health, stamina, luck, intuition);
-		character = new Character(characterName, stats);	
+		character = new PlayerCharacterData(characterName, stats);	
 		
 		JSONArray locationsArray = jsonObj.getJSONArray(ActionData.LOCATIONS);
 		List<LocationData> locations = new ArrayList<LocationData>();
@@ -115,17 +116,17 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 	}
 	
 	/**
-	 * {@link Character} is an inner class of {@link SyncPlayerClientDataRequestData}
+	 * {@link PlayerCharacterData} is an inner class of {@link SyncPlayerClientDataRequestData}
 	 * used only for the purpose of updating a player client.
 	 * 
 	 * @author Studio Toozo
 	 */
-	public static class Character {
+	public static class PlayerCharacterData {
 		
 		private String name;
 		private Stats stats;
 		
-		public Character(final String characterName, final Stats stats) {
+		public PlayerCharacterData(final String characterName, final Stats stats) {
 			this.name = characterName;
 			this.stats = stats;
 		}
@@ -139,7 +140,7 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		}
 		
 		/**
-		 * {@link Stats} is an inner class of {@link Character}
+		 * {@link Stats} is an inner class of {@link PlayerCharacterData}
 		 * used only for the purpose of updating a player client
 		 * within a {@link SyncPlayerClientDataRequestData}.
 		 * 

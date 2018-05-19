@@ -17,10 +17,11 @@ import actiondata.CreateGameRequestData;
 import actiondata.ErroredResponseData;
 import actiondata.JoinAsGameBoardRequestData;
 import actiondata.JoinAsPlayerRequestData;
+import actiondata.QueryIsInGameRequestData;
+import actiondata.SuccessResponseData;
+import actiondata.ToggleReadyUpRequestData;
 import actiondata.TurnRequestData;
 import actiondata.UseItemRequestData;
-import actiondata.QueryIsInGameRequestData;
-import actiondata.ToggleReadyUpRequestData;
 import message.Message;
 import message.Request;
 import message.Response;
@@ -62,7 +63,18 @@ public abstract class Action implements Runnable {
 		 * Static block in which ACTION_LOOKUP is populated. As new Actions are written,
 		 * their corresponding functions should be added here.
 		 */
-		{
+		{			
+			//default: take in action spit out action that does nothing
+			//default: response from client , ^
+			
+			//need responses from clients to server
+			
+			//syncplayerclient request server->client NOT IN THIS MAP
+			//client response->server "okay"
+			//like this? 
+			put(SuccessResponseData.class, ClientToServerResponseAction::fromMessage);
+			put(ErroredResponseData.class, SendErrorAction::fromMessage);
+			
 			put(JoinAsPlayerRequestData.class, JoinAsPlayerAction::fromMessage);
 			put(JoinAsGameBoardRequestData.class, JoinAsGameBoardAction::fromMessage);
 			put(CreateGameRequestData.class, CreateGameAction::fromMessage);

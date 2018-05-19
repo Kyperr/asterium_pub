@@ -33,6 +33,10 @@ public class Response  extends Message {
 		this.errorCode = errorCode;
 	}
 
+	public Integer getErrorCode() {
+		return this.errorCode;
+	}
+	
 	/**
 	 * Add a {@link JSONObject} to the {@link Response}'s JSONify method.
 	 * (Add JSON to the {@link Response}'s JSON representation.)

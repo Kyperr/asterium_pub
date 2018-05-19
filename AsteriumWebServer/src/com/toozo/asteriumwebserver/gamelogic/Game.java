@@ -314,13 +314,13 @@ public class Game extends Thread {
 
 			PlayerCharacter pChar = game.getGameState().getCharacter(auth);
 
-			SyncPlayerClientDataRequestData.Character.Stats stat = new SyncPlayerClientDataRequestData.Character.Stats(
+			SyncPlayerClientDataRequestData.PlayerCharacterData.Stats stat = new SyncPlayerClientDataRequestData.PlayerCharacterData.Stats(
 					pChar.getEffectiveStats().getHealth(),
 					pChar.getEffectiveStats().getStamina(),
 					pChar.getEffectiveStats().getLuck(),
 					pChar.getEffectiveStats().getIntuition());
 
-			SyncPlayerClientDataRequestData.Character dChar = new SyncPlayerClientDataRequestData.Character(pChar.getCharacterName(), stat);
+			SyncPlayerClientDataRequestData.PlayerCharacterData dChar = new SyncPlayerClientDataRequestData.PlayerCharacterData(pChar.getCharacterName(), stat);
 
 			
 			SyncPlayerClientDataRequestData data = new SyncPlayerClientDataRequestData(loc, dChar);
