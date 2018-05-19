@@ -2,10 +2,11 @@ package com.toozo.asteriumwebserver.gamelogic;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
 
-public class Inventory {
+public class Inventory implements Iterable<AbstractItem> {
 	// ===== CONSTANTS =====
 	public static final int INVENTORY_SIZE = 16;
 	// =====================
@@ -121,6 +122,12 @@ public class Inventory {
 	 */
 	public boolean isFull() {
 		return this.size() >= INVENTORY_SIZE;
+	}
+	
+
+	@Override
+	public Iterator<AbstractItem> iterator() {
+		return this.inventory.iterator();
 	}
 	// ===================
 }
