@@ -3,7 +3,7 @@ package com.toozo.asteriumwebserver.gamelogic;
 import java.util.Collection;
 import java.util.HashSet;
 
-import com.toozo.asteriumwebserver.gamelogic.items.equipment.Loadout;
+import com.toozo.asteriumwebserver.gamelogic.items.equipment.Equipment;
 import com.toozo.asteriumwebserver.gamelogic.statuseffects.StatusEffect;
 
 public class PlayerCharacter {
@@ -17,7 +17,7 @@ public class PlayerCharacter {
 	private Stats stats;
 	private Inventory inventory;
 	private Collection<StatusEffect> effects;
-	private Loadout equipment;
+	private Equipment equipment;
 	// ==================
 	
 	// ===== CONSTRUCTORS =====
@@ -25,7 +25,7 @@ public class PlayerCharacter {
 		this.stats = new Stats();
 		this.inventory = new Inventory();
 		this.effects = new HashSet<StatusEffect>();
-		this.equipment = new Loadout(this);
+		this.equipment = new Equipment(this);
 	}
 	// ========================
 	
@@ -65,7 +65,7 @@ public class PlayerCharacter {
 		return this.inventory;
 	}
 	
-	public Loadout getEquipment() {
+	public Equipment getEquipment() {
 		return this.equipment;
 	}
 	// ===================

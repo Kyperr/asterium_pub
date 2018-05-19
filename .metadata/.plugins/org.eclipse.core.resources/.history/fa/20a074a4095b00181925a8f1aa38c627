@@ -212,12 +212,11 @@ public class GameState {
 																		playerDatas,
 																		victoryDatas,
 																		itemDatas);
-		Message syncGBMessage = new Request(syncGBRequestData,
+		Message displayBoardMessage = new Request(syncGBRequestData,
 												  "DanielSaysToLeaveTheAuthTokenBlank");
 
-		// Send sync to all GameBoards
 		for (GameBoard gameBoard : state.game.getGameBoards()) {
-			SessionManager.getInstance().getSession(gameBoard.getAuthToken()).getAsyncRemote().sendText(syncGBMessage.jsonify().toString());
+			SessionManager.getInstance().getSession(gameBoard.getAuthToken()).getAsyncRemote().sendText(displayBoardMessage.jsonify().toString());
 		}
 
 		state.setGamePhase(GamePhase.TURN_RESOLVE);
