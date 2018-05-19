@@ -16,7 +16,7 @@ import com.toozo.asteriumwebserver.exceptions.GameFullException;
 public class Game extends Thread {
 
 	// ===== STATIC FIELDS =====
-	//The character set used to generate random strings.
+	// The character set used to generate random strings.
 	private static final String CHAR_SET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 	// The maximum number of players allowed to join a game.
@@ -32,17 +32,17 @@ public class Game extends Thread {
 	// ===== INSTANCE FIELDS =====
 	// Indicates that players still need this game object.
 	private boolean isNotAbandoned = true;
-	
+
 	private final String lobbyID;
-	
+
 	private final Map<String, Player> playerList = new ConcurrentHashMap<String, Player>();
-	
+
 	private Map<String, Boolean> playerReadyMap;
-	
+
 	private final Map<String, GameBoard> gameBoardList = new ConcurrentHashMap<String, GameBoard>();
 
 	private GameState gameState;
-	
+
 	/*
 	 * The game's map of turn actions. Maps players to their turn action(s).
 	 */
@@ -90,7 +90,7 @@ public class Game extends Thread {
 		this.playerReadyMap = new ConcurrentHashMap<String, Boolean>();
 	}
 	// ========================
-	
+
 	// ===== GETTERS =====
 	/**
 	 * @return The {@link Game}'s lobby ID, used to allow players to join the game.
@@ -98,32 +98,30 @@ public class Game extends Thread {
 	public String getLobbyID() {
 		return lobbyID;
 	}
-	
+
 	/**
 	 * @return a {@link Collection} of {@link Player}s that are in this Game.
 	 */
 	public Collection<Player> getPlayers() {
 		return playerList.values();
 	}
-	
+
 	public Collection<GameBoard> getGameBoards() {
 		return this.gameBoardList.values();
 	}
-
 
 	public Player getPlayer(String authToken) {
 		return playerList.get(authToken);
 	}
 
-
 	public GameState getGameState() {
 		return gameState;
 	}
-	
+
 	public boolean getPlayerIsReady(final String auth) {
 		return playerReadyMap.get(auth);
 	}
-	
+
 	public boolean allCharactersReady() {
 		for (Boolean bool : playerReadyMap.values()) {
 			if (!bool) {
@@ -133,28 +131,29 @@ public class Game extends Thread {
 		return true;
 	}
 	// ===================
-	
+
 	// ===== SETTERS =====
 	/**
-	 * Toggles whether the {@link PlayerCharacter} belonging
-	 * to the {@link Player} with authToken is ready or not.
+	 * Toggles whether the {@link PlayerCharacter} belonging to the {@link Player}
+	 * with authToken is ready or not.
 	 * 
-	 * @param authToken The auth token of the {@link Player}
+	 * @param authToken
+	 *            The auth token of the {@link Player}
 	 */
 	public synchronized boolean toggleReady(final String authToken) {
-			boolean isReady = !playerReadyMap.get(authToken);
-			this.playerReadyMap.put(authToken, isReady);
-			this.getGameState().executePhase();
-			return isReady;
+		boolean isReady = !playerReadyMap.get(authToken);
+		this.playerReadyMap.put(authToken, isReady);
+		this.getGameState().executePhase();
+		return isReady;
 	}
-	
+
 	public void setAllCharactersNotReady() {
-		for(String auth : playerReadyMap.keySet()) {
+		for (String auth : playerReadyMap.keySet()) {
 			playerReadyMap.put(auth, false);
 		}
 	}
 	// ===================
-	
+
 	// ===== OTHER INSTANCE METHODS =====
 	@Override
 	public void run() {
@@ -195,11 +194,11 @@ public class Game extends Thread {
 			String authToken = player.getAuthToken();
 			this.playerList.put(authToken, player);
 			this.playerReadyMap.put(authToken, false);
-			
+
 			// Add PlayerCharacter to GameState
 			PlayerCharacter character = new PlayerCharacter();
 			this.getGameState().addPlayerCharacter(authToken, character);
-			
+
 			// Register with GameManager
 			GameManager.getInstance().registerPlayerToGame(player.getAuthToken(), this);
 		} else {
@@ -226,8 +225,25 @@ public class Game extends Thread {
 	 * @param action
 	 *            {@link Action}
 	 */
-	public void addTurnAction(final Player player, final Runnable runnable) {
+	public synchronized void addTurnAction(final Player player, final Runnable runnable) {
 		this.turnActionMap.put(player, runnable);
+		synchronized (this) {
+			notify();
+		}
 	}
+	
+	public synchronized boolean areAllTurnsSubmitted() {
+		boolean bool = turnActionMap.size() > 0;
+		for(Player p : this.turnActionMap.keySet()) {
+			bool = bool && turnActionMap.containsKey(p);
+		}
+		System.out.println("All player turns tested as: " + bool);
+		return bool;
+	}
+	
+	public synchronized void resetTurnActionMap() {
+		turnActionMap.clear();
+	}
+	
 	// ==================================
 }

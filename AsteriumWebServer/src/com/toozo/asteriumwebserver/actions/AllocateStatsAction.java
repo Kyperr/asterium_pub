@@ -3,6 +3,8 @@ package com.toozo.asteriumwebserver.actions;
 import java.io.IOException;
 import java.util.UUID;
 
+import javax.websocket.Session;
+
 import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter.StatBlock;
 import com.toozo.asteriumwebserver.gamelogic.Game;
@@ -51,8 +53,10 @@ public class AllocateStatsAction extends RequestAction {
 		}
 		// Send the response back to the calling session.
 		try {
-			SessionManager.getInstance().getSession(getCallingAuthToken()).getBasicRemote()
-			.sendText(message.jsonify().toString());
+			Session session = SessionManager.getInstance().getSession(getCallingAuthToken());
+			synchronized (session) {
+				session.getBasicRemote().sendText(message.jsonify().toString());
+			}
 		} catch (IOException e) {
 			// Error cannot be sent, so display in console
 			e.printStackTrace();

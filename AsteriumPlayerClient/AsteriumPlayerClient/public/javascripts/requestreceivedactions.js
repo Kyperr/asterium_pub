@@ -25,3 +25,7 @@ var phaseChangeStartingActions = {};
 phaseChangeStartingActions["PLAYER_TURNS"] = function () {
     actionDisplayController.display();
 };
+
+phaseChangeStartingActions["TURN_RESOLVE"] = function () {
+    console.log("TURN RESOLVE! SHOULD PROBABLY DISPLAY SOMETHING!");
+};

@@ -12,6 +12,8 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
+import javax.websocket.Session;
+
 import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
@@ -40,9 +42,7 @@ public class GameState {
 
 		PLAYER_TURNS(GameState::initiatePlayerTurnPhase),
 
-		TURN_RESOLVE(game -> {
-
-		}),
+		TURN_RESOLVE(GameState::initiateTurnResolvePhase),
 
 		TURN_SUMMARY(game -> {
 
@@ -125,8 +125,21 @@ public class GameState {
 	}
 
 	private static final void initiatePlayerTurnPhase(GameState state) {
+		state.game.resetTurnActionMap();
 		state.syncPlayerClients();
 		syncGameBoards(state);
+
+		// Is there an action for every player? If so:
+		if (state.game.areAllTurnsSubmitted()) {
+			state.setGamePhase(GamePhase.TURN_RESOLVE);
+		}
+	}
+
+	private static final void initiateTurnResolvePhase(GameState state) {
+		state.syncPlayerClients();
+		syncGameBoards(state);
+		state.setGamePhase(GamePhase.PLAYER_TURNS);
+		state.gamePhase.executePhase(state);
 	}
 
 	private static final void syncGameBoards(GameState state) {
@@ -173,11 +186,13 @@ public class GameState {
 
 		// Send sync to all GameBoards
 		for (GameBoard gameBoard : state.game.getGameBoards()) {
-			
+
 			Message syncGBMessage = new Request(syncGBRequestData, gameBoard.getAuthToken());
-			
-			SessionManager.getInstance().getSession(gameBoard.getAuthToken()).getAsyncRemote()
-					.sendText(syncGBMessage.jsonify().toString());
+
+			Session session = SessionManager.getInstance().getSession(gameBoard.getAuthToken());
+			synchronized (session) {
+				session.getAsyncRemote().sendText(syncGBMessage.jsonify().toString());
+			}
 		}
 	}
 	// ==========================
@@ -335,8 +350,10 @@ public class GameState {
 			Request request = new Request(data, p.getAuthToken());
 
 			try {
-				SessionManager.getInstance().getSession(p.getAuthToken()).getBasicRemote()
-						.sendText(request.jsonify().toString());
+				Session session = SessionManager.getInstance().getSession(p.getAuthToken());
+				synchronized (session) {
+					session.getBasicRemote().sendText(request.jsonify().toString());
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -375,7 +392,7 @@ public class GameState {
 		return data;
 
 	}
-	
+
 	// ==================================
 
 }
