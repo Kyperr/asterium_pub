@@ -50,7 +50,7 @@ public class GameResources {
 	
 	public GameResources() {
 		ccHandler = new ClientConnectionHandler(URI);
-//		registerCallbacks();
+		registerCallbacks();
 	}
 	
 	public static void setLobbyId(String id) {

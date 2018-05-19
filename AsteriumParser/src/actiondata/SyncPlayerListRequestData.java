@@ -6,7 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class SyncPlayerListRequestData extends AbstractResponseActionData {
+public class SyncPlayerListRequestData extends AbstractRequestActionData {
 
 	Collection<PlayerData> players;
 	

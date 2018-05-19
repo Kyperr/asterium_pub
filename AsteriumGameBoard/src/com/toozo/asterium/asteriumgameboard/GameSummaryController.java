@@ -13,7 +13,11 @@ public class GameSummaryController {
 
     @FXML
     private Label label;
+    
+    @FXML
     private Button lobbyIdButton;
+    
+    @FXML
     private Button backButton;
     
     @FXML

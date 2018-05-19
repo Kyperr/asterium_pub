@@ -93,7 +93,7 @@ public class NodeNavigator {
     }
     
     public static void loadLobby() {
-    	lobbyController.update();
+    	lobbyController.updateLobbyId();
         mainController.setNode(lobbyLayout);
      }
     
