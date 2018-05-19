@@ -141,8 +141,8 @@ public class GameState {
 			PlayerCharacter pChar = state.getCharacter(auth);
 
 			SyncPlayerListRequestData.PlayerData playerData = new SyncPlayerListRequestData.PlayerData(pChar.getCharacterName(), 
-					state.game.getPlayerIsReady(auth), pChar.getEffectiveStats().getStamina(),
-					pChar.getEffectiveStats().getLuck(), pChar.getEffectiveStats().getIntuition());
+					state.game.getPlayerIsReady(auth), pChar.getEffectiveStats().getStat(Stat.STAMINA),
+					pChar.getEffectiveStats().getStat(Stat.LUCK), pChar.getEffectiveStats().getStat(Stat.INTUITION));
 			
 			players.add(playerData);
 
