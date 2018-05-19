@@ -315,10 +315,10 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 	 */
 	public static class VictoryData {
 		private final String conditionName;
-		private final Integer currentValue;
-		private final Integer maxValue;
+		private final double currentValue;
+		private final double maxValue;
 
-		public VictoryData(final String conditionName, final Integer currentValue, final Integer maxValue) {
+		public VictoryData(final String conditionName, final double currentValue, final double maxValue) {
 			this.conditionName = conditionName;
 			this.currentValue = currentValue;
 			this.maxValue = maxValue;
@@ -328,11 +328,11 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 			return this.conditionName;
 		}
 		
-		public Integer getCurrentValue() {
+		public double getCurrentValue() {
 			return this.currentValue;
 		}
 		
-		public Integer getMaxValue() {
+		public double getMaxValue() {
 			return this.maxValue;
 		}
 
@@ -351,8 +351,8 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 			if (other instanceof SyncGameBoardDataRequestData.VictoryData) {
 				SyncGameBoardDataRequestData.VictoryData otherVictoryData = (SyncGameBoardDataRequestData.VictoryData) other;
 				return otherVictoryData.conditionName.equals(this.conditionName) &&
-					   otherVictoryData.currentValue.equals(this.currentValue) &&
-					   otherVictoryData.maxValue.equals(this.maxValue);
+					   otherVictoryData.currentValue == this.currentValue &&
+					   otherVictoryData.maxValue == this.maxValue;
 			} else {
 				return false;
 			}

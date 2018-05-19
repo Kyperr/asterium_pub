@@ -44,7 +44,7 @@ public class TurnAction extends RequestAction {
 		if (game != null) {
 			GameState state = game.getGameState();
 			Player player = game.getPlayer(auth);
-			Location location = game.getLocation(this.locationID);
+			Location location = state.getLocation(this.locationID);
 			String activityName = this.activityName;
 			if (state != null) {
 				// use character to search (uses their stats)
