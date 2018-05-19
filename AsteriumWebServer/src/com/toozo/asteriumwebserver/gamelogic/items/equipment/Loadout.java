@@ -108,6 +108,7 @@ public class Loadout {
 	 */
 	public void equip(AbstractEquipmentItem item) {
 		Inventory ownerInventory = owner.getInventory();
+		
 		// Make sure that equipper has the item.
 		if (item != null && ownerInventory.contains(item)) {
 			EquipmentSlot type = item.getType();

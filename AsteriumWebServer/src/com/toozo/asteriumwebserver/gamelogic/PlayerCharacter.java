@@ -2,32 +2,96 @@ package com.toozo.asteriumwebserver.gamelogic;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Map;
 
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.Loadout;
-import com.toozo.asteriumwebserver.gamelogic.statuseffects.StatusEffect;
+import com.toozo.asteriumwebserver.gamelogic.statuseffects.AbstractStatusEffect;
 
 public class PlayerCharacter {
 	// ===== CONSTANTS =====
 	private static final int DEFAULT_HEALTH = 10;
 	private static final int DEFAULT_STARTING_STAT = 5;
+	private static final String DEFAULT_NAME = "";
 	// =====================
 	
 	// ===== FIELDS =====
-	private String characterName = "";
-	private Stats stats;
+	private String characterName;
+	private StatBlock stats;
 	private Inventory inventory;
-	private Collection<StatusEffect> effects;
+	private Collection<AbstractStatusEffect> effects;
 	private Loadout equipment;
 	// ==================
 	
 	// ===== CONSTRUCTORS =====
 	public PlayerCharacter() {
-		this.stats = new Stats();
+		this.characterName = DEFAULT_NAME;
+		this.stats = new StatBlock();
 		this.inventory = new Inventory();
-		this.effects = new HashSet<StatusEffect>();
+		this.effects = new HashSet<AbstractStatusEffect>();
 		this.equipment = new Loadout(this);
 	}
 	// ========================
+	
+	// ===== INNER CLASSES =====
+	public static class StatBlock {
+		// ===== FIELDS =====
+		Map<Stat, Integer> stats;
+		// ==================
+		
+		// ===== CONSTRUCTORS =====
+		public StatBlock() {
+			this(DEFAULT_STARTING_STAT, DEFAULT_STARTING_STAT, DEFAULT_STARTING_STAT);
+		}
+		
+		public StatBlock(final int stamina, final int luck, final int intuition) {
+			this(stamina, luck, intuition, DEFAULT_HEALTH);
+		}
+		
+		public StatBlock(final int stamina, final int luck, final int intuition, final int health) {
+			this.stats.put(Stat.STAMINA, stamina);
+			this.stats.put(Stat.LUCK, luck);
+			this.stats.put(Stat.INTUITION, intuition);
+			this.stats.put(Stat.HEALTH, health);
+		}
+		// ========================
+		
+		// ===== GETTERS =====
+		/**
+		 * @param theStat The {@link Stat} which will be returned.
+		 * @return the value of theStat.
+		 */
+		public int getStat(Stat theStat) {
+			return this.stats.get(theStat);
+		}
+		// ===================
+		
+		// ===== SETTERS =====
+		/**
+		 * Change the value of theStat.
+		 * @param theStat The {@link Stat} which should be changed.
+		 * @param newValue The new value of theStat.
+		 */
+		public void setStat(Stat theStat, int newValue) {
+			this.stats.put(theStat, newValue);
+		}
+		// ===================
+		
+		// ===== METHODS =====
+		/**
+		 * @return a deep copy of this Stats.
+		 */
+		public StatBlock deepCopy() {
+			StatBlock copy = new StatBlock();
+			
+			for (Stat stat : Stat.values()) {
+				copy.stats.put(stat, this.getStat(stat));
+			}
+			
+			return copy;
+		}
+		// ===================
+	}
+	// =========================
 	
 	// ===== GETTERS =====
 	public String getCharacterName() {
@@ -37,10 +101,10 @@ public class PlayerCharacter {
 	/**
 	 * @return The stats of this player after all its StatusEffects are applied.
 	 */
-	public Stats getEffectiveStats() {
-		PlayerCharacter.Stats stats = this.getBaseStats();
+	public StatBlock getEffectiveStats() {
+		PlayerCharacter.StatBlock stats = this.getBaseStats();
 		
-		for (StatusEffect condition : this.getStatusEffects()) {
+		for (AbstractStatusEffect condition : this.getStatusEffects()) {
 			stats = condition.affectStats(stats);
 		}
 		
@@ -50,11 +114,11 @@ public class PlayerCharacter {
 	/**
 	 * @return The stats of this player before any of its StatusEffects are applied.
 	 */
-	public Stats getBaseStats() {
+	public StatBlock getBaseStats() {
 		return this.stats.deepCopy();
 	}
 	
-	public Collection<StatusEffect> getStatusEffects() {
+	public Collection<AbstractStatusEffect> getStatusEffects() {
 		return this.effects;
 	}
 	
@@ -72,10 +136,12 @@ public class PlayerCharacter {
 	
 	// ===== SETTERS =====
 	public void setCharacterName(final String name) {
-		this.characterName = name;
+		if (name != null) {
+			this.characterName = name;
+		}
 	}
 	
-	public void setStats(final Stats stats) {
+	public void setStats(final StatBlock stats) {
 		this.stats = stats;
 	}
 	
@@ -90,73 +156,25 @@ public class PlayerCharacter {
 	}
 	// ===================
 	
-	// ===== INNER CLASSES =====
-	public static class Stats {
-		// ===== FIELDS =====
-		private int health = DEFAULT_HEALTH;
-		private int stamina;
-		private int luck;
-		private int intuition;
-		// ==================
-		
-		// ===== CONSTRUCTORS =====
-		public Stats() {
-			this(DEFAULT_STARTING_STAT, DEFAULT_STARTING_STAT, DEFAULT_STARTING_STAT);
+	// ===== OTHER INSTANCE METHODS =====
+	/**
+	 * Add a {@link AbstractStatusEffect} to the PlayerCharacter.
+	 * 
+	 * @param effect the {@link AbstractStatusEffect} which should be added to the PlayerCharacter.
+	 */
+	public void addStatusEffect(AbstractStatusEffect effect) {
+		if (effect != null) {
+			this.effects.add(effect);
 		}
-		
-		public Stats(final int stamina, final int luck, final int intuition) {
-			this(stamina, luck, intuition, DEFAULT_HEALTH);
-		}
-		
-		public Stats(final int stamina, final int luck, final int intuition, final int health) {
-			this.stamina = stamina;
-			this.luck = luck;
-			this.intuition = intuition;
-			this.health = health;
-		}
-		// ========================
-		
-		// ===== GETTERS =====
-		public int getStamina() {
-			return this.stamina;
-		}
-		
-		public int getLuck() {
-			return this.luck;
-		}
-		
-		public int getIntuition() {
-			return this.intuition;
-		}
-		
-		public int getHealth() {
-			return this.health;
-		}
-		// ===================
-		
-		// ===== SETTERS =====
-		public void setStamina(final int stamina) {
-			this.stamina = stamina;
-		}
-		
-		public void setLuck(final int luck) {
-			this.luck = luck;
-		}
-		
-		public void setIntuition(final int intuition) {
-			this.intuition = intuition;
-		}
-		
-		public void setHealth(final int health) {
-			this.health = health;
-		}
-		// ===================
-		
-		// ===== METHODS =====
-		public Stats deepCopy() {
-			return new Stats(this.stamina, this.luck, this.intuition, this.health);
-		}
-		// ===================
 	}
-	// =========================
+	
+	/**
+	 * Remove a {@link AbstractStatusEffect} to the PlayerCharacter.
+	 * 
+	 * @param effect the {@link AbstractStatusEffect} which should be removed from the PlayerCharacter.
+	 */
+	public void removeStatusEffect(AbstractStatusEffect effect) {
+		this.effects.remove(effect);
+	}
+	// ==================================
 }
