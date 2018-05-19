@@ -15,23 +15,21 @@ import message.Request;
 
 public class GameSummaryController {
 
-	private static final String fxml = "com/toozo/asterium/fxml/lobby.fxml";
-	
-	private ClientConnectionHandler ccHandler;
-	
     @FXML
     private Label label;
     private Button lobbyIdButton;
     private Button backButton;
     
-    public GameSummaryController() {
-    	ccHandler = GameResources.getClientConnectionHandler();
-    }
-    
-    
     @FXML
     public void initialize() {
-    	label.setText(GameResources.getGameWonStatus());
     }    
+    
+    public void handleMenuButtonAction(ActionEvent event) {
+    	NodeNavigator.loadMenu();
+    }
+    
+    public void update() {
+    	label.setText(GameResources.getGameWonStatus());
+    }
     
 }

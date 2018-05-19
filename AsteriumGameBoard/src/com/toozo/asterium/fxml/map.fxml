@@ -12,5 +12,8 @@
 	<center>
 		<ListView fx:id="locationListView"/>
 	</center>
+	<bottom>
+		<Button text="Ready" onAction="#handleReadyButtonAction" fx:id="readyButton" />
+	</bottom>
 
 </BorderPane>

@@ -13,11 +13,10 @@
 	<Label minHeight="16" minWidth="69" fx:id="label" />
 	</top>
 	<center>
-		<ListView fx:id="playerListView"/>
 	</center>
 	<bottom>
-	<Button text="Back" onAction="#handleBackButtonAction" fx:id="backButton" />
-	<Button text = "Ready" onAction="#handleReadyButttonAction" fx:id="readyButton" />
+		<Button text="Back" onAction="#handleBackButtonAction" fx:id="backButton" />
+		<Button text="Ready" onAction="#handleReadyButtonAction" fx:id="readyButton" />
 	</bottom>
 
 </BorderPane>

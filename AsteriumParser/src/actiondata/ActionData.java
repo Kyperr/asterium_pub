@@ -20,6 +20,7 @@ public interface ActionData {
 	public static final String ALLOCATE_STATS = "allocate_stats";
 	public static final String SYNC_GAME_BOARD_DATA = "sync_game_board_data";
 	public static final String TURN = "turn";
+	public static final String SYNC_PLAYER_LIST = "sync_player_list";
 	
 	//Query action constants
 	public static final String QUERY_IS_IN_GAME = "query_is_in_game";
@@ -56,6 +57,7 @@ public interface ActionData {
 	public static final String CURRENT_VALUE = "current_value";
 	public static final String MAX_VALUE = "max_value";
 	public static final String VICTORY_CONDITIONS = "victory_conditions";
+	public static final String PLAYER_READY_STATUS = "player_ready_status";
 	
 	/**
 	 * 

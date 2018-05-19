@@ -23,7 +23,7 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 	private Integer food;
 	private Integer fuel;
 	private Collection<SyncGameBoardDataRequestData.LocationData> locations;
-	private Collection<SyncGameBoardDataRequestData.PlayerData> players;
+	private Collection<SyncGameBoardDataRequestData.PlayerCharacterData> players;
 	private Collection<SyncGameBoardDataRequestData.VictoryData> victoryConditions;
 	private Collection<SyncGameBoardDataRequestData.ItemData> communalInventory;
 	
@@ -38,7 +38,7 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 	 */
 	public SyncGameBoardDataRequestData(Integer food, Integer fuel,
 								   Collection<SyncGameBoardDataRequestData.LocationData> locations, 
-								   Collection<SyncGameBoardDataRequestData.PlayerData> players,
+								   Collection<SyncGameBoardDataRequestData.PlayerCharacterData> players,
 								   Collection<SyncGameBoardDataRequestData.VictoryData> victoryConditions) {
 		super(ActionData.SYNC_GAME_BOARD_DATA);
 		this.food = food;
@@ -58,7 +58,7 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 		
 		// Add players to data
 		JSONArray players = new JSONArray();
-		for (SyncGameBoardDataRequestData.PlayerData player : this.players) {
+		for (SyncGameBoardDataRequestData.PlayerCharacterData player : this.players) {
 			players.put(player.jsonify());
 		}
 		data.put(ActionData.PLAYERS, players);
@@ -111,12 +111,12 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 		
 		// Parse array of players
 		JSONArray playerArray = jsonObj.getJSONArray(ActionData.PLAYERS);
-		Collection<SyncGameBoardDataRequestData.PlayerData> players = new ArrayList<SyncGameBoardDataRequestData.PlayerData>();
+		Collection<SyncGameBoardDataRequestData.PlayerCharacterData> players = new ArrayList<SyncGameBoardDataRequestData.PlayerCharacterData>();
 		JSONObject playerObject;
-		SyncGameBoardDataRequestData.PlayerData player;
+		SyncGameBoardDataRequestData.PlayerCharacterData player;
 		for (int i = 0; i < playerArray.length(); i++) {
 			playerObject = playerArray.getJSONObject(i);
-			player = new SyncGameBoardDataRequestData.PlayerData(playerObject.getString(ActionData.NAME), 
+			player = new SyncGameBoardDataRequestData.PlayerCharacterData(playerObject.getString(ActionData.NAME), 
 															Color.getColor(playerObject.getString(ActionData.COLOR)), 
 															playerObject.getInt(ActionData.MAP_LOCATION));
 			players.add(player);
@@ -140,20 +140,68 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 		return new SyncGameBoardDataRequestData(food, fuel, locations, players, victories);
 	}
 	
+	public Integer getFood() {
+		return food;
+	}
+	
+	public void setFood(Integer food) {
+		this.food = food;
+	}
+	
+	public Integer getFuel() {
+		return fuel;
+	}
+	
+	public void setFuel(Integer fuel) {
+		this.fuel = fuel;
+	}
+	
+	public Collection<SyncGameBoardDataRequestData.ItemData> getCommunalInventory() {
+		return communalInventory;
+	}
+
+	public void setCommunalInventory(Collection<SyncGameBoardDataRequestData.ItemData> communalInventory) {
+		this.communalInventory = communalInventory;
+	}
+	
+	public Collection<SyncGameBoardDataRequestData.LocationData> getLocations() {
+		return locations;
+	}
+	
+	public void setLocations(Collection<SyncGameBoardDataRequestData.LocationData> locations) {
+		this.locations = locations;
+	}
+	
+	public Collection<SyncGameBoardDataRequestData.VictoryData> getVictoryConditions() {
+		return victoryConditions;
+	}
+	
+	public void setVictoryConditions(Collection<SyncGameBoardDataRequestData.VictoryData> victoryConditions) {
+		this.victoryConditions = victoryConditions;
+	}
+	
+	public Collection<SyncGameBoardDataRequestData.PlayerCharacterData> getPlayers() {
+		return players;
+	}
+	
+	public void setPlayers(Collection<SyncGameBoardDataRequestData.PlayerCharacterData> players) {
+		this.players = players;
+	}
+
 	// ===== PLAYER DATA INNER CLASS =====
 	/**
-	 * {@link PlayerData} is the representation of a player
+	 * {@link PlayerCharacterData} is the representation of a player
 	 * for the purposes of displaying the board.
 	 * 
 	 * @author Greg Schmitt
 	 *
 	 */
-	public static class PlayerData {
+	public static class PlayerCharacterData {
 		private final String name;
 		private final Color color;
 		private final Integer mapLocation;
 
-		public PlayerData(final String name, final Color color, final Integer location) {
+		public PlayerCharacterData(final String name, final Color color, final Integer location) {
 			this.name = name;
 			this.color = color;
 			this.mapLocation = location;
@@ -183,8 +231,8 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 		}
 		
 		public boolean equals(final Object other) {
-			if (other instanceof PlayerData) {
-				PlayerData otherPlayerData = (PlayerData) other;
+			if (other instanceof PlayerCharacterData) {
+				PlayerCharacterData otherPlayerData = (PlayerCharacterData) other;
 				return otherPlayerData.name.equals(this.name) &&
 					   otherPlayerData.color.equals(this.color) &&
 					   otherPlayerData.mapLocation.equals(this.mapLocation);

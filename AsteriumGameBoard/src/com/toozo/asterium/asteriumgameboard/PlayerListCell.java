@@ -3,14 +3,13 @@ package com.toozo.asterium.asteriumgameboard;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 
-import com.toozo.asterium.model.Player;
-
+import actiondata.SyncPlayerListRequestData.PlayerData;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.Pane;
 
-public class PlayerListCell extends ListCell<Player> {
+public class PlayerListCell extends ListCell<PlayerData> {
 
     private final Pane playerView ;
     private final PlayerController playerController ;
@@ -28,7 +27,7 @@ public class PlayerListCell extends ListCell<Player> {
     }
 
     @Override
-    protected void updateItem(Player item, boolean empty) {
+    protected void updateItem(PlayerData item, boolean empty) {
         super.updateItem(item, empty);
         playerController.setPlayer(item);
     }

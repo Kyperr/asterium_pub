@@ -6,6 +6,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import message.Message;
+
 public class SyncLocationsRequestData extends AbstractRequestActionData {
 
 	private List<LocationData> locations;
@@ -15,6 +17,11 @@ public class SyncLocationsRequestData extends AbstractRequestActionData {
 		this.locations = locations; 
 	}
 
+
+	public List<LocationData> getLocationList() {
+		return locations;
+	}
+	
 	@Override
 	public JSONObject jsonify() {
 		JSONObject data = new JSONObject();
@@ -34,6 +41,11 @@ public class SyncLocationsRequestData extends AbstractRequestActionData {
 		
 		
 		return null; //new SyncLocationsRequestData();
+	}
+	
+
+	public static SyncLocationsRequestData fromMessage(final Message message) throws JSONException {
+		return SyncLocationsRequestData.class.cast(message.getActionData());
 	}
 	
 	public static class LocationData {
@@ -59,4 +71,5 @@ public class SyncLocationsRequestData extends AbstractRequestActionData {
 			return data;
 		}
 	}
+	
 }

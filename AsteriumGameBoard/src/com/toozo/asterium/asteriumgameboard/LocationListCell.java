@@ -3,14 +3,12 @@ package com.toozo.asterium.asteriumgameboard;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 
-import com.toozo.asterium.model.Location;
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.Pane;
 
-public class LocationListCell extends ListCell<Location> {
+public class LocationListCell extends ListCell<String> {
 	private final Pane locationView ;
     private final LocationController locationController ;
 
@@ -27,7 +25,7 @@ public class LocationListCell extends ListCell<Location> {
     }
 
     @Override
-    protected void updateItem(Location item, boolean empty) {
+    protected void updateItem(String item, boolean empty) {
         super.updateItem(item, empty);
         locationController.setLocation(item);
     }

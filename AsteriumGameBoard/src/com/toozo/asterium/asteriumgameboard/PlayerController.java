@@ -1,12 +1,16 @@
 package com.toozo.asterium.asteriumgameboard;
 
-import com.toozo.asterium.model.Player;
-
+import actiondata.SyncPlayerListRequestData.PlayerData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
+/**
+ * Controller for the display of a player in the lobby.
+ * @author Jenna
+ *
+ */
 public class PlayerController {
-	private Player player;
+	private PlayerData player;
 
     @FXML
     private Label nameLabel ;
@@ -14,15 +18,15 @@ public class PlayerController {
     @FXML
     private Label readyLabel ;
 
-    public void setPlayer(Player player) {
+    public void setPlayer(PlayerData player) {
         this.player = player;
         nameLabel.textProperty().unbind();
         if (player == null) {
             nameLabel.setText(null);
             readyLabel.setText(null);
         } else {
-            nameLabel.textProperty().bind(player.nameProperty());;
-            readyLabel.textProperty().bind(player.readyProperty().asString());
+            nameLabel.setText(player.getName());
+            readyLabel.setText(player.getName());;
         }
     }
 }

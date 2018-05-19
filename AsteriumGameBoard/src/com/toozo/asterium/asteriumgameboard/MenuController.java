@@ -24,29 +24,20 @@ import message.Request;
  */
 public class MenuController {	
 	
-	
-	private static final String fxml = "com/toozo/asterium/fxml/lobby.fxml";
-	
-	private ClientConnectionHandler ccHandler;
-	
     @FXML
     private Label label;
     private Button lobbyIdButton;
     private Button backButton;
     
-    public MenuController() {
-    	ccHandler = GameResources.getClientConnectionHandler();
-    }
-    
     @FXML
     private void handleLobbyIdButtonAction(ActionEvent event) {
-    	
-    	CreateGameRequestData cgrData = new CreateGameRequestData();
+    	NodeNavigator.loadLobby();
+    	//CreateGameRequestData cgrData = new CreateGameRequestData();
     	    	
-        Request request = new Request(cgrData, "");
+        //Request request = new Request(cgrData, "");
         
         //Here, we say that once we get the message back, run the lambda...
-    	ccHandler.send(request.jsonify().toString(), (message) -> {
+    	/*GameResources.getClientConnectionHandler().send(request.jsonify().toString(), (message) -> {
     		
     		//... and now that we have a message response from the server, we need to set the text
     		//of the label, however, that needs to be done on the UI thread, so we use 
@@ -61,16 +52,11 @@ public class MenuController {
                 	GameResources.setLobbyId(responseData.getLobbyID());
                 	
                 	// Go to the lobby
-                	NodeNavigator.loadNode(fxml);
+                	NodeNavigator.loadLobby();
                 }
             });
     		
-    	});
-    }
-    
-    @FXML
-    private void handleBackButtonAction(ActionEvent event) {
-    	NodeNavigator.loadNode(fxml);
+    	});*/
     }
     
     @FXML
