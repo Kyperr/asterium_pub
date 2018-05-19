@@ -3,8 +3,6 @@ package actiondata;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import actiondata.JoinAsPlayerRequestData.PlayerData;
-
 public class QueryIsInGameRequestData extends AbstractRequestActionData {
 	
 	public QueryIsInGameRequestData() {

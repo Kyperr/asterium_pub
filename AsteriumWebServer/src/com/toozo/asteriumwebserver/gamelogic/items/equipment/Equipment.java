@@ -1,16 +1,142 @@
 package com.toozo.asteriumwebserver.gamelogic.items.equipment;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
+import com.toozo.asteriumwebserver.gamelogic.Inventory;
 import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
-import com.toozo.asteriumwebserver.gamelogic.GameState;
-import com.toozo.asteriumwebserver.gamelogic.items.Item;
 
-public abstract class Equipment extends Item {
-
-	@Override
-	public void use(GameState state, PlayerCharacter user, Collection<PlayerCharacter> targets) {
-		// TODO Equip this item.
+/**
+ * A player's equipment, with slots for each type of {@link AbstractEquipmentItem}.
+ * 
+ * @author Greg Schmitt
+ */
+public class Equipment {
+	// ===== FIELDS =====
+	private Map<EquipmentSlot, AbstractEquipmentItem> slots;
+	private PlayerCharacter owner;
+	// ==================
+	
+	// ===== CONSTRUCTORS =====
+	/**
+	 * Construct an Equipment with all slots empty.
+	 * @param owner The {@link PlayerCharacter} whose equipment this object will represent.
+	 */
+	public Equipment(PlayerCharacter owner) {
+		this(owner, Arrays.asList());
 	}
-
+	
+	/**
+	 * Construct an Equipment with starterItem equipped.
+	 * @param owner The {@link PlayerCharacter} whose equipment this object will represent.
+	 */
+	public Equipment(PlayerCharacter owner, AbstractEquipmentItem starterItem) {
+		this(owner, Arrays.asList(starterItem));
+	}
+	
+	/**
+	 * Constructs a new Equipment with as many of the {@link AbstractEquipmentItem}s in
+	 * starterItems equipped as possible.
+	 * 
+	 * If multiple items are of the same type (e.g. two headgear items), there is no guarantee
+	 * which will be equipped.
+	 * 
+	 * @param owner The {@link PlayerCharacter} whose equipment this object will represent.
+	 * @param starterItems a list of items which should be equipped if possible.
+	 */
+	public Equipment(PlayerCharacter owner, Collection<AbstractEquipmentItem> starterItems) {
+		this.owner = owner;
+		this.slots = new ConcurrentHashMap<EquipmentSlot, AbstractEquipmentItem>();
+		
+		// Instantiate slots
+		for (EquipmentSlot slot : EquipmentSlot.values()) {
+			this.slots.put(slot, null);
+		}
+		
+		// Put items into slots
+		EquipmentSlot type;
+		for (AbstractEquipmentItem item : starterItems) {
+			type = item.getType();
+			boolean canEquip =  slotEmpty(type);
+			item.setEquipped(canEquip);
+			if (canEquip) {
+				// Equip it
+				this.slots.put(type, item);
+			}
+		}
+	}
+	// ========================
+	
+	// ===== GETTERS =====
+	/**
+	 * @param slot The {@link EquipmentSlot} to be checked.
+	 * @return True if the equipmentSlot is already occupied, false otherwise.
+	 */
+	public boolean slotFull(EquipmentSlot slot) {
+		return this.slots.get(slot) == null;
+	}
+	
+	/**
+	 * @param slot The {@link EquipmentSlot} to be checked.
+	 * @return True if the equipmentSlot is unoccupied, false otherwise.
+	 */
+	public boolean slotEmpty(EquipmentSlot slot) {
+		return !slotFull(slot);
+	}
+	
+	/**
+	 * @param slot The slot from which to get the {@link AbstractEquipmentItem}.
+	 * @return The {@link AbstractEquipmentItem} in slot if there is one, null otherwise.
+	 */
+	public AbstractEquipmentItem itemIn(EquipmentSlot slot) {
+		return this.slots.get(slot);
+	}
+	// ===================
+	
+	// ===== METHODS =====
+	/**
+	 * If item is non-null and equipper has item, equips item to the 
+	 * appropriate slot, otherwise does nothing. If equipper already has 
+	 * an equipment item in that slot, swaps them.
+	 * 
+	 * @param item The item to be equipped.
+	 * @param equipper The {@link PlayerCharacter} to whom this item should be equipped.
+	 */
+	public void equip(AbstractEquipmentItem item) {
+		EquipmentSlot type = item.getType();
+		Inventory ownerInventory = owner.getInventory();
+		
+		// Make sure that equipper has the item.
+		if (ownerInventory.contains(item)) {
+			ownerInventory.remove(item);
+			
+			if (owner.getEquipment().slotFull(type)) {
+				// Move equipped item to inventory
+				ownerInventory.add(this.removeFrom(type));
+			}
+			
+			// Put item into slot
+			this.slots.put(type, item);
+			item.setEquipped(true);
+		}
+	}
+	
+	/**
+	 * Removes and returns the {@link AbstractEquipmentItem} (if any) from the appropriate slot.
+	 * 
+	 * @param slot The slot from which the {@link AbstractEquipmentItem} should be removed.
+	 * @return {@link AbstractEquipmentItem} that was equipped, or null if there was none.
+	 */
+	public AbstractEquipmentItem removeFrom(EquipmentSlot slot) {
+		AbstractEquipmentItem result = this.slots.remove(slot);
+		
+		if (result != null) {
+			result.setEquipped(false);
+		}
+		
+		return result;
+	}
+	// ===================
 }

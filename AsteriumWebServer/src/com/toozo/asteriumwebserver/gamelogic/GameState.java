@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
+import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
 
 /**
  * @author Studio Toozo
@@ -15,7 +16,7 @@ public class GameState {
 	/* Map of player auth token to character */
 	private Game game;
 	private Map<String, PlayerCharacter> playerCharacterMap;
-	private Map<Player, Boolean> playerReadyMap;
+	private Map<String, Boolean> playerReadyMap;
 	private Collection<VictoryCondition> victoryConditions;
 	private Inventory communalInventory;
 	// ==================
@@ -24,12 +25,12 @@ public class GameState {
 	public GameState(Game game) {
 		this.game = game;
 		this.playerCharacterMap = new ConcurrentHashMap<String, PlayerCharacter>();
-		this.playerReadyMap = new ConcurrentHashMap<Player, Boolean>();
+		this.playerReadyMap = new ConcurrentHashMap<String, Boolean>();
 		this.victoryConditions = new ArrayList<VictoryCondition>();
 		this.communalInventory = new Inventory();
 	}
 	// ========================
-	
+
 	// ===== GETTERS =====
 	public PlayerCharacter getCharacter(final String auth) {
 		return playerCharacterMap.get(auth);
@@ -59,6 +60,13 @@ public class GameState {
 		return this.victoryConditions;
 	}
 	
+	/** 
+	 * @return the communal {@link Inventory} that all players can access.
+	 */
+	public final Inventory getCommunalInventory() {
+		return this.communalInventory;
+	}
+	
 	/**
 	 * Gets a {@link Collection} of the {@link PlayerCharacter}s in the game.
 	 * WARNING: Modifications to this Collection will affect 
@@ -69,6 +77,7 @@ public class GameState {
 	public Collection<PlayerCharacter> getCharacters() {
 		return this.playerCharacterMap.values();
 	}
+	
 	// ===================
 	
 	// ===== METHODS =====
@@ -87,9 +96,12 @@ public class GameState {
 	 * 
 	 * @param authToken The auth token of the {@link Player}
 	 */
-	public void toggleReady(final String authToken) {
-		Player player = this.game.getPlayer(authToken);
-		this.playerReadyMap.put(player, !playerReadyMap.get(player));
+	public synchronized boolean toggleReady(final String authToken) {
+			//Player player = this.game.getPlayer(authToken);
+			boolean isReady = !playerReadyMap.get(authToken);
+			this.playerReadyMap.put(authToken, isReady);
+			game.executePhase();
+			return isReady;
 	}
 	
 	/**
@@ -99,11 +111,26 @@ public class GameState {
 	 * @param character The new character
 	 */
 	public void addPlayer(final String playerAuth) {
-		Player player = this.game.getPlayer(playerAuth);
+		//Player player = this.game.getPlayer(playerAuth);
 		PlayerCharacter character = new PlayerCharacter();
 		
 		this.playerCharacterMap.put(playerAuth, character);
-		this.playerReadyMap.put(player, false);
+		this.playerReadyMap.put(playerAuth, false);
+	}
+	
+	/**
+	 * Add an item to the communal inventory.
+	 * 
+	 * @param item the {@link AbstractItem} which should be added to the communal {@link Inventory}.
+	 */
+	public void addCommunalItem(final AbstractItem item) {
+		this.communalInventory.add(item);
 	}
 	// ===================
+
+	public void setAllCharactersNotReady() {
+		for(String auth : playerReadyMap.keySet()) {
+			playerReadyMap.put(auth, false);
+		}
+	}
 }

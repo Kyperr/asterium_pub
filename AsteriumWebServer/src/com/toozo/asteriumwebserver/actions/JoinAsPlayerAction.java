@@ -72,7 +72,7 @@ public class JoinAsPlayerAction extends RequestAction {
 		JoinAsPlayerRequestData.PlayerData data = this.playerData;
 
 		// Construct the player.
-		Player player = new Player(data.getName(), this.getCallingAuthToken());
+		Player player = new Player(this.getCallingAuthToken(), data.getName());
 
 		// Try adding the player to the game.
 		try {
@@ -91,7 +91,7 @@ public class JoinAsPlayerAction extends RequestAction {
 			SessionManager.getInstance().getSession(getCallingAuthToken()).getBasicRemote()
 					.sendText(message.jsonify().toString());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			// Error cannot be sent, so display in console
 			e.printStackTrace();
 		}
 

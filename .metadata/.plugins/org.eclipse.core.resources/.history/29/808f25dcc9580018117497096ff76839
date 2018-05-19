@@ -1,0 +1,11 @@
+package com.toozo.asteriumwebserver.gamelogic;
+
+import java.util.function.Function;
+
+public class StatusEffect {
+	private Function<Character, Character> effect;
+	
+	public StatusEffect(Function<Character, Character> statusEffect) {
+		
+	}
+}

@@ -1,0 +1,62 @@
+package com.toozo.asteriumwebserver.gamelogic.items.equipment;
+
+import java.util.Collection;
+
+import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
+import com.toozo.asteriumwebserver.gamelogic.GameState;
+import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
+
+/**
+ * The abstract for an item that is equippable.
+ * 
+ * @author Greg Schmitt
+ */
+public abstract class AbstractEquipmentItem extends AbstractItem {
+	// ===== FIELDS =====
+	private boolean isEquipped;
+	private EquipmentSlot equipmentType;
+	// ==================
+	
+	// ===== CONSTRUCTORS =====
+	/**
+	 * Abstract constructor which defines which type of equipment this is.
+	 * @param equipmentType the {@link EquipmentSlot} to which this item is native.
+	 */
+	protected AbstractEquipmentItem(EquipmentSlot equipmentType) {
+		super();
+		this.equipmentType = equipmentType;
+	}
+	// ========================
+	
+	// ===== GETTERS =====
+	public EquipmentSlot getType() {
+		return this.equipmentType;
+	}
+	
+	public boolean isEquipped() {
+		return this.isEquipped;
+	}
+	// ===================
+	
+	// ===== SETTERS =====
+	public void setEquipped(boolean equipped) {
+		this.isEquipped = equipped;
+	}
+	// ===================
+	
+	// ===== METHODS =====
+	@Override
+	public void use(GameState state, 
+					PlayerCharacter user, 
+					Collection<PlayerCharacter> targets,
+					boolean fromCommunalInventory) {
+		// TODO Equip this item.
+	}
+	
+	public void equip(PlayerCharacter equipper, PlayerCharacter equippee) {
+	}
+	
+	public void unequip(PlayerCharacter equipper) {
+	}
+	// ===================
+}

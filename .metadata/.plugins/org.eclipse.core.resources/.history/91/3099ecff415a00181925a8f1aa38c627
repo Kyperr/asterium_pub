@@ -1,0 +1,48 @@
+package com.toozo.asteriumwebserver.gamelogic.items.equipment;
+
+import java.util.Collection;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+public class Equipment {
+	// ===== FIELDS =====
+	private Map<EquipmentSlot, AbstractEquipmentItem> slots;
+	// ==================
+	
+	// ===== CONSTRUCTORS =====
+	public Equipment() {
+	}
+	
+	public Equipment(AbstractEquipmentItem starterItem) {
+		
+	}
+	
+	/**
+	 * Constructs a new Equipment with as many starterItems equipped as possible.
+	 * @param starterItems
+	 */
+	public Equipment(Collection<AbstractEquipmentItem> starterItems) {
+		this.slots = new ConcurrentHashMap<EquipmentSlot, AbstractEquipmentItem>();
+		
+		// Instantiate slots
+		for (EquipmentSlot slot : EquipmentSlot.values()) {
+			this.slots.put(slot, null);
+		}
+		
+		// Put items into slots
+		for (AbstractEquipmentItem item : starterItems) {
+			if (this.slots.get(item.getType()) == null) {
+				this.slots.put(item.getType(), item);
+			} else {
+
+			}
+		}
+	}
+	// ========================
+	
+	// ===== GETTERS =====
+	// ===================
+	
+	// ===== SETTERS =====
+	// ===================
+}

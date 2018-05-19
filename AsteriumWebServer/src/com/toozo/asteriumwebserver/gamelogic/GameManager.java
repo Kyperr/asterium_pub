@@ -31,7 +31,9 @@ public final class GameManager {
 	public static synchronized GameManager getInstance() {
 		if (gameManager == null) {
 			gameManager = new GameManager();
-			gameManager.gameMap.put("TOOZO", new Game());
+			Game debugGame = new Game();
+			debugGame.start();
+			gameManager.gameMap.put("TOOZO", debugGame);
 		} 
 		return gameManager;
 	}
@@ -88,10 +90,10 @@ public final class GameManager {
 	 * @return the {@link Game} associated with the {@link Player}'s auth token.
 	 */
 	public Game getGameForPlayer(final String authToken) {
-		if (playerMap.get(authToken) != null) {
-			return playerMap.get(authToken);
-		} else {
-			return null;
-		}
+		return playerMap.get(authToken);
+	}
+	
+	public Game registerPlayerToGame(final String authToken, Game game) {
+		return playerMap.put(authToken, game);
 	}
 }
