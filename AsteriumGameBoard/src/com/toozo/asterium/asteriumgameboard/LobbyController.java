@@ -29,7 +29,7 @@ public class LobbyController {
 	
 	@FXML
 	public void initialize() {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("com/toozo/asterium/fxml/playerlist.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/toozo/asterium/fxml/playerlist.fxml"));
         try {
 			playerList = loader.load();
 		} catch (IOException e) {
