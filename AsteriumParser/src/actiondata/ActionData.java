@@ -20,7 +20,7 @@ public interface ActionData {
 	public static final String SYNC_LOCATIONS = "sync_locations";
 	public static final String SYNC_GAME_BOARD_DATA = "sync_game_board_data";
 	public static final String SYNC_PLAYER_CLIENT_DATA = "sync_player_client_data";
-	public static final String TURN = "turn";
+	public static final String TURN_ACTION = "turn_action";
 	public static final String USE_ITEM = "use_item";
 	
 	//Query action constants

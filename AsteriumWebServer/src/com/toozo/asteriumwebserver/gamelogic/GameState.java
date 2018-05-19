@@ -108,95 +108,25 @@ public class GameState {
 	private static final void playerJoining(GameState state) {
 		System.err.println("Running Player Joining Phase.");
 		if (state.game.allCharactersReady()) {
-			syncPlayerList(state);
 			// Here is where we would validate game state to make sure everything is ready
 			// to start.
 			// if(validateGameState()){
 			state.setGamePhase(GamePhase.GAME_INITIALIZING);
-			state.gamePhase.executePhase(state);
 			state.game.setAllCharactersNotReady();
+			state.gamePhase.executePhase(state);
 			// }
 		}
 	}
 
 	private static final void initializeGame(GameState state) {
-		System.err.println("Initializing Game.");
 		// TODO Initialize game
 		state.setGamePhase(GamePhase.PLAYER_TURNS);
 		state.gamePhase.executePhase(state);
 	}
 
 	private static final void initiatePlayerTurnPhase(GameState state) {
-		syncPlayerClients(state);
+		state.syncPlayerClients();
 		syncGameBoards(state);
-	}
-
-	private static final void syncPlayerList(GameState state) {
-		String auth = "";
-		Collection<SyncPlayerListRequestData.PlayerData> players = new HashSet<SyncPlayerListRequestData.PlayerData>();
-		Request request;
-		for (Player p : state.game.getPlayers()) {
-			auth = p.getAuthToken();
-
-			PlayerCharacter pChar = state.getCharacter(auth);
-
-			SyncPlayerListRequestData.PlayerData playerData = new SyncPlayerListRequestData.PlayerData(pChar.getCharacterName(), 
-					state.game.getPlayerIsReady(auth), pChar.getEffectiveStats().getStat(Stat.STAMINA),
-					pChar.getEffectiveStats().getStat(Stat.LUCK), pChar.getEffectiveStats().getStat(Stat.INTUITION));
-			
-			players.add(playerData);
-
-		}
-		SyncPlayerListRequestData data = new SyncPlayerListRequestData(players);
-		request = new Request(data, auth);
-		try {
-			SessionManager.getInstance().getSession(auth).getBasicRemote().sendText(request.jsonify().toString());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	private static final void syncPlayerClients(GameState state) {
-		System.err.println("Sending player client sync.");
-		List<SyncPlayerClientDataRequestData.LocationData> loc = new ArrayList<>();
-
-		for (String s : state.getMapLocations()) {
-			Location l = state.getAtMapLocation(s);
-			// if(l.distance <= player.stamina)//pseudocode
-
-			SyncPlayerClientDataRequestData.LocationData locData = new SyncPlayerClientDataRequestData.LocationData(s,
-					l.getType().getJSONVersion(), l.getActivityNames());
-
-			loc.add(locData);
-		}
-
-		for (Player p : state.game.getPlayers()) {
-			String auth = p.getAuthToken();
-
-			PlayerCharacter pChar = state.getCharacter(auth);
-
-			SyncPlayerClientDataRequestData.PlayerCharacterData.Stats stat = new SyncPlayerClientDataRequestData.PlayerCharacterData.Stats(
-					pChar.getEffectiveStats().getStat(Stat.HEALTH), pChar.getEffectiveStats().getStat(Stat.STAMINA),
-					pChar.getEffectiveStats().getStat(Stat.LUCK), pChar.getEffectiveStats().getStat(Stat.INTUITION));
-
-			SyncPlayerClientDataRequestData.PlayerCharacterData dChar = new SyncPlayerClientDataRequestData.PlayerCharacterData(
-					pChar.getCharacterName(), stat);
-
-			SyncPlayerClientDataRequestData data = new SyncPlayerClientDataRequestData(loc, dChar,
-					state.getGamePhase().toString());
-
-			Request request = new Request(data, auth);
-
-			try {
-				SessionManager.getInstance().getSession(auth).getBasicRemote().sendText(request.jsonify().toString());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		}
-
 	}
 
 	private static final void syncGameBoards(GameState state) {
@@ -240,15 +170,15 @@ public class GameState {
 
 		ActionData syncGBRequestData = new SyncGameBoardDataRequestData(food, fuel, locationDatas, playerDatas,
 				victoryDatas, itemDatas);
-		Message syncGBMessage = new Request(syncGBRequestData, "DanielSaysToLeaveTheAuthTokenBlank");
 
 		// Send sync to all GameBoards
 		for (GameBoard gameBoard : state.game.getGameBoards()) {
+			
+			Message syncGBMessage = new Request(syncGBRequestData, gameBoard.getAuthToken());
+			
 			SessionManager.getInstance().getSession(gameBoard.getAuthToken()).getAsyncRemote()
 					.sendText(syncGBMessage.jsonify().toString());
 		}
-
-		state.setGamePhase(GamePhase.TURN_RESOLVE);
 	}
 	// ==========================
 
@@ -397,6 +327,55 @@ public class GameState {
 	public void executePhase() {
 		this.gamePhase.executePhase(this);
 	}
+
+	private final void syncPlayerClients() {
+		for (Player p : this.game.getPlayers()) {
+
+			ActionData data = createSyncPlayerClientDataRequestData(p);
+			Request request = new Request(data, p.getAuthToken());
+
+			try {
+				SessionManager.getInstance().getSession(p.getAuthToken()).getBasicRemote()
+						.sendText(request.jsonify().toString());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+	public SyncPlayerClientDataRequestData createSyncPlayerClientDataRequestData(Player player) {
+		System.err.println("Sending player client sync.");
+		List<SyncPlayerClientDataRequestData.LocationData> loc = new ArrayList<>();
+
+		for (String s : getMapLocations()) {
+			Location l = getAtMapLocation(s);
+			// if(l.distance <= player.stamina)//pseudocode
+
+			SyncPlayerClientDataRequestData.LocationData locData = new SyncPlayerClientDataRequestData.LocationData(s,
+					l.getType().getJSONVersion(), l.getActivityNames());
+
+			loc.add(locData);
+		}
+
+		String auth = player.getAuthToken();
+
+		PlayerCharacter pChar = getCharacter(auth);
+
+		SyncPlayerClientDataRequestData.PlayerCharacterData.Stats stat = new SyncPlayerClientDataRequestData.PlayerCharacterData.Stats(
+				pChar.getEffectiveStats().getStat(Stat.HEALTH), pChar.getEffectiveStats().getStat(Stat.STAMINA),
+				pChar.getEffectiveStats().getStat(Stat.LUCK), pChar.getEffectiveStats().getStat(Stat.INTUITION));
+
+		SyncPlayerClientDataRequestData.PlayerCharacterData dChar = new SyncPlayerClientDataRequestData.PlayerCharacterData(
+				pChar.getCharacterName(), stat);
+
+		SyncPlayerClientDataRequestData data = new SyncPlayerClientDataRequestData(loc, dChar,
+				getGamePhase().toString());
+
+		return data;
+
+	}
+	
 	// ==================================
 
 }

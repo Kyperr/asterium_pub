@@ -5,6 +5,8 @@ var playerIsReady = false;
 
 var gamePhase = "PLAYERS_JOINING";
 
+var turnActionSelectedLocation;
+
 var locations = [];
 
 function getAuthToken(){

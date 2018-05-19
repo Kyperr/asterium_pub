@@ -15,7 +15,7 @@ import message.Response;
 public class TurnResponseData extends AbstractResponseActionData {
 
 	public TurnResponseData() {
-		super(ActionData.TURN);
+		super(ActionData.TURN_ACTION);
 	}
 
 	@Override

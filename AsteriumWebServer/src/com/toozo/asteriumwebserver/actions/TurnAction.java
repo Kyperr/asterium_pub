@@ -56,12 +56,12 @@ public class TurnAction extends RequestAction {
 							try {
 								location.doActivity(activityName, game, character);
 							} catch (Exception e) {
-
+								e.printStackTrace();
 							}
 						}
 					};
 					game.addTurnAction(player, runnable);
-					SuccessResponseData data = new SuccessResponseData(ActionData.TURN);
+					SuccessResponseData data = new SuccessResponseData(ActionData.TURN_ACTION);
 					message = new Response(data, 0, this.getMessageID(), auth);
 				}
 			}
@@ -89,7 +89,7 @@ public class TurnAction extends RequestAction {
 	public static TurnAction fromMessage(final Message message) {
 		TurnRequestData action = TurnRequestData.class.cast(message.getActionData());
 		return new TurnAction(message.getAuthToken(), message.getMessageID(), 
-							  action.getLocation().getLocationID(), 
+							  action.getLocationID(), 
 							  action.getActivityName());
 
 	}

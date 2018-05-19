@@ -2,11 +2,13 @@
 var responseActions = {};
 
 function processQueryIsInGameResponse(response) {
-    var isInGame = response.query_is_in_game.is_in_game;
-    if (isInGame) {
-        waitingForPlayersDisplayController.display(document.getElementById("centralDiv"));
-    } else {
-        joinAsLobbyDisplayController.display(document.getElementById("centralDiv"));
+    if (gamePhase == "PLAYERS_JOINING") {
+        var isInGame = response.query_is_in_game.is_in_game;
+        if (isInGame) {
+            waitingForPlayersDisplayController.display();
+        } else {
+            joinAsLobbyDisplayController.display();
+        }
     }
 };
 
@@ -29,13 +31,15 @@ function processToggleReadyUpResponse(response) {
         } else {
             waitingForPlayersDisplayController.btn.innerHTML = 'READY';
         }
-
     } else {
         console.log("Failed to toggle ready up status, error_code: " + response.error_code);
     }
 }
 
-function process(response){
-
+function processTurnActionResponse(response){
+    if (response.error_code == 0) {
+        afterTurnWaitingDisplayController.display();
+    } else {
+        console.log("Failed to do turn, error_code: " + response.error_code);
+    }
 }
-
