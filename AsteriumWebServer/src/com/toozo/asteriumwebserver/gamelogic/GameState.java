@@ -147,8 +147,8 @@ public class GameState {
 			PlayerCharacter pChar = state.getCharacter(auth);
 
 			SyncPlayerClientDataRequestData.PlayerCharacterData.Stats stat = new SyncPlayerClientDataRequestData.PlayerCharacterData.Stats(
-					pChar.getEffectiveStats().getHealth(), pChar.getEffectiveStats().getStamina(),
-					pChar.getEffectiveStats().getLuck(), pChar.getEffectiveStats().getIntuition());
+					pChar.getEffectiveStats().getStat(Stat.HEALTH), pChar.getEffectiveStats().getStat(Stat.STAMINA),
+					pChar.getEffectiveStats().getStat(Stat.LUCK), pChar.getEffectiveStats().getStat(Stat.INTUITION));
 
 			SyncPlayerClientDataRequestData.PlayerCharacterData dChar = new SyncPlayerClientDataRequestData.PlayerCharacterData(
 					pChar.getCharacterName(), stat);

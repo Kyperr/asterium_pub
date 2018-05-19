@@ -1,0 +1,12 @@
+package com.toozo.asteriumwebserver.gamelogic.statuseffects;
+
+import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
+
+public class AffectSingleStat extends AbstractStatusEffect {
+
+	public AffectSingleStat(PlayerCharacter owner) {
+		super(owner);
+		// TODO Auto-generated constructor stub
+	}
+
+}
