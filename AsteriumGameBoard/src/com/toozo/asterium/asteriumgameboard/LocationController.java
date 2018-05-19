@@ -1,13 +1,11 @@
 package com.toozo.asterium.asteriumgameboard;
 
-import com.toozo.asterium.model.Location;
-import com.toozo.asterium.model.Player;
-
+import actiondata.SyncGameBoardDataRequestData.LocationData;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 public class LocationController {
-	private Location location;
+	private String location;
 
 	@FXML
 	private Label nameLabel;
@@ -15,12 +13,12 @@ public class LocationController {
 	@FXML
 	private Label readyLabel;
 
-	public void setLocation(Location location) {
+	public void setLocation(String location) {
 		this.location = location;
 		if (location == null) {
 			nameLabel.setText(null);
 		} else {
-			nameLabel.setText(location.getLocationName());;
+			nameLabel.setText(location);
 		}
 	}
 }

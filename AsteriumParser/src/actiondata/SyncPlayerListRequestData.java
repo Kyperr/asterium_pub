@@ -60,8 +60,7 @@ public class SyncPlayerListRequestData extends AbstractRequestActionData {
 		private int luck;
 		private int stamina;
 				
-
-		public PlayerData(final String name, boolean readyStatus, int stamina, int luck, int intuition) {
+		public PlayerData(final String name, boolean readyStatus, int intuition, int luck, int stamina) {
 			this.name = name;
 			this.readyStatus = readyStatus;
 			this.intuition = intuition;
@@ -118,6 +117,7 @@ public class SyncPlayerListRequestData extends AbstractRequestActionData {
 			data.put(ActionData.STAMINA, this.stamina);
 			return data;
 		}
+		
 	}
 
 }

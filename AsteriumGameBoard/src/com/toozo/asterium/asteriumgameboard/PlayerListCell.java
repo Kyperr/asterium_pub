@@ -3,34 +3,35 @@ package com.toozo.asterium.asteriumgameboard;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 
-import com.toozo.asterium.model.Player;
-
+import actiondata.SyncPlayerListRequestData.PlayerData;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.Pane;
 
-public class PlayerListCell extends ListCell<Player> {
+public class PlayerListCell {
 
     private final Pane playerView ;
     private final PlayerController playerController ;
 
-    public PlayerListCell() {
+    public PlayerListCell(PlayerData data) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("player.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/toozo/asterium/fxml/player.fxml"));
             playerView = loader.load();
             playerController = loader.getController();
-            setGraphic(playerView);
-            setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+            updateItem(data);
         } catch (IOException exc) {
             throw new UncheckedIOException(exc);
         }
     }
 
-    @Override
-    protected void updateItem(Player item, boolean empty) {
-        super.updateItem(item, empty);
-        playerController.setPlayer(item);
+    protected void updateItem(PlayerData item) {
+        playerController.setName(item.getName());
+        playerController.setReadyStatus(item.getReadyStatus());
+    }
+    
+    public Pane getPlayerView() {
+    	return playerView;
     }
     
     

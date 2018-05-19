@@ -155,6 +155,54 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 		return new SyncGameBoardDataRequestData(food, fuel, locations, players, victories, communalInventory);
 	}
 	
+	public Integer getFood() {
+		return food;
+	}
+	
+	public void setFood(Integer food) {
+		this.food = food;
+	}
+	
+	public Integer getFuel() {
+		return fuel;
+	}
+	
+	public void setFuel(Integer fuel) {
+		this.fuel = fuel;
+	}
+	
+	public Collection<SyncGameBoardDataRequestData.ItemData> getCommunalInventory() {
+		return communalInventory;
+	}
+
+	public void setCommunalInventory(Collection<SyncGameBoardDataRequestData.ItemData> communalInventory) {
+		this.communalInventory = communalInventory;
+	}
+	
+	public Collection<SyncGameBoardDataRequestData.LocationData> getLocations() {
+		return locations;
+	}
+	
+	public void setLocations(Collection<SyncGameBoardDataRequestData.LocationData> locations) {
+		this.locations = locations;
+	}
+	
+	public Collection<SyncGameBoardDataRequestData.VictoryData> getVictoryConditions() {
+		return victoryConditions;
+	}
+	
+	public void setVictoryConditions(Collection<SyncGameBoardDataRequestData.VictoryData> victoryConditions) {
+		this.victoryConditions = victoryConditions;
+	}
+	
+	public Collection<SyncGameBoardDataRequestData.PlayerCharacterData> getPlayers() {
+		return players;
+	}
+	
+	public void setPlayers(Collection<SyncGameBoardDataRequestData.PlayerCharacterData> players) {
+		this.players = players;
+	}
+
 	// ===== PLAYER DATA INNER CLASS =====
 	/**
 	 * {@link PlayerCharacterData} is the representation of a player

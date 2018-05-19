@@ -1,22 +1,29 @@
 package com.toozo.asterium.asteriumgameboard;
 
-import com.toozo.asterium.model.Location;
-import com.toozo.asterium.util.GameResources;
+import com.toozo.asterium.util.NodeNavigator;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
-import main.ClientConnectionHandler;
+import javafx.scene.layout.Pane;
 
 public class MapController {
-	private ClientConnectionHandler ccHandler;
 
 	@FXML
-	private ListView<Location> locationListView;
+	private ListView<String> locationListView;
+	
 	
 	@FXML
 	public void initialize() {
-		locationListView.setCellFactory(lv -> new LocationListCell());
+		//locationListView.setCellFactory(lv -> new LocationListCell());
 		
-		//
+	}
+	
+	@FXML
+	public void handleReadyButtonAction() {
+		NodeNavigator.loadTurnSummary();
+	}
+	
+	public void update() {
+		
 	}
 }

@@ -6,6 +6,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.toozo.asterium.asteriumgameboard.LocationController"/>
-    <Label fx:id="nameLabel"/>
-</VBox>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="playerList" 
+	fx:controller="com.toozo.asterium.asteriumgameboard.PlayerListController"/>
+   
