@@ -11,7 +11,7 @@ function processQueryIsInGameResponse(response) {
             displayWaitingForPlayers(document.getElementById("centralDiv"));
         }
     } else {
-        addJoinLobby(document.getElementById("centralDiv"));
+        joinAsLobbyDisplayController.display(document.getElementById("centralDiv"));
     }
 };
 

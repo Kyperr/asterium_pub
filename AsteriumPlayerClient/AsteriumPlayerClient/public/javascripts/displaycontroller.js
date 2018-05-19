@@ -1,26 +1,4 @@
 
-function addJoinLobby(div) {
-
-    var name = document.createElement("input");
-    name.setAttribute("id", "name");
-    name.setAttribute("name", "name");
-    div.appendChild(name);
-
-    div.appendChild(document.createElement("br"));
-
-    var lobby_id = document.createElement("input");
-    lobby_id.setAttribute("id", "lobby_id");
-    lobby_id.setAttribute("name", "lobby_id");
-    div.appendChild(lobby_id);
-
-    div.appendChild(document.createElement("br"));
-
-    var btn = document.createElement("BUTTON");
-    btn.innerHTML = 'Join Lobby';
-    btn.setAttribute("onClick", "joinAsPlayer()");
-    div.appendChild(btn);
-
-}
 
 function displayWaitingForPlayers(div) {
     div.innerHTML = "Waiting for players to be ready...";
@@ -40,9 +18,63 @@ function displayWaitingForPlayers(div) {
     div.appendChild(btn);
 }
 
-function displayLocations(div){
+function displayLocations(div) {
     div.innerHTML = "Please Select A Location...";
 
-    
+
 
 }
+
+//=====AbstractDisplayController
+
+function AbstractDisplayController() {
+}
+
+AbstractDisplayController.prototype = new AbstractDisplayController();
+AbstractDisplayController.prototype.constructor = AbstractDisplayController;
+
+AbstractDisplayController.prototype.init = function () {
+}
+
+AbstractDisplayController.prototype.display = function (div) {
+    div.innerHTML = "This Display Controller is not correctly implemented."
+}
+
+//=====JoinLobbyDisplayController
+
+function JoinLobbyDisplayController() {
+    this.nameInput = document.createElement("input");
+    this.lobby_id = document.createElement("input");
+    this.btn = document.createElement("BUTTON");
+    this.init();
+}
+
+JoinLobbyDisplayController.prototype = Object.create(JoinLobbyDisplayController.prototype);
+JoinLobbyDisplayController.prototype.constructor = JoinLobbyDisplayController;
+
+
+JoinLobbyDisplayController.prototype.init = function () {
+    this.nameInput.setAttribute("id", "name");
+    this.nameInput.setAttribute("name", "name");
+
+    this.lobby_id.setAttribute("id", "lobby_id");
+    this.lobby_id.setAttribute("name", "lobby_id");
+
+    this.btn.innerHTML = 'Join Lobby';
+    this.btn.setAttribute("onClick", "joinAsPlayer()");
+}
+
+JoinLobbyDisplayController.prototype.display = function (div) {
+
+    div.appendChild(this.nameInput);
+
+    div.appendChild(document.createElement("br"));
+
+    div.appendChild(this.lobby_id);
+
+    div.appendChild(document.createElement("br"));
+
+    div.appendChild(this.btn);
+}
+
+var joinAsLobbyDisplayController = new JoinLobbyDisplayController();
