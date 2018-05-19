@@ -44,7 +44,7 @@ public interface ActionData {
 	public static final String INTUITION = "intuition";	
 	public static final String GAMEBOARD_DATA = "gameboard_data";
 	public static final String AUTH_TOKEN = "auth_token";
-	public static final String GAME_PHASE = "game_phase";
+	public static final String GAME_PHASE_NAME = "game_phase_name";
 	public static final String ACTIVITY = "activity";
 	public static final String ACTIVITIES = "activities";
 	public static final String ACTIVITY_NAME = "activity_name";
@@ -66,6 +66,7 @@ public interface ActionData {
 	public static final String CURRENT_VALUE = "current_value";
 	public static final String MAX_VALUE = "max_value";
 	public static final String VICTORY_CONDITIONS = "victory_conditions";
+	public static final String PLAYER_READY_STATUS = "player_ready_status";
 	
 	/**
 	 * 

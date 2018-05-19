@@ -148,7 +148,7 @@ public class GameState {
 			SyncPlayerClientDataRequestData.PlayerCharacterData dChar = new SyncPlayerClientDataRequestData.PlayerCharacterData(
 					pChar.getCharacterName(), stat);
 
-			SyncPlayerClientDataRequestData data = new SyncPlayerClientDataRequestData(loc, dChar);
+			SyncPlayerClientDataRequestData data = new SyncPlayerClientDataRequestData(loc, dChar, state.getGamePhase().toString());
 
 			Request request = new Request(data, auth);
 
@@ -290,6 +290,10 @@ public class GameState {
 	 */
 	public Inventory getCommunalInventory() {
 		return this.communalInventory;
+	}
+	
+	public GamePhase getGamePhase() {
+		return this.gamePhase;
 	}
 	
 	public Location getLocation(String locationID) {
