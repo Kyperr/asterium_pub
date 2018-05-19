@@ -77,7 +77,6 @@ function checkIfIsInGame() {
 }
 
 function toggleReady() {
-    test.innerHTML = ""
     console.log("Toggling ready!");
     var uuid = genUUID();
     message =
