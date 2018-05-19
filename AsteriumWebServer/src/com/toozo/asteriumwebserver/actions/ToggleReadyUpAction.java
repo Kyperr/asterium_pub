@@ -5,13 +5,10 @@ import java.util.UUID;
 
 import com.toozo.asteriumwebserver.gamelogic.Game;
 import com.toozo.asteriumwebserver.gamelogic.GameManager;
-import com.toozo.asteriumwebserver.gamelogic.GameState;
 import com.toozo.asteriumwebserver.gamelogic.Player;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
-import actiondata.ActionData;
 import actiondata.ErroredResponseData;
-import actiondata.SuccessResponseData;
 import actiondata.ToggleReadyUpResponseData;
 import message.Message;
 import message.Response;
@@ -40,7 +37,7 @@ public class ToggleReadyUpAction extends RequestAction {
 		Message message;
 		// Check to see if the player auth token was invalid / they are not a real player
 		if (game != null) {
-			GameState state = game.getGameState();
+			//GameState state = game.getGameState();
 			ToggleReadyUpResponseData data = new ToggleReadyUpResponseData(game.toggleReady(auth));
 			message = new Response(data, 0, this.getMessageID(), this.getCallingAuthToken());
 		} else {
