@@ -8,6 +8,11 @@ import java.util.function.Supplier;
 import com.toozo.asteriumwebserver.gamelogic.GameState;
 import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 
+/**
+ * The abstract class for an item that can be used by a {@link PlayerCharacter}.
+ * 
+ * @author Studio Toozo
+ */
 public abstract class AbstractItem {
 	// ===== CONSTANTS =====
 	public static final String DEFAULT_NAME = "";

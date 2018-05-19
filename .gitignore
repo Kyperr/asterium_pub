@@ -23,7 +23,7 @@ tomcat
 *.class
 
 # Maven 
-target/
+*/target/
 
 # IntelliJ project files 
 *.iml
@@ -32,9 +32,9 @@ target/
 .idea/
 
 # eclipse project file
-.settings/
-.classpath
-.project
+*/.settings/
+*/.classpath
+*/.project
 
 # NetBeans specific
 nbproject/private/
@@ -54,3 +54,4 @@ nb-configuration.xml
 release.properties
 pom.xml.releaseBackup
 pom.xml.tag
+*/pom.properties

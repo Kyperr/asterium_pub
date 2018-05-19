@@ -1,17 +1,16 @@
 package com.toozo.asteriumwebserver.gamelogic.items.equipment;
 
 import java.util.Collection;
-import java.util.Objects;
 
-import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 import com.toozo.asteriumwebserver.gamelogic.GameState;
 import com.toozo.asteriumwebserver.gamelogic.Inventory;
+import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
 
 /**
- * The abstract for an item that is equippable.
+ * The abstract for an {@link AbstractItem} that is equippable.
  * 
- * @author Greg Schmitt
+ * @author Studio Toozo
  */
 public abstract class AbstractEquipmentItem extends AbstractItem {
 	// ===== FIELDS =====
