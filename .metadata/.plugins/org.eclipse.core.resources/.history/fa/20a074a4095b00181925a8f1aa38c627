@@ -146,14 +146,14 @@ public class GameState {
 
 			PlayerCharacter pChar = state.getCharacter(auth);
 
-			SyncPlayerClientDataRequestData.PlayerCharacterData.Stats stat = new SyncPlayerClientDataRequestData.PlayerCharacterData.Stats(
+			SyncPlayerClientDataRequestData.Character.Stats stat = new SyncPlayerClientDataRequestData.Character.Stats(
 					pChar.getEffectiveStats().getHealth(), pChar.getEffectiveStats().getStamina(),
 					pChar.getEffectiveStats().getLuck(), pChar.getEffectiveStats().getIntuition());
 
-			SyncPlayerClientDataRequestData.PlayerCharacterData dChar = new SyncPlayerClientDataRequestData.PlayerCharacterData(
+			SyncPlayerClientDataRequestData.Character dChar = new SyncPlayerClientDataRequestData.Character(
 					pChar.getCharacterName(), stat);
 
-			SyncPlayerClientDataRequestData data = new SyncPlayerClientDataRequestData(loc, dChar, state.getGamePhase().toString());
+			SyncPlayerClientDataRequestData data = new SyncPlayerClientDataRequestData(loc, dChar);
 
 			Request request = new Request(data, auth);
 
@@ -212,12 +212,11 @@ public class GameState {
 																		playerDatas,
 																		victoryDatas,
 																		itemDatas);
-		Message syncGBMessage = new Request(syncGBRequestData,
+		Message displayBoardMessage = new Request(syncGBRequestData,
 												  "DanielSaysToLeaveTheAuthTokenBlank");
 
-		// Send sync to all GameBoards
 		for (GameBoard gameBoard : state.game.getGameBoards()) {
-			SessionManager.getInstance().getSession(gameBoard.getAuthToken()).getAsyncRemote().sendText(syncGBMessage.jsonify().toString());
+			SessionManager.getInstance().getSession(gameBoard.getAuthToken()).getAsyncRemote().sendText(displayBoardMessage.jsonify().toString());
 		}
 
 		state.setGamePhase(GamePhase.TURN_RESOLVE);
@@ -295,10 +294,6 @@ public class GameState {
 	 */
 	public Inventory getCommunalInventory() {
 		return this.communalInventory;
-	}
-	
-	public GamePhase getGamePhase() {
-		return this.gamePhase;
 	}
 	
 	public Location getLocation(String locationID) {
