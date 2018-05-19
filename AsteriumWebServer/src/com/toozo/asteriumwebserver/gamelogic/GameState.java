@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -17,6 +18,7 @@ import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 import actiondata.ActionData;
 import actiondata.SyncGameBoardDataRequestData;
 import actiondata.SyncPlayerClientDataRequestData;
+import actiondata.SyncPlayerListRequestData;
 import message.Message;
 import message.Request;
 
@@ -95,16 +97,18 @@ public class GameState {
 	private Collection<VictoryCondition> victoryConditions;
 	private Inventory communalInventory;
 	// ===========================
-	
+
 	// ===== STATIC METHODS =====
 	/**
 	 * Definition of what should be performed during the players
 	 * 
-	 * @param state The current state of the game.
+	 * @param state
+	 *            The current state of the game.
 	 */
 	private static final void playerJoining(GameState state) {
 		System.err.println("Running Player Joining Phase.");
 		if (state.game.allCharactersReady()) {
+			syncPlayerList(state);
 			// Here is where we would validate game state to make sure everything is ready
 			// to start.
 			// if(validateGameState()){
@@ -127,6 +131,32 @@ public class GameState {
 		syncGameBoards(state);
 	}
 
+	private static final void syncPlayerList(GameState state) {
+		String auth = "";
+		Collection<SyncPlayerListRequestData.PlayerData> players = new HashSet<SyncPlayerListRequestData.PlayerData>();
+		Request request;
+		for (Player p : state.game.getPlayers()) {
+			auth = p.getAuthToken();
+
+			PlayerCharacter pChar = state.getCharacter(auth);
+
+			SyncPlayerListRequestData.PlayerData playerData = new SyncPlayerListRequestData.PlayerData(pChar.getCharacterName(), 
+					state.game.getPlayerIsReady(auth), pChar.getEffectiveStats().getStat(Stat.STAMINA),
+					pChar.getEffectiveStats().getStat(Stat.LUCK), pChar.getEffectiveStats().getStat(Stat.INTUITION));
+			
+			players.add(playerData);
+
+		}
+		SyncPlayerListRequestData data = new SyncPlayerListRequestData(players);
+		request = new Request(data, auth);
+		try {
+			SessionManager.getInstance().getSession(auth).getBasicRemote().sendText(request.jsonify().toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	private static final void syncPlayerClients(GameState state) {
 		System.err.println("Sending player client sync.");
 		List<SyncPlayerClientDataRequestData.LocationData> loc = new ArrayList<>();
@@ -147,13 +177,14 @@ public class GameState {
 			PlayerCharacter pChar = state.getCharacter(auth);
 
 			SyncPlayerClientDataRequestData.PlayerCharacterData.Stats stat = new SyncPlayerClientDataRequestData.PlayerCharacterData.Stats(
-					pChar.getEffectiveStats().getHealth(), pChar.getEffectiveStats().getStamina(),
-					pChar.getEffectiveStats().getLuck(), pChar.getEffectiveStats().getIntuition());
+					pChar.getEffectiveStats().getStat(Stat.HEALTH), pChar.getEffectiveStats().getStat(Stat.STAMINA),
+					pChar.getEffectiveStats().getStat(Stat.LUCK), pChar.getEffectiveStats().getStat(Stat.INTUITION));
 
 			SyncPlayerClientDataRequestData.PlayerCharacterData dChar = new SyncPlayerClientDataRequestData.PlayerCharacterData(
 					pChar.getCharacterName(), stat);
 
-			SyncPlayerClientDataRequestData data = new SyncPlayerClientDataRequestData(loc, dChar, state.getGamePhase().toString());
+			SyncPlayerClientDataRequestData data = new SyncPlayerClientDataRequestData(loc, dChar,
+					state.getGamePhase().toString());
 
 			Request request = new Request(data, auth);
 
@@ -171,7 +202,7 @@ public class GameState {
 	private static final void syncGameBoards(GameState state) {
 		int food = state.getFood();
 		int fuel = state.getFuel();
-		
+
 		// Construct collection of LocationData
 		Collection<SyncGameBoardDataRequestData.LocationData> locationDatas = new ArrayList<SyncGameBoardDataRequestData.LocationData>();
 		SyncGameBoardDataRequestData.LocationData location;
@@ -207,17 +238,14 @@ public class GameState {
 			itemDatas.add(itemData);
 		}
 
-		ActionData syncGBRequestData = new SyncGameBoardDataRequestData(food, fuel,
-																		locationDatas,
-																		playerDatas,
-																		victoryDatas,
-																		itemDatas);
-		Message syncGBMessage = new Request(syncGBRequestData,
-												  "DanielSaysToLeaveTheAuthTokenBlank");
+		ActionData syncGBRequestData = new SyncGameBoardDataRequestData(food, fuel, locationDatas, playerDatas,
+				victoryDatas, itemDatas);
+		Message syncGBMessage = new Request(syncGBRequestData, "DanielSaysToLeaveTheAuthTokenBlank");
 
 		// Send sync to all GameBoards
 		for (GameBoard gameBoard : state.game.getGameBoards()) {
-			SessionManager.getInstance().getSession(gameBoard.getAuthToken()).getAsyncRemote().sendText(syncGBMessage.jsonify().toString());
+			SessionManager.getInstance().getSession(gameBoard.getAuthToken()).getAsyncRemote()
+					.sendText(syncGBMessage.jsonify().toString());
 		}
 
 		state.setGamePhase(GamePhase.TURN_RESOLVE);
@@ -243,13 +271,14 @@ public class GameState {
 	public int getFood() {
 		return this.food;
 	}
-	
+
 	/**
 	 * @return the current amount of fuel.
 	 */
 	public int getFuel() {
 		return this.fuel;
 	}
+
 	public PlayerCharacter getCharacter(final String auth) {
 		return playerCharacterMap.get(auth);
 	}
@@ -296,11 +325,11 @@ public class GameState {
 	public Inventory getCommunalInventory() {
 		return this.communalInventory;
 	}
-	
+
 	public GamePhase getGamePhase() {
 		return this.gamePhase;
 	}
-	
+
 	public Location getLocation(String locationID) {
 		return GameState.locations.get(locationID);
 	}
@@ -317,31 +346,35 @@ public class GameState {
 	// ===== SETTERS =====
 	/**
 	 * Set the current {@link GamePhase} to newGamePhase.
-	 * @param gamePhase The new {@link GamePhase}.
+	 * 
+	 * @param gamePhase
+	 *            The new {@link GamePhase}.
 	 */
 	public void setGamePhase(final GamePhase newGamePhase) {
 		this.gamePhase = newGamePhase;
 	}
-	
+
 	/**
 	 * Update the amount of food in this GameState.
 	 * 
-	 * @param newFood The new amount of food.
+	 * @param newFood
+	 *            The new amount of food.
 	 */
 	public void setFood(final int newFood) {
 		this.food = newFood;
 	}
-	
+
 	/**
 	 * Update the amount of fuel in this GameState.
 	 * 
-	 * @param newFuel The new amount of fuel.
+	 * @param newFuel
+	 *            The new amount of fuel.
 	 */
 	public void setFuel(final int newFuel) {
 		this.fuel = newFuel;
 	}
 	// ===================
-	
+
 	// ===== OTHER INSTANCE METHODS =====
 	public void addPlayerCharacter(final String playerAuthToken, final PlayerCharacter pc) {
 		this.playerCharacterMap.put(playerAuthToken, pc);

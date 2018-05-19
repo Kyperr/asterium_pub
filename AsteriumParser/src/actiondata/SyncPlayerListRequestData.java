@@ -61,7 +61,7 @@ public class SyncPlayerListRequestData extends AbstractRequestActionData {
 		private int stamina;
 				
 
-		public PlayerData(final String name, boolean readyStatus, int intuition, int luck, int stamina) {
+		public PlayerData(final String name, boolean readyStatus, int stamina, int luck, int intuition) {
 			this.name = name;
 			this.readyStatus = readyStatus;
 			this.intuition = intuition;

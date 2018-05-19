@@ -9,3 +9,6 @@
 1526608824940	Rename type 'Consumable'
 1526608834447	Rename type 'AbstractConsumable'
 1526696393962	Rename type 'Equipment'
+1526705299232	Rename type 'StatusEffect'
+1526706072066	Rename type 'Stats'
+1526706357178	Rename type 'Stats'

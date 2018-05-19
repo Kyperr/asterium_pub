@@ -120,6 +120,10 @@ public class Game extends Thread {
 		return gameState;
 	}
 	
+	public boolean getPlayerIsReady(final String auth) {
+		return playerReadyMap.get(auth);
+	}
+	
 	public boolean allCharactersReady() {
 		for (Boolean bool : playerReadyMap.values()) {
 			if (!bool) {
