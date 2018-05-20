@@ -21,6 +21,7 @@ import actiondata.ActionData;
 import actiondata.SyncGameBoardDataRequestData;
 import actiondata.SyncPlayerClientDataRequestData;
 import actiondata.SyncPlayerListRequestData;
+import actiondata.JoinAsPlayerRequestData.PlayerData;
 import message.Message;
 import message.Request;
 
@@ -186,6 +187,7 @@ public class GameState {
 
 		// Send sync to all GameBoards
 		for (GameBoard gameBoard : state.game.getGameBoards()) {
+			System.out.println("Game board: " + gameBoard.getAuthToken());
 
 			Message syncGBMessage = new Request(syncGBRequestData, gameBoard.getAuthToken());
 
@@ -323,6 +325,52 @@ public class GameState {
 	// ===== OTHER INSTANCE METHODS =====
 	public void addPlayerCharacter(final String playerAuthToken, final PlayerCharacter pc) {
 		this.playerCharacterMap.put(playerAuthToken, pc);
+		syncGameBoardsPlayerList();
+	}
+
+	/**
+	 * This is a helper method to sync the player list on the game board.
+	 */
+	private void syncGameBoardsPlayerList() {
+
+		//Create list of player data.
+		Collection<SyncPlayerListRequestData.PlayerData> playerData = new ArrayList<>();
+		for (Player p : game.getPlayers()) {
+
+			// Construct the stats.
+			// TODO: Woah, cumbersome as hell. There's a smarter way to do this.
+			SyncPlayerListRequestData.PlayerData.DisplayStats dStats = new SyncPlayerListRequestData.PlayerData.DisplayStats(
+					getCharacter(p.getAuthToken()).getBaseStats().getStat(Stat.INTUITION),
+					getCharacter(p.getAuthToken()).getBaseStats().getStat(Stat.LUCK),
+					getCharacter(p.getAuthToken()).getBaseStats().getStat(Stat.STAMINA));
+
+			// Construct a player data object
+			SyncPlayerListRequestData.PlayerData pData = new SyncPlayerListRequestData.PlayerData(
+					p.getPlayerName(),
+					game.getPlayerIsReady(p.getAuthToken()), dStats);
+			
+			playerData.add(pData);
+		}
+
+		SyncPlayerListRequestData data = new SyncPlayerListRequestData(playerData);
+		
+		//Send player lists to each game board.
+		for(GameBoard gameBoard : game.getGameBoards()) {
+			String auth = gameBoard.getAuthToken();
+			
+			Request request = new Request(data, auth);
+
+			try {
+				Session session = SessionManager.getInstance().getSession(auth);
+				synchronized (session) {
+					session.getBasicRemote().sendText(request.jsonify().toString());
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		
 	}
 
 	/**

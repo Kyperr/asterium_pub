@@ -5,6 +5,8 @@ import com.toozo.asterium.util.NodeNavigator;
 
 import actiondata.CreateGameRequestData;
 import actiondata.CreateGameResponseData;
+import actiondata.JoinAsGameBoardRequestData;
+import actiondata.JoinAsGameBoardRequestData.GameBoardData;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,52 +17,86 @@ import message.Request;
 
 /**
  * Controller for main menu layout.
+ * 
  * @author Jenna
  *
  */
-public class MenuController {	
-	
-    @FXML
-    private Label label;
-    
-    @FXML
-    private Button lobbyIdButton;
-    
-    @FXML
-    private Button backButton;
-    
-    @FXML
-    private void handleLobbyIdButtonAction(ActionEvent event) {
-    	
-    	CreateGameRequestData cgrData = new CreateGameRequestData();
-    	    	
-        Request request = new Request(cgrData, "");
-        
-        //Here, we say that once we get the message back, run the lambda...
-    	GameResources.getClientConnectionHandler().send(request.jsonify().toString(), (message) -> {
-    		
-    		//... and now that we have a message response from the server, we need to set the text
-    		//of the label, however, that needs to be done on the UI thread, so we use 
-    		//Platform.runLater(Runnable) to "send" our action to the correct thread :)
-    		Platform.runLater(new Runnable() {
-                @Override public void run() {
-                	
-                	//This is our response data, formed from the message.
-            		CreateGameResponseData responseData = CreateGameResponseData.fromMessage(message);
-            		        	
-            		// Save the lobby id
-                	GameResources.setLobbyId(responseData.getLobbyID());
-                	
-                	// Go to the lobby
-                	NodeNavigator.loadLobby();
-                }
-            });
-    		
-    	});
-    }
-    
-    @FXML
-    public void initialize() {
-    }    
-    
+public class MenuController {
+
+	@FXML
+	private Label label;
+
+	@FXML
+	private Button lobbyIdButton;
+
+	@FXML
+	private Button backButton;
+
+	@FXML
+	private void handleLobbyIdButtonAction(ActionEvent event) {
+
+		CreateGameRequestData cgrData = new CreateGameRequestData();
+
+		Request request = new Request(cgrData, "");
+
+		// Here, we say that once we get the message back, run the lambda...
+		GameResources.getClientConnectionHandler().send(request.jsonify().toString(), (message) -> {
+
+			// ... and now that we have a message response from the server, we need to set
+			// the text
+			// of the label, however, that needs to be done on the UI thread, so we use
+			// Platform.runLater(Runnable) to "send" our action to the correct thread :)
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+
+					// Once we have create a game, we need to join it.
+
+					// This is our response data, formed from the message.
+					CreateGameResponseData responseData = CreateGameResponseData.fromMessage(message);
+
+					GameResources.setAuthToken(responseData.getAuthToken());
+
+					joinLobby(responseData.getLobbyID());
+
+					// Save the lobby id
+					GameResources.setLobbyId(responseData.getLobbyID());
+
+					
+				}
+			});
+
+		});
+	}
+
+	private void joinLobby(String lobbyID) {
+		
+		GameBoardData gameData = new GameBoardData();
+		
+		JoinAsGameBoardRequestData data = new JoinAsGameBoardRequestData(lobbyID, gameData);
+		
+		Request request = new Request(data, GameResources.getAuthToken());
+		
+		GameResources.getClientConnectionHandler().send(request.jsonify().toString(), (message) -> {
+
+			// ... and now that we have a message response from the server, we need to set
+			// the text
+			// of the label, however, that needs to be done on the UI thread, so we use
+			// Platform.runLater(Runnable) to "send" our action to the correct thread :)
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					// Go to the lobby
+					NodeNavigator.loadLobby();
+				}
+			});
+
+		});
+
+	}
+
+	@FXML
+	public void initialize() {
+	}
+
 }

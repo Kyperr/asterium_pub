@@ -214,6 +214,7 @@ public class Game extends Thread {
 	 *            The game board client.
 	 */
 	public void addGameBoard(final GameBoard gameBoard) {
+		System.out.println("adding game board: " + gameBoard.getAuthToken());
 		this.gameBoardList.put(gameBoard.getAuthToken(), gameBoard);
 	}
 

@@ -39,6 +39,10 @@ public class CreateGameResponseData extends AbstractResponseActionData {
 		return this.lobbyID;
 	}
 	
+	public String getAuthToken() {
+		return this.authToken;
+	}
+	
 	public static CreateGameResponseData fromMessage(final Message message) throws JSONException {
 		return CreateGameResponseData.class.cast(message.getActionData());
 	}

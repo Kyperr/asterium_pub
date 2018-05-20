@@ -27,6 +27,8 @@ public class GameResources {
 	private static final String URI = "ws://localhost:8080/AsteriumWebServer/Game";	
 	
 	private static String lobbyId = "no lobby id";
+	
+	private static String authToken = "";
 
 	private static ClientConnectionHandler ccHandler;
 	
@@ -56,9 +58,17 @@ public class GameResources {
 	public static void setLobbyId(String id) {
 		lobbyId = id;
 	}
-	
+
 	public static String getLobbyId() {
 		return lobbyId;
+	}
+
+	public static void setAuthToken(String authToken) {
+		GameResources.authToken = authToken;
+	}
+	
+	public static String getAuthToken() {
+		return authToken;
 	}
 	
 	public static ClientConnectionHandler getClientConnectionHandler() {
@@ -113,6 +123,7 @@ public class GameResources {
 		// Register a response with the server: what should happen 
 		// when we receive a list of locations.
 		ccHandler.registerRequestCallback(ActionData.SYNC_GAME_BOARD_DATA, (message) -> {
+			 System.err.println("Received sync_game_board_data");
 			Platform.runLater(new Runnable() {
 				 @Override public void run() {
 					 // Get the data
@@ -131,13 +142,16 @@ public class GameResources {
 		
 		// Register a response with the server: what should happen 
 		// when we receive a list of players
-		ccHandler.registerRequestCallback(ActionData.SYNC_PLAYER_LIST,  (message) -> {
+		ccHandler.registerRequestCallback(ActionData.SyncPlayerList,  (message) -> {
+			 System.err.println("Received sync_player_list");
 			Platform.runLater(new Runnable() {
 				 @Override public void run() {
 					 // Get the data
 					 SyncPlayerListRequestData data = SyncPlayerListRequestData.class.cast(message.getActionData());
 					 // Sync the data
 					 players = (List<PlayerData>) data.getPlayers();
+					 
+					 NodeNavigator.loadLobby();
 				 }
 				
 			});
