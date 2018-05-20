@@ -15,15 +15,14 @@ import main.ClientConnectionHandler;
 /**
  * Main controller class for the entire layout.
  */
-public class GameBoardController {
+public class GameBoardController extends AbstractAsteriumController {
 	
     /** Holder of a node. Initialized by fxml. */
     @FXML
     private StackPane nodeHolder;
-    private static GameResources resources;
+    private GameResources resources;
  
     public GameBoardController() {
-    	resources = new GameResources();
     }
     
     public void setNode(Node node) {

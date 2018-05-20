@@ -1,7 +1,10 @@
 package com.toozo.asterium.asteriumgameboard;
 
+import javax.resource.spi.IllegalStateException;
+
 import com.toozo.asterium.util.GameResources;
 import com.toozo.asterium.util.NodeNavigator;
+import com.toozo.asterium.util.NodeNavigator.Display;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,7 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 
-public class GameSummaryController {
+public class GameSummaryController extends AbstractAsteriumController {
 
     @FXML
     private Label label;
@@ -25,11 +28,15 @@ public class GameSummaryController {
     }    
     
     public void handleMenuButtonAction(ActionEvent event) {
-    	NodeNavigator.loadMenu();
+    	try {
+			getNodeNavigator().display(Display.MENU);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		}
     }
     
-    public void update() {
-    	label.setText(GameResources.getGameWonStatus());
+    public void update(GameResources gameResources) {
+    	label.setText(gameResources.getGameWonStatus());
     }
     
 }
