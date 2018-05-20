@@ -6,8 +6,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="com.toozo.asterium.asteriumgameboard.PlayerController" fx:id="playerView">
+<HBox xmlns:fx="http://javafx.com/fxml"
+	fx:controller="com.toozo.asterium.asteriumgameboard.PlayerController">
 	<Label fx:id="nameLabel" />
 	<Label fx:id="readyLabel" />
 </HBox>
