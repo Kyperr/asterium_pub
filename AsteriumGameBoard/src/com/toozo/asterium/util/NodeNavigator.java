@@ -76,6 +76,10 @@ public class NodeNavigator {
 	public void display(Display view) {
 		mainController.setNode(layoutMap.get(view));
 	}
+	
+	public Node getLayout(Display view) {
+		return layoutMap.get(view);
+	}
 
 //	public static void loadLobby() {
 //		lobbyController.updateLobbyId();
