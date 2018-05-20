@@ -59,8 +59,10 @@ public class CreateGameAction extends RequestAction {
 
 		// Send the response
 		try {
-			SessionManager.getInstance().getSession(getCallingAuthToken()).getBasicRemote()
-					.sendText(message.jsonify().toString());
+			Session session = SessionManager.getInstance().getSession(getCallingAuthToken());
+			synchronized (session) {
+				session.getBasicRemote().sendText(message.jsonify().toString());
+			}
 		} catch (IOException e) {
 			// Error cannot be sent, so display in console
 			e.printStackTrace();

@@ -53,7 +53,9 @@ public class WebSocketServer {
 		} catch (JSONException e) {
 			e.printStackTrace();
 			try {
-				session.getBasicRemote().sendText("Error: Malformed JSON.");
+				synchronized (session) {
+					session.getBasicRemote().sendText("Error: Malformed JSON.");
+				}
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}

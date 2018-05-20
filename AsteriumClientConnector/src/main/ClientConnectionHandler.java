@@ -92,7 +92,9 @@ public class ClientConnectionHandler {
 	 * @param json A JSON message to send to the server.
 	 */
 	public void send(final String json) {
-		this.userSession.getAsyncRemote().sendText(json);
+		synchronized(this.userSession) {
+			this.userSession.getAsyncRemote().sendText(json);	
+		}
 	}
 	
 	/**

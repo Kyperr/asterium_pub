@@ -94,6 +94,27 @@ function toggleReady() {
     responseActions[uuid] = processToggleReadyUpResponse;
 }
 
+function turnActivity(){
+    console.log("Toggling ready!");
+    var uuid = genUUID();
+    message =
+        {
+            "request":
+                {
+                    "action_name": "turn_action",
+                    "turn_action":
+                        {
+                            "location_id": locationsDisplayController.selectedLocation.location_id,
+                            "activity_name": activityDisplayController.selectedActivity
+                        },
+                    "auth_token": getAuthToken(),
+                    "message_id": uuid
+                }
+        }
+    socket.send(JSON.stringify(message));
+    responseActions[uuid] = processTurnActionResponse;
+}
+
 //***Utils***
 
 //Created uuid

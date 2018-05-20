@@ -1,6 +1,7 @@
 package com.toozo.asteriumwebserver.gamelogic;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
@@ -35,7 +36,7 @@ public class PlayerCharacter {
 	// ===== INNER CLASSES =====
 	public static class StatBlock {
 		// ===== FIELDS =====
-		Map<Stat, Integer> stats;
+		Map<Stat, Integer> stats = new HashMap<>();;
 		// ==================
 		
 		// ===== CONSTRUCTORS =====

@@ -90,6 +90,9 @@ public final class GameManager {
 	 * @return the {@link Game} associated with the {@link Player}'s auth token.
 	 */
 	public Game getGameForPlayer(final String authToken) {
+		for(Game g : playerMap.values()) {
+			System.out.println("!Game phase: " + g.getGameState().getGamePhase());
+		}
 		return playerMap.get(authToken);
 	}
 	

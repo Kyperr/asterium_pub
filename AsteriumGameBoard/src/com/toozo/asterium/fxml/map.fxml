@@ -10,7 +10,9 @@
 	xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="com.toozo.asterium.asteriumgameboard.MapController">
 	<center>
-		<ListView fx:id="locationListView"/>
 	</center>
+	<bottom>
+		<Button text="Ready" onAction="#handleReadyButtonAction" fx:id="readyButton" />
+	</bottom>
 
 </BorderPane>

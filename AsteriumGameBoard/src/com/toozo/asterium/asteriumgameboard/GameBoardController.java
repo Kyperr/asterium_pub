@@ -29,7 +29,7 @@ public class GameBoardController {
     public void setNode(Node node) {
     	nodeHolder.getChildren().setAll(node);
     }
-    
+   
     public void addNewNode(Node node) {
         nodeHolder.getChildren().add(node);
     }
@@ -38,6 +38,12 @@ public class GameBoardController {
     	if(nodeHolder.getChildren().contains(node)) {
     		nodeHolder.getChildren().remove(node);
     		nodeHolder.getChildren().add(0, node);
+    	}
+    }
+    
+    public void removehNode(Node node) {
+    	if(nodeHolder.getChildren().contains(node)) {
+    		nodeHolder.getChildren().remove(node);
     	}
     }
     
