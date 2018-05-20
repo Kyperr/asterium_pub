@@ -9,7 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import actiondata.SyncPlayerClientDataRequestData.PlayerCharacterData.Stats;
+import actiondata.SyncPlayerClientDataRequestData.PlayerCharacterData.StatsData;
 import message.Request;
 
 /**
@@ -22,13 +22,15 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 
 	private List<LocationData> locations;
 	private PlayerCharacterData character;
+	private List<InventoryData> inventory;
 	private String gamePhaseName;
 
 	public SyncPlayerClientDataRequestData(final List<LocationData> locations, final PlayerCharacterData character,
-			final String gamePhaseName) {
+			final String gamePhaseName, final List<InventoryData> inventory) {
 		super(ActionData.SYNC_PLAYER_CLIENT_DATA);
 		this.locations = locations;
 		this.character = character;
+		this.inventory = inventory;
 		this.gamePhaseName = gamePhaseName;
 	}
 
@@ -43,6 +45,11 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 
 		data.put(ActionData.LOCATIONS, array);
 		data.put(ActionData.CHARACTER, this.character.jsonify());
+		JSONArray inventoryArray = new JSONArray();
+		for (InventoryData item : this.inventory) {
+			data.put(ActionData.ITEM, item.jsonify());
+		}
+		data.put(ActionData.COMMUNAL_INVENTORY, inventoryArray);
 		data.put(ActionData.GAME_PHASE_NAME, this.gamePhaseName);
 		return data;
 	}
@@ -64,8 +71,8 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		Integer stamina = statsObj.getInt(ActionData.STAMINA);
 		Integer luck = statsObj.getInt(ActionData.LUCK);
 		Integer intuition = statsObj.getInt(ActionData.INTUITION);
-		Stats stats = new Stats(health, stamina, luck, intuition);
-		character = new PlayerCharacterData(characterName, stats);
+		StatsData stats = new StatsData(health, stamina, luck, intuition);
+		character = null;//new PlayerCharacterData(characterName, stats);
 
 		JSONArray locationsArray = jsonObj.getJSONArray(ActionData.LOCATIONS);
 		List<LocationData> locations = new ArrayList<LocationData>();
@@ -85,9 +92,20 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 			location = new LocationData(locationID, locationType, activities);
 			locations.add(location);
 		}
+		
+		JSONArray inventoryArray = jsonObj.getJSONArray(ActionData.COMMUNAL_INVENTORY);
+		List<InventoryData> inventory = new ArrayList<InventoryData>();
+		JSONObject itemObject;
+		InventoryData item;
+		for (int j = 0; j < inventoryArray.length(); j++) {
+			itemObject = inventoryArray.getJSONObject(j);
+			String name = itemObject.getString(ActionData.ITEM_NAME);
+			item = new InventoryData(name);
+			inventory.add(item);
+		}
 
 		String gamePhaseName = jsonObj.getString(ActionData.GAME_PHASE_NAME);
-		return new SyncPlayerClientDataRequestData(locations, character, gamePhaseName);
+		return new SyncPlayerClientDataRequestData(locations, character, gamePhaseName, inventory);
 	}
 
 	/**
@@ -131,36 +149,46 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 	public static class PlayerCharacterData {
 
 		private String name;
-		private Stats stats;
+		private StatsData stats;
+		private List<InventoryData> inventory;
+		private LoadoutData equipped;
 
-		public PlayerCharacterData(final String characterName, final Stats stats) {
+		public PlayerCharacterData(final String characterName, final StatsData stats, 
+								   final List<InventoryData> inventory, final LoadoutData equipped) {
 			this.name = characterName;
 			this.stats = stats;
+			this.inventory = inventory;
+			this.equipped = equipped;
 		}
 
 		public JSONObject jsonify() {
 			JSONObject data = new JSONObject();
 			data.put(ActionData.CHARACTER_NAME, this.name);
 			data.put(ActionData.STATS, this.stats.jsonify());
+			JSONArray inventoryArray = new JSONArray();
+			for (InventoryData item : this.inventory) {
+				data.put(ActionData.ITEM, item.jsonify());
+			}
+			data.put(ActionData.PERSONAL_INVENTORY, inventoryArray);
 
 			return data;
 		}
 
 		/**
-		 * {@link Stats} is an inner class of {@link PlayerCharacterData} used only for
+		 * {@link StatsData} is an inner class of {@link PlayerCharacterData} used only for
 		 * the purpose of updating a player client within a
 		 * {@link SyncPlayerClientDataRequestData}.
 		 * 
 		 * @author Studio Toozo
 		 */
-		public static class Stats {
+		public static class StatsData {
 
 			private Integer health;
 			private Integer stamina;
 			private Integer luck;
 			private Integer intuition;
 
-			public Stats(final Integer health, final Integer stamina, final Integer luck, final Integer intuition) {
+			public StatsData(final Integer health, final Integer stamina, final Integer luck, final Integer intuition) {
 				this.health = health;
 				this.stamina = stamina;
 				this.luck = luck;
@@ -176,6 +204,25 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 
 				return data;
 			}
+		}
+		
+		public static class LoadoutData {
+			
+		}
+	}
+
+	public static class InventoryData {
+		private String name;
+
+		public InventoryData(final String name) {
+			this.name = name;
+		}
+
+		public JSONObject jsonify() {
+			JSONObject data = new JSONObject();
+			data.put(ActionData.ITEM_NAME, this.name);
+
+			return data;
 		}
 	}
 }

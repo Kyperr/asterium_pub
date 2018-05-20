@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -21,7 +20,6 @@ import actiondata.ActionData;
 import actiondata.SyncGameBoardDataRequestData;
 import actiondata.SyncPlayerClientDataRequestData;
 import actiondata.SyncPlayerListRequestData;
-import actiondata.JoinAsPlayerRequestData.PlayerData;
 import message.Message;
 import message.Request;
 
@@ -411,7 +409,7 @@ public class GameState {
 
 	public SyncPlayerClientDataRequestData createSyncPlayerClientDataRequestData(Player player) {
 		System.err.println("Sending player client sync.");
-		List<SyncPlayerClientDataRequestData.LocationData> loc = new ArrayList<>();
+		List<SyncPlayerClientDataRequestData.LocationData> loc = new ArrayList<SyncPlayerClientDataRequestData.LocationData>();
 
 		for (String s : getMapLocations()) {
 			Location l = getAtMapLocation(s);
@@ -427,15 +425,21 @@ public class GameState {
 
 		PlayerCharacter pChar = getCharacter(auth);
 
-		SyncPlayerClientDataRequestData.PlayerCharacterData.Stats stat = new SyncPlayerClientDataRequestData.PlayerCharacterData.Stats(
+		SyncPlayerClientDataRequestData.PlayerCharacterData.StatsData stat = new SyncPlayerClientDataRequestData.PlayerCharacterData.StatsData(
 				pChar.getEffectiveStats().getStat(Stat.HEALTH), pChar.getEffectiveStats().getStat(Stat.STAMINA),
 				pChar.getEffectiveStats().getStat(Stat.LUCK), pChar.getEffectiveStats().getStat(Stat.INTUITION));
 
 		SyncPlayerClientDataRequestData.PlayerCharacterData dChar = new SyncPlayerClientDataRequestData.PlayerCharacterData(
 				pChar.getCharacterName(), stat);
+		
+		List<SyncPlayerClientDataRequestData.InventoryData> inventory = new ArrayList<SyncPlayerClientDataRequestData.InventoryData>();
+		for (AbstractItem item : getCommunalInventory()) {
+			SyncPlayerClientDataRequestData.InventoryData itemData = new SyncPlayerClientDataRequestData.InventoryData(item.getName());
+			inventory.add(itemData);
+		}
 
 		SyncPlayerClientDataRequestData data = new SyncPlayerClientDataRequestData(loc, dChar,
-				getGamePhase().toString());
+				getGamePhase().toString(), inventory);
 
 		return data;
 

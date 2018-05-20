@@ -55,12 +55,15 @@ public interface ActionData {
 	public static final String LOCATIONS = "locations";
 	public static final String MAP_LOCATION = "map_location";
 	public static final String COMMUNAL_INVENTORY = "communal_inventory";
+	public static final String PERSONAL_INVENTORY = "personal_inventory";
 	public static final String TYPE = "type";
 	public static final String ITEM = "item";
 	public static final String IS_COMMUNAL = "is_communal";
 	public static final String USER = "user";
 	public static final String TARGETS = "targets";
 	public static final String ITEM_ID = "item_id";
+	public static final String ITEM_NAME = "item_name";
+	public static final String ICON = "icon";
 	public static final String LOCATION_ID = "location_id";
 	public static final String LOCATION_TYPE = "location_type";
 	public static final String ROOM_ID = "room_id"; 
