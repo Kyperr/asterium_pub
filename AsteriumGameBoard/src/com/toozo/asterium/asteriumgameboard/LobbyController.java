@@ -29,14 +29,14 @@ public class LobbyController {
 	
 	@FXML
 	public void initialize() {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("com/toozo/asterium/fxml/playerlist.fxml"));
-//        try {
-//			playerList = loader.load();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		scrollPane.setContent(playerList);
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/toozo/asterium/fxml/playerlist.fxml"));
+        try {
+			playerList = loader.load();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		scrollPane.setContent(playerList);
 	}
 	
 	public void updateLobbyId() {

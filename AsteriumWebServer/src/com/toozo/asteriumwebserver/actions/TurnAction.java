@@ -3,6 +3,8 @@ package com.toozo.asteriumwebserver.actions;
 import java.io.IOException;
 import java.util.UUID;
 
+import javax.websocket.Session;
+
 import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 import com.toozo.asteriumwebserver.gamelogic.Game;
 import com.toozo.asteriumwebserver.gamelogic.GameManager;
@@ -56,12 +58,12 @@ public class TurnAction extends RequestAction {
 							try {
 								location.doActivity(activityName, game, character);
 							} catch (Exception e) {
-
+								e.printStackTrace();
 							}
 						}
 					};
 					game.addTurnAction(player, runnable);
-					SuccessResponseData data = new SuccessResponseData(ActionData.TURN);
+					SuccessResponseData data = new SuccessResponseData(ActionData.TURN_ACTION);
 					message = new Response(data, 0, this.getMessageID(), auth);
 				}
 			}
@@ -71,8 +73,10 @@ public class TurnAction extends RequestAction {
 		}
 		// Send the response back to the calling session.
 		try {
-			SessionManager.getInstance().getSession(getCallingAuthToken()).getBasicRemote()
-			.sendText(message.jsonify().toString());
+			Session session = SessionManager.getInstance().getSession(getCallingAuthToken());
+			synchronized (session) {
+				session.getBasicRemote().sendText(message.jsonify().toString());
+			}
 		} catch (IOException e) {
 			// Error cannot be sent, so display in console
 			e.printStackTrace();
@@ -89,7 +93,7 @@ public class TurnAction extends RequestAction {
 	public static TurnAction fromMessage(final Message message) {
 		TurnRequestData action = TurnRequestData.class.cast(message.getActionData());
 		return new TurnAction(message.getAuthToken(), message.getMessageID(), 
-							  action.getLocation().getLocationID(), 
+							  action.getLocationID(), 
 							  action.getActivityName());
 
 	}

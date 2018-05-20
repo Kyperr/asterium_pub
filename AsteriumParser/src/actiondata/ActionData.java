@@ -16,12 +16,12 @@ public interface ActionData {
 	public static final String TOGGLE_READY_UP = "toggle_ready_up";	
 	public static final String CREATE_GAME = "create_game";
 	public static final String ALLOCATE_STATS = "allocate_stats";
-	public static final String PLAYER_SYNC = "player_sync";
+	//public static final String PLAYER_SYNC = "player_sync";
 	public static final String SYNC_LOCATIONS = "sync_locations";
 	public static final String SYNC_GAME_BOARD_DATA = "sync_game_board_data";
 	public static final String SYNC_PLAYER_CLIENT_DATA = "sync_player_client_data";
-	public static final String TURN = "turn";
-	public static final String SYNC_PLAYER_LIST = "sync_player_list";
+	public static final String TURN_ACTION = "turn_action";
+	public static final String SyncPlayerList = "sync_player_list";
 	public static final String USE_ITEM = "use_item";
 	
 	//Query action constants
@@ -45,7 +45,7 @@ public interface ActionData {
 	public static final String INTUITION = "intuition";	
 	public static final String GAMEBOARD_DATA = "gameboard_data";
 	public static final String AUTH_TOKEN = "auth_token";
-	public static final String GAME_PHASE = "game_phase";
+	public static final String GAME_PHASE_NAME = "game_phase_name";
 	public static final String ACTIVITY = "activity";
 	public static final String ACTIVITIES = "activities";
 	public static final String ACTIVITY_NAME = "activity_name";
@@ -68,6 +68,7 @@ public interface ActionData {
 	public static final String MAX_VALUE = "max_value";
 	public static final String VICTORY_CONDITIONS = "victory_conditions";
 	public static final String PLAYER_READY_STATUS = "player_ready_status";
+	public static final String DISPLAY_STATS = "display_stats";
 	
 	/**
 	 * 

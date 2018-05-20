@@ -18,8 +18,12 @@ import actiondata.JoinAsPlayerRequestData;
 import actiondata.JoinAsPlayerResponseData;
 import actiondata.QueryIsInGameRequestData;
 import actiondata.QueryIsInGameResponseData;
+import actiondata.SyncGameBoardDataRequestData;
+import actiondata.SyncPlayerListRequestData;
 import actiondata.ToggleReadyUpRequestData;
 import actiondata.ToggleReadyUpResponseData;
+import actiondata.TurnRequestData;
+import actiondata.TurnResponseData;
 import message.Message;
 import message.Request;
 import message.Response;
@@ -50,6 +54,14 @@ public class Parser {
 
 		put(Arrays.asList(true, ActionData.TOGGLE_READY_UP), ToggleReadyUpRequestData::parseArgs);
 		put(Arrays.asList(false, ActionData.TOGGLE_READY_UP), ToggleReadyUpResponseData::parseArgs);
+		
+		put(Arrays.asList(true, ActionData.TURN_ACTION), TurnRequestData::parseArgs);
+		put(Arrays.asList(false, ActionData.TURN_ACTION), TurnResponseData::parseArgs);
+
+		put(Arrays.asList(true, ActionData.SYNC_GAME_BOARD_DATA), SyncGameBoardDataRequestData::parseArgs);
+		//put(Arrays.asList(false, ActionData.SYNC_GAME_BOARD_DATA), SyncGameBoardDataResponseData::parseArgs);
+		
+		put(Arrays.asList(true, ActionData.SyncPlayerList), SyncPlayerListRequestData::parseArgs);
 	}};
 
 	/**
@@ -93,8 +105,13 @@ public class Parser {
 			System.out.println(actionDataLookup.get(Arrays.asList(isRequest, actionName)));
 		}
 
+		try {
 		actionData = actionDataLookup.get(Arrays.asList(isRequest, actionName)).apply(jsonObj);
-
+		} catch(NullPointerException e) {
+			System.err.println("No value found found for: {" + isRequest + ", " + actionName + "}.\n"
+					+ "You probably forgot to map this actiondata.");
+			e.printStackTrace();
+		}
 		
 		Message message;
 		

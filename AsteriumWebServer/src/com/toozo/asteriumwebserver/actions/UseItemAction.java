@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.UUID;
 
+import javax.websocket.Session;
+
 import com.toozo.asteriumwebserver.gamelogic.Game;
 import com.toozo.asteriumwebserver.gamelogic.GameManager;
 import com.toozo.asteriumwebserver.gamelogic.GameState;
@@ -22,8 +24,9 @@ import message.Message;
 import message.Response;
 
 /**
- * A {@link RequestAction} from a {@link PlayerCharacter} 
- * which uses an {@link Item} from an {@link Inventory}. 
+ * A {@link RequestAction} from a {@link PlayerCharacter} which uses an
+ * {@link Item} from an {@link Inventory}.
+ * 
  * @author Studio Toozo
  */
 public class UseItemAction extends Action {
@@ -74,8 +77,10 @@ public class UseItemAction extends Action {
 		}
 		// Send the response back to the calling session.
 		try {
-			SessionManager.getInstance().getSession(getCallingAuthToken()).getBasicRemote()
-					.sendText(message.jsonify().toString());
+			Session session = SessionManager.getInstance().getSession(getCallingAuthToken());
+			synchronized (session) {
+				session.getBasicRemote().sendText(message.jsonify().toString());
+			}
 		} catch (IOException e) {
 			// Error cannot be sent, so display in console
 			e.printStackTrace();
@@ -91,8 +96,8 @@ public class UseItemAction extends Action {
 	 */
 	public static UseItemAction fromMessage(final Message message) {
 		UseItemRequestData data = UseItemRequestData.class.cast(message.getActionData());
-		return new UseItemAction(message.getAuthToken(), message.getMessageID(), data.getUser(),
-				data.getTargets(), data.getItem(), data.getIsCommunal());
+		return new UseItemAction(message.getAuthToken(), message.getMessageID(), data.getUser(), data.getTargets(),
+				data.getItem(), data.getIsCommunal());
 
 	}
 

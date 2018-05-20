@@ -1,0 +1,27 @@
+package com.toozo.asteriumwebserver.gamelogic.items.location;
+
+import java.util.Collection;
+
+import com.toozo.asteriumwebserver.gamelogic.GameState;
+import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
+import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
+
+public class AbstractLocationItem extends AbstractItem {
+
+	@Override
+	public void use(GameState state, PlayerCharacter user, 
+					Collection<PlayerCharacter> targets,
+					boolean fromCommunalInventory) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void applyEffect(GameState state, 
+							PlayerCharacter user, 
+							Collection<PlayerCharacter> targets) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

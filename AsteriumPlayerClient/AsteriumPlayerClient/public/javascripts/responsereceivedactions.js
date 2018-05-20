@@ -2,16 +2,13 @@
 var responseActions = {};
 
 function processQueryIsInGameResponse(response) {
-    var isInGame = response.query_is_in_game.is_in_game;
-    if (isInGame) {
-        document.getElementById("centralDiv").innerHTML = "<p>You are currently in a game!";
-        if(gameIsStarted){
-
+    if (gamePhase == "PLAYERS_JOINING") {
+        var isInGame = response.query_is_in_game.is_in_game;
+        if (isInGame) {
+            waitingForPlayersDisplayController.display();
         } else {
-            displayWaitingForPlayers(document.getElementById("centralDiv"));
+            joinAsLobbyDisplayController.display();
         }
-    } else {
-        addJoinLobby(document.getElementById("centralDiv"));
     }
 };
 
@@ -25,12 +22,24 @@ function processJoinAsPlayerResponse(response) {
     }
 }
 
-function processToggleReadyUpResponse(response){
+function processToggleReadyUpResponse(response) {
     if (response.error_code == 0) {
         playerIsReady = response.toggle_ready_up.player_is_ready;
-        displayWaitingForPlayers(document.getElementById("centralDiv"));
+
+        if (playerIsReady) {
+            waitingForPlayersDisplayController.btn.innerHTML = 'UNREADY';
+        } else {
+            waitingForPlayersDisplayController.btn.innerHTML = 'READY';
+        }
     } else {
         console.log("Failed to toggle ready up status, error_code: " + response.error_code);
     }
 }
 
+function processTurnActionResponse(response){
+    if (response.error_code == 0) {
+        afterTurnWaitingDisplayController.display();
+    } else {
+        console.log("Failed to do turn, error_code: " + response.error_code);
+    }
+}

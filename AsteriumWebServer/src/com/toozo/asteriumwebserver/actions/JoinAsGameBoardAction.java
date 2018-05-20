@@ -3,6 +3,8 @@ package com.toozo.asteriumwebserver.actions;
 import java.io.IOException;
 import java.util.UUID;
 
+import javax.websocket.Session;
+
 import com.toozo.asteriumwebserver.gamelogic.Game;
 import com.toozo.asteriumwebserver.gamelogic.GameBoard;
 import com.toozo.asteriumwebserver.gamelogic.GameManager;
@@ -69,8 +71,10 @@ public class JoinAsGameBoardAction extends RequestAction {
 
 		// Send the response back to the calling session.
 		try {
-			SessionManager.getInstance().getSession(getCallingAuthToken()).getBasicRemote()
-			.sendText(message.jsonify().toString());
+			Session session = SessionManager.getInstance().getSession(getCallingAuthToken());
+			synchronized (session) {
+				session.getBasicRemote().sendText(message.jsonify().toString());
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

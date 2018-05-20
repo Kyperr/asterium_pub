@@ -44,6 +44,7 @@ public abstract class Action implements Runnable {
 	public static final String ALLOCATE_STATS = "allocate_stats";
 	public static final String TURN = "turn";
 	public static final String SYNC_LOCATIONS = "sync_locations";
+	public static final String SYNC_PLAYER_LIST = "sync_player_list";
 	public static final String USE_ITEM = "use_item";
 
 	public static final boolean VERBOSE = true;
@@ -102,12 +103,6 @@ public abstract class Action implements Runnable {
 	public static Action getActionFor(final Message message) {
 		ActionData actionData = message.getActionData();
 		try {
-			if (VERBOSE) {
-				System.out.println("class: " + actionData.getClass());
-				for (Class<? extends ActionData> c : ACTION_LOOKUP.keySet()) {
-					System.out.println("class2: " + c.getName());
-				}
-			}
 
 			// Look up the function that corresponds to actionData's class and call it.
 			return ACTION_LOOKUP.get(actionData.getClass()).apply(message);

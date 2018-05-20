@@ -61,7 +61,7 @@ public abstract class AbstractEquipmentItem extends AbstractItem {
 	}
 	
 	/**
-	 * @see com.toozo.asteriumwebserver.gamelogic.items.equipment.Equipment#equip(AbstractEquipmentItem)
+	 * @see com.toozo.asteriumwebserver.gamelogic.items.equipment.Loadout#equip(AbstractEquipmentItem)
 	 * 
 	 * @param equipper The {@link PlayerCharacter} equipping this item.
 	 */
@@ -84,7 +84,7 @@ public abstract class AbstractEquipmentItem extends AbstractItem {
 		
 		if (equipper != null) {
 			Inventory equipperInventory = equipper.getInventory();
-			Equipment equipperEquipment = equipper.getEquipment();
+			Loadout equipperEquipment = equipper.getEquipment();
 			
 			// If item is in slot and inventory has room, 
 			// move it to inventory and return whether it worked.
