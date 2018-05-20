@@ -39,27 +39,24 @@ public class AsteriumGameBoard extends Application {
 	public void start(Stage stage) throws Exception {
 
 		NodeNavigator navigator = new NodeNavigator();
-		
-		stage.setTitle(GAME_BOARD_TITLE);
-		stage.setScene(
-	            createScene(
-	                navigator.display(Display.MENU);
-	            )
-	        );
 
-	        stage.show();
+		stage.setTitle(GAME_BOARD_TITLE);
+		stage.setScene(createScene(navigator.getMainController()));
+		stage.show();
+		navigator.display(Display.MENU);
 	}
 
 	private Pane loadMainPane() throws IOException {
 		FXMLLoader loader = new FXMLLoader();
 
-		//Pane mainPane = (Pane) loader.load(ClassLoader.class.getResourceAsStream(NodeNavigator.Display.MAIN.getLocation()));
+		// Pane mainPane = (Pane)
+		// loader.load(ClassLoader.class.getResourceAsStream(NodeNavigator.Display.MAIN.getLocation()));
 
 		GameBoardController mainController = loader.getController();
 
 		NodeNavigator navigator = new NodeNavigator();
 		navigator.setChildControllers();
-		
+
 		navigator.setMainController(mainController);
 		navigator.display(Display.MENU);
 
@@ -69,7 +66,8 @@ public class AsteriumGameBoard extends Application {
 	/**
 	 * Creates the main application scene.
 	 *
-	 * @param mainPane the main application layout.
+	 * @param mainPane
+	 *            the main application layout.
 	 *
 	 * @return the created scene.
 	 */
@@ -78,7 +76,7 @@ public class AsteriumGameBoard extends Application {
 
 		return scene;
 	}
-	
+
 	/**
 	 * Creates a game.
 	 * 

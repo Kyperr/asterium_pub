@@ -8,6 +8,7 @@ import com.toozo.asterium.asteriumgameboard.GameBoardController;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.layout.Pane;
 
 /**
  * Utility class for controlling navigation between Nodes.
@@ -17,8 +18,9 @@ import javafx.scene.Node;
  */
 public class NodeNavigator {
 
+	private static String MAIN = "/com/toozo/asterium/fxml/gameboard.fxml";
+	
 	public enum Display {
-		MAIN("/com/toozo/asterium/fxml/gameboard.fxml"), 
 		LOBBY("/com/toozo/asterium/fxml/lobby.fxml"), 
 		MAP("/com/toozo/asterium/fxml/map.fxml"), 
 		MENU("/com/toozo/asterium/fxml/menu.fxml"), 
@@ -36,15 +38,26 @@ public class NodeNavigator {
 		}
 
 	}
-	
-	public NodeNavigator() {
-		setChildControllers();
-	}
-
 
 	private Map<Display, Node> layoutMap = new HashMap<>();
 
 	private Map<Display, FXMLLoader> loaderMap = new HashMap<>();
+	
+	private GameBoardController mainController;
+	
+	public NodeNavigator() {
+		setChildControllers();
+
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			this.mainController = loader.load(ClassLoader.class.getResourceAsStream(MAIN));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
 
 
 	private void setChildControllers() {
@@ -79,6 +92,11 @@ public class NodeNavigator {
 	
 	public Node getLayout(Display view) {
 		return layoutMap.get(view);
+	}
+
+
+	public GameBoardController getMainController() {
+		return this.mainController;
 	}
 
 //	public static void loadLobby() {

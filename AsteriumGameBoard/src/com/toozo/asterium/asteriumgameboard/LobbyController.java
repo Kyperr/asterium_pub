@@ -2,6 +2,8 @@ package com.toozo.asterium.asteriumgameboard;
 
 import java.io.IOException;
 
+import javax.resource.spi.IllegalStateException;
+
 import com.toozo.asterium.util.GameResources;
 import com.toozo.asterium.util.NodeNavigator;
 
@@ -17,7 +19,7 @@ import javafx.scene.layout.Pane;
  * @author Jenna
  *
  */
-public class LobbyController {
+public class LobbyController extends AbstractAsteriumController{
 	
 	private Pane playerList;
 	
@@ -40,7 +42,12 @@ public class LobbyController {
 	}
 	
 	public void updateLobbyId() {
-		label.setText(GameResources.getLobbyId());
+		try {
+			label.setText(getGameResources().getLobbyId());
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void updatePlayerViews() {
