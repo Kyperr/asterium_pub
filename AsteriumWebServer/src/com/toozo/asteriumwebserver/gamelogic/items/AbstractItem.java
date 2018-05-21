@@ -88,7 +88,7 @@ public abstract class AbstractItem {
 	 * Use this item.
 	 * 
 	 * Should be implemented by specific item class (e.g. Medkit) 
-	 * to apply the effect of that particular item.
+	 * to perform whatever should happen when this item is used.
 	 * 
 	 * @param state The state of the game which may be changed by this item's effect.
 	 * @param user The {@link PlayerCharacter} which is using this item.

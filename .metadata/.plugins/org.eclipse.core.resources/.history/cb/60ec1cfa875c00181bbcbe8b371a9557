@@ -1,0 +1,12 @@
+package com.toozo.asteriumwebserver.gamelogic;
+
+public enum Stat {
+	HEALTH (true),
+	STAMINA (false),
+	LUCK (false),
+	INTUITION (false);
+	
+	private Stat(boolean isVariable) {
+		
+	}
+}

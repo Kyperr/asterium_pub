@@ -1,0 +1,20 @@
+package com.toozo.asteriumwebserver.gamelogic.items.location;
+
+import java.util.Collection;
+
+import com.toozo.asteriumwebserver.gamelogic.GameState;
+import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
+
+public class Book extends AbstractLocationItem {
+
+	public Book(String name) {
+		super(name);
+	}
+
+	@Override
+	public void applyEffect(GameState state, PlayerCharacter user, Collection<PlayerCharacter> targets) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
