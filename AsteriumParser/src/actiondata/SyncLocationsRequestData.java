@@ -37,7 +37,7 @@ public class SyncLocationsRequestData extends AbstractRequestActionData {
 	}
 
 	public static SyncLocationsRequestData parseArgs(final JSONObject jsonObj) throws JSONException {
-		List<LocationData> locations = new ArrayList<LocationData>();;
+		List<LocationData> locations = new ArrayList<LocationData>();
 		JSONArray locationsArray = jsonObj.getJSONArray(ActionData.LOCATIONS);
 		for (int i = 0; i < locationsArray.length(); i++) {
 			JSONObject locationObject = locationsArray.getJSONObject(i);
