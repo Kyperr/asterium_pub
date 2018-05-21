@@ -16,7 +16,6 @@ import javax.websocket.Session;
 import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.EquipmentSlot;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.Loadout;
-import com.toozo.asteriumwebserver.gamelogic.items.location.RescueBeacon;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
 import actiondata.ActionData;
@@ -380,7 +379,6 @@ public class GameState {
 	public void addPlayerCharacter(final String playerAuthToken, final PlayerCharacter pc) {
 		this.authCharacterMap.put(playerAuthToken, pc);
 		this.nameCharacterMap.put(pc.getCharacterName(), pc);
-		pc.getInventory().add(new RescueBeacon());
 		syncGameBoardsPlayerList();
 	}
 	

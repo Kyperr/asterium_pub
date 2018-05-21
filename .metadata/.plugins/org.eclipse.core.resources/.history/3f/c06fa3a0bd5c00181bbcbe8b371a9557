@@ -16,7 +16,6 @@ import javax.websocket.Session;
 import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.EquipmentSlot;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.Loadout;
-import com.toozo.asteriumwebserver.gamelogic.items.location.RescueBeacon;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
 import actiondata.ActionData;
@@ -96,9 +95,13 @@ public class GameState {
 	private GamePhase gamePhase;
 	private int food;
 	private int fuel;
+<<<<<<< HEAD
 	private Map<String, PlayerCharacter> authCharacterMap;
 	private Map<String, PlayerCharacter> nameCharacterMap;
+=======
 	private static int day;
+	private Map<String, PlayerCharacter> playerCharacterMap;
+>>>>>>> 2e650d8fbb2062deca7408ff5f95a9143fd26317
 	private Collection<VictoryCondition> victoryConditions;
 	private Inventory communalInventory;
 	// ===========================
@@ -236,9 +239,13 @@ public class GameState {
 		this.gamePhase = GamePhase.PLAYERS_JOINING;
 		this.food = STARTING_FOOD_PER_PLAYER * this.game.getPlayers().size();
 		this.fuel = STARTING_FUEL;
+<<<<<<< HEAD
 		this.authCharacterMap = new ConcurrentHashMap<String, PlayerCharacter>();
 		this.nameCharacterMap = new ConcurrentHashMap<String, PlayerCharacter>();
+=======
 		GameState.day = STARTING_DAY;
+		this.playerCharacterMap = new ConcurrentHashMap<String, PlayerCharacter>();
+>>>>>>> 2e650d8fbb2062deca7408ff5f95a9143fd26317
 		this.victoryConditions = new ArrayList<VictoryCondition>();
 		this.communalInventory = new Inventory();
 	}
@@ -380,7 +387,6 @@ public class GameState {
 	public void addPlayerCharacter(final String playerAuthToken, final PlayerCharacter pc) {
 		this.authCharacterMap.put(playerAuthToken, pc);
 		this.nameCharacterMap.put(pc.getCharacterName(), pc);
-		pc.getInventory().add(new RescueBeacon());
 		syncGameBoardsPlayerList();
 	}
 	
