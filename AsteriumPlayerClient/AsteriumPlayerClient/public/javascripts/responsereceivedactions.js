@@ -7,7 +7,7 @@ function processQueryIsInGameResponse(response) {
         if (isInGame) {
             waitingForPlayersDisplayController.display();
         } else {
-            joinAsLobbyDisplayController.display();
+            joinLobbyDisplayController.display();
         }
     }
 };

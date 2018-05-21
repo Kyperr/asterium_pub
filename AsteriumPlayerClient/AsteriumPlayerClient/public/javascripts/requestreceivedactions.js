@@ -4,9 +4,15 @@ var requestActions = {};
 function syncPlayerClientData(request) {
 
     locations = [];
+
     request.sync_player_client_data.locations.forEach(location => {
         locations[location.location_id] = location;
     });
+
+    communalInventory = request.communal_inventory;
+
+    personalInventory = request.character.personal_inventory;
+
     var newPhase = request.sync_player_client_data.game_phase_name;
 
     if (gamePhase != newPhase) {
@@ -14,8 +20,6 @@ function syncPlayerClientData(request) {
         console.log("Should be going to new phase now. Went from " + gamePhase + " to " + newPhase);
         phaseChangeStartingActions[newPhase]();
     }
-
-
 }
 
 requestActions["sync_player_client_data"] = syncPlayerClientData;
