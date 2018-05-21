@@ -11,6 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import actiondata.SyncPlayerClientDataRequestData.LocationData.LocationType;
 import actiondata.SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData;
 import actiondata.SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType;
 import actiondata.SyncPlayerClientDataRequestData.PlayerCharacterData.StatsData;
@@ -24,14 +25,21 @@ import message.Request;
  */
 public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 
+	private int food;
+	private int fuel;
+	private int day;
 	private List<LocationData> locations;
 	private PlayerCharacterData character;
 	private List<InventoryData> inventory;
 	private String gamePhaseName;
 
-	public SyncPlayerClientDataRequestData(final List<LocationData> locations, final PlayerCharacterData character,
-			final String gamePhaseName, final List<InventoryData> inventory) {
+	public SyncPlayerClientDataRequestData(final int food, final int fuel, final int day,
+			final List<LocationData> locations, final PlayerCharacterData character, final String gamePhaseName,
+			final List<InventoryData> inventory) {
 		super(ActionData.SYNC_PLAYER_CLIENT_DATA);
+		this.food = food;
+		this.fuel = fuel;
+		this.day = day;
 		this.locations = locations;
 		this.character = character;
 		this.inventory = inventory;
@@ -47,6 +55,9 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 			array.put(datum.jsonify());
 		}
 
+		data.put(ActionData.FOOD, this.food);
+		data.put(ActionData.FUEL, this.fuel);
+		data.put(ActionData.DAY, this.day);
 		data.put(ActionData.LOCATIONS, array);
 		data.put(ActionData.CHARACTER, this.character.jsonify());
 		JSONArray inventoryArray = new JSONArray();
@@ -67,6 +78,10 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 	 * @throws JSONException
 	 */
 	public static SyncPlayerClientDataRequestData parseArgs(final JSONObject jsonObj) throws JSONException {
+		int food = jsonObj.getInt(ActionData.FOOD);
+		int fuel = jsonObj.getInt(ActionData.FUEL);
+		int day = jsonObj.getInt(ActionData.DAY);
+		
 		// build character
 		PlayerCharacterData character;
 		JSONObject characterObj = jsonObj.getJSONObject(ActionData.CHARACTER);
@@ -100,12 +115,12 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		for (int i = 0; i < loadoutArray.length(); i++) {
 			JSONObject jo = loadoutArray.getJSONObject(i);
 			EquipmentType type = EquipmentType.valueOf(jo.getString(ActionData.SLOT));
-			equipmentObject = jo.getJSONObject(ActionData.EQUIPMENT);			
+			equipmentObject = jo.getJSONObject(ActionData.EQUIPMENT);
 			equipment = InventoryData.parseArgs(equipmentObject);
 			equipments.put(type, equipment);
 		}
 		loadout = new LoadoutData(equipments);
-		
+
 		boolean turnTaken = characterObj.getBoolean(ActionData.TURN_TAKEN);
 
 		character = new PlayerCharacterData(characterName, stats, personalInv, loadout, turnTaken);
@@ -113,21 +128,20 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		// build locations
 		JSONArray locationsArray = jsonObj.getJSONArray(ActionData.LOCATIONS);
 		List<LocationData> locations = new ArrayList<LocationData>();
-		JSONObject locationObject;
-		LocationData location;
 		for (int i = 0; i < locationsArray.length(); i++) {
-			locationObject = locationsArray.getJSONObject(i);
+			JSONObject locationObject = locationsArray.getJSONObject(i);
 			String locationID = locationObject.getString(ActionData.LOCATION_ID);
-			String locationType = locationObject.getString(ActionData.LOCATION_TYPE);
+			String name = locationObject.getString(ActionData.LOCATION_NAME);
+			LocationType type;
+			JSONObject typeObject = locationObject.getJSONObject(ActionData.LOCATION_TYPE);
+			type = LocationType.valueOf(typeObject.getString(ActionData.LOCATION_TYPE));
 			Set<String> activities = new HashSet<String>();
 			JSONArray activitiesArray = locationObject.getJSONArray(ActionData.ACTIVITIES);
 			for (int j = 0; j < activitiesArray.length(); j++) {
-				String activity = String.class.cast(activitiesArray.getJSONObject(j));
-				activities.add(activity);
+				activities.add(activitiesArray.getString(j));
 			}
 
-			location = new LocationData(locationID, locationType, activities);
-			locations.add(location);
+			locations.add(new LocationData(locationID, name, type, activities));
 		}
 
 		// build communal inventory
@@ -142,7 +156,7 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		}
 
 		String gamePhaseName = jsonObj.getString(ActionData.GAME_PHASE_NAME);
-		return new SyncPlayerClientDataRequestData(locations, character, gamePhaseName, inventory);
+		return new SyncPlayerClientDataRequestData(food, fuel, day, locations, character, gamePhaseName, inventory);
 	}
 
 	/**
@@ -155,16 +169,37 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 	public static class LocationData {
 
 		private String locationID;
+		private final String name;
+		private final LocationType type;
 		private Set<String> activities;
 
-		public LocationData(final String locationID, final String locationType, final Set<String> activities) {
+		public enum LocationType {
+			CONTROL_ROOM("control_room"), MED_BAY("med_bay");
+
+			private final String jsonVersion;
+
+			LocationType(String jsonVersion) {
+				this.jsonVersion = jsonVersion;
+			}
+
+			public String getJSONVersion() {
+				return this.jsonVersion;
+			}
+		}
+
+		public LocationData(final String locationID, final String name, final LocationType type,
+				final Set<String> activities) {
 			this.locationID = locationID;
+			this.name = name;
+			this.type = type;
 			this.activities = activities;
 		}
 
 		public JSONObject jsonify() {
 			JSONObject data = new JSONObject();
 			data.put(ActionData.LOCATION_ID, this.locationID);
+			data.put(ActionData.LOCATION_NAME, this.name);
+			data.put(ActionData.LOCATION_TYPE, this.type.getJSONVersion());
 			JSONArray array = new JSONArray();
 
 			for (String s : this.activities) {

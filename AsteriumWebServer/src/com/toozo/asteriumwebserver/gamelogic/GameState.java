@@ -34,6 +34,7 @@ public class GameState {
 	// ===== CONSTANTS & ENUMS =====
 	public static final int STARTING_FOOD_PER_PLAYER = 5;
 	public static final int STARTING_FUEL = 100;
+	public static final int STARTING_DAY = 0;
 
 	public enum GamePhase {
 
@@ -49,9 +50,7 @@ public class GameState {
 
 		}),
 
-		END_SUMMARY(game -> {
-
-		}),
+		END_SUMMARY(GameState::initiateEndSummaryPhase),
 
 		START_SUMMARY(game -> {
 
@@ -96,6 +95,7 @@ public class GameState {
 	private GamePhase gamePhase;
 	private int food;
 	private int fuel;
+	private static int day;
 	private Map<String, PlayerCharacter> playerCharacterMap;
 	private Collection<VictoryCondition> victoryConditions;
 	private Inventory communalInventory;
@@ -128,6 +128,7 @@ public class GameState {
 	}
 
 	private static final void initiatePlayerTurnPhase(GameState state) {
+		setDay(getDay() + 1);
 		state.syncPlayerClients();
 		syncGameBoards(state);
 
@@ -145,27 +146,45 @@ public class GameState {
 		state.syncPlayerClients();
 		syncGameBoards(state);
 
-		state.setGamePhase(GamePhase.PLAYER_TURNS);
+		if (state.getCompleteVictoryConditions().size() >= 1) {
+			state.setGamePhase(GamePhase.END_SUMMARY);
+		} else {
+			state.setGamePhase(GamePhase.PLAYER_TURNS);
 
-		// Should run everyone's actions here.
+			// Should run everyone's actions here.
 
-		state.game.resetTurnActionMap();
-
+			state.game.resetTurnActionMap();
+		}
 		state.gamePhase.executePhase(state);
+	}
+
+	private static final void initiateEndSummaryPhase(GameState state) {
+		// TODO Notify game board the game is over and clients that the game is over and
+		// if they won or lost. Wrap up.
+		state.syncPlayerClients();
+		syncGameBoards(state);
 	}
 
 	private static final void syncGameBoards(GameState state) {
 		int food = state.getFood();
 		int fuel = state.getFuel();
+		int day = GameState.getDay();
 
 		// Construct collection of LocationData
-		Collection<SyncGameBoardDataRequestData.LocationData> locationDatas = new ArrayList<SyncGameBoardDataRequestData.LocationData>();
-		SyncGameBoardDataRequestData.LocationData location;
-		for (String mapLocation : state.getMapLocations()) {
-			location = new SyncGameBoardDataRequestData.LocationData(mapLocation,
-					state.getAtMapLocation(mapLocation).getType().toString());
-			locationDatas.add(location);
+		List<SyncGameBoardDataRequestData.LocationData> loc = new ArrayList<SyncGameBoardDataRequestData.LocationData>();
+
+		for (String s : state.getMapLocations()) {
+			Location l = state.getAtMapLocation(s);
+			// if(l.distance <= player.stamina)//pseudocode
+			SyncGameBoardDataRequestData.LocationData.LocationType type = SyncGameBoardDataRequestData.LocationData.LocationType
+					.valueOf(l.getType().getJSONVersion());
+
+			SyncGameBoardDataRequestData.LocationData locData = new SyncGameBoardDataRequestData.LocationData(s,
+					l.getName(), type, l.getActivityNames());
+
+			loc.add(locData);
 		}
+		
 
 		// Construct collection of PlayerData
 		Collection<SyncGameBoardDataRequestData.PlayerCharacterData> playerDatas = new ArrayList<SyncGameBoardDataRequestData.PlayerCharacterData>();
@@ -193,7 +212,7 @@ public class GameState {
 			itemDatas.add(itemData);
 		}
 
-		ActionData syncGBRequestData = new SyncGameBoardDataRequestData(food, fuel, locationDatas, playerDatas,
+		ActionData syncGBRequestData = new SyncGameBoardDataRequestData(food, fuel, day, loc, playerDatas,
 				victoryDatas, itemDatas);
 
 		// Send sync to all GameBoards
@@ -216,6 +235,7 @@ public class GameState {
 		this.gamePhase = GamePhase.PLAYERS_JOINING;
 		this.food = STARTING_FOOD_PER_PLAYER * this.game.getPlayers().size();
 		this.fuel = STARTING_FUEL;
+		GameState.day = STARTING_DAY;
 		this.playerCharacterMap = new ConcurrentHashMap<String, PlayerCharacter>();
 		this.victoryConditions = new ArrayList<VictoryCondition>();
 		this.communalInventory = new Inventory();
@@ -235,6 +255,13 @@ public class GameState {
 	 */
 	public int getFuel() {
 		return this.fuel;
+	}
+
+	/**
+	 * @return the current day
+	 */
+	public static int getDay() {
+		return GameState.day;
 	}
 
 	public PlayerCharacter getCharacter(final String auth) {
@@ -331,6 +358,16 @@ public class GameState {
 	public void setFuel(final int newFuel) {
 		this.fuel = newFuel;
 	}
+
+	/**
+	 * Update the day
+	 * 
+	 * @param newDay
+	 *            The new day
+	 */
+	public static void setDay(final int newDay) {
+		GameState.day = newDay;
+	}
 	// ===================
 
 	// ===== OTHER INSTANCE METHODS =====
@@ -426,9 +463,11 @@ public class GameState {
 		for (String s : getMapLocations()) {
 			Location l = getAtMapLocation(s);
 			// if(l.distance <= player.stamina)//pseudocode
+			SyncPlayerClientDataRequestData.LocationData.LocationType type = SyncPlayerClientDataRequestData.LocationData.LocationType
+					.valueOf(l.getType().getJSONVersion());
 
 			SyncPlayerClientDataRequestData.LocationData locData = new SyncPlayerClientDataRequestData.LocationData(s,
-					l.getType().getJSONVersion(), l.getActivityNames());
+					l.getName(), type, l.getActivityNames());
 
 			loc.add(locData);
 		}
@@ -452,13 +491,10 @@ public class GameState {
 		Loadout load = pChar.getEquipment();
 		for (EquipmentSlot slot : EquipmentSlot.values()) {
 			if (load.slotFull(slot)) {
-				
 				SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType type = SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType
 						.valueOf(slot.toString());
-				
 				SyncPlayerClientDataRequestData.InventoryData item = new SyncPlayerClientDataRequestData.InventoryData(
 						load.itemIn(slot).getName());
-				
 				equipment.put(type, item);
 			}
 		}
@@ -476,7 +512,7 @@ public class GameState {
 			inventory.add(itemData);
 		}
 
-		SyncPlayerClientDataRequestData data = new SyncPlayerClientDataRequestData(loc, dChar,
+		SyncPlayerClientDataRequestData data = new SyncPlayerClientDataRequestData(getFood(), getFuel(), getDay(), loc, dChar,
 				getGamePhase().toString(), inventory);
 
 		return data;

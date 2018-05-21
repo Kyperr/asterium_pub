@@ -33,6 +33,7 @@ public interface ActionData {
 	public static final String COLOR = "color";
 	public static final String FOOD = "food";
 	public static final String FUEL = "fuel";
+	public static final String DAY = "day";
 	public static final String LOBBY_ID = "lobby_id";
 	public static final String PLAYER_LIST = "player_list";
 	public static final String PLAYER_DATA = "player_data";

@@ -57,3 +57,4 @@ pom.xml.tag
 */pom.properties
 *pom.properties
 *META-INF*
+*/META-INF/*

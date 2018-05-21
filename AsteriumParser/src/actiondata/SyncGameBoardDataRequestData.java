@@ -3,11 +3,15 @@ package actiondata;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import actiondata.SyncGameBoardDataRequestData.LocationData.LocationType;
 import message.Request;
 
 /**
@@ -20,8 +24,9 @@ import message.Request;
  *
  */
 public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
-	private Integer food;
-	private Integer fuel;
+	private int food;
+	private int fuel;
+	private int day;
 	private Collection<SyncGameBoardDataRequestData.LocationData> locations;
 	private Collection<SyncGameBoardDataRequestData.PlayerCharacterData> players;
 	private Collection<SyncGameBoardDataRequestData.VictoryData> victoryConditions;
@@ -36,11 +41,11 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 	 * @param players The players to display.
 	 * @param victoryConditions The victory conditions.
 	 */
-	public SyncGameBoardDataRequestData(Integer food, Integer fuel,
-								   Collection<SyncGameBoardDataRequestData.LocationData> locations, 
-								   Collection<SyncGameBoardDataRequestData.PlayerCharacterData> players,
-								   Collection<SyncGameBoardDataRequestData.VictoryData> victoryConditions,
-								   Collection<SyncGameBoardDataRequestData.ItemData> communalInventory) {
+	public SyncGameBoardDataRequestData(final Integer food, final Integer fuel, final Integer day, 
+			final Collection<SyncGameBoardDataRequestData.LocationData> locations, 
+			final Collection<SyncGameBoardDataRequestData.PlayerCharacterData> players,
+			final Collection<SyncGameBoardDataRequestData.VictoryData> victoryConditions,
+			final Collection<SyncGameBoardDataRequestData.ItemData> communalInventory) {
 		super(ActionData.SYNC_GAME_BOARD_DATA);
 		this.food = food;
 		this.fuel = fuel;
@@ -101,17 +106,26 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 		// Parse resources
 		Integer food = jsonObj.getInt(ActionData.FOOD);
 		Integer fuel = jsonObj.getInt(ActionData.FUEL);
+		Integer day = jsonObj.getInt(ActionData.DAY);
 		
 		// Parse array of locations
-		JSONArray locationArray = jsonObj.getJSONArray(ActionData.LOCATIONS);
-		Collection<SyncGameBoardDataRequestData.LocationData> locations = new ArrayList<SyncGameBoardDataRequestData.LocationData>();
-		JSONObject locationObject;
-		SyncGameBoardDataRequestData.LocationData location;
-		for (int i = 0; i < locationArray.length(); i++) {
-			locationObject = locationArray.getJSONObject(i);
-			location = new SyncGameBoardDataRequestData.LocationData(locationObject.getString(ActionData.MAP_LOCATION), 
-																locationObject.getString(ActionData.TYPE));
-			locations.add(location);
+		
+		JSONArray locationsArray = jsonObj.getJSONArray(ActionData.LOCATIONS);
+		List<LocationData> locations = new ArrayList<LocationData>();
+		for (int i = 0; i < locationsArray.length(); i++) {
+			JSONObject locationObject = locationsArray.getJSONObject(i);
+			String mapLocation = locationObject.getString(ActionData.MAP_LOCATION);
+			String name = locationObject.getString(ActionData.LOCATION_NAME);
+			LocationType type;
+			JSONObject typeObject = locationObject.getJSONObject(ActionData.LOCATION_TYPE);
+			type = LocationType.valueOf(typeObject.getString(ActionData.LOCATION_TYPE));
+			Set<String> activities = new HashSet<String>();
+			JSONArray activitiesArray  = locationObject.getJSONArray(ActionData.ACTIVITIES);
+			for (int j = 0; j < activitiesArray.length(); j++) {
+				activities.add(activitiesArray.getString(j));	
+			}
+			
+			locations.add(new LocationData(mapLocation, name, type, activities));
 		}
 		
 		// Parse array of players
@@ -152,7 +166,7 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 		}
 		
 		// Construct and return
-		return new SyncGameBoardDataRequestData(food, fuel, locations, players, victories, communalInventory);
+		return new SyncGameBoardDataRequestData(food, fuel, day, locations, players, victories, communalInventory);
 	}
 	
 	public Integer getFood() {
@@ -169,6 +183,14 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 	
 	public void setFuel(Integer fuel) {
 		this.fuel = fuel;
+	}
+	
+	public Integer getDay() {
+		return day;
+	}
+	
+	public void setSay(Integer day) {
+		this.day = day;
 	}
 	
 	public Collection<SyncGameBoardDataRequestData.ItemData> getCommunalInventory() {
@@ -263,44 +285,50 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 	 * {@link LocationData} is the representation of a location
 	 * for the purposes of displaying the board.
 	 * 
-	 * @author Greg Schmitt
+	 * @author Studio Toozo
 	 *
 	 */
 	public static class LocationData {
 		private final String mapLocation;
-		private final String type;
+		private final String name;
+		private final LocationType type;
+		private Set<String> activities;
 
-		public LocationData(final String mapLocation, final String type) {
-			this.mapLocation = mapLocation;
+		public enum LocationType {
+			CONTROL_ROOM("control_room"), MED_BAY("med_bay");
+
+			private final String jsonVersion;
+
+			LocationType(String jsonVersion) {
+				this.jsonVersion = jsonVersion;
+			}
+
+			public String getJSONVersion() {
+				return this.jsonVersion;
+			}
+		}
+		
+		public LocationData(final String locationID, final String name, final LocationType type,
+				final Set<String> activities) {
+			this.mapLocation = locationID;
+			this.name = name;
 			this.type = type;
-		}
-		
-		public String getMapLocation() {
-			return this.mapLocation;
-		}
-		
-		public String getType() {
-			return this.type;
+			this.activities = activities;
 		}
 
-		/**
-		 * @return	{@link JSONObject} representation of the data.
-		 */
 		public JSONObject jsonify() {
 			JSONObject data = new JSONObject();
 			data.put(ActionData.MAP_LOCATION, this.mapLocation);
-			data.put(ActionData.TYPE, this.type);
-			return data;
-		}
-		
-		public boolean equals(final Object other) {
-			if (other instanceof SyncGameBoardDataRequestData.LocationData) {
-				SyncGameBoardDataRequestData.LocationData otherLocationData = (SyncGameBoardDataRequestData.LocationData) other;
-				return otherLocationData.mapLocation.equals(this.mapLocation) &&
-					   otherLocationData.type.equals(this.type);
-			} else {
-				return false;
+			data.put(ActionData.LOCATION_NAME, this.name);
+			data.put(ActionData.LOCATION_TYPE, this.type.getJSONVersion());
+			JSONArray array = new JSONArray();
+
+			for (String s : this.activities) {
+				array.put(s);
 			}
+			data.put(ActionData.ACTIVITIES, array);
+
+			return data;
 		}
 	}
 	// =====================================
