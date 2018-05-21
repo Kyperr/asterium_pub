@@ -101,6 +101,7 @@ public class MenuController extends AbstractAsteriumController {
 					public void run() {
 						// Go to the lobby
 						try {
+					    	System.out.println("Displaying lobby.");
 							getNodeNavigator().display(Display.LOBBY);
 						} catch (IllegalStateException e) {
 							// TODO Auto-generated catch block

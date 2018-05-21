@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.resource.spi.IllegalStateException;
+
+import com.toozo.asterium.asteriumgameboard.AbstractAsteriumController;
 import com.toozo.asterium.asteriumgameboard.GameBoardController;
 
 import javafx.fxml.FXMLLoader;
@@ -18,14 +21,11 @@ import javafx.scene.layout.Pane;
  */
 public class NodeNavigator {
 
-	private static String MAIN = "/com/toozo/asterium/fxml/gameboard.fxml";
-	
-	public enum Display {
-		LOBBY("/com/toozo/asterium/fxml/lobby.fxml"), 
-		MAP("/com/toozo/asterium/fxml/map.fxml"), 
-		MENU("/com/toozo/asterium/fxml/menu.fxml"), 
-		TURN_SUMMARY("/com/toozo/asterium/fxml/turnsummary.fxml"), 
-		GAME_SUMMARY("/com/toozo/asterium/fxml/gamesummary.fxml");
+	public static enum Display {
+		LOBBY("/com/toozo/asterium/fxml/lobby.fxml"), MAP("/com/toozo/asterium/fxml/map.fxml"), MENU(
+				"/com/toozo/asterium/fxml/menu.fxml"), TURN_SUMMARY(
+						"/com/toozo/asterium/fxml/turnsummary.fxml"), GAME_SUMMARY(
+								"/com/toozo/asterium/fxml/gamesummary.fxml");
 
 		String fxmlLocation;
 
@@ -41,34 +41,44 @@ public class NodeNavigator {
 
 	private Map<Display, Node> layoutMap = new HashMap<>();
 
-	private Map<Display, FXMLLoader> loaderMap = new HashMap<>();
-	
-	private GameBoardController mainController;
-	
-	public NodeNavigator() {
-		setChildControllers();
+	private Map<Display, AbstractAsteriumController> loaderMap = new HashMap<>();
 
+	private GameResources gameResources;
+	
+	private GameBoardController gameBoardController;
+
+	public NodeNavigator(GameBoardController gameBoardController) {
+		gameResources = new GameResources(this);
 		try {
-			FXMLLoader loader = new FXMLLoader();
-			this.mainController = loader.load(ClassLoader.class.getResourceAsStream(MAIN));
-		} catch (IOException e) {
+			gameBoardController.initialize(this.gameResources, this);
+		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+		this.gameBoardController = gameBoardController;
+		setChildControllers();
 	}
-
 
 	private void setChildControllers() {
 
 		try {
 
 			for (Display view : Display.values()) {
-				FXMLLoader loader = new FXMLLoader();
-				Node node = loader.load(ClassLoader.class.getResourceAsStream(view.getLocation()));
-				layoutMap.put(view, node);
-				loaderMap.put(view, loader);
+				try {
+					FXMLLoader loader = new FXMLLoader();
+
+					Node node = loader.load(ClassLoader.class.getResourceAsStream(view.getLocation()));
+					layoutMap.put(view, node);
+
+					AbstractAsteriumController controller = loader.getController();
+
+					controller.initialize(this.gameResources, this);
+
+					loaderMap.put(view, controller);
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			/*
 			 * FXMLLoader loader = new FXMLLoader(); menuLayout =
@@ -82,25 +92,20 @@ public class NodeNavigator {
 		}
 	}
 
-	public <T> T getController(Display view) {
-		return loaderMap.get(view).getController();
+	@SuppressWarnings("unchecked") // This is what javafx does. Not my fault.
+	public <T extends AbstractAsteriumController> T getController(Display view) {
+		return (T) loaderMap.get(view);
 	}
 
 	public void display(Display view) {
-		mainController.setNode(layoutMap.get(view));
+		gameBoardController.setNode(layoutMap.get(view));
 	}
-	
+
 	public Node getLayout(Display view) {
 		return layoutMap.get(view);
 	}
 
-
 	public GameBoardController getMainController() {
-		return this.mainController;
+		return this.gameBoardController;
 	}
-
-//	public static void loadLobby() {
-//		lobbyController.updateLobbyId();
-//		mainController.setNode(lobbyLayout);
-//	}
 }

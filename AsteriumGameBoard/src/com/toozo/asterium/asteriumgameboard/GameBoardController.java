@@ -3,7 +3,10 @@ package com.toozo.asterium.asteriumgameboard;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javax.resource.spi.IllegalStateException;
+
 import com.toozo.asterium.util.GameResources;
+import com.toozo.asterium.util.NodeNavigator;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -48,12 +51,5 @@ public class GameBoardController extends AbstractAsteriumController {
     
     public ObservableList<Node> getNodes() {
     	return nodeHolder.getChildren();
-    }
-    
-    @FXML
-	public void initialize() {
-		// TODO Auto-generated method stub
-		
-	}
-    
+    }    
 }

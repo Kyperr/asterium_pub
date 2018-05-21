@@ -7,6 +7,7 @@ package com.toozo.asterium.asteriumgameboard;
 
 import java.io.IOException;
 
+import com.toozo.asterium.util.GameResources;
 import com.toozo.asterium.util.NodeNavigator;
 import com.toozo.asterium.util.NodeNavigator.Display;
 
@@ -30,6 +31,8 @@ import javafx.stage.Stage;
  */
 public class AsteriumGameBoard extends Application {
 
+	private static String MAIN = "/com/toozo/asterium/fxml/gameboard.fxml";
+	
 	private static final String GAME_BOARD_TITLE = "Asterium";
 	private static final String CONTAINER_CSS = "css/asteriumgameboard.css";
 	private static final int PANE_WIDTH = 275;
@@ -38,31 +41,26 @@ public class AsteriumGameBoard extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 
-		NodeNavigator navigator = new NodeNavigator();
+		try {
 
-		stage.setTitle(GAME_BOARD_TITLE);
-		stage.setScene(createScene(navigator.getMainController()));
-		stage.show();
-		navigator.display(Display.MENU);
+			
+			FXMLLoader loader = new FXMLLoader();
+			Pane gameBoardPane = loader.load(ClassLoader.class.getResourceAsStream(MAIN));
+			GameBoardController gameBoardController = loader.getController();
+			
+			NodeNavigator navigator = new NodeNavigator(gameBoardController);
+
+			stage.setTitle(GAME_BOARD_TITLE);
+			stage.setScene(createScene(gameBoardPane));
+			stage.show();
+			navigator.display(Display.MENU);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-
-	private Pane loadMainPane() throws IOException {
-		FXMLLoader loader = new FXMLLoader();
-
-		// Pane mainPane = (Pane)
-		// loader.load(ClassLoader.class.getResourceAsStream(NodeNavigator.Display.MAIN.getLocation()));
-
-		GameBoardController mainController = loader.getController();
-
-		NodeNavigator navigator = new NodeNavigator();
-		navigator.setChildControllers();
-
-		navigator.setMainController(mainController);
-		navigator.display(Display.MENU);
-
-		return mainPane;
-	}
-
+	
 	/**
 	 * Creates the main application scene.
 	 *

@@ -13,12 +13,12 @@ public class AbstractAsteriumController {
 
 	private NodeNavigator nodeNavigator;
 
-	public final void initialize(GameResources gameResources, NodeNavigator nodeNavigatir) throws IllegalStateException {
+	public final void initialize(GameResources gameResources, NodeNavigator nodeNavigator) throws IllegalStateException {
 		if (isInitialized) {
 			throw new IllegalStateException("Initialization is being called on an already initialized AsteriumController.");
 		} else {
 			this.gameResources = gameResources;
-			this.nodeNavigator = nodeNavigatir;
+			this.nodeNavigator = nodeNavigator;
 			this.isInitialized = true;
 		}
 	}
