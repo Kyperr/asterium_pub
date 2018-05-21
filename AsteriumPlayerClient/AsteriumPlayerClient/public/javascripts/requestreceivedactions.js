@@ -36,3 +36,7 @@ phaseChangeStartingActions["PLAYER_TURNS"] = function () {
 phaseChangeStartingActions["TURN_RESOLVE"] = function () {
     console.log("TURN RESOLVE! SHOULD PROBABLY DISPLAY SOMETHING!");
 };
+
+phaseChangeStartingActions["END_SUMMARY"] = function () {
+    console.log("GAME OVER!!!!!!!!!!!!!!!!!!!!!!!");
+};
