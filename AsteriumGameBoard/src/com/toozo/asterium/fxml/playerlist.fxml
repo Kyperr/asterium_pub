@@ -6,6 +6,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns:fx="http://javafx.com/fxml/1" fx:id="playerList" 
-	fx:controller="com.toozo.asterium.asteriumgameboard.PlayerListController"/>
-   
+<AnchorPane
+	xmlns:fx="http://javafx.com/fxml/" prefHeight="200" prefWidth="400"
+	fx:controller="com.toozo.asterium.asteriumgameboard.PlayerListController">
+	<VBox fx:id="playerList" />
+</AnchorPane>

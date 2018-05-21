@@ -22,6 +22,7 @@ public class PlayerListController extends AbstractAsteriumController {
 	private VBox playerList;
 	
 	// Add player views to the vbox
+<<<<<<< HEAD
 	public void updatePlayers(List<PlayerData> playerData) {
 		for (int i = 0; i < playerData.size(); i++) {
 			if (i < playerCells.size()) {
@@ -32,6 +33,18 @@ public class PlayerListController extends AbstractAsteriumController {
 				playerList.getChildren().add(cell.getPlayerView());
 			}
 		}
+=======
+	public void updatePlayers() {
+//		for (int i = 0; i < GameResources.getPlayers().size(); i++) {
+//			if (i < playerCells.size()) {
+//				playerCells.get(i).updateItem(GameResources.getPlayers().get(i));
+//			} else {
+//				PlayerListCell cell = new PlayerListCell(GameResources.getPlayers().get(i));
+//				playerCells.add(cell);
+//				playerList.getChildren().add(cell.getPlayerView());
+//			}
+//		}
+>>>>>>> webstuff
 	}
 
 	@Override

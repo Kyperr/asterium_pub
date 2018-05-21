@@ -1,4 +1,4 @@
-
+/*
 
 function displayLocations(div) {
     div.innerHTML = "Please Select A Location...";
@@ -268,3 +268,4 @@ AfterTurnWaitingDisplayController.prototype.display = function () {
 
 //Static instance. USE THIS ONE!
 var afterTurnWaitingDisplayController = new AfterTurnWaitingDisplayController();
+*/
