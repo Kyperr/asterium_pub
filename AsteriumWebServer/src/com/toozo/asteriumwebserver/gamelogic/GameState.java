@@ -76,15 +76,17 @@ public class GameState {
 	// Initialize the locations
 	{
 		// Make a new location
-		Location home = new Location(Location.LocationType.CONTROL_ROOM);
+		Location home = new Location("Control Room", Location.LocationType.CONTROL_ROOM);
 		// Make a new room with a room id and location
 		locations.put("1", home);
 
-		Location med_bay = new Location(Location.LocationType.MED_BAY);
-		med_bay.addActivity(Activity.SEARCH, Activity.searchActivity);
-
-		locations.put("2", med_bay);
-		locations.put("3", med_bay);
+		Location med_bay_a = new Location("Med Bay A", Location.LocationType.MED_BAY);
+		med_bay_a.addActivity(Activity.SEARCH, Activity.searchActivity);
+		locations.put("2", med_bay_a);
+		
+		Location med_bay_2 = new Location("Med Bay 2", Location.LocationType.MED_BAY);
+		med_bay_2.addActivity(Activity.SEARCH, Activity.searchActivity);
+		locations.put("3", med_bay_2);
 	};
 	// =========================
 
