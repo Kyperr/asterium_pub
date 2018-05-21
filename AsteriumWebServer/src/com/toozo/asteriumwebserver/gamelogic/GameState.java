@@ -487,6 +487,11 @@ public class GameState {
 		String auth = player.getAuthToken();
 
 		PlayerCharacter pChar = getCharacter(auth);
+		
+		Collection<String> characters = new ArrayList<String>();
+		for (PlayerCharacter pc : getCharacters()) {
+			characters.add(pc.getCharacterName());
+		}
 
 		SyncPlayerClientDataRequestData.PlayerCharacterData.StatsData stat = new SyncPlayerClientDataRequestData.PlayerCharacterData.StatsData(
 				pChar.getEffectiveStats().getStat(Stat.HEALTH), pChar.getEffectiveStats().getStat(Stat.STAMINA),
@@ -524,7 +529,7 @@ public class GameState {
 			inventory.add(itemData);
 		}
 
-		SyncPlayerClientDataRequestData data = new SyncPlayerClientDataRequestData(getFood(), getFuel(), getDay(), loc, dChar,
+		SyncPlayerClientDataRequestData data = new SyncPlayerClientDataRequestData(getFood(), getFuel(), getDay(), loc, dChar, characters,
 				getGamePhase().toString(), inventory);
 
 		return data;
