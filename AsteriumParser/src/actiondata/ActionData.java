@@ -74,6 +74,7 @@ public interface ActionData {
 	public static final String ICON = "icon";
 	public static final String LOCATION_ID = "location_id";
 	public static final String LOCATION_TYPE = "location_type";
+	public static final String LOCATION_NAME = "location_name";
 	public static final String ROOM_ID = "room_id"; 
 	public static final String CURRENT_VALUE = "current_value";
 	public static final String MAX_VALUE = "max_value";
