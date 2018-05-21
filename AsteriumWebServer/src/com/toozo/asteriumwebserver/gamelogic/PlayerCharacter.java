@@ -10,8 +10,6 @@ import com.toozo.asteriumwebserver.gamelogic.statuseffects.AbstractStatusEffect;
 
 public class PlayerCharacter {
 	// ===== CONSTANTS =====
-	private static final int DEFAULT_HEALTH = 10;
-	private static final int DEFAULT_STARTING_STAT = 5;
 	private static final String DEFAULT_NAME = "";
 	// =====================
 	
@@ -35,6 +33,12 @@ public class PlayerCharacter {
 	
 	// ===== INNER CLASSES =====
 	public static class StatBlock {
+		// ===== CONSTANTS =====
+		private static final int DEFAULT_HEALTH = 10;
+		private static final int MAX_HEALTH = 10;
+		private static final int DEFAULT_STARTING_STAT = 5;
+		// =====================
+		
 		// ===== FIELDS =====
 		Map<Stat, Integer> stats = new HashMap<>();;
 		// ==================
@@ -73,6 +77,10 @@ public class PlayerCharacter {
 		 * @param newValue The new value of theStat.
 		 */
 		public void setStat(Stat theStat, int newValue) {
+			if (theStat == Stat.HEALTH) {
+				newValue = Math.min(newValue, MAX_HEALTH);
+			}
+			
 			this.stats.put(theStat, newValue);
 		}
 		// ===================
@@ -98,9 +106,16 @@ public class PlayerCharacter {
 	public String getCharacterName() {
 		return this.characterName;
 	}
+
+	/**
+	 * @return A copy of this character's {@link StatBlock} before any status effects are applied.
+	 */
+	public StatBlock getBaseStats() {
+		return this.stats.deepCopy();
+	}
 	
 	/**
-	 * @return The stats of this player after all its StatusEffects are applied.
+	 * @return A copy of this character's {@link StatBlock} after all status effects are applied.
 	 */
 	public StatBlock getEffectiveStats() {
 		PlayerCharacter.StatBlock stats = this.getBaseStats();
@@ -110,13 +125,6 @@ public class PlayerCharacter {
 		}
 		
 		return stats;	
-	}
-	
-	/**
-	 * @return The stats of this player before any of its StatusEffects are applied.
-	 */
-	public StatBlock getBaseStats() {
-		return this.stats.deepCopy();
 	}
 	
 	public Collection<AbstractStatusEffect> getStatusEffects() {

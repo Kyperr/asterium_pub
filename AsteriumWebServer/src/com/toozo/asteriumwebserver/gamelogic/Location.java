@@ -2,7 +2,6 @@ package com.toozo.asteriumwebserver.gamelogic;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -24,14 +23,20 @@ public class Location {
 	}
 	
 	private final LocationType type;
+	private final String name;
 	private Map<String, Activity> activities = new HashMap<String, Activity>();
 	
-	public Location(LocationType type) {
+	public Location(final String name, final LocationType type) {
+		this.name = name;
 		this.type = type; 
 	}
 	
+	public final String getName() {
+		return this.name;
+	}
+	
 	public final LocationType getType() {
-		return type;
+		return this.type;
 	}
 	
 	public void addActivity(final String name, final Activity activity) {

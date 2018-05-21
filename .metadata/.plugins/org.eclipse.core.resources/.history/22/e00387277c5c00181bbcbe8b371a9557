@@ -1,0 +1,40 @@
+package com.toozo.asteriumwebserver.gamelogic.items.consumables;
+
+import java.util.Collection;
+
+import com.toozo.asteriumwebserver.gamelogic.GameState;
+import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
+import com.toozo.asteriumwebserver.gamelogic.Stat;
+
+public class HealItem extends AbstractConsumableItem {
+	private int healAmount;
+
+	/**
+	 * Create a new Medkit which should heal all of its
+	 * @param name
+	 * @param healAmount
+	 */
+	public HealItem(final String name, final int healAmount) {
+		super(name);
+		this.healAmount = healAmount;
+	}
+
+	@Override
+	/**
+	 * Add the defined healAmount to each {@link PlayerCharacter} in targets.
+	 */
+	public void applyEffect(GameState state, PlayerCharacter user, Collection<PlayerCharacter> targets) {
+		// For each target of this...
+		for (final PlayerCharacter target : targets) {
+			// Get copy of current stats
+			PlayerCharacter.StatBlock stats = target.getBaseStats();
+			
+			// Modify health stat
+			int oldHealth = stats.getStat(Stat.HEALTH);
+			int newHealth = oldHealth + healAmount;
+			stats.setStat(Stat.HEALTH, newHealth);
+			target.setStats(stats);
+		}
+	}
+
+}

@@ -12,6 +12,10 @@ import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
  * @author Studio Toozo
  */
 public abstract class AbstractConsumableItem extends AbstractItem {
+	protected AbstractConsumableItem(String name) {
+		super(name);
+	}
+	
 	@Override
 	public void use(final GameState state, 
 					final PlayerCharacter user, 

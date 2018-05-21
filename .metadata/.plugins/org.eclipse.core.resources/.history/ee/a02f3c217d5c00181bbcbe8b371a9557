@@ -1,0 +1,14 @@
+package com.toozo.asteriumwebserver.gamelogic.items.consumables;
+
+public class TriageRobot extends HealItem {
+	// ===== CONSTANTS =====
+	public static final String NAME = "Medkit";
+	public static final int HEAL_AMOUNT = 5;
+	// =====================
+	
+	// ===== CONSTRUCTORS =====
+	public TriageRobot() {
+		super(NAME, HEAL_AMOUNT);
+	}
+	// ========================
+}

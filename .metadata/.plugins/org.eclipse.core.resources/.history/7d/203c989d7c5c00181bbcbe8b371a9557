@@ -1,0 +1,10 @@
+package com.toozo.asteriumwebserver.gamelogic.items.consumables;
+
+public class Bandage extends HealItem {
+
+	public Bandage(String name, int healAmount) {
+		super(name, healAmount);
+		// TODO Auto-generated constructor stub
+	}
+
+}

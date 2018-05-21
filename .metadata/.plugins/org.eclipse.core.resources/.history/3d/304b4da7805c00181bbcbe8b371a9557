@@ -1,0 +1,41 @@
+package com.toozo.asteriumwebserver.gamelogic.items.consumables;
+
+import java.util.Collection;
+
+import com.toozo.asteriumwebserver.gamelogic.GameState;
+import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
+
+public class FoodItem extends AbstractConsumableItem {
+	// ===== CONSTANTS =====
+	public static final String PACK_NAME = "Food Pack";
+	public static final int PACK_AMOUNT = 5;
+	
+	public static final String PACK_NAME = "Food Pack";
+	public static final int PACK_AMOUNT = 5;
+	// =====================
+	
+	// ===== FIELDS =====
+	private int addAmount;
+	// ==================
+	
+	// ===== FACTORIES =====
+	public static FoodItem createPack() {
+		return new FoodItem(PACK_NAME, PACK_AMOUNT);
+	}
+	// =====================
+	
+	// ===== CONSTRUCTORS =====
+	public FoodItem(final String name, final int addAmount) {
+		super(name);
+		this.addAmount = addAmount;
+	}
+	// ========================
+
+	
+	// ===== METHODS ======
+	@Override
+	public void applyEffect(GameState state, PlayerCharacter user, Collection<PlayerCharacter> targets) {
+		state.setFood(state.getFood() + this.addAmount);
+	}
+	// ====================
+}
