@@ -18,8 +18,10 @@
 }
 
 #lobbyBorderPane{/*Where the lobby code is displayed */
-	-fx-background-color: rgba(240,255,240, 0.5);/*light light blue */
+	-fx-background-color: rgba(0,0,0, 0.5);/*light light blue */
     -fx-font: 20px "Serif";
+    -fx-text-base-color: white;
+    -fx-text-background-color: white;
 }
 
 
@@ -32,10 +34,24 @@
 }
 
 #playersScrollPane {
-	-fx-background-color: rgba(105,105,105, .25);/*Green */
+	-fx-background-color: rgba(105,105,105, .5);/*Gray, half vis */
 	
 }
 
 #PlayerPane {/*Top during player list.*/
 	-fx-background-color: rgba(0,0,205, 0.0);/*Blue */	
+}
+
+#nameLabel, #readyLabel {
+    -fx-font: 20px "Serif";
+	-fx-padding: 5px;
+    -fx-border-insets: 5px;
+    -fx-background-insets: 5px;
+}
+
+#readyLabel{
+    -fx-font: 16px "Serif";
+	-fx-padding: 5px;
+    -fx-border-insets: 5px;
+    -fx-background-insets: 5px;	
 }

@@ -33,7 +33,7 @@ public class LobbyController extends AbstractAsteriumController {
 	
 	public void updateLobbyId() {
 		try {
-			label.setText("Lobby ID: [" + getGameResources().getLobbyId() + "]");
+			label.setText("Lobby ID: " + getGameResources().getLobbyId());
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

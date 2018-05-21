@@ -12,7 +12,7 @@
 	xmlns:fx="http://javafx.com/fxml"
 	fx:controller="com.toozo.asterium.asteriumgameboard.MenuController">
 	<children>
-		<Button layoutX="50" layoutY="90" text="Get lobby ID"
+		<Button layoutX="50" layoutY="90" text="Create A Game"
 			onAction="#handleLobbyIdButtonAction" fx:id="LobbyIdButton" />
 		<Label layoutX="100" layoutY="120" minHeight="16" minWidth="69"
 			fx:id="label" />
