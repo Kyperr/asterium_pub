@@ -30,7 +30,7 @@ ActionDisplayController.prototype.display = function () {
 
     console.log("action");
 
-    div.innerHTML = "What action would you like to do?";
+    div.innerHTML = "<b>What action would you like to do?</b>";
 
     div.appendChild(document.createElement("br"));
     div.appendChild(this.btnExplore);

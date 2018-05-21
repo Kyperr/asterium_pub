@@ -18,7 +18,7 @@ ActivityDisplayController.prototype.init = function () {
 ActivityDisplayController.prototype.display = function () {
     var div = document.getElementById("centralDiv");
 
-    div.innerHTML = "What activity will you do in the " + locationsDisplayController.selectedLocation.location_id + "?";
+    div.innerHTML = "<b>What activity will you do in the " + locationsDisplayController.selectedLocation.location_id + "?</b>";
 
     div.appendChild(document.createElement("br"));
 

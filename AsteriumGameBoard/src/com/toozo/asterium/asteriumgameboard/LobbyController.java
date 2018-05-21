@@ -37,7 +37,7 @@ public class LobbyController extends AbstractAsteriumController {
 
 	@Override
 	protected void setup() {
-		try {//Somehow, I need to get playerlist to call initialize(a, b) before we get here.
+		try {
 			playerList = getNodeNavigator().getLayout(Display.PLAYER_LIST);
 			scrollPane.setContent(playerList);
 		} catch (IllegalStateException e) {

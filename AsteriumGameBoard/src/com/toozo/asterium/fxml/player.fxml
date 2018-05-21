@@ -8,6 +8,6 @@
 
 <HBox xmlns:fx="http://javafx.com/fxml"
 	fx:controller="com.toozo.asterium.asteriumgameboard.PlayerController">
-	<Label fx:id="nameLabel" />
-	<Label fx:id="readyLabel" />
+		<Label fx:id="nameLabel" />
+		<Label fx:id="readyLabel" />
 </HBox>

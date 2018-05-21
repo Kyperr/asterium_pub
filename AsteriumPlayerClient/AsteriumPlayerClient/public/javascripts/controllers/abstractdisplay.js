@@ -18,5 +18,5 @@ AbstractDisplayController.prototype.init = function () {
 AbstractDisplayController.prototype.display = function () {
     var div = document.getElementById("centralDiv");
 
-    div.innerHTML = "This Display Controller is not correctly implemented."
+    div.innerHTML = "<b>This Display Controller is not correctly implemented.</b>"
 }

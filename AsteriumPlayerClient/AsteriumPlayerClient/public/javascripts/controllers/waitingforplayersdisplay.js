@@ -20,8 +20,7 @@ WaitingForPlayersDisplayController.prototype.init = function () {
 WaitingForPlayersDisplayController.prototype.display = function () {
     var div = document.getElementById("centralDiv");
 
-    console.log("waiting");
-    div.innerHTML = "Waiting for players to be ready...";
+    div.innerHTML = "<b>Waiting for players to be ready...</b>";
 
     div.appendChild(document.createElement("br"));
 

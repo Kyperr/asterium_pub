@@ -19,7 +19,7 @@ LocationsDisplayController.prototype.init = function () {
 LocationsDisplayController.prototype.display = function () {
     var div = document.getElementById("centralDiv");
 
-    div.innerHTML = "What location would you like to explore?";
+    div.innerHTML = "<b>What location would you like to explore?</b>";
 
     div.appendChild(document.createElement("br"));
 
@@ -29,7 +29,7 @@ LocationsDisplayController.prototype.display = function () {
 
         //Should map the id to a display-friendly string and get it here.
 
-        that.btnLocation.innerHTML = location.location_id;
+        that.btnLocation.innerHTML = location.;
         that.btnLocation.setAttribute("onClick", "locationsDisplayController.selectLocation(\'" + location.location_id + "\')");
         div.appendChild(this.btnLocation);
         div.appendChild(document.createElement("br"));

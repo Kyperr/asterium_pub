@@ -28,7 +28,7 @@ JoinLobbyDisplayController.prototype.init = function () {
 JoinLobbyDisplayController.prototype.display = function () {
     var div = document.getElementById("centralDiv");
     
-    this.div = "Join a lobby:";
+    this.div = "<b>Join a lobby:</b>";
 
     div.appendChild(document.createElement("br"));
 

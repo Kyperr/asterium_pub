@@ -24,7 +24,7 @@ AfterTurnWaitingDisplayController.prototype.init = function () {
 AfterTurnWaitingDisplayController.prototype.display = function () {
     var div = document.getElementById("centralDiv");
 
-    div.innerHTML = "Waiting on other players(Cancel doesn't work.)...";
+    div.innerHTML = "<b>Waiting on other players(Cancel doesn't work.)...</b>";
 
     div.appendChild(document.createElement("br"));
 
