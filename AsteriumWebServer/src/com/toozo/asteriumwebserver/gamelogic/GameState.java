@@ -16,6 +16,7 @@ import javax.websocket.Session;
 import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.EquipmentSlot;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.Loadout;
+import com.toozo.asteriumwebserver.gamelogic.items.location.RescueBeacon;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
 import actiondata.ActionData;
@@ -95,8 +96,9 @@ public class GameState {
 	private GamePhase gamePhase;
 	private int food;
 	private int fuel;
+	private Map<String, PlayerCharacter> authCharacterMap;
+	private Map<String, PlayerCharacter> nameCharacterMap;
 	private static int day;
-	private Map<String, PlayerCharacter> playerCharacterMap;
 	private Collection<VictoryCondition> victoryConditions;
 	private Inventory communalInventory;
 	// ===========================
@@ -122,7 +124,7 @@ public class GameState {
 	}
 
 	private static final void initializeGame(GameState state) {
-		// TODO Initialize game
+		state.addVictoryCondition(new VictoryCondition(VictoryCondition::getBeaconProgress));
 		state.setGamePhase(GamePhase.PLAYER_TURNS);
 		state.gamePhase.executePhase(state);
 	}
@@ -134,7 +136,6 @@ public class GameState {
 
 		// Is there an action for every player and is everyone ready?? If so:
 		if (state.game.areAllTurnsSubmitted() && state.game.allCharactersReady()) {
-
 			state.setGamePhase(GamePhase.TURN_RESOLVE);
 		}
 	}
@@ -235,8 +236,9 @@ public class GameState {
 		this.gamePhase = GamePhase.PLAYERS_JOINING;
 		this.food = STARTING_FOOD_PER_PLAYER * this.game.getPlayers().size();
 		this.fuel = STARTING_FUEL;
+		this.authCharacterMap = new ConcurrentHashMap<String, PlayerCharacter>();
+		this.nameCharacterMap = new ConcurrentHashMap<String, PlayerCharacter>();
 		GameState.day = STARTING_DAY;
-		this.playerCharacterMap = new ConcurrentHashMap<String, PlayerCharacter>();
 		this.victoryConditions = new ArrayList<VictoryCondition>();
 		this.communalInventory = new Inventory();
 	}
@@ -265,7 +267,11 @@ public class GameState {
 	}
 
 	public PlayerCharacter getCharacter(final String auth) {
-		return playerCharacterMap.get(auth);
+		return authCharacterMap.get(auth);
+	}
+	
+	public PlayerCharacter getCharacterByName(final String name) {
+		return nameCharacterMap.get(name);
 	}
 
 	/**
@@ -276,7 +282,7 @@ public class GameState {
 	 * @return Collection<Character> containing the game's Characters.
 	 */
 	public Collection<PlayerCharacter> getCharacters() {
-		return this.playerCharacterMap.values();
+		return this.authCharacterMap.values();
 	}
 
 	/**
@@ -372,8 +378,14 @@ public class GameState {
 
 	// ===== OTHER INSTANCE METHODS =====
 	public void addPlayerCharacter(final String playerAuthToken, final PlayerCharacter pc) {
-		this.playerCharacterMap.put(playerAuthToken, pc);
+		this.authCharacterMap.put(playerAuthToken, pc);
+		this.nameCharacterMap.put(pc.getCharacterName(), pc);
+		pc.getInventory().add(new RescueBeacon());
 		syncGameBoardsPlayerList();
+	}
+	
+	public void addVictoryCondition(final VictoryCondition victory) {
+		this.victoryConditions.add(victory);
 	}
 
 	/**

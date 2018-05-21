@@ -22,7 +22,7 @@ public class LootPool {
 	 * Constructs a new LootPool based on lootProbabilities.
 	 * 
 	 * @param lootProbabilities a {@link Map} from (? extends AbstractItem)::getLoot to
-	 * 							the probability [0.0, 1.0] that it should be called.
+	 * 							the probability that it should be called.
 	 * 							
 	 */
 	public LootPool(Map<Supplier<? extends AbstractItem>, Double> lootProbabilities) {
