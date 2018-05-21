@@ -1,29 +1,23 @@
 package com.toozo.asterium.asteriumgameboard;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import com.toozo.asterium.util.GameResources;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
-import main.ClientConnectionHandler;
 
 /**
  * Main controller class for the entire layout.
  */
-public class GameBoardController {
+public class GameBoardController extends AbstractAsteriumController {
 	
     /** Holder of a node. Initialized by fxml. */
     @FXML
     private StackPane nodeHolder;
-    private static GameResources resources;
+    private GameResources resources;
  
     public GameBoardController() {
-    	resources = new GameResources();
     }
     
     public void setNode(Node node) {
@@ -50,11 +44,8 @@ public class GameBoardController {
     public ObservableList<Node> getNodes() {
     	return nodeHolder.getChildren();
     }
-    
-    @FXML
-	public void initialize() {
-		// TODO Auto-generated method stub
-		
-	}
-    
+
+	@Override
+	protected void setup() {		
+	}    
 }

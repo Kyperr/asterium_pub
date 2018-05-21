@@ -128,20 +128,29 @@ public class GameState {
 	}
 
 	private static final void initiatePlayerTurnPhase(GameState state) {
-		state.game.resetTurnActionMap();
 		state.syncPlayerClients();
 		syncGameBoards(state);
 
-		// Is there an action for every player? If so:
-		if (state.game.areAllTurnsSubmitted()) {
+		// Is there an action for every player and is everyone ready?? If so:
+		if (state.game.areAllTurnsSubmitted() && state.game.allCharactersReady()) {
+			
 			state.setGamePhase(GamePhase.TURN_RESOLVE);
 		}
 	}
 
 	private static final void initiateTurnResolvePhase(GameState state) {
-		state.syncPlayerClients();
+		
+		state.game.setAllCharactersNotReady();
+		
+		state.syncPlayerClients();		
 		syncGameBoards(state);
+		
 		state.setGamePhase(GamePhase.PLAYER_TURNS);
+		
+		//Should run everyone's actions here.
+		
+		state.game.resetTurnActionMap();
+		
 		state.gamePhase.executePhase(state);
 	}
 
@@ -333,7 +342,7 @@ public class GameState {
 	/**
 	 * This is a helper method to sync the player list on the game board.
 	 */
-	private void syncGameBoardsPlayerList() {
+	public void syncGameBoardsPlayerList() {
 
 		// Create list of player data.
 		Collection<SyncPlayerListRequestData.PlayerData> playerData = new ArrayList<>();

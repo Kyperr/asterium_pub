@@ -19,7 +19,8 @@ import com.toozo.asteriumwebserver.gamelogic.items.consumables.HealItem;
 public abstract class AbstractItem {
 	// ===== CONSTANTS =====
 	public static final String DEFAULT_NAME = "";
-	public static final Random RNG = new Random();
+	
+	private static final Random RNG = new Random();
 	
 	private static final Map<String, Supplier<AbstractItem>> ITEM_LOOKUP = new HashMap<String, Supplier<AbstractItem>>() {
 		/**
@@ -134,7 +135,7 @@ public abstract class AbstractItem {
 		// 		Probabilities -> [0.6, 0.3, 0.1] 
 		//		Thresholds ----> [0.6, 0.9, 1.0]
 		Double[] weights = new Double[this.factoryProbabilities.keySet().size()];
-		this.factoryProbabilities.keySet().toArray(weights);
+		weights = this.factoryProbabilities.keySet().toArray(weights);
 		for (i = 1; i < weights.length; i++) {
 			weights[i] += weights[i - 1];
 		}

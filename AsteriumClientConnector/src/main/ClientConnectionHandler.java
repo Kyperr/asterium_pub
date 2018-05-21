@@ -93,7 +93,12 @@ public class ClientConnectionHandler {
 	 */
 	public void send(final String json) {
 		synchronized(this.userSession) {
-			this.userSession.getAsyncRemote().sendText(json);	
+			try {
+				this.userSession.getBasicRemote().sendText(json);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
 		}
 	}
 	
@@ -136,7 +141,7 @@ public class ClientConnectionHandler {
 				if (callback != null) {
 					callback.accept(message);
 				} else {
-					System.err.println("Error: Response received, but callback not found!");
+					System.err.println("Error: Response received, but callback not found for: " + message.getActionData().getName());
 				}
 			});
 		} else {
@@ -144,11 +149,11 @@ public class ClientConnectionHandler {
 			// TODO Change else block to message.isRequest(), and have Message not necessarily be a request or response.
 			threadPool.execute(() -> {
 				String actionName = message.getActionData().getName();
-				Consumer<Message> callback = this.requestCallbacks.remove(actionName);
+				Consumer<Message> callback = this.requestCallbacks.get(actionName);
 				if (callback != null) {
 					callback.accept(message);
 				} else {
-					System.err.println("Error: Request received, but callback not found!");
+					System.err.println("Error: Request received, but callback not found for: " + message.getActionData().getName());
 				}
 			});
 		}

@@ -10,7 +10,8 @@ function syncPlayerClientData(request) {
     var newPhase = request.sync_player_client_data.game_phase_name;
 
     if (gamePhase != newPhase) {
-        console.log("Should be going to new phase now.");
+        gamePhase = newPhase;
+        console.log("Should be going to new phase now. Went from " + gamePhase + " to " + newPhase);
         phaseChangeStartingActions[newPhase]();
     }
 
