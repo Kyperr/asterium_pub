@@ -39,7 +39,6 @@ INDEX VERSION 1.130+/home/gpschmitt/git/asterium2/.metadata/.plugins/org.eclipse
 3108896783.index
 1866078619.index
 2945478813.index
-3726599210.index
 2633598418.index
 818474405.index
 2811102654.index

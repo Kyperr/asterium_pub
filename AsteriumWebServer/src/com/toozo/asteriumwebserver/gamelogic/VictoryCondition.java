@@ -2,6 +2,9 @@ package com.toozo.asteriumwebserver.gamelogic;
 
 import java.util.function.Function;
 
+import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
+import com.toozo.asteriumwebserver.gamelogic.items.location.RescueBeacon;
+
 /**
  * A VictoryCondition of the {@link Game}.
  * Can have a name, can be active or inactive, and contains a function which determines
@@ -14,6 +17,22 @@ public class VictoryCondition {
 	public static final String DEFAULT_NAME = "";
 	public static final double COMPLETE_THRESHOLD = 1.0;
 	public static final double ERROR_VALUE = -1.0;
+	
+	/**
+	 * Function to determine whether there is a used beacon in the communal inventory.
+	 * @param state The current {@link GameState}.
+	 * @return COMPLETE_THRESHOLD if there is, 0.0 if there isn't.
+	 */
+	public static final double getBeaconProgress(GameState state) {
+		for (AbstractItem item : state.getCommunalInventory()) {
+			if (item.getName().equals(RescueBeacon.NAME) &&
+				RescueBeacon.class.cast(item).isUsed()) {
+				return COMPLETE_THRESHOLD;
+			}
+		}
+		
+		return 0.0;
+	}
 	// =====================
 	
 	// ===== FIELDS =====
