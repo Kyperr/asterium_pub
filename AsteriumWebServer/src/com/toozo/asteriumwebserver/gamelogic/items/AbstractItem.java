@@ -44,7 +44,7 @@ public abstract class AbstractItem {
 	// ==================
 	
 	// ===== CONSTRUCTORS =====
-	protected AbstractItem(String name) {
+	protected AbstractItem(final String name) {
 		this.name = name;
 	}
 	
@@ -69,7 +69,7 @@ public abstract class AbstractItem {
 	 * 
 	 * @param newName The new name. If null, name will be unchanged.
 	 */
-	public void setName(String newName) {
+	public void setName(final String newName) {
 		if (newName != null) {
 			this.name = newName;
 		} else if (this.name == null) {
@@ -96,10 +96,10 @@ public abstract class AbstractItem {
 	 * @param fromCommunalInventory True if this item is in the communal inventory,
 	 * 								false if it's in user's inventory.
 	 */
-	public abstract void use(GameState state, 
-							 PlayerCharacter user, 
-							 Collection<PlayerCharacter> targets,
-							 boolean fromCommunalInventory);
+	public abstract void use(final GameState state, 
+							 final PlayerCharacter user, 
+							 final Collection<PlayerCharacter> targets,
+							 final boolean fromCommunalInventory);
 	
 	/**
 	 * Apply the effect of this item.
@@ -108,6 +108,6 @@ public abstract class AbstractItem {
 	 * @param user The {@link PlayerCharacter} which is using this item.
 	 * @param targets The {@link PlayerCharacter}s which this item may affects.
 	 */
-	public abstract void applyEffect(GameState state, PlayerCharacter user, Collection<PlayerCharacter> targets);
+	public abstract void applyEffect(final GameState state, final PlayerCharacter user, final Collection<PlayerCharacter> targets);
 	// ===================
 }

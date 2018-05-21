@@ -52,7 +52,7 @@ public class Game extends Thread {
 		@Override
 		public Runnable put(Player player, Runnable runnable) {
 			return super.put(player, runnable);
-		}
+		}		
 	};
 	// ===========================
 
@@ -120,6 +120,14 @@ public class Game extends Thread {
 
 	public boolean getPlayerIsReady(final String auth) {
 		return playerReadyMap.get(auth);
+	}
+	
+	public boolean turnTaken(final Player player) {
+		if (turnActionMap.get(player) != null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public boolean allCharactersReady() {
@@ -232,19 +240,19 @@ public class Game extends Thread {
 			notify();
 		}
 	}
-	
+
 	public synchronized boolean areAllTurnsSubmitted() {
 		boolean bool = turnActionMap.size() > 0;
-		for(Player p : this.turnActionMap.keySet()) {
+		for (Player p : this.turnActionMap.keySet()) {
 			bool = bool && turnActionMap.containsKey(p);
 		}
 		System.out.println("All player turns tested as: " + bool);
 		return bool;
 	}
-	
+
 	public synchronized void resetTurnActionMap() {
 		turnActionMap.clear();
 	}
-	
+
 	// ==================================
 }
