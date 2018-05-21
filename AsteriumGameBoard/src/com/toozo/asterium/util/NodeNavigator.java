@@ -66,6 +66,7 @@ public class NodeNavigator {
 		try {
 
 			for (Display view : Display.values()) {
+				
 				FXMLLoader loader = new FXMLLoader();
 
 				Node node = loader.load(ClassLoader.class.getResourceAsStream(view.getLocation()));
