@@ -7,7 +7,9 @@ package com.toozo.asterium.asteriumgameboard;
 
 import java.io.IOException;
 
+import com.toozo.asterium.util.GameResources;
 import com.toozo.asterium.util.NodeNavigator;
+import com.toozo.asterium.util.NodeNavigator.Display;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -29,6 +31,8 @@ import javafx.stage.Stage;
  */
 public class AsteriumGameBoard extends Application {
 
+	private static String MAIN = "/com/toozo/asterium/fxml/gameboard.fxml";
+	
 	private static final String GAME_BOARD_TITLE = "Asterium";
 	private static final String CONTAINER_CSS = "css/asteriumgameboard.css";
 	private static final int PANE_WIDTH = 275;
@@ -36,36 +40,32 @@ public class AsteriumGameBoard extends Application {
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		stage.setTitle(GAME_BOARD_TITLE);
-		stage.setScene(
-	            createScene(
-	                loadMainPane()
-	            )
-	        );
 
-	        stage.show();
+		try {
+
+			
+			FXMLLoader loader = new FXMLLoader();
+			Pane gameBoardPane = loader.load(ClassLoader.class.getResourceAsStream(MAIN));
+			GameBoardController gameBoardController = loader.getController();
+			
+			NodeNavigator navigator = new NodeNavigator(gameBoardController);
+
+			stage.setTitle(GAME_BOARD_TITLE);
+			stage.setScene(createScene(gameBoardPane));
+			stage.show();
+			navigator.display(Display.MENU);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-
-	private Pane loadMainPane() throws IOException {
-		FXMLLoader loader = new FXMLLoader();
-
-		Pane mainPane = (Pane) loader.load(ClassLoader.class.getResourceAsStream(NodeNavigator.MAIN));
-
-		GameBoardController mainController = loader.getController();
-
-		NodeNavigator navigator = new NodeNavigator();
-		navigator.setChildControllers();
-		
-		NodeNavigator.setMainController(mainController);
-		NodeNavigator.loadMenu();
-
-		return mainPane;
-	}
-
+	
 	/**
 	 * Creates the main application scene.
 	 *
-	 * @param mainPane the main application layout.
+	 * @param mainPane
+	 *            the main application layout.
 	 *
 	 * @return the created scene.
 	 */
@@ -74,7 +74,7 @@ public class AsteriumGameBoard extends Application {
 
 		return scene;
 	}
-	
+
 	/**
 	 * Creates a game.
 	 * 

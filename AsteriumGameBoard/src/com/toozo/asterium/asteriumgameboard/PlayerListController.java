@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.toozo.asterium.util.GameResources;
 
+import actiondata.SyncPlayerListRequestData.PlayerData;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 
@@ -13,7 +14,7 @@ import javafx.scene.layout.VBox;
  * @author Jenna
  *
  */
-public class PlayerListController {
+public class PlayerListController extends AbstractAsteriumController {
 
 	List<PlayerListCell> playerCells = new ArrayList<PlayerListCell>();
 	
@@ -21,16 +22,20 @@ public class PlayerListController {
 	private VBox playerList;
 	
 	// Add player views to the vbox
-	public void updatePlayers() {
-		for (int i = 0; i < GameResources.getPlayers().size(); i++) {
+	public void updatePlayers(List<PlayerData> playerData) {
+		for (int i = 0; i < playerData.size(); i++) {
 			if (i < playerCells.size()) {
-				playerCells.get(i).updateItem(GameResources.getPlayers().get(i));
+				playerCells.get(i).updateItem(playerData.get(i));
 			} else {
-				PlayerListCell cell = new PlayerListCell(GameResources.getPlayers().get(i));
+				PlayerListCell cell = new PlayerListCell(playerData.get(i));
 				playerCells.add(cell);
 				playerList.getChildren().add(cell.getPlayerView());
 			}
 		}
+	}
+
+	@Override
+	protected void setup() {
 	}
     
 }

@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import com.toozo.asterium.asteriumgameboard.LobbyController;
+import com.toozo.asterium.asteriumgameboard.MapController;
+import com.toozo.asterium.asteriumgameboard.PlayerListController;
+import com.toozo.asterium.util.NodeNavigator.Display;
+
 import actiondata.ActionData;
 import actiondata.SyncGameBoardDataRequestData;
 import actiondata.SyncGameBoardDataRequestData.ItemData;
@@ -22,56 +27,59 @@ import main.ClientConnectionHandler;
  * All methods on the navigator are static to facilitate access from anywhere in the application.
  * @author Jenna
  */
-public class GameResources {
+public final class GameResources {
 	
-	private static final String URI = "ws://localhost:8080/AsteriumWebServer/Game";	
+	private final String URI = "ws://localhost:8080/AsteriumWebServer/Game";	
 	
-	private static String lobbyId = "no lobby id";
+	private String lobbyId = "no lobby id";
 	
-	private static String authToken = "";
+	private String authToken = "";
 
-	private static ClientConnectionHandler ccHandler;
+	private ClientConnectionHandler ccHandler;
+	
+	private NodeNavigator nodeNavigator;
 	
 	/* =============== Game Data ============== */
 	
-	private static Integer food = 0;
+	private Integer food = 0;
 	
-	private static Integer fuel = 0;
+	private Integer fuel = 0;
 	
-	private static List<PlayerData> players = new ArrayList<PlayerData>();
+	private List<PlayerData> players = new ArrayList<PlayerData>();
 	
-	private static List<PlayerCharacterData> characters = new ArrayList<PlayerCharacterData>();
+	private List<PlayerCharacterData> characters = new ArrayList<PlayerCharacterData>();
 	
-	private static List<LocationData> locations = new ArrayList<LocationData>();
+	private List<LocationData> locations = new ArrayList<LocationData>();
 	
-	private static List<VictoryData> victoryConditions = new ArrayList<VictoryData>();
+	private List<VictoryData> victoryConditions = new ArrayList<VictoryData>();
 	
-	private static  List<ItemData> communalInventory = new ArrayList<ItemData>();
+	private List<ItemData> communalInventory = new ArrayList<ItemData>();
 	
-	private static boolean gameWonStatus = false;
+	private boolean gameWonStatus = false;
 	
-	public GameResources() {
+	public GameResources(NodeNavigator nodeNavigator) {
+		this.nodeNavigator = nodeNavigator;
 		ccHandler = new ClientConnectionHandler(URI);
 		registerCallbacks();
 	}
 	
-	public static void setLobbyId(String id) {
+	public void setLobbyId(String id) {
 		lobbyId = id;
 	}
 
-	public static String getLobbyId() {
+	public String getLobbyId() {
 		return lobbyId;
 	}
 
-	public static void setAuthToken(String authToken) {
-		GameResources.authToken = authToken;
+	public void setAuthToken(String authToken) {
+		authToken = authToken;
 	}
 	
-	public static String getAuthToken() {
+	public String getAuthToken() {
 		return authToken;
 	}
 	
-	public static ClientConnectionHandler getClientConnectionHandler() {
+	public ClientConnectionHandler getClientConnectionHandler() {
     	return ccHandler;
     }
 	
@@ -83,32 +91,32 @@ public class GameResources {
 		return fuel;
 	}
 	
-	public static List<PlayerData> getPlayers() {
+	public List<PlayerData> getPlayers() {
 		return players;
 	}
 	
-	public static List<PlayerCharacterData> getCharacters() {
+	public List<PlayerCharacterData> getCharacters() {
 		return characters;
 	}
 	
-	public static List<ItemData> getCommunalInventory() {
+	public List<ItemData> getCommunalInventory() {
 		return communalInventory;
 	}
 	
-	public static List<LocationData> getLocations() {
+	public List<LocationData> getLocations() {
 		return locations;
 	}
 
-	public static List<VictoryData> getVictoryConditions() {
+	public List<VictoryData> getVictoryConditions() {
 		return victoryConditions;
 	}
 
 	
-	public static void setGameWonStatus(boolean status) {
+	public void setGameWonStatus(boolean status) {
 		gameWonStatus = status;
 	}
 	
-	public static String getGameWonStatus() {
+	public String getGameWonStatus() {
 		StringBuilder endOfGameMessage = new StringBuilder();
 		if (gameWonStatus) {
 			endOfGameMessage.append("You won!");
@@ -118,7 +126,7 @@ public class GameResources {
 		return endOfGameMessage.toString();
 	}
 	
-	public static void registerCallbacks() {
+	public void registerCallbacks() {
 		
 		// Register a response with the server: what should happen 
 		// when we receive a list of locations.
@@ -135,6 +143,13 @@ public class GameResources {
 					 locations = (List<LocationData>) data.getLocations();
 					 communalInventory = (List<ItemData>) data.getCommunalInventory();
 					 characters = (List<PlayerCharacterData>) data.getPlayers();
+					 
+					 MapController controller = nodeNavigator.getController(Display.MAP);
+					 
+					 controller.update();
+					 
+					 nodeNavigator.display(Display.MAP);
+					 
 				 }
 				
 			});
@@ -151,7 +166,9 @@ public class GameResources {
 					 // Sync the data
 					 players = (List<PlayerData>) data.getPlayers();
 					 
-					 NodeNavigator.loadLobby();
+					 PlayerListController controller = nodeNavigator.getController(Display.PLAYER_LIST);
+					 
+					 controller.updatePlayers(players);
 				 }
 				
 			});

@@ -46,11 +46,11 @@ public class Game extends Thread {
 	/*
 	 * The game's map of turn actions. Maps players to their turn action(s).
 	 */
-	private final Map<Player, Runnable> turnActionMap = new ConcurrentHashMap<Player, Runnable>() {
+	private final Map<String, Runnable> turnActionMap = new ConcurrentHashMap<String, Runnable>() {
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public Runnable put(Player player, Runnable runnable) {
+		public Runnable put(String player, Runnable runnable) {
 			return super.put(player, runnable);
 		}		
 	};
@@ -152,6 +152,10 @@ public class Game extends Thread {
 		boolean isReady = !playerReadyMap.get(authToken);
 		this.playerReadyMap.put(authToken, isReady);
 		this.getGameState().executePhase();
+		this.getGameState().syncGameBoardsPlayerList();
+		synchronized (this) {
+			notify();
+		}
 		return isReady;
 	}
 
@@ -235,7 +239,7 @@ public class Game extends Thread {
 	 *            {@link Action}
 	 */
 	public synchronized void addTurnAction(final Player player, final Runnable runnable) {
-		this.turnActionMap.put(player, runnable);
+		this.turnActionMap.put(player.getAuthToken(), runnable);
 		synchronized (this) {
 			notify();
 		}
@@ -243,8 +247,8 @@ public class Game extends Thread {
 
 	public synchronized boolean areAllTurnsSubmitted() {
 		boolean bool = turnActionMap.size() > 0;
-		for (Player p : this.turnActionMap.keySet()) {
-			bool = bool && turnActionMap.containsKey(p);
+		for(Player player : getPlayers()) {
+			bool = bool && turnActionMap.containsKey(player.getAuthToken());
 		}
 		System.out.println("All player turns tested as: " + bool);
 		return bool;
