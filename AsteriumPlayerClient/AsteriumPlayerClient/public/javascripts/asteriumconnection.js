@@ -115,25 +115,26 @@ function turnActivity(){
     responseActions[uuid] = processTurnActionResponse;
 }
 
-function useItem(itemName){//Should use itemID later.
+function useItemAction(itemName, targets, isCommunal){//Should use itemID later.  
     console.log("Sending use-item!");
     var uuid = genUUID();
     message =
         {
             "request":
                 {
-                    "action_name": "turn_action",
-                    "turn_action":
+                    "action_name": "use_item",
+                    "use_item":
                         {
-                            "location_id": locationsDisplayController.selectedLocation.location_id,
-                            "activity_name": activityDisplayController.selectedActivity
+                            "item": itenName,
+                            "targets": targets,
+                            "is_communal": isCommunal
                         },
                     "auth_token": getAuthToken(),
                     "message_id": uuid
                 }
         }
     socket.send(JSON.stringify(message));
-    responseActions[uuid] = processTurnActionResponse;
+    responseActions[uuid] = ;
 }
 
 

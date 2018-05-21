@@ -46,3 +46,12 @@ function processTurnActionResponse(response){
         console.log("Failed to do turn, error_code: " + response.error_code);
     }
 }
+
+function processUseItemResponse(response){
+    if (response.error_code == 0) {
+        console.log("Item usage was a success.");
+        actionDisplayController.display();
+    } else {
+        console.log("Failed to do turn, error_code: " + response.error_code);
+    }
+}

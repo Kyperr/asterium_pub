@@ -14,7 +14,7 @@ ItemInteractionDisplayController.prototype.constructor = ItemInteractionDisplayC
 
 ItemInteractionDisplayController.prototype.init = function () {
     useButton.innerHTML = "USE";
-    useButton.setAttribute("onClick", "actionDisplayController.display()");
+    useButton.setAttribute("onClick", "itemInteractionDisplayController.useItem()");
 
     cancelButton.innerHTML = "CANCEL";
     useButtcancelButtonon.setAttribute("onClick", "actionDisplayController.display()");
@@ -34,6 +34,14 @@ ItemInteractionDisplayController.prototype.display = function () {
 
     div.appendChild(this.cancelButton);
 }
+
+ItemInteractionDisplayController.prototype.useItem = function () {
+    var targets = [user];
+    var item = viewInventoryDisplayController.selectedInventory;
+    var isCommunal = viewInventoryDisplayController.isCommunal;
+    useItemAction(item, targets, isCommunal);
+}
+
 
 //Static instance. USE THIS ONE!
 var itemInteractionDisplayController = new ItemInteractionDisplayController();
