@@ -71,7 +71,7 @@ public class AsteriumGameBoard extends Application {
 	 */
 	private Scene createScene(Pane mainPane) {
 		Scene scene = new Scene(mainPane, PANE_WIDTH, PANE_HEIGHT);
-
+		scene.getStylesheets().addAll(this.getClass().getResource("/com/toozo/asterium/css/asteriumgameboard.css").toExternalForm());
 		return scene;
 	}
 

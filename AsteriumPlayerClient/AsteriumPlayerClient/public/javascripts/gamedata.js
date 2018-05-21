@@ -9,6 +9,10 @@ var turnActionSelectedLocation;
 
 var locations = [];
 
+var personalInventory = [];
+
+var communalInventory = [];
+
 function getAuthToken(){
     var authToken = (localStorage.getItem("auth_token") == null) ? "" : localStorage.getItem("auth_token");
     return authToken;

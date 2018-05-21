@@ -77,7 +77,7 @@ public class Loadout {
 	 * @return True if the equipmentSlot is already occupied, false otherwise.
 	 */
 	public boolean slotFull(EquipmentSlot slot) {
-		return !slotEmpty(slot);
+		return this.slots.containsKey(slot);
 	}
 	
 	/**
@@ -85,7 +85,7 @@ public class Loadout {
 	 * @return True if the equipmentSlot is unoccupied, false otherwise.
 	 */
 	public boolean slotEmpty(EquipmentSlot slot) {
-		return this.slots.containsKey(slot);
+		return !slotFull(slot);
 	}
 	
 	/**

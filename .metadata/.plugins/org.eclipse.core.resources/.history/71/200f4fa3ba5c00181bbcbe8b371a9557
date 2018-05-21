@@ -133,6 +133,10 @@ public class GameState {
 
 		// Is there an action for every player and is everyone ready?? If so:
 		if (state.game.areAllTurnsSubmitted() && state.game.allCharactersReady()) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 01eccfef6cd6a09f3482f95b328749bb43d35673
 			state.setGamePhase(GamePhase.TURN_RESOLVE);
 		}
 	}
