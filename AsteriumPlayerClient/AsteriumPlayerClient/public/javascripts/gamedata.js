@@ -5,6 +5,8 @@ var playerIsReady = false;
 
 var gamePhase = "PLAYERS_JOINING";
 
+var user;
+
 var turnActionSelectedLocation;
 
 var locations = [];

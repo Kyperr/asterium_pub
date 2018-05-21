@@ -6,6 +6,7 @@
 function ViewInventoryDisplayController() {
     this.cancelButton = document.createElement("BUTTON");
     this.selectedInventory;
+    this.isCommunal;
     this.init();
 }
 
@@ -30,7 +31,7 @@ ViewInventoryDisplayController.prototype.display = function () {
     personalInventory.forEach(inventory => {
         var btnInventory = document.createElement("BUTTON");
         btnInventory.innerHTML = inventory.name;
-        btnInventory.setAttribute("onClick", "viewInventoryDisplayController.selectInventory(\'" + inventory.name + "\')");
+        btnInventory.setAttribute("onClick", "viewInventoryDisplayController.selectInventory(\'" + inventory.name + "\', false)");
         div.appendChild(this.btnLocation);
         div.appendChild(document.createElement("br"));
     });
@@ -43,7 +44,7 @@ ViewInventoryDisplayController.prototype.display = function () {
     communalInventory.forEach(inventory => {
         var btnInventory = document.createElement("BUTTON");
         btnInventory.innerHTML = inventory.name;
-        btnInventory.setAttribute("onClick", "viewInventoryDisplayController.selectInventory(\'" + inventory.name + "\')");//swap this to the item's I.D. later.
+        btnInventory.setAttribute("onClick", "viewInventoryDisplayController.selectInventory(\'" + inventory.name + "\', true)");//swap this to the item's I.D. later.
         div.appendChild(this.btnLocation);
         div.appendChild(document.createElement("br"));
     });
@@ -51,8 +52,9 @@ ViewInventoryDisplayController.prototype.display = function () {
     div.appendChild(this.cancelButton);
 }
 
-ViewInventoryDisplayController.prototype.selectInventory = function (inventoryName) {
+ViewInventoryDisplayController.prototype.selectInventory = function (inventoryName, isCommunal) {
     this.selectedInventory = inventoryName;
+    this.isCommunal = isCommunal;
     itemInteractionDisplayController.display();
 }
 

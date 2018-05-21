@@ -3,6 +3,8 @@ var requestActions = {};
 
 function syncPlayerClientData(request) {
 
+    user = request.sync_player_client_data.character.character_name;
+
     locations = [];
 
     request.sync_player_client_data.locations.forEach(location => {
