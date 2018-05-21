@@ -1,13 +1,16 @@
 package com.toozo.asteriumwebserver.gamelogic.items.equipment;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import com.toozo.asteriumwebserver.gamelogic.GameState;
 import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 import com.toozo.asteriumwebserver.gamelogic.Stat;
+import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
 import com.toozo.asteriumwebserver.gamelogic.statuseffects.AffectStats;
 
 public class EquipmentItem extends AbstractEquipmentItem {
@@ -47,6 +50,16 @@ public class EquipmentItem extends AbstractEquipmentItem {
 			put(Stat.STAMINA, 1);
 		}
 	};
+	
+	public static final Map<Double, Supplier<? extends AbstractItem>> FACTORY_PROBABILITIES;
+	static {
+		Map<Double, Supplier<? extends AbstractItem>> probsMap = new HashMap<Double, Supplier<? extends AbstractItem>>();
+		probsMap.put(0.25, EquipmentItem::createTinfoilHat);
+		probsMap.put(0.25, EquipmentItem::createLettermanJacket);
+		probsMap.put(0.25, EquipmentItem::createHareyGloves);
+		probsMap.put(0.25, EquipmentItem::createHoverSkates);
+		FACTORY_PROBABILITIES = Collections.unmodifiableMap(probsMap);
+	}
 	// =====================
 
 	// ===== FIELDS =====
@@ -73,7 +86,7 @@ public class EquipmentItem extends AbstractEquipmentItem {
 
 	// ===== CONSTRUCTORS =====
 	public EquipmentItem(final String name, final EquipmentSlot equipmentType, final Map<Stat, Integer> boosts) {
-		super(name, equipmentType);
+		super(name, equipmentType, FACTORY_PROBABILITIES);
 		this.boosts = boosts;
 	}
 	// ========================
@@ -88,7 +101,6 @@ public class EquipmentItem extends AbstractEquipmentItem {
 		String name = this.getName() + " Equipped";
 		AffectStats effect = new AffectStats(user, name, statModifiers);
 		user.addStatusEffect(effect);
-
 	}
 
 }

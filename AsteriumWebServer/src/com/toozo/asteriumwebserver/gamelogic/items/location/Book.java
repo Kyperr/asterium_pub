@@ -9,10 +9,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import com.toozo.asteriumwebserver.gamelogic.GameState;
 import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 import com.toozo.asteriumwebserver.gamelogic.Stat;
+import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
 import com.toozo.asteriumwebserver.gamelogic.statuseffects.AffectStats;
 
 /**
@@ -66,10 +68,17 @@ public class Book extends AbstractLocationItem {
 	// Other
 	public static final String ERROR_NAME = "Squashing Bugs, 1st Edition";
 	public static final int DEFAULT_STAT_BOOST = 1;
-	public static final Random RNG = new Random();
 	public static final double SINGLE_PROBABILITY = 0.8;
 	public static final double DOUBLE_PROBABILITY = 0.15;
 	public static final double TRIPLE_PROBABILITY = 0.05;
+	public static final Map<Double, Supplier<? extends AbstractItem>> FACTORY_PROBABILITIES;
+	static {
+		Map<Double, Supplier<? extends AbstractItem>> probsMap = new HashMap<Double, Supplier<? extends AbstractItem>>();
+		probsMap.put(1.0, Book::createBook);
+		FACTORY_PROBABILITIES = Collections.unmodifiableMap(probsMap);
+	}
+
+	private static final Random RNG = new Random();
 	// =====================
 
 	// ===== INSTANCE FIELDS =====
@@ -90,7 +99,6 @@ public class Book extends AbstractLocationItem {
 	 * @return a "random" {@link Collection} of {@link Stat}s, as defined above.
 	 */
 	private static Collection<Stat> generateStats() {
-		double[] weights = { SINGLE_PROBABILITY, DOUBLE_PROBABILITY, TRIPLE_PROBABILITY };
 		int numberOfStats = 0;
 		ArrayList<Stat> result = new ArrayList<Stat>();
 
@@ -101,10 +109,15 @@ public class Book extends AbstractLocationItem {
 			}
 		}
 
-		// Determine number of Stats which should be in result.
-		double random = RNG.nextDouble();
-		for (numberOfStats = 1; random < weights[numberOfStats - 1]; numberOfStats++) {
+		// Generate weights distribution (e.g. {0.8, 0.15, 0.05} -> {0.8, 0.95, 1.0})
+		double[] weights = {SINGLE_PROBABILITY, DOUBLE_PROBABILITY, TRIPLE_PROBABILITY};
+		for (int i = 1; i < weights.length; i++) {
+			weights[i] += weights[i - 1];
 		}
+		
+		// Determine number of Stats which should be in result based on weights distribution.
+		double random = RNG.nextDouble();
+		for (numberOfStats = 1; random > weights[numberOfStats - 1]; numberOfStats++) {}
 
 		// Randomly return that many Stats
 		Collections.shuffle(result, RNG);
@@ -135,6 +148,13 @@ public class Book extends AbstractLocationItem {
 		}
 	}
 	// ==========================
+	
+	// ===== FACTORIES =====
+	public static Book createBook() {
+		// Generate a book which boosts random stats by 1
+		return new Book(1);
+	}
+	// =====================
 
 	// ===== CONSTRUCTORS =====
 	/**
@@ -183,7 +203,7 @@ public class Book extends AbstractLocationItem {
 	 *            The amount by which this book will boost stats.
 	 */
 	public Book(final String name, final Collection<Stat> stats, final int amount) {
-		super(name);
+		super(name, FACTORY_PROBABILITIES);
 		this.stats = stats;
 		this.effect = (oldStat) -> (oldStat + amount);
 	}

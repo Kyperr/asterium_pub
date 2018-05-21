@@ -1,0 +1,11 @@
+package com.toozo.asteriumwebserver.gamelogic.items;
+
+import java.util.Map;
+
+public class LootPool {
+	private Map<AbstractItem, Double> probabilities;
+	
+	public LootPool(Map<AbstractItem, Double> lootProbabilities) {
+		
+	}
+}
