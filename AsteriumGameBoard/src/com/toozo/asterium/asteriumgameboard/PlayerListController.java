@@ -14,7 +14,7 @@ import javafx.scene.layout.VBox;
  * @author Jenna
  *
  */
-public class PlayerListController {
+public class PlayerListController extends AbstractAsteriumController {
 
 	List<PlayerListCell> playerCells = new ArrayList<PlayerListCell>();
 	
@@ -32,6 +32,10 @@ public class PlayerListController {
 				playerList.getChildren().add(cell.getPlayerView());
 			}
 		}
+	}
+
+	@Override
+	protected void setup() {
 	}
     
 }

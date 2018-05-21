@@ -27,7 +27,9 @@ public class TurnSummaryController extends AbstractAsteriumController{
 		}
 	}
 	
-	@FXML
-	public void initialize() {
+	@Override
+	protected void setup() {
+		// TODO Auto-generated method stub
+		
 	}
 }

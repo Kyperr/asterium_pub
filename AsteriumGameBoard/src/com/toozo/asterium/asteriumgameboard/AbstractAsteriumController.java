@@ -5,7 +5,7 @@ import javax.resource.spi.IllegalStateException;
 import com.toozo.asterium.util.GameResources;
 import com.toozo.asterium.util.NodeNavigator;
 
-public class AbstractAsteriumController {
+public abstract class AbstractAsteriumController {
 
 	private boolean isInitialized = false;
 
@@ -21,7 +21,10 @@ public class AbstractAsteriumController {
 			this.nodeNavigator = nodeNavigator;
 			this.isInitialized = true;
 		}
+		setup();
 	}
+	
+	protected abstract void setup();
 	
 	protected GameResources getGameResources() throws IllegalStateException {
 		if(isInitialized) {

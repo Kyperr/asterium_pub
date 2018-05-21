@@ -95,7 +95,7 @@ function toggleReady() {
 }
 
 function turnActivity(){
-    console.log("Toggling ready!");
+    console.log("Sending turn action!");
     var uuid = genUUID();
     message =
         {

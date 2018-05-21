@@ -11,8 +11,5 @@
 	fx:controller="com.toozo.asterium.asteriumgameboard.MapController">
 	<center>
 	</center>
-	<bottom>
-		<Button text="Ready" onAction="#handleReadyButtonAction" fx:id="readyButton" />
-	</bottom>
 
 </BorderPane>

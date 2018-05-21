@@ -102,6 +102,10 @@ public class MenuController extends AbstractAsteriumController {
 						// Go to the lobby
 						try {
 					    	System.out.println("Displaying lobby.");
+					    	
+					    	LobbyController lobbyController = getNodeNavigator().getController(Display.LOBBY);
+					    	lobbyController.updateLobbyId();
+					    	
 							getNodeNavigator().display(Display.LOBBY);
 						} catch (IllegalStateException e) {
 							// TODO Auto-generated catch block
@@ -118,8 +122,9 @@ public class MenuController extends AbstractAsteriumController {
 
 	}
 
-	@FXML
-	public void initialize() {
+	@Override
+	protected void setup() {
+		// TODO Auto-generated method stub
+		
 	}
-
 }

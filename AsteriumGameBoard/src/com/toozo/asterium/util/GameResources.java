@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import com.toozo.asterium.asteriumgameboard.LobbyController;
+import com.toozo.asterium.asteriumgameboard.MapController;
+import com.toozo.asterium.asteriumgameboard.PlayerListController;
 import com.toozo.asterium.util.NodeNavigator.Display;
 
 import actiondata.ActionData;
@@ -140,6 +143,13 @@ public final class GameResources {
 					 locations = (List<LocationData>) data.getLocations();
 					 communalInventory = (List<ItemData>) data.getCommunalInventory();
 					 characters = (List<PlayerCharacterData>) data.getPlayers();
+					 
+					 MapController controller = nodeNavigator.getController(Display.MAP);
+					 
+					 controller.update();
+					 
+					 nodeNavigator.display(Display.MAP);
+					 
 				 }
 				
 			});
@@ -156,7 +166,9 @@ public final class GameResources {
 					 // Sync the data
 					 players = (List<PlayerData>) data.getPlayers();
 					 
-					 nodeNavigator.display(Display.LOBBY);
+					 PlayerListController controller = nodeNavigator.getController(Display.PLAYER_LIST);
+					 
+					 controller.updatePlayers(players);
 				 }
 				
 			});

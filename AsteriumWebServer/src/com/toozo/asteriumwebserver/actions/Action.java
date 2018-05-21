@@ -187,8 +187,11 @@ public abstract class Action implements Runnable {
 
 		// Try to send the error response
 		try {
-			SessionManager.getInstance().getSession(getCallingAuthToken()).getBasicRemote()
-					.sendText(message.jsonify().toString());
+			Session session = SessionManager.getInstance().getSession(getCallingAuthToken());
+			synchronized(session) {
+				session.getBasicRemote()
+						.sendText(message.jsonify().toString());	
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

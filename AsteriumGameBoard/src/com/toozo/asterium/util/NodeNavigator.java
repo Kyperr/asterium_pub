@@ -22,10 +22,12 @@ import javafx.scene.layout.Pane;
 public class NodeNavigator {
 
 	public static enum Display {
-		LOBBY("/com/toozo/asterium/fxml/lobby.fxml"), MAP("/com/toozo/asterium/fxml/map.fxml"), MENU(
-				"/com/toozo/asterium/fxml/menu.fxml"), TURN_SUMMARY(
-						"/com/toozo/asterium/fxml/turnsummary.fxml"), GAME_SUMMARY(
-								"/com/toozo/asterium/fxml/gamesummary.fxml");
+		LOBBY("/com/toozo/asterium/fxml/lobby.fxml"),
+		MAP("/com/toozo/asterium/fxml/map.fxml"),
+		MENU("/com/toozo/asterium/fxml/menu.fxml"),
+		TURN_SUMMARY("/com/toozo/asterium/fxml/turnsummary.fxml"),
+		GAME_SUMMARY("/com/toozo/asterium/fxml/gamesummary.fxml"),
+		PLAYER_LIST("/com/toozo/asterium/fxml/playerlist.fxml");
 
 		String fxmlLocation;
 
@@ -64,17 +66,21 @@ public class NodeNavigator {
 		try {
 
 			for (Display view : Display.values()) {
+				FXMLLoader loader = new FXMLLoader();
+
+				Node node = loader.load(ClassLoader.class.getResourceAsStream(view.getLocation()));
+				
+				layoutMap.put(view, node);
+
+				AbstractAsteriumController controller = loader.getController();
+
+				loaderMap.put(view, controller);
+			}
+			
+			//Once they all exist, initialize all of them.
+			for(AbstractAsteriumController aac: loaderMap.values()) {
 				try {
-					FXMLLoader loader = new FXMLLoader();
-
-					Node node = loader.load(ClassLoader.class.getResourceAsStream(view.getLocation()));
-					layoutMap.put(view, node);
-
-					AbstractAsteriumController controller = loader.getController();
-
-					controller.initialize(this.gameResources, this);
-
-					loaderMap.put(view, controller);
+					aac.initialize(this.gameResources, this);
 				} catch (IllegalStateException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

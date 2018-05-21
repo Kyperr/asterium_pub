@@ -22,11 +22,7 @@ public class GameSummaryController extends AbstractAsteriumController {
     
     @FXML
     private Button backButton;
-    
-    @FXML
-    public void initialize() {
-    }    
-    
+        
     public void handleMenuButtonAction(ActionEvent event) {
     	try {
 			getNodeNavigator().display(Display.MENU);
@@ -38,5 +34,11 @@ public class GameSummaryController extends AbstractAsteriumController {
     public void update(GameResources gameResources) {
     	label.setText(gameResources.getGameWonStatus());
     }
+
+	@Override
+	protected void setup() {
+		// TODO Auto-generated method stub
+		
+	}
     
 }
