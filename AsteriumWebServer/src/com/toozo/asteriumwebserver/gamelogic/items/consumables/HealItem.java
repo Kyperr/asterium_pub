@@ -1,10 +1,15 @@
 package com.toozo.asteriumwebserver.gamelogic.items.consumables;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Supplier;
 
 import com.toozo.asteriumwebserver.gamelogic.GameState;
 import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 import com.toozo.asteriumwebserver.gamelogic.Stat;
+import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
 
 /**
  * A consumable item which, when consumed, heals all of its targets by some amount.
@@ -21,6 +26,15 @@ public class HealItem extends AbstractConsumableItem {
 	
 	public static final String TRIAGE_NAME = "Nanobot Syringe";
 	public static final int TRIAGE_HEAL_AMOUNT = 10;
+	
+	public static final Map<Double, Supplier<? extends AbstractItem>> FACTORY_PROBABILITIES;
+	static {
+		Map<Double, Supplier<? extends AbstractItem>> probsMap = new HashMap<Double, Supplier<? extends AbstractItem>>();
+		probsMap.put(0.6, HealItem::createBandage);
+		probsMap.put(0.3, HealItem::createMedkit);
+		probsMap.put(0.1, HealItem::createTriage);
+		FACTORY_PROBABILITIES = Collections.unmodifiableMap(probsMap);
+	}
 	// =====================
 	
 	// ===== FIELDS =====
@@ -48,7 +62,7 @@ public class HealItem extends AbstractConsumableItem {
 	 * @param healAmount The amount this healItem should heal each of its targets.
 	 */
 	public HealItem(final String name, final int healAmount) {
-		super(name);
+		super(name, FACTORY_PROBABILITIES);
 		this.healAmount = healAmount;
 	}
 	// ========================

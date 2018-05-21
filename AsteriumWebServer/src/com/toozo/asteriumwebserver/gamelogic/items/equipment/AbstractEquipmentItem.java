@@ -1,6 +1,8 @@
 package com.toozo.asteriumwebserver.gamelogic.items.equipment;
 
 import java.util.Collection;
+import java.util.Map;
+import java.util.function.Supplier;
 
 import com.toozo.asteriumwebserver.gamelogic.GameState;
 import com.toozo.asteriumwebserver.gamelogic.Inventory;
@@ -23,8 +25,9 @@ public abstract class AbstractEquipmentItem extends AbstractItem {
 	 * Abstract constructor which defines which type of equipment this is.
 	 * @param equipmentType the {@link EquipmentSlot} to which this item is native.
 	 */
-	protected AbstractEquipmentItem(EquipmentSlot equipmentType) {
-		super();
+	protected AbstractEquipmentItem(final String name, final EquipmentSlot equipmentType,
+									final Map<Double, Supplier<? extends AbstractItem>> factoryProbabilities) {
+		super(name, factoryProbabilities);
 		this.equipmentType = equipmentType;
 	}
 	// ========================

@@ -1,0 +1,60 @@
+package com.toozo.asteriumwebserver.gamelogic.items;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.function.Supplier;
+
+public class LootPool {
+	// ===== CONSTANTS =====
+	private static final Random RNG = new Random();
+	// =====================
+	
+	// ===== FIELDS =====
+	private Map<Supplier<? extends AbstractItem>, Double> probabilities;
+	// ==================
+	
+	// ===== CONSTRUCTORS =====
+	public LootPool(Map<Supplier<? extends AbstractItem>, Double> lootProbabilities) {
+		this.probabilities = lootProbabilities;
+	}
+	// ========================
+	
+	// ===== METHODS =====
+	public Collection<AbstractItem> loot() {
+		Collection<AbstractItem> result = new ArrayList<AbstractItem>();
+		for (Supplier<? extends AbstractItem> superItem : this.probabilities.keySet()) {
+			double probability = this.probabilities.get(superItem);
+			double random = RNG.nextDouble();
+			if (random > probability) {
+				result.add(superItem.get().getLoot());
+			}
+		}
+		return result;
+	}
+	
+	public Collection<AbstractItem> lootItems(int numberOfItems) {
+		List<AbstractItem> items = new ArrayList<AbstractItem>();
+		
+		// Keep looting until you have at least numberOfItems
+		while (items.size() < numberOfItems) {
+			items.addAll(loot());
+		}
+		
+		// Return numberOfItems' worth of items
+		Collections.shuffle(items);
+		return items.subList(0, numberOfItems);
+	}
+	
+	public AbstractItem lootItem(int numberOfItems) {
+		Collection<AbstractItem> oneItemCollection = lootItems(1);
+		AbstractItem[] itemArray = new AbstractItem[oneItemCollection.size()];
+		itemArray = oneItemCollection.toArray(itemArray);
+		return itemArray[0];
+	}
+	
+	// ===================
+}
