@@ -52,6 +52,7 @@ public interface ActionData {
 	public static final String ACTIVITIES = "activities";
 	public static final String ACTIVITY_NAME = "activity_name";
 	public static final String CHARACTER = "character";
+	public static final String CHARACTERS = "characters";
 	public static final String CHARACTER_NAME = "character_name";
 	public static final String LOCATION = "location";
 	public static final String LOCATIONS = "locations";
