@@ -4,7 +4,6 @@
 //
 
 function LocationsDisplayController() {
-    this.btnLocation = document.createElement("BUTTON");
     this.selectedLocation;
     this.init();
 }
@@ -25,11 +24,11 @@ LocationsDisplayController.prototype.display = function () {
 
     var that = this;
     locations.forEach(location => {
-        this.btnLocation = document.createElement("BUTTON");
+        var btnLocation = document.createElement("BUTTON");
 
         //Should map the id to a display-friendly string and get it here.
 
-        that.btnLocation.innerHTML = location.;
+        that.btnLocation.innerHTML = location.location_id;
         that.btnLocation.setAttribute("onClick", "locationsDisplayController.selectLocation(\'" + location.location_id + "\')");
         div.appendChild(this.btnLocation);
         div.appendChild(document.createElement("br"));
