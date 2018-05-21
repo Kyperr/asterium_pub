@@ -60,7 +60,7 @@ public class AffectStats extends AbstractStatusEffect {
 		this.statModifier = statModifier;
 	}
 
-	@Override	
+	@Override
 	/**
 	 * Applies the statModifier to the stat.
 	 * 
