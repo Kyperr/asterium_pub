@@ -14,7 +14,7 @@
 		<Label minHeight="16" minWidth="69" fx:id="foodLabel" />
 	</top>
 	<center>
-		<ScrollPane fx:id="scrollPane"/>
+		<ScrollPane fx:id="mapScrollPane"/>
 	</center>
 
 </BorderPane>

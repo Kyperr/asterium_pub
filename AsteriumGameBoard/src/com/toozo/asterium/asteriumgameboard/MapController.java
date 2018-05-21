@@ -24,7 +24,7 @@ public class MapController extends AbstractAsteriumController {
 	private Label foodLabel;
 
 	@FXML
-	private ScrollPane scrollPane;
+	private ScrollPane mapScrollPane;
 
 	@Override
 	protected void setup() {
@@ -37,6 +37,7 @@ public class MapController extends AbstractAsteriumController {
 			foodLabel.setText("Food storage: [" + getGameResources().getFood() + "]");
 			
 			GridPane gridPane = new GridPane();
+			gridPane.setStyle("-fx-background-color: rgba(255, 255, 255, 0.5);");
 			int i = 0;
 			for (LocationData loc : getGameResources().getLocations()) {
 				Label locLabel = new Label(loc.getName() + "(" + loc.getType().toString() + ")");
@@ -44,7 +45,7 @@ public class MapController extends AbstractAsteriumController {
 				i++;
 			}
 
-			scrollPane.setContent(gridPane);
+			mapScrollPane.setContent(gridPane);
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
