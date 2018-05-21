@@ -10,14 +10,14 @@
 	-fx-background-color: rgba(255,0,255, 0.1);/* */
 }
 
-#LobbyPane {/*Holds the lobbyVBox and the player scroll pane */
+#LobbyPane, #MapPane {/*Holds the lobbyVBox and the player scroll pane */
 	-fx-background-color: rgba(255,140,0, 0.0);/* */
 	-fx-border-color: black;
 	-fx-border-insets: 5;
 	-fx-border-width: 3;
 }
 
-#lobbyBorderPane{/*Where the lobby code is displayed */
+#lobbyBorderPane, #mapInfoBorderPane{/*Where info is displayed */
 	-fx-background-color: rgba(0,0,0, 0.5);/*light light blue */
     -fx-font: 20px "Serif";
     -fx-text-base-color: white;
@@ -33,7 +33,7 @@
    -fx-background-color: transparent;
 }
 
-#playersScrollPane {
+#playersScrollPane, #mapScrollPane {
 	-fx-background-color: rgba(105,105,105, .5);/*Gray, half vis */
 	
 }
@@ -42,7 +42,7 @@
 	-fx-background-color: rgba(0,0,205, 0.0);/*Blue */	
 }
 
-#nameLabel, #readyLabel {
+#nameLabel, #foodLabel {
     -fx-font: 20px "Serif";
 	-fx-padding: 5px;
     -fx-border-insets: 5px;

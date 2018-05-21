@@ -10,11 +10,14 @@
 	xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="com.toozo.asterium.asteriumgameboard.MapController">
 	<top>
-		<Label minHeight="16" minWidth="69" fx:id="locationLabel" />
-		<Label minHeight="16" minWidth="69" fx:id="foodLabel" />
+		<BorderPane fx:id="mapInfoBorderPane">
+			<center>
+				<Label minHeight="16" minWidth="69" fx:id="foodLabel" />
+			</center>
+		</BorderPane>
 	</top>
 	<center>
-		<ScrollPane fx:id="mapScrollPane"/>
+		<ScrollPane fx:id="mapScrollPane" />
 	</center>
 
 </BorderPane>
