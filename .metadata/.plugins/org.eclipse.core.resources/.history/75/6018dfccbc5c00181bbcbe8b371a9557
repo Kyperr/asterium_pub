@@ -241,10 +241,6 @@ public class GameState {
 	public PlayerCharacter getCharacter(final String auth) {
 		return authCharacterMap.get(auth);
 	}
-	
-	public PlayerCharacter getCharacterByName(final String name) {
-		return nameCharacterMap.get(name);
-	}
 
 	/**
 	 * Gets a {@link Collection} of the {@link PlayerCharacter}s in the game.
@@ -341,7 +337,6 @@ public class GameState {
 	// ===== OTHER INSTANCE METHODS =====
 	public void addPlayerCharacter(final String playerAuthToken, final PlayerCharacter pc) {
 		this.authCharacterMap.put(playerAuthToken, pc);
-		this.nameCharacterMap.put(pc.getCharacterName(), pc);
 		syncGameBoardsPlayerList();
 	}
 	

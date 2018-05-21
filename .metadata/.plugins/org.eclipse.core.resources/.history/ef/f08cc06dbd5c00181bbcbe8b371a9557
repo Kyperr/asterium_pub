@@ -3,6 +3,7 @@ package com.toozo.asteriumwebserver.actions;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.UUID;
 
 import javax.websocket.Session;
@@ -24,7 +25,7 @@ import message.Response;
 
 /**
  * A {@link RequestAction} from a {@link PlayerCharacter} which uses an
- * {@link AbstractItem} from an {@link Inventory}.
+ * {@link Item} from an {@link Inventory}.
  * 
  * @author Studio Toozo
  */

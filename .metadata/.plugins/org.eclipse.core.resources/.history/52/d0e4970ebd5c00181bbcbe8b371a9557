@@ -3,6 +3,7 @@ package com.toozo.asteriumwebserver.actions;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.UUID;
 
 import javax.websocket.Session;
@@ -24,7 +25,7 @@ import message.Response;
 
 /**
  * A {@link RequestAction} from a {@link PlayerCharacter} which uses an
- * {@link AbstractItem} from an {@link Inventory}.
+ * {@link Item} from an {@link Inventory}.
  * 
  * @author Studio Toozo
  */
@@ -41,9 +42,6 @@ public class UseItemAction extends Action {
 		this.state = GameManager.getInstance().getGameForPlayer(authToken).getGameState();
 		this.user = this.state.getCharacter(authToken);
 		this.targets = new ArrayList<PlayerCharacter>();
-		for (String name : targets) {
-			this.targets.add(this.state.getCharacterByName(name));
-		}
 		this.itemData = item;
 		this.isCommunal = isCommunal;
 	}
@@ -55,8 +53,13 @@ public class UseItemAction extends Action {
 		Message message = null;
 		if (game != null) {
 			GameState state = game.getGameState();
-			PlayerCharacter user = this.user;
-			Collection<PlayerCharacter> targets = this.targets;
+			PlayerCharacter user = state.getCharacter(this.userData.getAuthToken());
+			Collection<PlayerCharacter> targets = new HashSet<PlayerCharacter>();
+
+			for (PlayerCharacterData targetData : this.targetsData) {
+				PlayerCharacter target = state.getCharacter(targetData.getAuthToken());
+				targets.add(target);
+			}
 
 			AbstractItem item = AbstractItem.getItem(this.itemData.getItemID());
 			if (user != null && item != null && user.getInventory().contains(item)) {
@@ -94,7 +97,7 @@ public class UseItemAction extends Action {
 	 */
 	public static UseItemAction fromMessage(final Message message) {
 		UseItemRequestData data = UseItemRequestData.class.cast(message.getActionData());
-		return new UseItemAction(message.getAuthToken(), message.getMessageID(), data.getTargets(),
+		return new UseItemAction(message.getAuthToken(), message.getMessageID(), data.getUser(), data.getTargets(),
 				data.getItem(), data.getIsCommunal());
 
 	}

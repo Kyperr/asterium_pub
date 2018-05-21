@@ -341,7 +341,6 @@ public class GameState {
 	// ===== OTHER INSTANCE METHODS =====
 	public void addPlayerCharacter(final String playerAuthToken, final PlayerCharacter pc) {
 		this.authCharacterMap.put(playerAuthToken, pc);
-		this.nameCharacterMap.put(pc.getCharacterName(), pc);
 		syncGameBoardsPlayerList();
 	}
 	

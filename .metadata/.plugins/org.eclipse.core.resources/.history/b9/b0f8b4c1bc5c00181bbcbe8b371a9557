@@ -217,7 +217,6 @@ public class GameState {
 		this.food = STARTING_FOOD_PER_PLAYER * this.game.getPlayers().size();
 		this.fuel = STARTING_FUEL;
 		this.authCharacterMap = new ConcurrentHashMap<String, PlayerCharacter>();
-		this.nameCharacterMap = new ConcurrentHashMap<String, PlayerCharacter>();
 		this.victoryConditions = new ArrayList<VictoryCondition>();
 		this.communalInventory = new Inventory();
 	}
@@ -240,10 +239,6 @@ public class GameState {
 
 	public PlayerCharacter getCharacter(final String auth) {
 		return authCharacterMap.get(auth);
-	}
-	
-	public PlayerCharacter getCharacterByName(final String name) {
-		return nameCharacterMap.get(name);
 	}
 
 	/**
@@ -341,7 +336,6 @@ public class GameState {
 	// ===== OTHER INSTANCE METHODS =====
 	public void addPlayerCharacter(final String playerAuthToken, final PlayerCharacter pc) {
 		this.authCharacterMap.put(playerAuthToken, pc);
-		this.nameCharacterMap.put(pc.getCharacterName(), pc);
 		syncGameBoardsPlayerList();
 	}
 	
