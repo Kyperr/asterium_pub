@@ -11,9 +11,9 @@ function syncPlayerClientData(request) {
         locations[location.location_id] = location;
     });
 
-    communalInventory = request.communal_inventory;
+    communalInventory = request.sync_player_client_data.communal_inventory;
 
-    personalInventory = request.character.personal_inventory;
+    personalInventory = request.sync_player_client_data.character.personal_inventory;
 
     var newPhase = request.sync_player_client_data.game_phase_name;
 

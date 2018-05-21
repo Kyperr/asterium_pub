@@ -11,7 +11,7 @@ public class SyncPlayerListRequestData extends AbstractRequestActionData {
 	Collection<PlayerData> players;
 
 	public SyncPlayerListRequestData(Collection<SyncPlayerListRequestData.PlayerData> players) {
-		super(ActionData.SyncPlayerList);
+		super(ActionData.SYNC_PLAYER_LIST);
 		this.players = players;
 	}
 

@@ -10,6 +10,7 @@ import com.toozo.asteriumwebserver.gamelogic.GameState;
 import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodItem;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.HealItem;
+import com.toozo.asteriumwebserver.gamelogic.items.location.RescueBeacon;
 
 /**
  * The abstract class for an item that can be used by a {@link PlayerCharacter}.
@@ -40,6 +41,8 @@ public abstract class AbstractItem {
 			put(FoodItem.PACK_NAME, FoodItem::createPack);
 			put(FoodItem.CRATE_NAME, FoodItem::createCrate);
 			put(FoodItem.CHEST_NAME, FoodItem::createChest);
+			
+			put(RescueBeacon.NAME, RescueBeacon::new);
 		}
 	};
 	// =====================

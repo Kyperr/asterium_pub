@@ -125,7 +125,9 @@ function useItemAction(itemName, targets, isCommunal){//Should use itemID later.
                     "action_name": "use_item",
                     "use_item":
                         {
-                            "item": itenName,
+                            "item": {
+                                "item_id": itemName
+                            },
                             "targets": targets,
                             "is_communal": isCommunal
                         },
@@ -134,7 +136,7 @@ function useItemAction(itemName, targets, isCommunal){//Should use itemID later.
                 }
         }
     socket.send(JSON.stringify(message));
-    responseActions[uuid] = ;
+    responseActions[uuid] = processUseItemResponse;
 }
 
 

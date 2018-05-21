@@ -241,7 +241,7 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 			data.put(ActionData.STATS, this.stats.jsonify());
 			JSONArray inventoryArray = new JSONArray();
 			for (InventoryData item : this.inventory) {
-				data.put(ActionData.ITEM, item.jsonify());
+				inventoryArray.put(item.jsonify());
 			}
 			data.put(ActionData.PERSONAL_INVENTORY, inventoryArray);
 			data.put(ActionData.LOADOUT, this.equipped.jsonify());

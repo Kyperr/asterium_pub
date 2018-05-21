@@ -157,7 +157,7 @@ public final class GameResources {
 		
 		// Register a response with the server: what should happen 
 		// when we receive a list of players
-		ccHandler.registerRequestCallback(ActionData.SyncPlayerList,  (message) -> {
+		ccHandler.registerRequestCallback(ActionData.SYNC_PLAYER_LIST,  (message) -> {
 			 System.err.println("Received sync_player_list");
 			Platform.runLater(new Runnable() {
 				 @Override public void run() {

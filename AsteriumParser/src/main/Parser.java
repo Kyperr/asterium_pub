@@ -24,6 +24,7 @@ import actiondata.ToggleReadyUpRequestData;
 import actiondata.ToggleReadyUpResponseData;
 import actiondata.TurnRequestData;
 import actiondata.TurnResponseData;
+import actiondata.UseItemRequestData;
 import message.Message;
 import message.Request;
 import message.Response;
@@ -61,7 +62,9 @@ public class Parser {
 		put(Arrays.asList(true, ActionData.SYNC_GAME_BOARD_DATA), SyncGameBoardDataRequestData::parseArgs);
 		//put(Arrays.asList(false, ActionData.SYNC_GAME_BOARD_DATA), SyncGameBoardDataResponseData::parseArgs);
 		
-		put(Arrays.asList(true, ActionData.SyncPlayerList), SyncPlayerListRequestData::parseArgs);
+		put(Arrays.asList(true, ActionData.SYNC_PLAYER_LIST), SyncPlayerListRequestData::parseArgs);
+
+		put(Arrays.asList(true, ActionData.USE_ITEM), UseItemRequestData::parseArgs);
 	}};
 
 	/**

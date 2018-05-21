@@ -178,7 +178,7 @@ public class GameState {
 			Location l = state.getAtMapLocation(s);
 			// if(l.distance <= player.stamina)//pseudocode
 			SyncGameBoardDataRequestData.LocationData.LocationType type = SyncGameBoardDataRequestData.LocationData.LocationType
-					.valueOf(l.getType().getJSONVersion());
+					.valueOf(l.getType().toString());
 
 			SyncGameBoardDataRequestData.LocationData locData = new SyncGameBoardDataRequestData.LocationData(s,
 					l.getName(), type, l.getActivityNames());
@@ -476,7 +476,7 @@ public class GameState {
 			Location l = getAtMapLocation(s);
 			// if(l.distance <= player.stamina)//pseudocode
 			SyncPlayerClientDataRequestData.LocationData.LocationType type = SyncPlayerClientDataRequestData.LocationData.LocationType
-					.valueOf(l.getType().getJSONVersion());
+					.valueOf(l.getType().toString());
 
 			SyncPlayerClientDataRequestData.LocationData locData = new SyncPlayerClientDataRequestData.LocationData(s,
 					l.getName(), type, l.getActivityNames());

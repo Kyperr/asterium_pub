@@ -39,7 +39,7 @@ public class MapController extends AbstractAsteriumController {
 			GridPane gridPane = new GridPane();
 			int i = 0;
 			for (LocationData loc : getGameResources().getLocations()) {
-				Label locLabel = new Label(loc.getMapLocation() + "(" + loc.getType() + ")");
+				Label locLabel = new Label(loc.getName() + "(" + loc.getType().toString() + ")");
 				gridPane.add(locLabel, 0, i);
 				i++;
 			}

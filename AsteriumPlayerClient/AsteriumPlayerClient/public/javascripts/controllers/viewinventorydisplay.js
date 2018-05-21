@@ -14,8 +14,8 @@ ViewInventoryDisplayController.prototype = Object.create(AbstractDisplayControll
 ViewInventoryDisplayController.prototype.constructor = ViewInventoryDisplayController;
 
 ViewInventoryDisplayController.prototype.init = function () {
-    cancelButton.innerHTML = "CANCEL";
-    cancelButton.setAttribute("onClick", "actionDisplayController.display()");
+    this.cancelButton.innerHTML = "CANCEL";
+    this.cancelButton.setAttribute("onClick", "actionDisplayController.display()");
 }
 
 ViewInventoryDisplayController.prototype.display = function () {
@@ -30,9 +30,9 @@ ViewInventoryDisplayController.prototype.display = function () {
 
     personalInventory.forEach(inventory => {
         var btnInventory = document.createElement("BUTTON");
-        btnInventory.innerHTML = inventory.name;
-        btnInventory.setAttribute("onClick", "viewInventoryDisplayController.selectInventory(\'" + inventory.name + "\', false)");
-        div.appendChild(this.btnLocation);
+        btnInventory.innerHTML = inventory.item_name;
+        btnInventory.setAttribute("onClick", "viewInventoryDisplayController.selectInventory(\'" + inventory.item_name + "\', false)");
+        div.appendChild(btnInventory);
         div.appendChild(document.createElement("br"));
     });
 
@@ -43,9 +43,9 @@ ViewInventoryDisplayController.prototype.display = function () {
 
     communalInventory.forEach(inventory => {
         var btnInventory = document.createElement("BUTTON");
-        btnInventory.innerHTML = inventory.name;
-        btnInventory.setAttribute("onClick", "viewInventoryDisplayController.selectInventory(\'" + inventory.name + "\', true)");//swap this to the item's I.D. later.
-        div.appendChild(this.btnLocation);
+        btnInventory.innerHTML = inventory.item_name;
+        btnInventory.setAttribute("onClick", "viewInventoryDisplayController.selectInventory(\'" + inventory.item_name + "\', true)");//swap this to the item's I.D. later.
+        div.appendChild(btnInventory);
         div.appendChild(document.createElement("br"));
     });
 

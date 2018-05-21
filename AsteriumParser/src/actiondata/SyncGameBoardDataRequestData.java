@@ -62,6 +62,7 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 		// Add resources to data
 		data.put(ActionData.FOOD, this.food);
 		data.put(ActionData.FUEL, this.fuel);
+		data.put(ActionData.DAY, this.day);
 		
 		// Add players to data
 		JSONArray players = new JSONArray();
@@ -117,8 +118,8 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 			String mapLocation = locationObject.getString(ActionData.MAP_LOCATION);
 			String name = locationObject.getString(ActionData.LOCATION_NAME);
 			LocationType type;
-			JSONObject typeObject = locationObject.getJSONObject(ActionData.LOCATION_TYPE);
-			type = LocationType.valueOf(typeObject.getString(ActionData.LOCATION_TYPE));
+			String typeObject = locationObject.getString(ActionData.LOCATION_TYPE);
+			type = LocationType.valueOf(typeObject);
 			Set<String> activities = new HashSet<String>();
 			JSONArray activitiesArray  = locationObject.getJSONArray(ActionData.ACTIVITIES);
 			for (int j = 0; j < activitiesArray.length(); j++) {
@@ -308,6 +309,14 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 			}
 		}
 		
+		public String getName() {
+			return this.name;
+		}
+		
+		public LocationType getType() {
+			return this.type;
+		}
+		
 		public LocationData(final String locationID, final String name, final LocationType type,
 				final Set<String> activities) {
 			this.mapLocation = locationID;
@@ -320,7 +329,7 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 			JSONObject data = new JSONObject();
 			data.put(ActionData.MAP_LOCATION, this.mapLocation);
 			data.put(ActionData.LOCATION_NAME, this.name);
-			data.put(ActionData.LOCATION_TYPE, this.type.getJSONVersion());
+			data.put(ActionData.LOCATION_TYPE, this.type.toString());
 			JSONArray array = new JSONArray();
 
 			for (String s : this.activities) {
