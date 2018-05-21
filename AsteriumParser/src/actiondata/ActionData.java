@@ -43,6 +43,7 @@ public interface ActionData {
 	public static final String STAMINA = "stamina";
 	public static final String LUCK = "luck";
 	public static final String INTUITION = "intuition";	
+	public static final String TURN_TAKEN = "turn_taken";	
 	public static final String GAMEBOARD_DATA = "gameboard_data";
 	public static final String AUTH_TOKEN = "auth_token";
 	public static final String GAME_PHASE_NAME = "game_phase_name";
@@ -56,6 +57,13 @@ public interface ActionData {
 	public static final String MAP_LOCATION = "map_location";
 	public static final String COMMUNAL_INVENTORY = "communal_inventory";
 	public static final String PERSONAL_INVENTORY = "personal_inventory";
+	public static final String LOADOUT = "loadout";
+//	public static final String HEAD = "HEAD";
+//	public static final String TORSO = "TORSO";
+//	public static final String ARMS = "ARMS";
+//	public static final String LEGS = "LEGS";
+	public static final String SLOT = "slot";
+	public static final String EQUIPMENT = "equipment";
 	public static final String TYPE = "type";
 	public static final String ITEM = "item";
 	public static final String IS_COMMUNAL = "is_communal";

@@ -14,6 +14,8 @@ import java.util.function.Consumer;
 import javax.websocket.Session;
 
 import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
+import com.toozo.asteriumwebserver.gamelogic.items.equipment.EquipmentSlot;
+import com.toozo.asteriumwebserver.gamelogic.items.equipment.Loadout;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
 import actiondata.ActionData;
@@ -331,7 +333,7 @@ public class GameState {
 	 */
 	private void syncGameBoardsPlayerList() {
 
-		//Create list of player data.
+		// Create list of player data.
 		Collection<SyncPlayerListRequestData.PlayerData> playerData = new ArrayList<>();
 		for (Player p : game.getPlayers()) {
 
@@ -343,19 +345,18 @@ public class GameState {
 					getCharacter(p.getAuthToken()).getBaseStats().getStat(Stat.STAMINA));
 
 			// Construct a player data object
-			SyncPlayerListRequestData.PlayerData pData = new SyncPlayerListRequestData.PlayerData(
-					p.getPlayerName(),
+			SyncPlayerListRequestData.PlayerData pData = new SyncPlayerListRequestData.PlayerData(p.getPlayerName(),
 					game.getPlayerIsReady(p.getAuthToken()), dStats);
-			
+
 			playerData.add(pData);
 		}
 
 		SyncPlayerListRequestData data = new SyncPlayerListRequestData(playerData);
-		
-		//Send player lists to each game board.
-		for(GameBoard gameBoard : game.getGameBoards()) {
+
+		// Send player lists to each game board.
+		for (GameBoard gameBoard : game.getGameBoards()) {
 			String auth = gameBoard.getAuthToken();
-			
+
 			Request request = new Request(data, auth);
 
 			try {
@@ -366,9 +367,9 @@ public class GameState {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
+
 		}
-		
+
 	}
 
 	/**
@@ -429,12 +430,35 @@ public class GameState {
 				pChar.getEffectiveStats().getStat(Stat.HEALTH), pChar.getEffectiveStats().getStat(Stat.STAMINA),
 				pChar.getEffectiveStats().getStat(Stat.LUCK), pChar.getEffectiveStats().getStat(Stat.INTUITION));
 
-		SyncPlayerClientDataRequestData.PlayerCharacterData dChar = new SyncPlayerClientDataRequestData.PlayerCharacterData(
-				pChar.getCharacterName(), stat);
+		List<SyncPlayerClientDataRequestData.InventoryData> personalInv = new ArrayList<SyncPlayerClientDataRequestData.InventoryData>();
+		for (AbstractItem item : pChar.getInventory()) {
+			SyncPlayerClientDataRequestData.InventoryData itemData = new SyncPlayerClientDataRequestData.InventoryData(
+					item.getName());
+			personalInv.add(itemData);
+		}
 		
+		Map<SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType, SyncPlayerClientDataRequestData.InventoryData> equipment = 
+				new HashMap<SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType, SyncPlayerClientDataRequestData.InventoryData>();
+		Loadout load = pChar.getEquipment();
+		for (EquipmentSlot slot : EquipmentSlot.values()) {
+			if (load.slotFull(slot)) {
+				SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType type = 
+						SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType.valueOf(slot.toString());
+				SyncPlayerClientDataRequestData.InventoryData item = new SyncPlayerClientDataRequestData.InventoryData(load.itemIn(slot).getName());
+				equipment.put(type,item);
+			}
+		}
+		
+		SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData loadout = new SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData(
+				equipment);
+
+		SyncPlayerClientDataRequestData.PlayerCharacterData dChar = new SyncPlayerClientDataRequestData.PlayerCharacterData(
+				pChar.getCharacterName(), stat, personalInv, loadout, game.turnTaken(player));
+
 		List<SyncPlayerClientDataRequestData.InventoryData> inventory = new ArrayList<SyncPlayerClientDataRequestData.InventoryData>();
 		for (AbstractItem item : getCommunalInventory()) {
-			SyncPlayerClientDataRequestData.InventoryData itemData = new SyncPlayerClientDataRequestData.InventoryData(item.getName());
+			SyncPlayerClientDataRequestData.InventoryData itemData = new SyncPlayerClientDataRequestData.InventoryData(
+					item.getName());
 			inventory.add(itemData);
 		}
 
