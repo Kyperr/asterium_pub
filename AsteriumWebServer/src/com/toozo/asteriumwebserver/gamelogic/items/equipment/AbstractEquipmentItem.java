@@ -23,8 +23,8 @@ public abstract class AbstractEquipmentItem extends AbstractItem {
 	 * Abstract constructor which defines which type of equipment this is.
 	 * @param equipmentType the {@link EquipmentSlot} to which this item is native.
 	 */
-	protected AbstractEquipmentItem(EquipmentSlot equipmentType) {
-		super();
+	protected AbstractEquipmentItem(final String name, final EquipmentSlot equipmentType) {
+		super(name);
 		this.equipmentType = equipmentType;
 	}
 	// ========================
