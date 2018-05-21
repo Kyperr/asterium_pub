@@ -6,8 +6,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<<<<<<< HEAD
 <BorderPane id="MapPane" prefHeight="500" prefWidth="720"
 	xmlns:fx="http://javafx.com/fxml/1"
+=======
+<BorderPane id="BorderPane" prefHeight="500" prefWidth="720"
+	xmlns:fx="http://javafx.com/fxml"
+>>>>>>> webstuff
 	fx:controller="com.toozo.asterium.asteriumgameboard.MapController">
 	<center>
 	</center>
