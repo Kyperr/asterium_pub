@@ -49,9 +49,7 @@ public class GameState {
 
 		}),
 
-		END_SUMMARY(game -> {
-
-		}),
+		END_SUMMARY(GameState::initiateEndSummaryPhase),
 
 		START_SUMMARY(game -> {
 
@@ -83,7 +81,7 @@ public class GameState {
 		Location med_bay_a = new Location("Med Bay A", Location.LocationType.MED_BAY);
 		med_bay_a.addActivity(Activity.SEARCH, Activity.searchActivity);
 		locations.put("2", med_bay_a);
-		
+
 		Location med_bay_2 = new Location("Med Bay 2", Location.LocationType.MED_BAY);
 		med_bay_2.addActivity(Activity.SEARCH, Activity.searchActivity);
 		locations.put("3", med_bay_2);
@@ -133,25 +131,35 @@ public class GameState {
 
 		// Is there an action for every player and is everyone ready?? If so:
 		if (state.game.areAllTurnsSubmitted() && state.game.allCharactersReady()) {
-			
+
 			state.setGamePhase(GamePhase.TURN_RESOLVE);
 		}
 	}
 
 	private static final void initiateTurnResolvePhase(GameState state) {
-		
+
 		state.game.setAllCharactersNotReady();
-		
-		state.syncPlayerClients();		
+
+		state.syncPlayerClients();
 		syncGameBoards(state);
-		
-		state.setGamePhase(GamePhase.PLAYER_TURNS);
-		
-		//Should run everyone's actions here.
-		
-		state.game.resetTurnActionMap();
-		
+
+		if (state.getVictoryConditions().size() == state.getCompleteVictoryConditions().size()) {
+			state.setGamePhase(GamePhase.END_SUMMARY);
+		} else {
+			state.setGamePhase(GamePhase.PLAYER_TURNS);
+
+			// Should run everyone's actions here.
+
+			state.game.resetTurnActionMap();
+		}
 		state.gamePhase.executePhase(state);
+	}
+
+	private static final void initiateEndSummaryPhase(GameState state) {
+		// TODO Notify game board the game is over and clients that the game is over and
+		// if they won or lost. Wrap up.
+		state.syncPlayerClients();
+		syncGameBoards(state);
 	}
 
 	private static final void syncGameBoards(GameState state) {
@@ -447,19 +455,19 @@ public class GameState {
 					item.getName());
 			personalInv.add(itemData);
 		}
-		
-		Map<SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType, SyncPlayerClientDataRequestData.InventoryData> equipment = 
-				new HashMap<SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType, SyncPlayerClientDataRequestData.InventoryData>();
+
+		Map<SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType, SyncPlayerClientDataRequestData.InventoryData> equipment = new HashMap<SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType, SyncPlayerClientDataRequestData.InventoryData>();
 		Loadout load = pChar.getEquipment();
 		for (EquipmentSlot slot : EquipmentSlot.values()) {
 			if (load.slotFull(slot)) {
-				SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType type = 
-						SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType.valueOf(slot.toString());
-				SyncPlayerClientDataRequestData.InventoryData item = new SyncPlayerClientDataRequestData.InventoryData(load.itemIn(slot).getName());
-				equipment.put(type,item);
+				SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType type = SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType
+						.valueOf(slot.toString());
+				SyncPlayerClientDataRequestData.InventoryData item = new SyncPlayerClientDataRequestData.InventoryData(
+						load.itemIn(slot).getName());
+				equipment.put(type, item);
 			}
 		}
-		
+
 		SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData loadout = new SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData(
 				equipment);
 
