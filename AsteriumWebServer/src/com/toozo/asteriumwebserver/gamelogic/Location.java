@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Supplier;
 
 import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
 import com.toozo.asteriumwebserver.gamelogic.items.LootPool;
@@ -13,7 +12,8 @@ public class Location {
 
 	public enum LocationType {
 		CONTROL_ROOM("control_room"),
-		MED_BAY("med_bay");
+		MED_BAY("med_bay"), 
+		MESS_HALL("mess_hall");
 		
 		private final String jsonVersion;
 		
@@ -35,12 +35,6 @@ public class Location {
 		this.name = name;
 		this.type = type; 
 		this.loot = lootPool;
-	}
-	
-	
-	
-	public void addLoot(Supplier<AbstractItem>... lootsup) {
-		
 	}
 	
 	public final String getName() {
