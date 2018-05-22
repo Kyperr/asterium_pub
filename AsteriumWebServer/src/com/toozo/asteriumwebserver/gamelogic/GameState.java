@@ -43,7 +43,8 @@ public class GameState {
 	public static final int STARTING_FUEL = 100;
 	public static final int STARTING_DAY = 0;
 	
-	// Loot Pools
+	// LOOT POOLS
+	// 		Medbay
 	public static final Map<Supplier<? extends AbstractItem>, Double> MEDBAY_LOOT_PROB;
 	static {
 		Map<Supplier<? extends AbstractItem>, Double> probs = new HashMap<Supplier<? extends AbstractItem>, Double>();
@@ -51,14 +52,28 @@ public class GameState {
 		probs.put(FoodPack::new, 0.25);
 		probs.put(FoodCrate::new, 0.20);
 		probs.put(FoodChest::new, 0.15);
-		//probs.put(EquipmentItem::getLoot, 0.20);
-		//probs.put(HealItem::getLoot, 0.15);
 		probs.put(RescueBeacon::new, 0.10);
 		
 		MEDBAY_LOOT_PROB = Collections.unmodifiableMap(probs);
 	}
 	public static final LootPool MEDBAY_LOOT_POOL = new LootPool(MEDBAY_LOOT_PROB);
-
+	
+	//		Mess Hall
+	/*
+	public static final Map<Supplier<? extends AbstractItem>, Double> MEDBAY_LOOT_PROB;
+	static {
+		Map<Supplier<? extends AbstractItem>, Double> probs = new HashMap<Supplier<? extends AbstractItem>, Double>();
+		
+		probs.put(FoodPack::new, 0.25);
+		probs.put(FoodCrate::new, 0.20);
+		probs.put(FoodChest::new, 0.15);
+		probs.put(RescueBeacon::new, 0.10);
+		
+		MEDBAY_LOOT_PROB = Collections.unmodifiableMap(probs);
+	}
+	public static final LootPool MEDBAY_LOOT_POOL = new LootPool(MEDBAY_LOOT_PROB);
+	*/
+	
 	public enum GamePhase {
 
 		PLAYERS_JOINING(GameState::playerJoining),
