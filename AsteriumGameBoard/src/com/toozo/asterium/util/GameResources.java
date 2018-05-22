@@ -150,17 +150,16 @@ public final class GameResources {
 					 if (data.getGamePhase() == GAME_SUMMARY) {
 						 GameSummaryController controller = nodeNavigator.getController(Display.GAME_SUMMARY);
 						 controller.update();
+						 nodeNavigator.display(Display.GAME_SUMMARY);
 					 } else if (data.getGamePhase() == TURN_SUMMARY) {
 						 TurnSummaryController controller = nodeNavigator.getController(Display.TURN_SUMMARY);
 						 controller.update();
+						 nodeNavigator.display(Display.TURN_SUMMARY);
 					 } else {
 						 MapController controller = nodeNavigator.getController(Display.MAP);
 						 controller.update();
-					 }
-					
-					 
-					 nodeNavigator.display(Display.MAP);
-					 
+						 nodeNavigator.display(Display.MAP);
+					 }					 
 				 }
 				
 			});
