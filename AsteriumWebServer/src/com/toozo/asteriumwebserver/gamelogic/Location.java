@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Supplier;
 
 import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
 import com.toozo.asteriumwebserver.gamelogic.items.LootPool;
@@ -36,12 +35,6 @@ public class Location {
 		this.name = name;
 		this.type = type; 
 		this.loot = lootPool;
-	}
-	
-	
-	
-	public void addLoot(Supplier<AbstractItem>... lootsup) {
-		
 	}
 	
 	public final String getName() {
