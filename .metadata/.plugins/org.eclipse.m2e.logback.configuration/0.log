@@ -8604,3 +8604,7 @@ Caused by: java.io.FileNotFoundException: /home/gpschmitt/git/asterium2/.metadat
 2018-05-22 16:05:29,761 [Worker-3] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
 2018-05-22 16:05:29,765 [Worker-3] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
 2018-05-22 16:05:29,769 [Worker-3] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-22 16:06:18,523 [Worker-10] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-22 16:06:18,531 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-22 16:06:18,535 [Worker-10] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-22 16:06:18,539 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources

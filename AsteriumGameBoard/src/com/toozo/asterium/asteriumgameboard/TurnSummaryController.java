@@ -20,11 +20,15 @@ public class TurnSummaryController extends AbstractAsteriumController{
 	public void handleContinueButtonAction(ActionEvent event) {
 		// Continue the game
 		try {
-			getNodeNavigator().display(Display.TURN_SUMMARY);
+			getNodeNavigator().display(Display.MAP);
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void update() {
+		label.setText("You finished a turn.");
 	}
 	
 	@Override

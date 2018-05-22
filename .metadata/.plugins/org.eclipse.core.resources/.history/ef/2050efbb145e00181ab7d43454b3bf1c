@@ -52,7 +52,7 @@ public class GameState {
 	static {
 		Map<Supplier<? extends AbstractItem>, Double> probs = new HashMap<Supplier<? extends AbstractItem>, Double>();
 		
-		probs.put(Bandage::new, 0.40);
+		probs.put(Bandage::new, 0.65);
 		probs.put(Medkit::new, 0.20);
 		probs.put(Syringe::new, 0.05);
 		probs.put(RescueBeacon::new, 0.10);
@@ -66,7 +66,7 @@ public class GameState {
 	static {
 		Map<Supplier<? extends AbstractItem>, Double> probs = new HashMap<Supplier<? extends AbstractItem>, Double>();
 		
-		probs.put(FoodPack::new, 0.40);
+		probs.put(FoodPack::new, 0.65);
 		probs.put(FoodCrate::new, 0.20);
 		probs.put(FoodChest::new, 0.05);
 		probs.put(RescueBeacon::new, 0.10);

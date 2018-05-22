@@ -1,12 +1,12 @@
 package com.toozo.asterium.util;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
-import com.toozo.asterium.asteriumgameboard.LobbyController;
+import com.toozo.asterium.asteriumgameboard.GameSummaryController;
 import com.toozo.asterium.asteriumgameboard.MapController;
 import com.toozo.asterium.asteriumgameboard.PlayerListController;
+import com.toozo.asterium.asteriumgameboard.TurnSummaryController;
 import com.toozo.asterium.util.NodeNavigator.Display;
 
 import actiondata.ActionData;
@@ -14,7 +14,6 @@ import actiondata.SyncGameBoardDataRequestData;
 import actiondata.SyncGameBoardDataRequestData.ItemData;
 import actiondata.SyncGameBoardDataRequestData.LocationData;
 import actiondata.SyncGameBoardDataRequestData.PlayerCharacterData;
-
 import actiondata.SyncGameBoardDataRequestData.VictoryData;
 import actiondata.SyncPlayerListRequestData;
 import actiondata.SyncPlayerListRequestData.PlayerData;
@@ -29,7 +28,11 @@ import main.ClientConnectionHandler;
  */
 public final class GameResources {
 	
-	private final String URI = "ws://localhost:8080/AsteriumWebServer/Game";	
+	private final String URI = "ws://35.230.4.196:8080/AsteriumWebServer/Game";	
+	
+	private final String GAME_SUMMARY = "GAME_SUMMARY";
+	
+	private final String TURN_SUMMARY = "TURN_SUMMARY";
 	
 	private String lobbyId = "no lobby id";
 	
@@ -144,9 +147,17 @@ public final class GameResources {
 					 communalInventory = (List<ItemData>) data.getCommunalInventory();
 					 characters = (List<PlayerCharacterData>) data.getPlayers();
 					 
-					 MapController controller = nodeNavigator.getController(Display.MAP);
-					 
-					 controller.update();
+					 if (data.getGamePhase() == GAME_SUMMARY) {
+						 GameSummaryController controller = nodeNavigator.getController(Display.GAME_SUMMARY);
+						 controller.update();
+					 } else if (data.getGamePhase() == TURN_SUMMARY) {
+						 TurnSummaryController controller = nodeNavigator.getController(Display.TURN_SUMMARY);
+						 controller.update();
+					 } else {
+						 MapController controller = nodeNavigator.getController(Display.MAP);
+						 controller.update();
+					 }
+					
 					 
 					 nodeNavigator.display(Display.MAP);
 					 

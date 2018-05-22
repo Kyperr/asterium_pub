@@ -183,6 +183,11 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 		return food;
 	}
 
+	public String getGamePhase() {
+		return gamePhaseName;
+	}
+
+	
 	public void setFood(Integer food) {
 		this.food = food;
 	}
@@ -304,7 +309,9 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 		private Set<String> activities;
 
 		public enum LocationType {
-			CONTROL_ROOM("control_room"), MED_BAY("med_bay");
+			CONTROL_ROOM("control_room"),
+			MED_BAY("med_bay"), 
+			MESS_HALL("mess_hall");
 
 			private final String jsonVersion;
 

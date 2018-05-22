@@ -13,6 +13,9 @@ var locations = [];
 
 var personalInventory = [];
 
+//Just a variable for the mvp.
+var usedTheBeacon = false;
+
 var communalInventory = [];
 
 function getAuthToken(){

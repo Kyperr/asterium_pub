@@ -4,6 +4,8 @@ import javax.resource.spi.IllegalStateException;
 
 import actiondata.SyncGameBoardDataRequestData.LocationData;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -38,6 +40,8 @@ public class MapController extends AbstractAsteriumController {
 			for (LocationData loc : getGameResources().getLocations()) {
 				Label locLabel = new Label(loc.getName() + "(" + loc.getType().toString() + ")");
 				gridPane.add(locLabel, 0, i);
+				gridPane.setAlignment(Pos.CENTER);
+				gridPane.setPadding(new Insets(5,2,5,2));
 				i++;
 			}
 
