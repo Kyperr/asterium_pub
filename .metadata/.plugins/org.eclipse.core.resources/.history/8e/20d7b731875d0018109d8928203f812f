@@ -115,11 +115,12 @@ public class GameState {
 	{
 		// Make a new location
 		Location home = new Location("Control Room", Location.LocationType.CONTROL_ROOM, MEDBAY_LOOT_POOL);
+		// Make a new room with a room id and location
 		locations.put("1", home);
 
-		Location med_bay = new Location("Med Bay", Location.LocationType.MED_BAY, MEDBAY_LOOT_POOL);
-		med_bay.addActivity(Activity.SEARCH, Activity.searchActivity);
-		locations.put("2", med_bay);
+		Location med_bay_a = new Location("Med Bay", Location.LocationType.MED_BAY, MEDBAY_LOOT_POOL);
+		med_bay_a.addActivity(Activity.SEARCH, Activity.searchActivity);
+		locations.put("2", med_bay_a);
 		
 		Location cafeteria = new Location("Cafeteria", Location.LocationType.MESS_HALL, CAFETERIA_LOOT_POOL);
 		cafeteria.addActivity(Activity.SEARCH, Activity.searchActivity);
@@ -190,11 +191,6 @@ public class GameState {
 			state.setGamePhase(GamePhase.PLAYER_TURNS);
 
 			// Should run everyone's actions here.
-			for (Player player : state.game.getPlayers()) {
-				String auth = player.getAuthToken();
-				Runnable action = state.game.getTurnAction(auth);
-				action.run();
-			}
 
 			state.game.resetTurnActionMap();
 		}
