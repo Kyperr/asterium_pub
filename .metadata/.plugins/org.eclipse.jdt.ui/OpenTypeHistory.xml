@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <typeInfoHistroy>
-<typeInfo handle="=AsteriumWebServer/src&lt;com.toozo.asteriumwebserver.gamelogic.items{AbstractItem.java[AbstractItem" modifiers="1025" timestamp="1526694890000"/>
+<typeInfo handle="=AsteriumWebServer/src&lt;com.toozo.asteriumwebserver.gamelogic.items{AbstractItem.java[AbstractItem" modifiers="1025" timestamp="1526968247000"/>
 <typeInfo handle="=AsteriumWebServer/src&lt;com.toozo.asteriumwebserver.gamelogic.statuseffects{AbstractStatusEffect.java[AbstractStatusEffect" modifiers="1025" timestamp="1526706071000"/>
+<typeInfo handle="=AsteriumWebServer/src&lt;com.toozo.asteriumwebserver.gamelogic.items.consumables{AbstractConsumableItem.java[AbstractConsumableItem" modifiers="1025" timestamp="1526966581000"/>
+<typeInfo handle="=AsteriumWebServer/src&lt;com.toozo.asteriumwebserver.gamelogic.items.consumables{AbstractFoodItem.java[AbstractFoodItem" modifiers="1025" timestamp="1526966625000"/>
+<typeInfo handle="=AsteriumWebServer/src&lt;com.toozo.asteriumwebserver.gamelogic.items.consumables{AbstractHealItem.java[AbstractHealItem" modifiers="1" timestamp="1526968260000"/>
 </typeInfoHistroy>

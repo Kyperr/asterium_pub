@@ -33,4 +33,11 @@
 <fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.Stat"/>
 <fullyQualifiedTypeName name="java.util.function.Function"/>
 <fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.PlayerCharacter.StatBlock"/>
+<fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodPack"/>
+<fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodCrate"/>
+<fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodChest"/>
+<fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.items.consumables.Bandage"/>
+<fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.items.consumables.Medkit"/>
+<fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.items.consumables.Syringe"/>
+<fullyQualifiedTypeName name="java.util.Iterator"/>
 </qualifiedTypeNameHistroy>

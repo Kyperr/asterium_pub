@@ -54,7 +54,7 @@ public class GameState {
 		
 		probs.put(Bandage::new, 0.65);
 		probs.put(Medkit::new, 0.20);
-		probs.put(Syringe::new, 0.05);
+		probs.put(Syringe::new, 0.10);
 		probs.put(RescueBeacon::new, 0.10);
 		
 		MEDBAY_LOOT_PROB = Collections.unmodifiableMap(probs);
@@ -68,7 +68,7 @@ public class GameState {
 		
 		probs.put(FoodPack::new, 0.65);
 		probs.put(FoodCrate::new, 0.20);
-		probs.put(FoodChest::new, 0.05);
+		probs.put(FoodChest::new, 0.10);
 		probs.put(RescueBeacon::new, 0.10);
 		
 		CAFETERIA_LOOT_PROB = Collections.unmodifiableMap(probs);

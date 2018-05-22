@@ -1,6 +1,0 @@
-package com.toozo.asteriumwebserver.gamelogic;
-
-public class Item {
-	private String name;
-	private BiConsumer<GameState, List<Character>> effect;
-}
