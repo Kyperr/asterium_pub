@@ -1,0 +1,10 @@
+package com.toozo.asteriumwebserver.gamelogic.items.consumables;
+
+public class FoodPack extends FoodItem {
+	public static final String PACK_NAME = "Food Pack";
+	public static final int PACK_AMOUNT = 3;
+	
+	public FoodPack() {
+		super(PACK_NAME, PACK_AMOUNT);
+	}
+}

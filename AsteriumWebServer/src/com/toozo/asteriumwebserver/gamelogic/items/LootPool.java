@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class LootPool {
@@ -15,18 +14,17 @@ public class LootPool {
 	// =====================
 	
 	// ===== FIELDS =====
-	private Map<Function<Map<Supplier<? extends AbstractItem>, Double>, ? extends AbstractItem>, Double> probabilities;
+	private Map<Supplier<? extends AbstractItem>, Double> probabilities;
 	// ==================
 	
 	// ===== CONSTRUCTORS =====
 	/**
 	 * Constructs a new LootPool based on lootProbabilities.
 	 * 
-	 * @param lootProbabilities a {@link Map} from (? extends AbstractItem)::getLoot to
-	 * 							the probability that it should be called.
-	 * 							
+	 * @param lootProbabilities a {@link Map} from (? extends AbstractItem)::new to
+	 * 							the probability that that item should be looted from this room.
 	 */
-	public LootPool(Map<Function<Map<Supplier<? extends AbstractItem>, Double>, ? extends AbstractItem>, Double> lootProbabilities) {
+	public LootPool(Map<Supplier<? extends AbstractItem>, Double> lootProbabilities) {
 		this.probabilities = lootProbabilities;
 	}
 	// ========================
@@ -37,11 +35,11 @@ public class LootPool {
 	 */
 	public Collection<AbstractItem> loot() {
 		Collection<AbstractItem> result = new ArrayList<AbstractItem>();
-		for (Function<Map<Supplier<? extends AbstractItem>, Double>, ? extends AbstractItem> getLoot : this.probabilities.keySet()) {
-			double probability = this.probabilities.get(getLoot);
+		for (Supplier<? extends AbstractItem> constructor : this.probabilities.keySet()) {
+			double probability = this.probabilities.get(constructor);
 			double random = RNG.nextDouble();
 			if (random > probability) {
-				//result.add(getLoot.apply());
+				result.add(constructor.get());
 			}
 		}
 		return result;
