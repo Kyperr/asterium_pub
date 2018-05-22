@@ -1,0 +1,5 @@
+package com.toozo.asteriumwebserver.gamelogic.items.consumables;
+
+public class Syringe extends AbstractHealItem {
+
+}

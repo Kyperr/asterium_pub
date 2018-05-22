@@ -7,11 +7,13 @@ import java.util.function.Supplier;
 
 import com.toozo.asteriumwebserver.gamelogic.GameState;
 import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
+import com.toozo.asteriumwebserver.gamelogic.items.consumables.Bandage;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodChest;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodCrate;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodPack;
-import com.toozo.asteriumwebserver.gamelogic.items.consumables.HealItem;
+import com.toozo.asteriumwebserver.gamelogic.items.consumables.Medkit;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.RescueBeacon;
+import com.toozo.asteriumwebserver.gamelogic.items.consumables.Syringe;
 
 /**
  * The abstract class for an item that can be used by a {@link PlayerCharacter}.
@@ -33,9 +35,9 @@ public abstract class AbstractItem {
 		 * their corresponding constructors should be added here.
 		 */
 		{
-			put(HealItem.BANDAGE_NAME, HealItem::createBandage);
-			put(HealItem.MEDKIT_NAME, HealItem::createMedkit);
-			put(HealItem.TRIAGE_NAME, HealItem::createTriage);
+			put(Bandage.NAME, Bandage::new);
+			put(Medkit.NAME, Medkit::new);
+			put(Syringe.NAME, Syringe::new);
 			
 			put(FoodPack.NAME, FoodPack::new);
 			put(FoodCrate.NAME, FoodCrate::new);
