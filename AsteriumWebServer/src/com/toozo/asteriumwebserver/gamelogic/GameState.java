@@ -96,9 +96,9 @@ public class GameState {
 	private GamePhase gamePhase;
 	private int food;
 	private int fuel;
+	private int day;
 	private Map<String, PlayerCharacter> authCharacterMap;
 	private Map<String, PlayerCharacter> nameCharacterMap;
-	private static int day;
 	private Collection<VictoryCondition> victoryConditions;
 	private Inventory communalInventory;
 	// ===========================
@@ -130,7 +130,7 @@ public class GameState {
 	}
 
 	private static final void initiatePlayerTurnPhase(GameState state) {
-		setDay(getDay() + 1);
+		state.setDay(state.getDay() + 1);
 		state.syncPlayerClients();
 		syncGameBoards(state);
 
@@ -169,7 +169,7 @@ public class GameState {
 	private static final void syncGameBoards(GameState state) {
 		int food = state.getFood();
 		int fuel = state.getFuel();
-		int day = GameState.getDay();
+		int day = state.getDay();
 
 		// Construct collection of LocationData
 		List<SyncGameBoardDataRequestData.LocationData> loc = new ArrayList<SyncGameBoardDataRequestData.LocationData>();
@@ -238,7 +238,7 @@ public class GameState {
 		this.fuel = STARTING_FUEL;
 		this.authCharacterMap = new ConcurrentHashMap<String, PlayerCharacter>();
 		this.nameCharacterMap = new ConcurrentHashMap<String, PlayerCharacter>();
-		GameState.day = STARTING_DAY;
+		this.day = STARTING_DAY;
 		this.victoryConditions = new ArrayList<VictoryCondition>();
 		this.communalInventory = new Inventory();
 	}
@@ -262,8 +262,8 @@ public class GameState {
 	/**
 	 * @return the current day
 	 */
-	public static int getDay() {
-		return GameState.day;
+	public int getDay() {
+		return this.day;
 	}
 
 	public PlayerCharacter getCharacter(final String auth) {
@@ -371,8 +371,8 @@ public class GameState {
 	 * @param newDay
 	 *            The new day
 	 */
-	public static void setDay(final int newDay) {
-		GameState.day = newDay;
+	public void setDay(final int newDay) {
+		this.day = newDay;
 	}
 	// ===================
 

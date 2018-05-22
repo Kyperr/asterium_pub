@@ -12,14 +12,7 @@ import javax.xml.ws.soap.AddressingFeature.Responses;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
 import actiondata.ActionData;
-import actiondata.AllocateStatsRequestData;
 import actiondata.ErroredResponseData;
-import actiondata.GeneralRequestData;
-import actiondata.JoinAsGameBoardRequestData;
-import actiondata.JoinAsPlayerRequestData;
-import actiondata.SuccessResponseData;
-import actiondata.TurnRequestData;
-import actiondata.UseItemRequestData;
 import message.Message;
 import message.Request;
 import message.Response;
@@ -53,7 +46,7 @@ public abstract class Action implements Runnable {
 	 * Static map from an {@link ActionData} subclass to the function which should
 	 * be performed.
 	 */
-	private final static Map<Class<? extends ActionData>, Function<Message, Action>> ACTION_LOOKUP = new HashMap<Class<? extends ActionData>, Function<Message, Action>>() {
+	private final static Map<String, Function<Message, Action>> ACTION_LOOKUP = new HashMap<String, Function<Message, Action>>() {
 		/**
 		 * Auto-generated unique identifier for ACTION_LOOKUP
 		 */
@@ -72,22 +65,22 @@ public abstract class Action implements Runnable {
 			//syncplayerclient request server->client NOT IN THIS MAP
 			//client response->server "okay"
 			//like this? 
-			put(SuccessResponseData.class, ClientToServerResponseAction::fromMessage);
-			put(ErroredResponseData.class, SendErrorAction::fromMessage);
+			put(ActionData.SUCCESS_RESPONSE, ClientToServerResponseAction::fromMessage);
+			put(ActionData.ERRORED_RESPONSE, SendErrorAction::fromMessage);
 			
-			put(JoinAsPlayerRequestData.class, JoinAsPlayerAction::fromMessage);
-			put(JoinAsGameBoardRequestData.class, JoinAsGameBoardAction::fromMessage);
-			put(GeneralRequestData.class, CreateGameAction::fromMessage);
+			put(ActionData.JOIN_AS_PLAYER, JoinAsPlayerAction::fromMessage);
+			put(ActionData.JOIN_AS_GAMEBOARD, JoinAsGameBoardAction::fromMessage);
+			put(ActionData.CREATE_GAME, CreateGameAction::fromMessage);
 			
-			put(AllocateStatsRequestData.class, AllocateStatsAction::fromMessage);
-			put(TurnRequestData.class, TurnAction::fromMessage);
-			put(UseItemRequestData.class, UseItemAction::fromMessage);
+			put(ActionData.ALLOCATE_STATS, AllocateStatsAction::fromMessage);
+			put(ActionData.TURN_ACTION, TurnAction::fromMessage);
+			put(ActionData.USE_ITEM, UseItemAction::fromMessage);
 			
-			put(GeneralRequestData.class, QueryIsInGameAction::fromMessage);
-			put(GeneralRequestData.class, ToggleReadyUpAction::fromMessage);
+			put(ActionData.QUERY_IS_IN_GAME, QueryIsInGameAction::fromMessage);
+			put(ActionData.TOGGLE_READY_UP, ToggleReadyUpAction::fromMessage);
 			
 			
-			put(GeneralRequestData.class, LeaveGameAction::fromMessage);
+			put(ActionData.LEAVE_GAME, LeaveGameAction::fromMessage);
 		}
 	};
 
@@ -107,7 +100,7 @@ public abstract class Action implements Runnable {
 		try {
 
 			// Look up the function that corresponds to actionData's class and call it.
-			return ACTION_LOOKUP.get(actionData.getClass()).apply(message);
+			return ACTION_LOOKUP.get(actionData.getName()).apply(message);
 		} catch (ClassCastException e) {
 			return new SendErrorAction(actionData.getName(), message.getAuthToken(), SendErrorAction.INCORRECT_ACTION_MAPPING,
 					message.getMessageID());
