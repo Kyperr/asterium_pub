@@ -23,6 +23,7 @@ public interface ActionData {
 	public static final String TURN_ACTION = "turn_action";
 	public static final String SYNC_PLAYER_LIST = "sync_player_list";
 	public static final String USE_ITEM = "use_item";
+	public static final String LEAVE_GAME = "leave_game";
 	
 	//Query action constants
 	public static final String QUERY_IS_IN_GAME = "query_is_in_game";
