@@ -71,10 +71,10 @@ public class Book extends AbstractLocationItem {
 	public static final double SINGLE_PROBABILITY = 0.8;
 	public static final double DOUBLE_PROBABILITY = 0.15;
 	public static final double TRIPLE_PROBABILITY = 0.05;
-	public static final Map<Double, Supplier<? extends AbstractItem>> FACTORY_PROBABILITIES;
+	public static final Map<Supplier<? extends AbstractItem>, Double> FACTORY_PROBABILITIES;
 	static {
-		Map<Double, Supplier<? extends AbstractItem>> probsMap = new HashMap<Double, Supplier<? extends AbstractItem>>();
-		probsMap.put(1.0, Book::createBook);
+		Map<Supplier<? extends AbstractItem>, Double> probsMap = new HashMap<Supplier<? extends AbstractItem>, Double>();
+		probsMap.put(Book::createBook, 1.0);
 		FACTORY_PROBABILITIES = Collections.unmodifiableMap(probsMap);
 	}
 
@@ -203,7 +203,7 @@ public class Book extends AbstractLocationItem {
 	 *            The amount by which this book will boost stats.
 	 */
 	public Book(final String name, final Collection<Stat> stats, final int amount) {
-		super(name, FACTORY_PROBABILITIES);
+		super(name);
 		this.stats = stats;
 		this.effect = (oldStat) -> (oldStat + amount);
 	}

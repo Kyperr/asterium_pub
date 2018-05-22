@@ -5,11 +5,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
+import com.toozo.asteriumwebserver.gamelogic.items.LootPool;
+
 public class Location {
 
 	public enum LocationType {
 		CONTROL_ROOM("control_room"),
-		MED_BAY("med_bay");
+		MED_BAY("med_bay"), 
+		MESS_HALL("mess_hall");
 		
 		private final String jsonVersion;
 		
@@ -24,11 +28,13 @@ public class Location {
 	
 	private final LocationType type;
 	private final String name;
+	private LootPool loot;
 	private Map<String, Activity> activities = new HashMap<String, Activity>();
 	
-	public Location(final String name, final LocationType type) {
+	public Location(final String name, final LocationType type, final LootPool lootPool) {
 		this.name = name;
 		this.type = type; 
+		this.loot = lootPool;
 	}
 	
 	public final String getName() {
@@ -53,5 +59,9 @@ public class Location {
 	
 	public void doActivity(String name, Game game, PlayerCharacter character) throws IllegalArgumentException{
 		activities.get(name).doActivity(game, character, this);
+	}
+	
+	public Collection<AbstractItem> lootLocation() {
+		return loot.loot();
 	}
 }

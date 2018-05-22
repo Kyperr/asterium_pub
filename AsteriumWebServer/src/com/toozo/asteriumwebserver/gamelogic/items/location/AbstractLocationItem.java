@@ -1,17 +1,14 @@
 package com.toozo.asteriumwebserver.gamelogic.items.location;
 
 import java.util.Collection;
-import java.util.Map;
-import java.util.function.Supplier;
 
 import com.toozo.asteriumwebserver.gamelogic.GameState;
 import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
 
 public abstract class AbstractLocationItem extends AbstractItem {
-	protected AbstractLocationItem(final String name,
-			                       final Map<Double, Supplier<? extends AbstractItem>> factoryProbabilities) {
-		super(name, factoryProbabilities);
+	protected AbstractLocationItem(final String name) {
+		super(name);
 	}
 	
 	@Override

@@ -1,13 +1,16 @@
 package com.toozo.asteriumwebserver.gamelogic.items.equipment;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Supplier;
+import java.util.function.Function;
 
 import com.toozo.asteriumwebserver.gamelogic.GameState;
 import com.toozo.asteriumwebserver.gamelogic.Inventory;
 import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
+import com.toozo.asteriumwebserver.gamelogic.Stat;
 import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
+import com.toozo.asteriumwebserver.gamelogic.statuseffects.AffectStats;
 
 /**
  * The abstract for an {@link AbstractItem} that is equippable.
@@ -18,6 +21,7 @@ public abstract class AbstractEquipmentItem extends AbstractItem {
 	// ===== FIELDS =====
 	private boolean isEquipped;
 	private EquipmentSlot equipmentType;
+	private Map<Stat, Integer> boosts;
 	// ==================
 	
 	// ===== CONSTRUCTORS =====
@@ -26,9 +30,10 @@ public abstract class AbstractEquipmentItem extends AbstractItem {
 	 * @param equipmentType the {@link EquipmentSlot} to which this item is native.
 	 */
 	protected AbstractEquipmentItem(final String name, final EquipmentSlot equipmentType,
-									final Map<Double, Supplier<? extends AbstractItem>> factoryProbabilities) {
-		super(name, factoryProbabilities);
+									final Map<Stat, Integer> boosts) {
+		super(name);
 		this.equipmentType = equipmentType;
+		this.boosts = boosts;
 	}
 	// ========================
 	
@@ -61,6 +66,13 @@ public abstract class AbstractEquipmentItem extends AbstractItem {
 					Collection<PlayerCharacter> targets,
 					boolean fromCommunalInventory) {
 		this.equip(user);
+		Map<Stat, Function<Integer, Integer>> statModifiers = new HashMap<Stat, Function<Integer, Integer>>();
+		for (Stat stat : this.boosts.keySet()) {
+			statModifiers.put(stat, (oldStat) -> (oldStat + this.boosts.get(stat)));
+		}
+		String name = this.getName() + " Equipped";
+		AffectStats effect = new AffectStats(user, name, statModifiers);
+		user.addStatusEffect(effect);
 	}
 	
 	/**

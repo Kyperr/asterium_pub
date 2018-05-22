@@ -309,7 +309,9 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 		private Set<String> activities;
 
 		public enum LocationType {
-			CONTROL_ROOM("control_room"), MED_BAY("med_bay");
+			CONTROL_ROOM("control_room"),
+			MED_BAY("med_bay"), 
+			MESS_HALL("mess_hall");
 
 			private final String jsonVersion;
 

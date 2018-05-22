@@ -2,6 +2,7 @@ package com.toozo.asteriumwebserver.gamelogic;
 
 import java.security.SecureRandom;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -137,6 +138,10 @@ public class Game extends Thread {
 			}
 		}
 		return true;
+	}
+	
+	public Runnable getTurnAction(String auth) {
+		return this.turnActionMap.get(auth);
 	}
 	// ===================
 

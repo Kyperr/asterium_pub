@@ -28,6 +28,12 @@ AfterTurnWaitingDisplayController.prototype.display = function () {
 
     div.innerHTML = "<b>Waiting on other players(Cancel doesn't work.)...</b>";
 
+    if (playerIsReady) {
+        afterTurnWaitingDisplayController.btnReady.innerHTML = 'UNREADY';
+    } else {
+        afterTurnWaitingDisplayController.btnReady.innerHTML = 'READY';
+    }
+
     div.appendChild(this.btnReady);
 
     div.appendChild(this.btnCancelTurn);
