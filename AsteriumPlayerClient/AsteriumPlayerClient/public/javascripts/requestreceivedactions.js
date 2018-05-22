@@ -19,7 +19,6 @@ function syncPlayerClientData(request) {
 
     if (gamePhase != newPhase) {
         gamePhase = newPhase;
-        console.log("Should be going to new phase now. Went from " + gamePhase + " to " + newPhase);
         phaseChangeStartingActions[newPhase]();
     }
 }
@@ -30,6 +29,10 @@ requestActions["sync_player_client_data"] = syncPlayerClientData;
 var phaseChangeStartingActions = {};
 
 phaseChangeStartingActions["PLAYER_TURNS"] = function () {
+    //Because I have secret server knowledge.
+    playerIsReady = false;
+    waitingForPlayersDisplayController.btn.innerHTML = 'READY';
+    afterTurnWaitingDisplayController.btnReady.innerHTML = 'READY';
     actionDisplayController.display();
 };
 

@@ -15,6 +15,7 @@ WaitingForPlayersDisplayController.prototype.constructor = WaitingForPlayersDisp
 WaitingForPlayersDisplayController.prototype.init = function () {
     this.btn.innerHTML = 'READY';
     this.btn.setAttribute("onClick", "toggleReady()");
+    this.btn.setAttribute("class", "button");
 }
 
 WaitingForPlayersDisplayController.prototype.display = function () {
