@@ -99,4 +99,15 @@ public final class GameManager {
 	public Game registerPlayerToGame(final String authToken, Game game) {
 		return playerMap.put(authToken, game);
 	}
+	
+	/**
+	 * Removes all references of the {@link Client} from the GameManager.
+	 * 
+	 * @param authToken The auth token of the {@link Client} to remove.
+	 */
+	public void removeClient(final String authToken) {
+		//remove client from the maps
+		this.playerMap.remove(authToken);
+		this.gameMap.remove(authToken);
+	}
 }

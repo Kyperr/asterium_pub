@@ -214,7 +214,7 @@ public class GameState {
 		}
 
 		ActionData syncGBRequestData = new SyncGameBoardDataRequestData(food, fuel, day, loc, playerDatas,
-				victoryDatas, itemDatas);
+				victoryDatas, itemDatas, state.getGamePhase().toString());
 
 		// Send sync to all GameBoards
 		for (GameBoard gameBoard : state.game.getGameBoards()) {
