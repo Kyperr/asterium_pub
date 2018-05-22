@@ -16,6 +16,7 @@ ViewInventoryDisplayController.prototype.constructor = ViewInventoryDisplayContr
 ViewInventoryDisplayController.prototype.init = function () {
     this.cancelButton.innerHTML = "CANCEL";
     this.cancelButton.setAttribute("onClick", "actionDisplayController.display()");
+    this.cancelButton.setAttribute("class", "button");
 }
 
 ViewInventoryDisplayController.prototype.display = function () {
@@ -24,30 +25,50 @@ ViewInventoryDisplayController.prototype.display = function () {
     div.innerHTML = "<b>What item would you like to use?</b>";
 
     div.appendChild(document.createElement("br"));
+    div.appendChild(document.createElement("br"));
 
     div.innerHTML += "Personal Inventory:";
     div.appendChild(document.createElement("br"));
+
+    var personalItemDiv = document.createElement("div");
+    personalItemDiv.setAttribute("class", "itemDiv");
 
     personalInventory.forEach(inventory => {
         var btnInventory = document.createElement("BUTTON");
         btnInventory.innerHTML = inventory.item_name;
         btnInventory.setAttribute("onClick", "viewInventoryDisplayController.selectInventory(\'" + inventory.item_name + "\', false)");
-        div.appendChild(btnInventory);
-        div.appendChild(document.createElement("br"));
+        btnInventory.setAttribute("class", "button");
+        personalItemDiv.appendChild(btnInventory);
     });
 
+    if(personalInventory.length == 0){
+        personalItemDiv.innerHTML = "Empty..." 
+    }
+
+    div.appendChild(personalItemDiv);
+
     div.appendChild(document.createElement("br"));
 
-    div.append += "Communal Inventory:";
+    div.innerHTML += "Communal Inventory:";
+
     div.appendChild(document.createElement("br"));
+
+    var communalItemDiv = document.createElement("div");
+    communalItemDiv.setAttribute("class", "itemDiv");
 
     communalInventory.forEach(inventory => {
         var btnInventory = document.createElement("BUTTON");
         btnInventory.innerHTML = inventory.item_name;
         btnInventory.setAttribute("onClick", "viewInventoryDisplayController.selectInventory(\'" + inventory.item_name + "\', true)");//swap this to the item's I.D. later.
-        div.appendChild(btnInventory);
-        div.appendChild(document.createElement("br"));
+        btnInventory.setAttribute("class", "button");
+        communalItemDiv.appendChild(btnInventory);
     });
+    
+    if(communalInventory.length == 0){
+        communalItemDiv.innerHTML = "Empty..." 
+    }
+
+    div.appendChild(communalItemDiv);
 
     div.appendChild(this.cancelButton);
 }

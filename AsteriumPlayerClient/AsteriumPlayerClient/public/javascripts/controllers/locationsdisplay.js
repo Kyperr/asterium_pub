@@ -27,10 +27,10 @@ LocationsDisplayController.prototype.display = function () {
 
         //Should map the id to a display-friendly string and get it here.
 
-        btnLocation.innerHTML = location.location_name + " (" + location.location_type + ")";
+        btnLocation.innerHTML = location.location_name ;
         btnLocation.setAttribute("onClick", "locationsDisplayController.selectLocation(\'" + location.location_id + "\')");
+        btnLocation.setAttribute("class", "button");
         div.appendChild(btnLocation);
-        div.appendChild(document.createElement("br"));
     });
 }
 LocationsDisplayController.prototype.selectLocation = function (location_id) {
