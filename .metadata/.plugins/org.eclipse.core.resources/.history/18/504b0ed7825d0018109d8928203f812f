@@ -51,6 +51,8 @@ public class GameState {
 		probs.put(FoodPack::new, 0.25);
 		probs.put(FoodCrate::new, 0.20);
 		probs.put(FoodChest::new, 0.15);
+		//probs.put(EquipmentItem::getLoot, 0.20);
+		//probs.put(HealItem::getLoot, 0.15);
 		probs.put(RescueBeacon::new, 0.10);
 		
 		MEDBAY_LOOT_PROB = Collections.unmodifiableMap(probs);
