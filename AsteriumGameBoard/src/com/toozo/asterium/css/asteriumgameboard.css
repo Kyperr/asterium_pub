@@ -1,56 +1,72 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
 .root {
-    -fx-font: 16px "Serif";
+    -fx-font: 16px "Arial";
     -fx-padding: 10;
     -fx-background-color: #606060;
     -fx-background-color: linear-gradient(to top right, #7582a3, #3d4861) where ;
 }
 
+
 #PlayerPane {
-	-fx-background-color: rgba(255,0,255, 0.1);/* */
+	-fx-alignment: center;
+	-fx-text-base-color: white;
+	-fx-background-color: linear-gradient(to top right, #7582a3, #3d4861);
+	-fx-border-width: 1;
+	-fx-border-color: black;
+	-fx-padding: 10, 2, 10, 2;
 }
 
 #LobbyPane, #MapPane {/*Holds the lobbyVBox and the player scroll pane */
-	-fx-background-color: rgba(255,140,0, 0.0);/* */
-	-fx-border-color: black;
+	/*-fx-background-color: rgba(255,140,0, 0.0);/* */
+	-fx-padding: 75;
+	-fx-alignment: center;
+	-fx-border-color: #3d4861;
 	-fx-border-insets: 5;
-	-fx-border-width: 3;
+	-fx-border-width: 0;
 }
 
 #lobbyBorderPane, #mapInfoBorderPane{/*Where info is displayed */
+	-fx-alignment: center;
 	-fx-background-color: rgba(0,0,0, 0.5);/*light light blue */
-    -fx-font: 20px "Serif";
+    -fx-font: 20px "Arial";
     -fx-text-base-color: white;
     -fx-text-background-color: white;
 }
 
 
-#playerList {
-	-fx-background-color: rgba(178,34,34, 0.0);	/*Red */
+#playerListBorderPane {
+	-fx-alignment: center;
+}
+
+#playerHBox {
+	-fx-alignment: center;
+}
+
+#mapBorderPane {
+	-fx-alignment: center;
 }
 
 .scroll-pane > .viewport {/*In order to see through the scroll pane */
+	-fx-alignment: center;
    -fx-background-color: transparent;
 }
 
 #playersScrollPane, #mapScrollPane {
-	-fx-background-color: rgba(105,105,105, .5);/*Gray, half vis */
+	-fx-alignment: center;
+	-fx-fit-to-width: true;
+	-fx-background-color: rgba(200, 200, 200, .5);/*Gray, half vis */
 	
 }
 
-#PlayerPane {/*Top during player list.*/
-	-fx-background-color: rgba(0,0,205, 0.0);/*Blue */	
-}
-
 #nameLabel, #foodLabel {
-    -fx-font: 20px "Serif";
+    -fx-font: 20px "Arial";
 	-fx-padding: 5px;
     -fx-border-insets: 5px;
     -fx-background-insets: 5px;
 }
 
 #readyLabel{
-    -fx-font: 16px "Serif";
+    -fx-font: 16px "Arial";
 	-fx-padding: 5px;
     -fx-border-insets: 5px;
     -fx-background-insets: 5px;	
