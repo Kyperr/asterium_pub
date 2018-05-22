@@ -105,10 +105,14 @@ public class GameState {
 		Location med_bay_a = new Location("Med Bay", Location.LocationType.MED_BAY, MEDBAY_LOOT_POOL);
 		med_bay_a.addActivity(Activity.SEARCH, Activity.searchActivity);
 		locations.put("2", med_bay_a);
-
+		
+		Location cafeteria = new Location("Cafeteria", Location.LocationType.MESS_HALL, CAFETERIA_LOOT_POOL);
+		cafeteria.addActivity(Activity.SEARCH, Activity.searchActivity);
+		locations.put("3", cafeteria);
+		
 		Location med_bay_2 = new Location("Med Bay 2", Location.LocationType.MED_BAY, MEDBAY_LOOT_POOL);
 		med_bay_2.addActivity(Activity.SEARCH, Activity.searchActivity);
-		locations.put("3", med_bay_2);
+		locations.put("4", med_bay_2);
 	};
 	// =========================
 
