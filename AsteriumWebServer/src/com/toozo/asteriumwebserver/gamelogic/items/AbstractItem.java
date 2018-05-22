@@ -12,6 +12,7 @@ import com.toozo.asteriumwebserver.gamelogic.GameState;
 import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodItem;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.HealItem;
+import com.toozo.asteriumwebserver.gamelogic.items.location.RescueBeacon;
 
 /**
  * The abstract class for an item that can be used by a {@link PlayerCharacter}.
@@ -42,6 +43,8 @@ public abstract class AbstractItem {
 			put(FoodItem.PACK_NAME, FoodItem::createPack);
 			put(FoodItem.CRATE_NAME, FoodItem::createCrate);
 			put(FoodItem.CHEST_NAME, FoodItem::createChest);
+			
+			put(RescueBeacon.NAME, RescueBeacon::new);
 		}
 	};
 	// =====================
@@ -165,4 +168,29 @@ public abstract class AbstractItem {
 		return AbstractItem.getLoot(this.factoryProbabilities);
 	}
 	// ===================
+	private String name;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AbstractItem other = (AbstractItem) obj;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
 }

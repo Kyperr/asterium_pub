@@ -22,16 +22,15 @@ LocationsDisplayController.prototype.display = function () {
 
     div.appendChild(document.createElement("br"));
 
-    var that = this;
     locations.forEach(location => {
         var btnLocation = document.createElement("BUTTON");
 
         //Should map the id to a display-friendly string and get it here.
 
-        that.btnLocation.innerHTML = location.location_id;
-        that.btnLocation.setAttribute("onClick", "locationsDisplayController.selectLocation(\'" + location.location_id + "\')");
-        div.appendChild(this.btnLocation);
-        div.appendChild(document.createElement("br"));
+        btnLocation.innerHTML = location.location_name ;
+        btnLocation.setAttribute("onClick", "locationsDisplayController.selectLocation(\'" + location.location_id + "\')");
+        btnLocation.setAttribute("class", "button");
+        div.appendChild(btnLocation);
     });
 }
 LocationsDisplayController.prototype.selectLocation = function (location_id) {

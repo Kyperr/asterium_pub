@@ -35,8 +35,8 @@ public class AsteriumGameBoard extends Application {
 	
 	private static final String GAME_BOARD_TITLE = "Asterium";
 	private static final String CONTAINER_CSS = "css/asteriumgameboard.css";
-	private static final int PANE_WIDTH = 275;
-	private static final int PANE_HEIGHT = 200;
+	private static final int PANE_WIDTH = 960;
+	private static final int PANE_HEIGHT = 540;
 
 	@Override
 	public void start(Stage stage) throws Exception {

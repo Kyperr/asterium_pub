@@ -116,9 +116,9 @@ public class GameState {
 	private GamePhase gamePhase;
 	private int food;
 	private int fuel;
+	private int day;
 	private Map<String, PlayerCharacter> authCharacterMap;
 	private Map<String, PlayerCharacter> nameCharacterMap;
-	private static int day;
 	private Collection<VictoryCondition> victoryConditions;
 	private Inventory communalInventory;
 	// ===========================
@@ -150,7 +150,7 @@ public class GameState {
 	}
 
 	private static final void initiatePlayerTurnPhase(GameState state) {
-		setDay(getDay() + 1);
+		state.setDay(state.getDay() + 1);
 		state.syncPlayerClients();
 		syncGameBoards(state);
 
@@ -189,7 +189,7 @@ public class GameState {
 	private static final void syncGameBoards(GameState state) {
 		int food = state.getFood();
 		int fuel = state.getFuel();
-		int day = GameState.getDay();
+		int day = state.getDay();
 
 		// Construct collection of LocationData
 		List<SyncGameBoardDataRequestData.LocationData> loc = new ArrayList<SyncGameBoardDataRequestData.LocationData>();
@@ -198,7 +198,7 @@ public class GameState {
 			Location l = state.getAtMapLocation(s);
 			// if(l.distance <= player.stamina)//pseudocode
 			SyncGameBoardDataRequestData.LocationData.LocationType type = SyncGameBoardDataRequestData.LocationData.LocationType
-					.valueOf(l.getType().getJSONVersion());
+					.valueOf(l.getType().toString());
 
 			SyncGameBoardDataRequestData.LocationData locData = new SyncGameBoardDataRequestData.LocationData(s,
 					l.getName(), type, l.getActivityNames());
@@ -234,7 +234,7 @@ public class GameState {
 		}
 
 		ActionData syncGBRequestData = new SyncGameBoardDataRequestData(food, fuel, day, loc, playerDatas,
-				victoryDatas, itemDatas);
+				victoryDatas, itemDatas, state.getGamePhase().toString());
 
 		// Send sync to all GameBoards
 		for (GameBoard gameBoard : state.game.getGameBoards()) {
@@ -258,7 +258,7 @@ public class GameState {
 		this.fuel = STARTING_FUEL;
 		this.authCharacterMap = new ConcurrentHashMap<String, PlayerCharacter>();
 		this.nameCharacterMap = new ConcurrentHashMap<String, PlayerCharacter>();
-		GameState.day = STARTING_DAY;
+		this.day = STARTING_DAY;
 		this.victoryConditions = new ArrayList<VictoryCondition>();
 		this.communalInventory = new Inventory();
 	}
@@ -282,8 +282,8 @@ public class GameState {
 	/**
 	 * @return the current day
 	 */
-	public static int getDay() {
-		return GameState.day;
+	public int getDay() {
+		return this.day;
 	}
 
 	public PlayerCharacter getCharacter(final String auth) {
@@ -391,8 +391,8 @@ public class GameState {
 	 * @param newDay
 	 *            The new day
 	 */
-	public static void setDay(final int newDay) {
-		GameState.day = newDay;
+	public void setDay(final int newDay) {
+		this.day = newDay;
 	}
 	// ===================
 
@@ -496,7 +496,7 @@ public class GameState {
 			Location l = getAtMapLocation(s);
 			// if(l.distance <= player.stamina)//pseudocode
 			SyncPlayerClientDataRequestData.LocationData.LocationType type = SyncPlayerClientDataRequestData.LocationData.LocationType
-					.valueOf(l.getType().getJSONVersion());
+					.valueOf(l.getType().toString());
 
 			SyncPlayerClientDataRequestData.LocationData locData = new SyncPlayerClientDataRequestData.LocationData(s,
 					l.getName(), type, l.getActivityNames());
@@ -507,6 +507,11 @@ public class GameState {
 		String auth = player.getAuthToken();
 
 		PlayerCharacter pChar = getCharacter(auth);
+		
+		Collection<String> characters = new ArrayList<String>();
+		for (PlayerCharacter pc : getCharacters()) {
+			characters.add(pc.getCharacterName());
+		}
 
 		SyncPlayerClientDataRequestData.PlayerCharacterData.StatsData stat = new SyncPlayerClientDataRequestData.PlayerCharacterData.StatsData(
 				pChar.getEffectiveStats().getStat(Stat.HEALTH), pChar.getEffectiveStats().getStat(Stat.STAMINA),
@@ -544,7 +549,7 @@ public class GameState {
 			inventory.add(itemData);
 		}
 
-		SyncPlayerClientDataRequestData data = new SyncPlayerClientDataRequestData(getFood(), getFuel(), getDay(), loc, dChar,
+		SyncPlayerClientDataRequestData data = new SyncPlayerClientDataRequestData(getFood(), getFuel(), getDay(), loc, dChar, characters,
 				getGamePhase().toString(), inventory);
 
 		return data;

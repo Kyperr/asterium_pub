@@ -15,7 +15,7 @@
 
 		<Label layoutX="100" layoutY="120" minHeight="16" minWidth="69"
 			fx:id="label" />
-		<Button layoutX="50" layoutY="90" text="Get lobby ID"
+		<Button layoutX="50" layoutY="90" text="Create Game"
 			onAction="#handleMenuButtonAction" fx:id="menuButton" />
 
 	</children>

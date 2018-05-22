@@ -2,6 +2,9 @@ package actiondata;
 
 import org.json.JSONObject;
 
+import message.Request;
+import message.Response;
+
 /**
  * The {@link ActionData} interface for creating a {@link Request} or {@link Response}.
  * 
@@ -21,8 +24,12 @@ public interface ActionData {
 	public static final String SYNC_GAME_BOARD_DATA = "sync_game_board_data";
 	public static final String SYNC_PLAYER_CLIENT_DATA = "sync_player_client_data";
 	public static final String TURN_ACTION = "turn_action";
-	public static final String SyncPlayerList = "sync_player_list";
+	public static final String SYNC_PLAYER_LIST = "sync_player_list";
 	public static final String USE_ITEM = "use_item";
+	public static final String LEAVE_GAME = "leave_game";
+	public static final String SUCCESS_RESPONSE = "success_response";
+	public static final String ERRORED_RESPONSE = "errored_response";
+	public static final String GENERAL_REQUEST = "general_request";
 	
 	//Query action constants
 	public static final String QUERY_IS_IN_GAME = "query_is_in_game";
@@ -52,6 +59,7 @@ public interface ActionData {
 	public static final String ACTIVITIES = "activities";
 	public static final String ACTIVITY_NAME = "activity_name";
 	public static final String CHARACTER = "character";
+	public static final String CHARACTERS = "characters";
 	public static final String CHARACTER_NAME = "character_name";
 	public static final String LOCATION = "location";
 	public static final String LOCATIONS = "locations";

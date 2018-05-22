@@ -13,11 +13,13 @@ ItemInteractionDisplayController.prototype = Object.create(AbstractDisplayContro
 ItemInteractionDisplayController.prototype.constructor = ItemInteractionDisplayController;
 
 ItemInteractionDisplayController.prototype.init = function () {
-    useButton.innerHTML = "USE";
-    useButton.setAttribute("onClick", "itemInteractionDisplayController.useItem()");
+    this.useButton.innerHTML = "USE";
+    this.useButton.setAttribute("onClick", "itemInteractionDisplayController.useItem()");
+    this.useButton.setAttribute("class", "button");
 
-    cancelButton.innerHTML = "CANCEL";
-    useButtcancelButtonon.setAttribute("onClick", "actionDisplayController.display()");
+    this.cancelButton.innerHTML = "CANCEL";
+    this.cancelButton.setAttribute("onClick", "actionDisplayController.display()");
+    this.cancelButton.setAttribute("class", "button");
 }
 
 ItemInteractionDisplayController.prototype.display = function () {
@@ -29,7 +31,6 @@ ItemInteractionDisplayController.prototype.display = function () {
 
     if(viewInventoryDisplayController.selectedInventory != null){
         div.appendChild(this.useButton);
-        div.appendChild(document.createElement("br"));
     } 
 
     div.appendChild(this.cancelButton);
@@ -39,7 +40,11 @@ ItemInteractionDisplayController.prototype.useItem = function () {
     var targets = [user];
     var item = viewInventoryDisplayController.selectedInventory;
     var isCommunal = viewInventoryDisplayController.isCommunal;
-    useItemAction(item, targets, isCommunal);
+    if (confirm('Are you sure you want to use this ' + item + '?')) {
+        useItemAction(item, targets, isCommunal);
+    } else {
+        // Do nothing!
+    }
 }
 
 

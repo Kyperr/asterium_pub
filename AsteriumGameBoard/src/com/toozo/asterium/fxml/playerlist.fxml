@@ -6,8 +6,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane
-	xmlns:fx="http://javafx.com/fxml/" prefHeight="200" prefWidth="400"
+<BorderPane xmlns:fx="http://javafx.com/fxml/"
+	id="PlayerPane"
 	fx:controller="com.toozo.asterium.asteriumgameboard.PlayerListController">
-	<VBox fx:id="playerList" />
-</AnchorPane>
+	<center>
+		<!-- Why doesn't this center the names of player? -->
+		<VBox fx:id="playerList" />
+	</center>
+</BorderPane>

@@ -56,5 +56,5 @@ pom.xml.releaseBackup
 pom.xml.tag
 */pom.properties
 *pom.properties
-*META-INF*
+*/MANIFEST.MF
 */META-INF/*

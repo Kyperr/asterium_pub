@@ -1,0 +1,12 @@
+//Setup Google cloud instance.
+
+
+//Create a war file from asteriu web server.
+Export>As war
+
+
+
+...
+
+//Copy over the war
+https://cloud.google.com/sdk/docs/quickstart-windows

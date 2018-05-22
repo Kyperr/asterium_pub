@@ -16,12 +16,14 @@ ActionDisplayController.prototype.constructor = ActionDisplayController;
 
 ActionDisplayController.prototype.init = function () {
     this.btnExplore.setAttribute("onClick", "locationsDisplayController.display()");
+    this.btnExplore.setAttribute("class", "button");
     this.btnExplore.innerHTML = "EXPLORE";
 
-    this.btnStay.setAttribute("onClick", "toggleReady()");
     this.btnStay.innerHTML = "STAY";
+    this.btnStay.setAttribute("class", "button");
 
-    this.btnInventory.setAttribute("onClick", "toggleReady()");
+    this.btnInventory.setAttribute("onClick", "viewInventoryDisplayController.display()");
+    this.btnInventory.setAttribute("class", "button");
     this.btnInventory.innerHTML = "INVENTORY";
 }
 
@@ -32,11 +34,8 @@ ActionDisplayController.prototype.display = function () {
 
     div.innerHTML = "<b>What action would you like to do?</b>";
 
-    div.appendChild(document.createElement("br"));
     div.appendChild(this.btnExplore);
-    div.appendChild(document.createElement("br"));
     div.appendChild(this.btnStay);
-    div.appendChild(document.createElement("br"));
     div.appendChild(this.btnInventory);
 }
 

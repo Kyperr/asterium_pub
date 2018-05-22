@@ -1,6 +1,7 @@
 package actiondata;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -30,11 +31,13 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 	private int day;
 	private List<LocationData> locations;
 	private PlayerCharacterData character;
+	private Collection<String> characters;
 	private List<InventoryData> inventory;
 	private String gamePhaseName;
 
 	public SyncPlayerClientDataRequestData(final int food, final int fuel, final int day,
-			final List<LocationData> locations, final PlayerCharacterData character, final String gamePhaseName,
+			final List<LocationData> locations, final PlayerCharacterData character, 
+			final Collection<String> characters, final String gamePhaseName,
 			final List<InventoryData> inventory) {
 		super(ActionData.SYNC_PLAYER_CLIENT_DATA);
 		this.food = food;
@@ -42,6 +45,7 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		this.day = day;
 		this.locations = locations;
 		this.character = character;
+		this.characters = characters;
 		this.inventory = inventory;
 		this.gamePhaseName = gamePhaseName;
 	}
@@ -60,6 +64,11 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		data.put(ActionData.DAY, this.day);
 		data.put(ActionData.LOCATIONS, array);
 		data.put(ActionData.CHARACTER, this.character.jsonify());
+		JSONArray charactersArray = new JSONArray();
+		for (String s : this.characters) {
+			charactersArray.put(s);
+		}
+		data.put(ActionData.CHARACTERS, charactersArray);
 		JSONArray inventoryArray = new JSONArray();
 		for (InventoryData item : this.inventory) {
 			data.put(ActionData.ITEM, item.jsonify());
@@ -93,6 +102,12 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		Integer luck = statsObj.getInt(ActionData.LUCK);
 		Integer intuition = statsObj.getInt(ActionData.INTUITION);
 		StatsData stats = new StatsData(health, stamina, luck, intuition);
+		
+		Collection<String> characters = new ArrayList<String>();
+		JSONArray charactersArray = jsonObj.getJSONArray(ActionData.CHARACTERS);
+		for (int c = 0; c < characters.size(); c++) {
+			characters.add(charactersArray.getString(c));
+		}
 
 		// character personal inventory
 		JSONArray personalInvArray = characterObj.getJSONArray(ActionData.PERSONAL_INVENTORY);
@@ -156,7 +171,7 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		}
 
 		String gamePhaseName = jsonObj.getString(ActionData.GAME_PHASE_NAME);
-		return new SyncPlayerClientDataRequestData(food, fuel, day, locations, character, gamePhaseName, inventory);
+		return new SyncPlayerClientDataRequestData(food, fuel, day, locations, character, characters, gamePhaseName, inventory);
 	}
 
 	/**
@@ -241,7 +256,7 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 			data.put(ActionData.STATS, this.stats.jsonify());
 			JSONArray inventoryArray = new JSONArray();
 			for (InventoryData item : this.inventory) {
-				data.put(ActionData.ITEM, item.jsonify());
+				inventoryArray.put(item.jsonify());
 			}
 			data.put(ActionData.PERSONAL_INVENTORY, inventoryArray);
 			data.put(ActionData.LOADOUT, this.equipped.jsonify());

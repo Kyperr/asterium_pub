@@ -7,13 +7,18 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.ScrollPane?>
 
-<BorderPane id="BorderPane" prefHeight="500" prefWidth="720" xmlns:fx="http://javafx.com/fxml/1"
+<BorderPane id="LobbyPane" prefHeight="500" prefWidth="720"
+	xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="com.toozo.asterium.asteriumgameboard.LobbyController">
 	<top>
-		<Label minHeight="16" minWidth="69" fx:id="label" />
+		<BorderPane fx:id="lobbyBorderPane">
+			<center>
+				<Label minHeight="16" minWidth="69" fx:id="label" />
+			</center>
+		</BorderPane>
 	</top>
 	<center>
-		<ScrollPane fx:id="scrollPane"/>
+		<ScrollPane fx:id="playersScrollPane" />
 	</center>
 
 </BorderPane>

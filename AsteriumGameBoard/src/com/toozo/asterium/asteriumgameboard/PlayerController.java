@@ -20,9 +20,11 @@ public class PlayerController {
 	
 	public void setReadyStatus(boolean status) {
 		if (status) {
-			readyLabel.setText(READY);
+			readyLabel.setText("(" + READY + ")");
+			readyLabel.setStyle("-fx-text-background-color: green;");
 		} else {
-			readyLabel.setText(NOT_READY);
+			readyLabel.setText("(" + NOT_READY + ")");
+			readyLabel.setStyle("-fx-text-background-color: red;");
 		}
 	}
 }
