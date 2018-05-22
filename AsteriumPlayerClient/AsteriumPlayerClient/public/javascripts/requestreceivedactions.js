@@ -15,9 +15,11 @@ function syncPlayerClientData(request) {
 
     personalInventory = request.sync_player_client_data.character.personal_inventory;
 
+    playerIsReady = request.sync_player_client_data.character.
+
     var newPhase = request.sync_player_client_data.game_phase_name;
 
-    if (gamePhase != newPhase) {
+    if (gamePhase != newPhase && gamePhase != "TURN_RESOLVE") {
         gamePhase = newPhase;
         phaseChangeStartingActions[newPhase]();
     }
@@ -29,10 +31,11 @@ requestActions["sync_player_client_data"] = syncPlayerClientData;
 var phaseChangeStartingActions = {};
 
 phaseChangeStartingActions["PLAYER_TURNS"] = function () {
+    
     //Because I have secret server knowledge.
+    console.log("Setting playerisready = false");
     playerIsReady = false;
-    waitingForPlayersDisplayController.btn.innerHTML = 'READY';
-    afterTurnWaitingDisplayController.btnReady.innerHTML = 'READY';
+
     actionDisplayController.display();
 };
 
@@ -41,5 +44,6 @@ phaseChangeStartingActions["TURN_RESOLVE"] = function () {
 };
 
 phaseChangeStartingActions["END_SUMMARY"] = function () {
-    console.log("GAME OVER!!!!!!!!!!!!!!!!!!!!!!!");
+    endGameDisplayController.display();
 };
+

@@ -117,6 +117,13 @@ function turnActivity(){
 
 function useItemAction(itemName, targets, isCommunal){//Should use itemID later.  
     console.log("Sending use-item!");
+
+    //Ew, remove this after the MVP
+    if(itemName == "Rescue Beacon"){
+        usedTheBeacon = true;
+    }
+
+
     var uuid = genUUID();
     message =
         {
@@ -138,8 +145,6 @@ function useItemAction(itemName, targets, isCommunal){//Should use itemID later.
     socket.send(JSON.stringify(message));
     responseActions[uuid] = processUseItemResponse;
 }
-
-
 
 //***Utils***
 

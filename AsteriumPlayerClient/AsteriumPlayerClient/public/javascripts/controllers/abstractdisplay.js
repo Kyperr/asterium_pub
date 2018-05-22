@@ -1,6 +1,3 @@
-function displayLocations(div) {
-    div.innerHTML = "Please Select A Location...";
-}
 
 //
 //==========AbstractDisplayController
