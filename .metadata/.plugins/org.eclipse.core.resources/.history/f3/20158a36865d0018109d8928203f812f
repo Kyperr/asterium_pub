@@ -59,7 +59,6 @@ public class GameState {
 	public static final LootPool MEDBAY_LOOT_POOL = new LootPool(MEDBAY_LOOT_PROB);
 	
 	//		Mess Hall
-	/*
 	public static final Map<Supplier<? extends AbstractItem>, Double> MEDBAY_LOOT_PROB;
 	static {
 		Map<Supplier<? extends AbstractItem>, Double> probs = new HashMap<Supplier<? extends AbstractItem>, Double>();
@@ -72,8 +71,7 @@ public class GameState {
 		MEDBAY_LOOT_PROB = Collections.unmodifiableMap(probs);
 	}
 	public static final LootPool MEDBAY_LOOT_POOL = new LootPool(MEDBAY_LOOT_PROB);
-	*/
-	
+
 	public enum GamePhase {
 
 		PLAYERS_JOINING(GameState::playerJoining),
