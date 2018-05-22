@@ -1,9 +1,10 @@
 //Setup Google cloud instance.
 
+//Setup tomcat on the google cloud instance(we're using tomcat9).
+https://tecadmin.net/install-tomcat-9-on-ubuntu/
 
 //Create a war file from asteriu web server.
 Export>As war
-
 
 
 ...

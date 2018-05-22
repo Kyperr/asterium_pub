@@ -183,6 +183,11 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 		return food;
 	}
 
+	public String getGamePhase() {
+		return gamePhaseName;
+	}
+
+	
 	public void setFood(Integer food) {
 		this.food = food;
 	}

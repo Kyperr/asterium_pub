@@ -3,14 +3,12 @@ package com.toozo.asterium.asteriumgameboard;
 import javax.resource.spi.IllegalStateException;
 
 import com.toozo.asterium.util.GameResources;
-import com.toozo.asterium.util.NodeNavigator;
 import com.toozo.asterium.util.NodeNavigator.Display;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
 
 public class GameSummaryController extends AbstractAsteriumController {
 
@@ -31,8 +29,13 @@ public class GameSummaryController extends AbstractAsteriumController {
 		}
     }
     
-    public void update(GameResources gameResources) {
-    	label.setText(gameResources.getGameWonStatus());
+    public void update() {
+    	try {
+			label.setText(getGameResources().getGameWonStatus());
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
 	@Override
