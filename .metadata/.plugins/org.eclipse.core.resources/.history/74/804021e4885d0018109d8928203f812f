@@ -141,7 +141,7 @@ public class Game extends Thread {
 	}
 	
 	public Runnable getTurnAction(String auth) {
-		return this.turnActionMap.get(auth);
+		return this.turnActionMap.
 	}
 	// ===================
 

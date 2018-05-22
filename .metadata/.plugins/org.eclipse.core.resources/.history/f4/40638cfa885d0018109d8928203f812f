@@ -190,11 +190,6 @@ public class GameState {
 			state.setGamePhase(GamePhase.PLAYER_TURNS);
 
 			// Should run everyone's actions here.
-			for (Player player : state.game.getPlayers()) {
-				String auth = player.getAuthToken();
-				Runnable action = state.game.getTurnAction(auth);
-				action.run();
-			}
 
 			state.game.resetTurnActionMap();
 		}
