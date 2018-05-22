@@ -1,26 +1,20 @@
 package com.toozo.asteriumwebserver.gamelogic.items.consumables;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Supplier;
 
 import com.toozo.asteriumwebserver.gamelogic.GameState;
 import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
-import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
-import com.toozo.asteriumwebserver.gamelogic.items.location.Book;
 
 public class RescueBeacon extends AbstractConsumableItem {
 	// ===== CONSTANTS =====
 	public static final String NAME = "Rescue Beacon";
 
-	public static final Map<Supplier<? extends AbstractItem>, Double> FACTORY_PROBABILITIES;
+	/*public static final Map<Supplier<? extends AbstractItem>, Double> FACTORY_PROBABILITIES;
 	static {
 		Map<Supplier<? extends AbstractItem>, Double> probsMap = new HashMap<Supplier<? extends AbstractItem>, Double>();
 		probsMap.put(Book::createBook, 1.0);
 		FACTORY_PROBABILITIES = Collections.unmodifiableMap(probsMap);
-	}
+	}*/
 	// =====================
 	
 	// ===== FIELDS =====
@@ -29,7 +23,7 @@ public class RescueBeacon extends AbstractConsumableItem {
 	
 	// ====== CONSTRUCTORS =====
 	public RescueBeacon() {
-		super(NAME, FACTORY_PROBABILITIES);
+		super(NAME);
 		
 	}
 	// =========================

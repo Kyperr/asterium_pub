@@ -1,11 +1,9 @@
 package com.toozo.asteriumwebserver.gamelogic.items.consumables;
 
 import java.util.Collection;
-import java.util.Map;
-import java.util.function.Supplier;
 
-import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 import com.toozo.asteriumwebserver.gamelogic.GameState;
+import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
 
 /**
@@ -14,9 +12,8 @@ import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
  * @author Studio Toozo
  */
 public abstract class AbstractConsumableItem extends AbstractItem {
-	protected AbstractConsumableItem(String name,
-									 Map<Supplier<? extends AbstractItem>, Double> factoryProbabilities) {
-		super(name, factoryProbabilities);
+	protected AbstractConsumableItem(String name) {
+		super(name);
 	}
 	
 	@Override

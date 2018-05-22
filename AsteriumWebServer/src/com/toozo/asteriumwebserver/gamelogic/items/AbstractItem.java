@@ -1,16 +1,15 @@
 package com.toozo.asteriumwebserver.gamelogic.items;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.function.Supplier;
 
 import com.toozo.asteriumwebserver.gamelogic.GameState;
 import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
-import com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodItem;
+import com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodChest;
+import com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodCrate;
+import com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodPack;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.HealItem;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.RescueBeacon;
 
@@ -22,8 +21,6 @@ import com.toozo.asteriumwebserver.gamelogic.items.consumables.RescueBeacon;
 public abstract class AbstractItem {
 	// ===== CONSTANTS =====
 	public static final String DEFAULT_NAME = "";
-	
-	private static final Random RNG = new Random();
 	
 	private static final Map<String, Supplier<AbstractItem>> ITEM_LOOKUP = new HashMap<String, Supplier<AbstractItem>>() {
 		/**
@@ -40,9 +37,9 @@ public abstract class AbstractItem {
 			put(HealItem.MEDKIT_NAME, HealItem::createMedkit);
 			put(HealItem.TRIAGE_NAME, HealItem::createTriage);
 			
-			put(FoodItem.PACK_NAME, FoodItem::createPack);
-			put(FoodItem.CRATE_NAME, FoodItem::createCrate);
-			put(FoodItem.CHEST_NAME, FoodItem::createChest);
+			put(FoodPack.NAME, FoodPack::new);
+			put(FoodCrate.NAME, FoodCrate::new);
+			put(FoodChest.NAME, FoodChest::new);
 			
 			put(RescueBeacon.NAME, RescueBeacon::new);
 		}
@@ -51,46 +48,11 @@ public abstract class AbstractItem {
 	
 	// ===== FIELDS =====
 	private String name;
-	private Map<Supplier<? extends AbstractItem>, Double> factoryProbabilities;
 	// ==================
 	
-	// ===== STATIC METHODS =====
-	public static AbstractItem getLoot(Map<Supplier<? extends AbstractItem>, Double> factoryProbabilities) {
-		int i;
-		
-		// Create parallel lists of factories and their associated probability of being used
-		List<Supplier<? extends AbstractItem>> factories = new ArrayList<Supplier<? extends AbstractItem>>();
-		List<Double> weights = new ArrayList<Double>();
-		
-		// Populate factories
-		for (Supplier<? extends AbstractItem> factory : factoryProbabilities.keySet()) {
-			factories.add(factory);
-		}
-		
-		// Populate weights
-		for (i = 0; i < factories.size(); i++) {
-			weights.add(i, factoryProbabilities.get(factories.get(i)));
-		}
-		
-		// Cascade weights ({0.6, 0.3, 0.1} -> {0.6, 0.9, 1.0})
-		for (i = 1; i < weights.size(); i++) {
-			weights.set(i, weights.get(i) + weights.get(i - 1));
-		}
-		
-		// Determine which factory should be called
-		double random = RNG.nextDouble();
-		for (i = 0; random > weights.get(i); i++) {}
-		
-		// Call the selected factory and return the result
-		return factories.get(i).get();
-	}
-	// ==========================
-	
 	// ===== CONSTRUCTORS =====
-	protected AbstractItem(final String name, 
-						   final Map<Supplier<? extends AbstractItem>, Double> factoryProbabilities) {
+	protected AbstractItem(final String name) {
 		this.name = name;
-		this.factoryProbabilities = factoryProbabilities;
 	}
 	// ========================
 	
@@ -155,18 +117,6 @@ public abstract class AbstractItem {
 	 * @param targets The {@link PlayerCharacter}s which this item may affects.
 	 */
 	public abstract void applyEffect(final GameState state, final PlayerCharacter user, final Collection<PlayerCharacter> targets);
-	
-	/**
-	 * Probabilistically select a subitem from the implementing superitem class.
-	 * 
-	 * e.g. HealItem.getLoot() returns Bandage 60% of the time, 
-	 * Medkit 30% of the time, Triage 10% of the time.
-	 * 
-	 * @return a subitem.
-	 */
-	public AbstractItem getLoot() {
-		return AbstractItem.getLoot(this.factoryProbabilities);
-	}
 	// ===================
 	@Override
 	public int hashCode() {

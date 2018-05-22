@@ -203,7 +203,7 @@ public class Book extends AbstractLocationItem {
 	 *            The amount by which this book will boost stats.
 	 */
 	public Book(final String name, final Collection<Stat> stats, final int amount) {
-		super(name, FACTORY_PROBABILITIES);
+		super(name);
 		this.stats = stats;
 		this.effect = (oldStat) -> (oldStat + amount);
 	}
