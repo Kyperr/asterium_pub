@@ -15,7 +15,7 @@ function syncPlayerClientData(request) {
 
     personalInventory = request.sync_player_client_data.character.personal_inventory;
 
-    playerIsReady = request.sync_player_client_data.character.
+    playerIsReady = request.sync_player_client_data.character.ready;
 
     var newPhase = request.sync_player_client_data.game_phase_name;
 
