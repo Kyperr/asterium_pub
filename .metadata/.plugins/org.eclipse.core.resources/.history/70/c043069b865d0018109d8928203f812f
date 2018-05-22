@@ -17,13 +17,10 @@ import javax.websocket.Session;
 
 import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
 import com.toozo.asteriumwebserver.gamelogic.items.LootPool;
-import com.toozo.asteriumwebserver.gamelogic.items.consumables.Bandage;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodChest;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodCrate;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodPack;
-import com.toozo.asteriumwebserver.gamelogic.items.consumables.Medkit;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.RescueBeacon;
-import com.toozo.asteriumwebserver.gamelogic.items.consumables.Syringe;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.EquipmentSlot;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.Loadout;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
@@ -53,8 +50,8 @@ public class GameState {
 		Map<Supplier<? extends AbstractItem>, Double> probs = new HashMap<Supplier<? extends AbstractItem>, Double>();
 		
 		probs.put(Bandage::new, 0.60);
-		probs.put(Medkit::new, 0.20);
-		probs.put(Syringe::new, 0.05);
+		probs.put(FoodCrate::new, 0.20);
+		probs.put(FoodChest::new, 0.05);
 		probs.put(RescueBeacon::new, 0.15);
 		
 		MEDBAY_LOOT_PROB = Collections.unmodifiableMap(probs);
