@@ -137,8 +137,9 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		loadout = new LoadoutData(equipments);
 
 		boolean turnTaken = characterObj.getBoolean(ActionData.TURN_TAKEN);
+		boolean ready = characterObj.getBoolean(ActionData.READY);
 
-		character = new PlayerCharacterData(characterName, stats, personalInv, loadout, turnTaken);
+		character = new PlayerCharacterData(characterName, stats, personalInv, loadout, turnTaken, ready);
 
 		// build locations
 		JSONArray locationsArray = jsonObj.getJSONArray(ActionData.LOCATIONS);
@@ -240,14 +241,17 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		private List<InventoryData> inventory;
 		private LoadoutData equipped;
 		private boolean turnTaken;
+		private boolean ready;
 
 		public PlayerCharacterData(final String characterName, final StatsData stats,
-				final List<InventoryData> inventory, final LoadoutData equipped, final boolean turnTaken) {
+				final List<InventoryData> inventory, final LoadoutData equipped, 
+				final boolean turnTaken, final boolean ready) {
 			this.name = characterName;
 			this.stats = stats;
 			this.inventory = inventory;
 			this.equipped = equipped;
 			this.turnTaken = turnTaken;
+			this.ready = ready;
 		}
 
 		public JSONObject jsonify() {
@@ -261,6 +265,7 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 			data.put(ActionData.PERSONAL_INVENTORY, inventoryArray);
 			data.put(ActionData.LOADOUT, this.equipped.jsonify());
 			data.put(ActionData.TURN_TAKEN, this.turnTaken);
+			data.put(ActionData.READY, this.ready);
 
 			return data;
 		}
