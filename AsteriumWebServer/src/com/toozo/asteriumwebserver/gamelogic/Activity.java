@@ -6,8 +6,8 @@ import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
 
 public interface Activity {
 
-	public static final String SEARCH = "search";
-	public static final String USE_LOCATION_ITEM = "use_location_item";
+	public static final String SEARCH = "Search";
+	public static final String USE_LOCATION_ITEM = "Use Location Item";
 	
 	public void doActivity(Game game, PlayerCharacter character, Location location);
 	
