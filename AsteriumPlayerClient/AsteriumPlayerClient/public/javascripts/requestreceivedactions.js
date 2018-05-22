@@ -19,9 +19,11 @@ function syncPlayerClientData(request) {
 
     var newPhase = request.sync_player_client_data.game_phase_name;
 
-    if (gamePhase != newPhase && gamePhase != "TURN_RESOLVE") {
+    if (gamePhase != newPhase) {
+        if(gamePhase != "TURN_RESOLVE"){
+            phaseChangeStartingActions[newPhase]();
+        }
         gamePhase = newPhase;
-        phaseChangeStartingActions[newPhase]();
     }
 }
 
@@ -40,7 +42,7 @@ phaseChangeStartingActions["PLAYER_TURNS"] = function () {
 };
 
 phaseChangeStartingActions["TURN_RESOLVE"] = function () {
-    console.log("TURN RESOLVE! SHOULD PROBABLY DISPLAY SOMETHING!");
+    turnSummaryDisplayController.display();
 };
 
 phaseChangeStartingActions["END_SUMMARY"] = function () {

@@ -34,7 +34,7 @@ ActivityDisplayController.prototype.display = function () {
         that.btnActivity.innerHTML = activity;
         that.btnActivity.setAttribute("onClick", "activityDisplayController.selectActivity(\'" + activity + "\')");
         that.btnActivity.setAttribute("class", "button");
-        div.appendChild(this.btnActivity);
+        div.appendChild(that.btnActivity);
     });
 
     div.appendChild(this.btnCancel);
