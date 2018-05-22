@@ -21,12 +21,12 @@ public class FoodItem extends AbstractConsumableItem {
 	public static final String CHEST_NAME = "Food Chest";
 	public static final int CHEST_AMOUNT = 10;
 	
-	public static final Map<Double, Supplier<? extends AbstractItem>> FACTORY_PROBABILITIES;
+	public static final Map<Supplier<? extends AbstractItem>, Double> FACTORY_PROBABILITIES;
 	static {
-		Map<Double, Supplier<? extends AbstractItem>> probsMap = new HashMap<Double, Supplier<? extends AbstractItem>>();
-		probsMap.put(0.6, FoodItem::createPack);
-		probsMap.put(0.3, FoodItem::createCrate);
-		probsMap.put(0.1, FoodItem::createChest);
+		Map<Supplier<? extends AbstractItem>, Double> probsMap = new HashMap<Supplier<? extends AbstractItem>, Double>();
+		probsMap.put(FoodItem::createPack, 0.6);
+		probsMap.put(FoodItem::createCrate, 0.3);
+		probsMap.put(FoodItem::createChest, 0.1);
 		FACTORY_PROBABILITIES = Collections.unmodifiableMap(probsMap);
 	}
 	// =====================
@@ -50,7 +50,7 @@ public class FoodItem extends AbstractConsumableItem {
 	// =====================
 	
 	// ===== CONSTRUCTORS =====
-	public FoodItem(final String name, final int addAmount) {
+	protected FoodItem(final String name, final int addAmount) {
 		super(name, FACTORY_PROBABILITIES);
 		this.addAmount = addAmount;
 	}

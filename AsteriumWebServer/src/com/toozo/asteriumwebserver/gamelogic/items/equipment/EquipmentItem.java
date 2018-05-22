@@ -51,13 +51,13 @@ public class EquipmentItem extends AbstractEquipmentItem {
 		}
 	};
 	
-	public static final Map<Double, Supplier<? extends AbstractItem>> FACTORY_PROBABILITIES;
+	public static final Map<Supplier<? extends AbstractItem>, Double> FACTORY_PROBABILITIES;
 	static {
-		Map<Double, Supplier<? extends AbstractItem>> probsMap = new HashMap<Double, Supplier<? extends AbstractItem>>();
-		probsMap.put(0.25, EquipmentItem::createTinfoilHat);
-		probsMap.put(0.25, EquipmentItem::createLettermanJacket);
-		probsMap.put(0.25, EquipmentItem::createHareyGloves);
-		probsMap.put(0.25, EquipmentItem::createHoverSkates);
+		Map<Supplier<? extends AbstractItem>, Double> probsMap = new HashMap<Supplier<? extends AbstractItem>, Double>();
+		probsMap.put(EquipmentItem::createTinfoilHat, 0.25);
+		probsMap.put(EquipmentItem::createLettermanJacket, 0.25);
+		probsMap.put(EquipmentItem::createHareyGloves, 0.25);
+		probsMap.put(EquipmentItem::createHoverSkates, 0.25);
 		FACTORY_PROBABILITIES = Collections.unmodifiableMap(probsMap);
 	}
 	// =====================

@@ -4,6 +4,10 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Supplier;
+
+import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
+import com.toozo.asteriumwebserver.gamelogic.items.LootPool;
 
 public class Location {
 
@@ -24,11 +28,19 @@ public class Location {
 	
 	private final LocationType type;
 	private final String name;
+	private LootPool loot;
 	private Map<String, Activity> activities = new HashMap<String, Activity>();
 	
-	public Location(final String name, final LocationType type) {
+	public Location(final String name, final LocationType type, final LootPool lootPool) {
 		this.name = name;
 		this.type = type; 
+		this.loot = lootPool;
+	}
+	
+	
+	
+	public void addLoot(Supplier<AbstractItem>... lootsup) {
+		
 	}
 	
 	public final String getName() {
@@ -53,5 +65,9 @@ public class Location {
 	
 	public void doActivity(String name, Game game, PlayerCharacter character) throws IllegalArgumentException{
 		activities.get(name).doActivity(game, character, this);
+	}
+	
+	public Collection<AbstractItem> lootLocation() {
+		return loot.loot();
 	}
 }

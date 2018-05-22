@@ -26,7 +26,7 @@ public abstract class AbstractEquipmentItem extends AbstractItem {
 	 * @param equipmentType the {@link EquipmentSlot} to which this item is native.
 	 */
 	protected AbstractEquipmentItem(final String name, final EquipmentSlot equipmentType,
-									final Map<Double, Supplier<? extends AbstractItem>> factoryProbabilities) {
+									final Map<Supplier<? extends AbstractItem>, Double> factoryProbabilities) {
 		super(name, factoryProbabilities);
 		this.equipmentType = equipmentType;
 	}

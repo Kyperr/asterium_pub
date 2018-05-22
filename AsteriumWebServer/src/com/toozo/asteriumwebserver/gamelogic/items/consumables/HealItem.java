@@ -27,12 +27,12 @@ public class HealItem extends AbstractConsumableItem {
 	public static final String TRIAGE_NAME = "Nanobot Syringe";
 	public static final int TRIAGE_HEAL_AMOUNT = 10;
 	
-	public static final Map<Double, Supplier<? extends AbstractItem>> FACTORY_PROBABILITIES;
+	public static final Map<Supplier<? extends AbstractItem>, Double> FACTORY_PROBABILITIES;
 	static {
-		Map<Double, Supplier<? extends AbstractItem>> probsMap = new HashMap<Double, Supplier<? extends AbstractItem>>();
-		probsMap.put(0.6, HealItem::createBandage);
-		probsMap.put(0.3, HealItem::createMedkit);
-		probsMap.put(0.1, HealItem::createTriage);
+		Map<Supplier<? extends AbstractItem>, Double> probsMap = new HashMap<Supplier<? extends AbstractItem>, Double>();
+		probsMap.put(HealItem::createBandage, 0.6);
+		probsMap.put(HealItem::createMedkit, 0.3);
+		probsMap.put(HealItem::createTriage, 0.1);
 		FACTORY_PROBABILITIES = Collections.unmodifiableMap(probsMap);
 	}
 	// =====================

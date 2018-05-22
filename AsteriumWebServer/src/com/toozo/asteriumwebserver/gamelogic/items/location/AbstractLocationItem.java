@@ -10,7 +10,7 @@ import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
 
 public abstract class AbstractLocationItem extends AbstractItem {
 	protected AbstractLocationItem(final String name,
-			                       final Map<Double, Supplier<? extends AbstractItem>> factoryProbabilities) {
+			                       final Map<Supplier<? extends AbstractItem>, Double> factoryProbabilities) {
 		super(name, factoryProbabilities);
 	}
 	

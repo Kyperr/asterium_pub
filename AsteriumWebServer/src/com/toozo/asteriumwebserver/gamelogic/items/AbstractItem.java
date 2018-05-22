@@ -1,7 +1,9 @@
 package com.toozo.asteriumwebserver.gamelogic.items;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.function.Supplier;
@@ -46,12 +48,44 @@ public abstract class AbstractItem {
 	
 	// ===== FIELDS =====
 	private String name;
-	private Map<Double, Supplier<? extends AbstractItem>> factoryProbabilities;
+	private Map<Supplier<? extends AbstractItem>, Double> factoryProbabilities;
 	// ==================
+	
+	// ===== STATIC METHODS =====
+	public static AbstractItem getLoot(Map<Supplier<? extends AbstractItem>, Double> factoryProbabilities) {
+		int i;
+		
+		// Create parallel lists of factories and their associated probability of being used
+		List<Supplier<? extends AbstractItem>> factories = new ArrayList<Supplier<? extends AbstractItem>>();
+		List<Double> weights = new ArrayList<Double>();
+		
+		// Populate factories
+		for (Supplier<? extends AbstractItem> factory : factoryProbabilities.keySet()) {
+			factories.add(factory);
+		}
+		
+		// Populate weights
+		for (i = 0; i < factories.size(); i++) {
+			weights.add(i, factoryProbabilities.get(factories.get(i)));
+		}
+		
+		// Cascade weights ({0.6, 0.3, 0.1} -> {0.6, 0.9, 1.0})
+		for (i = 1; i < weights.size(); i++) {
+			weights.set(i, weights.get(i) + weights.get(i - 1));
+		}
+		
+		// Determine which factory should be called
+		double random = RNG.nextDouble();
+		for (i = 0; random > weights.get(i); i++) {}
+		
+		// Call the selected factory and return the result
+		return factories.get(i).get();
+	}
+	// ==========================
 	
 	// ===== CONSTRUCTORS =====
 	protected AbstractItem(final String name, 
-						   final Map<Double, Supplier<? extends AbstractItem>> factoryProbabilities) {
+						   final Map<Supplier<? extends AbstractItem>, Double> factoryProbabilities) {
 		this.name = name;
 		this.factoryProbabilities = factoryProbabilities;
 	}
@@ -128,24 +162,7 @@ public abstract class AbstractItem {
 	 * @return a subitem.
 	 */
 	public AbstractItem getLoot() {
-		int i;
-		
-		// Generate array of thresholds based on probabilities
-		// Example: 
-		// 		Probabilities -> [0.6, 0.3, 0.1] 
-		//		Thresholds ----> [0.6, 0.9, 1.0]
-		Double[] weights = new Double[this.factoryProbabilities.keySet().size()];
-		weights = this.factoryProbabilities.keySet().toArray(weights);
-		for (i = 1; i < weights.length; i++) {
-			weights[i] += weights[i - 1];
-		}
-		
-		// Determine which factory should be called
-		double random = RNG.nextDouble();
-		for (i = 0; random > weights[i]; i++) {}
-		
-		// Call the selected factory and return the result
-		return this.factoryProbabilities.get(weights[i]).get();
+		return AbstractItem.getLoot(this.factoryProbabilities);
 	}
 	// ===================
 }
