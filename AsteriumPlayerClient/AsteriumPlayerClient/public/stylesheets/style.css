@@ -123,34 +123,27 @@ header {
   text-shadow: 0px -1px 0px #000;
 }
 .container {
-  width: 500px;
-  margin: 50px auto;
+  /*width: 500px;
+  margin: 50px auto;*/
   overflow: hidden;
+  width: 50%;
+  margin: auto;
 }
 .main-content {
-  float: left;
-  width: 300px;
+  float: center;
+  /*width: 300px;*/
+  width: 75%;
+  margin: auto;
 }
 .main-content p {
   margin-bottom: 20px;
 }
+
 .sidebar {
   float: left;
   width: 200px;
 }
-.sidebar .widget {
-/*
-     * Note the lack of vendor
-     * prefixes here. Nib will
-     * add them for us
-     */
-  border-radius: 3px;
-  border: 1px solid #ccc;
-  margin-left: 20px;
-  background-color: #faf9f0;
-  -webkit-box-shadow: inset 0px 0px 0px 3px rgba(255,255,255,0.8), 0px 3px 0px -2px rgba(0,0,0,0.1);
-  box-shadow: inset 0px 0px 0px 3px rgba(255,255,255,0.8), 0px 3px 0px -2px rgba(0,0,0,0.1);
-}
+
 .sidebar .widget h1 {
   font-family: 'Quicksand';
   margin: 13px 10px 4px;
@@ -159,18 +152,55 @@ header {
   border-radius: 2px 2px 0px 0px;
   margin-bottom: 10px;
 }
+
 .sidebar .widget p {
   font-size: 13px;
   padding: 0px 10px;
   margin-bottom: 10px;
 }
+
 p {
   line-height: 1.8;
 }
+
 footer {
   width: 500px;
   margin: 50px auto;
   border-top: 1px dotted #ccc;
   padding-top: 5px;
   font-size: 13px;
+}
+
+.button, .inputField {
+  margin: 10px auto;
+  display:block;
+  width: 100%;
+  font-size: medium;
+}
+
+ #centralDiv {
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  font-size: large;
+}
+
+.endGameDev {
+  padding-right: 5px;
+  padding-left: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-size: large;
+  text-align: center;
+}
+
+.itemDiv {
+  border-style: solid;
+  padding-right: 5px;
+  padding-left: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-width: 1px;
+  text-align: center;
 }
