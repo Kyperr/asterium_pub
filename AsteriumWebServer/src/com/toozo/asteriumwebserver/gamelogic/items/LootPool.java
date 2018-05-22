@@ -21,9 +21,8 @@ public class LootPool {
 	/**
 	 * Constructs a new LootPool based on lootProbabilities.
 	 * 
-	 * @param lootProbabilities a {@link Map} from (? extends AbstractItem)::getLoot to
-	 * 							the probability that it should be called.
-	 * 							
+	 * @param lootProbabilities a {@link Map} from (? extends AbstractItem)::new to
+	 * 							the probability that that item should be looted from this room.
 	 */
 	public LootPool(Map<Supplier<? extends AbstractItem>, Double> lootProbabilities) {
 		this.probabilities = lootProbabilities;
@@ -36,11 +35,11 @@ public class LootPool {
 	 */
 	public Collection<AbstractItem> loot() {
 		Collection<AbstractItem> result = new ArrayList<AbstractItem>();
-		for (Supplier<? extends AbstractItem> superItem : this.probabilities.keySet()) {
-			double probability = this.probabilities.get(superItem);
+		for (Supplier<? extends AbstractItem> constructor : this.probabilities.keySet()) {
+			double probability = this.probabilities.get(constructor);
 			double random = RNG.nextDouble();
 			if (random > probability) {
-				result.add(superItem.get().getLoot());
+				result.add(constructor.get());
 			}
 		}
 		return result;

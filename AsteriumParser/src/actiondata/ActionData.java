@@ -52,6 +52,7 @@ public interface ActionData {
 	public static final String LUCK = "luck";
 	public static final String INTUITION = "intuition";	
 	public static final String TURN_TAKEN = "turn_taken";	
+	public static final String READY = "ready";	
 	public static final String GAMEBOARD_DATA = "gameboard_data";
 	public static final String AUTH_TOKEN = "auth_token";
 	public static final String GAME_PHASE_NAME = "game_phase_name";

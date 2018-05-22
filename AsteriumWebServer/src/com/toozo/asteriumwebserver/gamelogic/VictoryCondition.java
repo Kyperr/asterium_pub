@@ -3,7 +3,7 @@ package com.toozo.asteriumwebserver.gamelogic;
 import java.util.function.Function;
 
 import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
-import com.toozo.asteriumwebserver.gamelogic.items.location.RescueBeacon;
+import com.toozo.asteriumwebserver.gamelogic.items.consumables.RescueBeacon;
 
 /**
  * A VictoryCondition of the {@link Game}.

@@ -4,19 +4,25 @@ import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import javax.websocket.Session;
 
 import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
+import com.toozo.asteriumwebserver.gamelogic.items.LootPool;
+import com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodChest;
+import com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodCrate;
+import com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodPack;
+import com.toozo.asteriumwebserver.gamelogic.items.consumables.RescueBeacon;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.EquipmentSlot;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.Loadout;
-import com.toozo.asteriumwebserver.gamelogic.items.location.RescueBeacon;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
 import actiondata.ActionData;
@@ -36,6 +42,22 @@ public class GameState {
 	public static final int STARTING_FOOD_PER_PLAYER = 5;
 	public static final int STARTING_FUEL = 100;
 	public static final int STARTING_DAY = 0;
+	
+	// Loot Pools
+	public static final Map<Supplier<? extends AbstractItem>, Double> MEDBAY_LOOT_PROB;
+	static {
+		Map<Supplier<? extends AbstractItem>, Double> probs = new HashMap<Supplier<? extends AbstractItem>, Double>();
+		
+		probs.put(FoodPack::new, 0.25);
+		probs.put(FoodCrate::new, 0.20);
+		probs.put(FoodChest::new, 0.15);
+		//probs.put(EquipmentItem::getLoot, 0.20);
+		//probs.put(HealItem::getLoot, 0.15);
+		probs.put(RescueBeacon::new, 0.10);
+		
+		MEDBAY_LOOT_PROB = Collections.unmodifiableMap(probs);
+	}
+	public static final LootPool MEDBAY_LOOT_POOL = new LootPool(MEDBAY_LOOT_PROB);
 
 	public enum GamePhase {
 
@@ -76,15 +98,15 @@ public class GameState {
 	// Initialize the locations
 	{
 		// Make a new location
-		Location home = new Location("Control Room", Location.LocationType.CONTROL_ROOM);
+		Location home = new Location("Control Room", Location.LocationType.CONTROL_ROOM, MEDBAY_LOOT_POOL);
 		// Make a new room with a room id and location
 		locations.put("1", home);
 
-		Location med_bay_a = new Location("Med Bay A", Location.LocationType.MED_BAY);
+		Location med_bay_a = new Location("Med Bay", Location.LocationType.MED_BAY, MEDBAY_LOOT_POOL);
 		med_bay_a.addActivity(Activity.SEARCH, Activity.searchActivity);
 		locations.put("2", med_bay_a);
 
-		Location med_bay_2 = new Location("Med Bay 2", Location.LocationType.MED_BAY);
+		Location med_bay_2 = new Location("Med Bay 2", Location.LocationType.MED_BAY, MEDBAY_LOOT_POOL);
 		med_bay_2.addActivity(Activity.SEARCH, Activity.searchActivity);
 		locations.put("3", med_bay_2);
 	};
@@ -520,7 +542,7 @@ public class GameState {
 				equipment);
 
 		SyncPlayerClientDataRequestData.PlayerCharacterData dChar = new SyncPlayerClientDataRequestData.PlayerCharacterData(
-				pChar.getCharacterName(), stat, personalInv, loadout, game.turnTaken(player));
+				pChar.getCharacterName(), stat, personalInv, loadout, game.turnTaken(player), game.getPlayerIsReady(auth));
 
 		List<SyncPlayerClientDataRequestData.InventoryData> inventory = new ArrayList<SyncPlayerClientDataRequestData.InventoryData>();
 		for (AbstractItem item : getCommunalInventory()) {
