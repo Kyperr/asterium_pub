@@ -72,8 +72,6 @@ public class CreateGameAction extends RequestAction {
 	/**
 	 * Get a {@link CreateGameAction} based on message.
 	 * 
-	 * @param sender
-	 *            the {@link Session} used for this {@link CreateGameACtion}.
 	 * @param message
 	 *            the {@link Message} containing the {@link CreateGameAction}.
 	 * @return a {@link CreateGameAction} containing the data from message.

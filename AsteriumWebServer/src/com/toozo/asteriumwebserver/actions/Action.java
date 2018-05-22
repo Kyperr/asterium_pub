@@ -13,13 +13,11 @@ import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
 import actiondata.ActionData;
 import actiondata.AllocateStatsRequestData;
-import actiondata.CreateGameRequestData;
 import actiondata.ErroredResponseData;
+import actiondata.GeneralRequestData;
 import actiondata.JoinAsGameBoardRequestData;
 import actiondata.JoinAsPlayerRequestData;
-import actiondata.QueryIsInGameRequestData;
 import actiondata.SuccessResponseData;
-import actiondata.ToggleReadyUpRequestData;
 import actiondata.TurnRequestData;
 import actiondata.UseItemRequestData;
 import message.Message;
@@ -46,6 +44,7 @@ public abstract class Action implements Runnable {
 	public static final String SYNC_LOCATIONS = "sync_locations";
 	public static final String SYNC_PLAYER_LIST = "sync_player_list";
 	public static final String USE_ITEM = "use_item";
+	public static final String LEAVE_GAME = "leave_game";
 
 	public static final boolean VERBOSE = true;
 	// ===================
@@ -78,14 +77,17 @@ public abstract class Action implements Runnable {
 			
 			put(JoinAsPlayerRequestData.class, JoinAsPlayerAction::fromMessage);
 			put(JoinAsGameBoardRequestData.class, JoinAsGameBoardAction::fromMessage);
-			put(CreateGameRequestData.class, CreateGameAction::fromMessage);
+			put(GeneralRequestData.class, CreateGameAction::fromMessage);
 			
 			put(AllocateStatsRequestData.class, AllocateStatsAction::fromMessage);
 			put(TurnRequestData.class, TurnAction::fromMessage);
 			put(UseItemRequestData.class, UseItemAction::fromMessage);
 			
-			put(QueryIsInGameRequestData.class, QueryIsInGameAction::fromMessage);
-			put(ToggleReadyUpRequestData.class, ToggleReadyUpAction::fromMessage);
+			put(GeneralRequestData.class, QueryIsInGameAction::fromMessage);
+			put(GeneralRequestData.class, ToggleReadyUpAction::fromMessage);
+			
+			
+			put(GeneralRequestData.class, LeaveGameAction::fromMessage);
 		}
 	};
 

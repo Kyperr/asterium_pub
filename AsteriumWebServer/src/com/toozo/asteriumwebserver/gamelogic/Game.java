@@ -191,6 +191,22 @@ public class Game extends Thread {
 	}
 
 	/**
+	 * Removes the {@link Client} from the Game.
+	 * 
+	 * @param authToken The auth token of the {@link Client} to be removed.
+	 */
+	public synchronized void removeClient(final String authToken) {
+		//the map.remove methods will 
+		//"[remove] the mapping for a key from this map if it is present"
+		//if the auth token is from a player client:
+		this.turnActionMap.remove(authToken);
+		this.playerReadyMap.remove(authToken);
+		this.playerList.remove(authToken);
+		//if the auth token is form a game board: 
+		this.gameBoardList.remove(authToken);
+	}
+	
+	/**
 	 * Register a new {@link Player} in the {@link Game}. They are added to the
 	 * {@link Game}'s list of players.
 	 * 
