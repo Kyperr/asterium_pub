@@ -21,7 +21,6 @@ import com.toozo.asteriumwebserver.gamelogic.items.LootPool;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodItem;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.HealItem;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.RescueBeacon;
-import com.toozo.asteriumwebserver.gamelogic.items.equipment.EquipmentItem;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.EquipmentSlot;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.Loadout;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
@@ -49,7 +48,7 @@ public class GameState {
 	static {
 		Map<Function<Map<Supplier<? extends AbstractItem>, Double>, ? extends AbstractItem>, Double> probs = new HashMap<Function<Map<Supplier<? extends AbstractItem>, Double>, ? extends AbstractItem>, Double>();
 		probs.put(FoodItem::getLoot, 0.25);
-		probs.put(EquipmentItem::getLoot, 0.20);
+		//probs.put(EquipmentItem::getLoot, 0.20);
 		probs.put(HealItem::getLoot, 0.15);
 		probs.put(RescueBeacon::getLoot, 0.10);
 		

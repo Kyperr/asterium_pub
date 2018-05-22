@@ -12,7 +12,7 @@ import com.toozo.asteriumwebserver.gamelogic.GameState;
 import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodItem;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.HealItem;
-import com.toozo.asteriumwebserver.gamelogic.items.location.RescueBeacon;
+import com.toozo.asteriumwebserver.gamelogic.items.consumables.RescueBeacon;
 
 /**
  * The abstract class for an item that can be used by a {@link PlayerCharacter}.
@@ -168,7 +168,6 @@ public abstract class AbstractItem {
 		return AbstractItem.getLoot(this.factoryProbabilities);
 	}
 	// ===================
-	private String name;
 	@Override
 	public int hashCode() {
 		final int prime = 31;
