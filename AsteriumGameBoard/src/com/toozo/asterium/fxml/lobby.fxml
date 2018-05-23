@@ -9,7 +9,7 @@
 
 <BorderPane id="LobbyPane" prefHeight="500" prefWidth="720"
 	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="com.toozo.asterium.asteriumgameboard.LobbyController">
+	fx:controller="com.toozo.asterium.controllers.LobbyController">
 	<top>
 		<BorderPane fx:id="lobbyBorderPane">
 			<center>

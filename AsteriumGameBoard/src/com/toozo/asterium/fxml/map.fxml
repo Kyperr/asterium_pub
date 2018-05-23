@@ -8,7 +8,7 @@
 
 <BorderPane id="MapPane" prefHeight="500" prefWidth="720"
 	xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="com.toozo.asterium.asteriumgameboard.MapController">
+	fx:controller="com.toozo.asterium.controllers.MapController">
 	<top>
 		<BorderPane fx:id="mapInfoBorderPane">
 			<center>

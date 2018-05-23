@@ -7,13 +7,15 @@ package com.toozo.asterium.asteriumgameboard;
 
 import java.io.IOException;
 
-import com.toozo.asterium.util.GameResources;
+import com.toozo.asterium.controllers.GameBoardController;
+import com.toozo.asterium.nodes.GameBoardPane;
 import com.toozo.asterium.util.NodeNavigator;
 import com.toozo.asterium.util.NodeNavigator.Display;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -32,7 +34,7 @@ import javafx.stage.Stage;
 public class AsteriumGameBoard extends Application {
 
 	private static String MAIN = "/com/toozo/asterium/fxml/gameboard.fxml";
-	
+
 	private static final String GAME_BOARD_TITLE = "Asterium";
 	private static final String CONTAINER_CSS = "css/asteriumgameboard.css";
 	private static final int PANE_WIDTH = 960;
@@ -41,26 +43,19 @@ public class AsteriumGameBoard extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 
-		try {
+		Image backgroundImage = new Image(
+				getClass().getResource("/com/toozo/asterium/resources/background.jpg").toURI().toString());
+		GameBoardPane gameboardPane = new GameBoardPane(backgroundImage);
 
-			
-			FXMLLoader loader = new FXMLLoader();
-			Pane gameBoardPane = loader.load(ClassLoader.class.getResourceAsStream(MAIN));
-			GameBoardController gameBoardController = loader.getController();
-			
-			NodeNavigator navigator = new NodeNavigator(gameBoardController);
+		NodeNavigator navigator = new NodeNavigator(gameboardPane);
 
-			stage.setTitle(GAME_BOARD_TITLE);
-			stage.setScene(createScene(gameBoardPane));
-			stage.show();
-			navigator.display(Display.MENU);
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		stage.setTitle(GAME_BOARD_TITLE);
+		stage.setScene(createScene(gameboardPane));
+		stage.show();
+		navigator.display(Display.MENU);
+
 	}
-	
+
 	/**
 	 * Creates the main application scene.
 	 *
@@ -71,7 +66,8 @@ public class AsteriumGameBoard extends Application {
 	 */
 	private Scene createScene(Pane mainPane) {
 		Scene scene = new Scene(mainPane, PANE_WIDTH, PANE_HEIGHT);
-		scene.getStylesheets().addAll(this.getClass().getResource("/com/toozo/asterium/css/asteriumgameboard.css").toExternalForm());
+		scene.getStylesheets()
+				.addAll(this.getClass().getResource("/com/toozo/asterium/css/asteriumgameboard.css").toExternalForm());
 		return scene;
 	}
 

@@ -1,10 +1,14 @@
-package com.toozo.asterium.asteriumgameboard;
+package com.toozo.asterium.controllers;
+
+import java.net.URISyntaxException;
 
 import com.toozo.asterium.util.GameResources;
 
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
 /**
@@ -15,6 +19,10 @@ public class GameBoardController extends AbstractAsteriumController {
     /** Holder of a node. Initialized by fxml. */
     @FXML
     private StackPane nodeHolder;
+    
+    @FXML
+    private ImageView backgroundImage;
+    
     private GameResources resources;
  
     public GameBoardController() {
@@ -46,6 +54,6 @@ public class GameBoardController extends AbstractAsteriumController {
     }
 
 	@Override
-	protected void setup() {		
+	protected void setup() {
 	}    
 }

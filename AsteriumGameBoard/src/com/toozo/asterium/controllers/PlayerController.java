@@ -1,4 +1,4 @@
-package com.toozo.asterium.asteriumgameboard;
+package com.toozo.asterium.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

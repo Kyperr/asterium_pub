@@ -6,12 +6,12 @@ import java.util.Map;
 
 import javax.resource.spi.IllegalStateException;
 
-import com.toozo.asterium.asteriumgameboard.AbstractAsteriumController;
-import com.toozo.asterium.asteriumgameboard.GameBoardController;
+import com.toozo.asterium.controllers.AbstractAsteriumController;
+import com.toozo.asterium.controllers.GameBoardController;
+import com.toozo.asterium.nodes.GameBoardPane;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.layout.Pane;
 
 /**
  * Utility class for controlling navigation between Nodes.
@@ -47,17 +47,17 @@ public class NodeNavigator {
 
 	private GameResources gameResources;
 	
-	private GameBoardController gameBoardController;
+	private GameBoardPane gameBoardPane;
 
-	public NodeNavigator(GameBoardController gameBoardController) {
+	public NodeNavigator(GameBoardPane gameBoardPane) {
 		gameResources = new GameResources(this);
 		try {
-			gameBoardController.initialize(this.gameResources, this);
+			gameBoardPane.initialize(this.gameResources, this);
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.gameBoardController = gameBoardController;
+		this.gameBoardPane = gameBoardPane;
 		setChildControllers();
 	}
 
@@ -105,14 +105,14 @@ public class NodeNavigator {
 	}
 
 	public void display(Display view) {
-		gameBoardController.setNode(layoutMap.get(view));
+		gameBoardPane.setNode(layoutMap.get(view));
 	}
 
 	public Node getLayout(Display view) {
 		return layoutMap.get(view);
 	}
 
-	public GameBoardController getMainController() {
-		return this.gameBoardController;
+	public GameBoardPane getGameBoardPane() {
+		return this.gameBoardPane;
 	}
 }

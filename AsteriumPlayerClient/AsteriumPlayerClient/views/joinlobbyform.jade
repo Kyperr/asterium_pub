@@ -1,0 +1,13 @@
+//- /joinlobbyform.jade
+div(id="centraldiv")
+    div(data-role='fieldcontain')
+        fieldset(data-role='controlgroup')
+        label(for='name') Name: 
+        input(id='name',type='text',value='',name='name')
+
+    div(data-role='fieldcontain')
+        fieldset(data-role='controlgroup')
+        label(for='lobby_id') Lobby ID: 
+        input(id='lobby_id',type='text',value='',name='lobby_id')
+
+    button(onclick='joinAsPlayer()') Join Lobby 

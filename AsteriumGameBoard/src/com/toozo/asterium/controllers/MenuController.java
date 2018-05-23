@@ -1,4 +1,4 @@
-package com.toozo.asterium.asteriumgameboard;
+package com.toozo.asterium.controllers;
 
 import javax.resource.spi.IllegalStateException;
 
