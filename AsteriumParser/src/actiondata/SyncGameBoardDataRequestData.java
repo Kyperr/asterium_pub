@@ -311,7 +311,8 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 		public enum LocationType {
 			CONTROL_ROOM("control_room"),
 			MED_BAY("med_bay"), 
-			MESS_HALL("mess_hall");
+			MESS_HALL("mess_hall"), 
+			RESIDENTAIL("residential");
 
 			private final String jsonVersion;
 
