@@ -26,34 +26,25 @@ public class GameBoardPane extends StackPane implements AsteriumController{
 
 	//Pane variables
 
-	private ImageView backgroundImage;
+	private LoopingBackGround backgroundImage;
 
 	private StackPane nodeHolder;
 	
-	private AnimationTimer backgroundAnim;
 	
 	
 	public GameBoardPane(Image backgroundImage) {
 		this.nodeHolder = new StackPane();
-		this.backgroundImage = new ImageView(backgroundImage);
+		this.backgroundImage = new LoopingBackGround(backgroundImage, 50.0);
 		init();
 	}
 
 	private void init() {
-		backgroundImage.fitHeightProperty().bind(this.heightProperty());
+		//backgroundImage.fitHeightProperty().bind(this.heightProperty());
+		
 		getChildren().add(backgroundImage);
 		getChildren().add(nodeHolder);
 		
-		backgroundAnim = new AnimationTimer() {
-
-            @Override
-            public void handle(long now) {
-            	Double newX = backgroundImage.getTranslateX();
-            	backgroundImage.setTranslateX(newX += .5);
-            }
-        };
         
-        backgroundAnim.start();
 		
 	}
 
