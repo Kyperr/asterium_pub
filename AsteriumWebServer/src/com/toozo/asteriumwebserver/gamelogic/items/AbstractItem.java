@@ -14,6 +14,7 @@ import com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodPack;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.Medkit;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.RescueBeacon;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.Syringe;
+import com.toozo.asteriumwebserver.gamelogic.items.equipment.TinfoilHatEquipmentItem;
 
 /**
  * The abstract class for an item that can be used by a {@link PlayerCharacter}.
@@ -42,6 +43,8 @@ public abstract class AbstractItem {
 			put(FoodPack.NAME, FoodPack::new);
 			put(FoodCrate.NAME, FoodCrate::new);
 			put(FoodChest.NAME, FoodChest::new);
+			
+			put(TinfoilHatEquipmentItem.NAME, TinfoilHatEquipmentItem::new);
 			
 			put(RescueBeacon.NAME, RescueBeacon::new);
 		}

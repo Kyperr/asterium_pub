@@ -26,6 +26,7 @@ import com.toozo.asteriumwebserver.gamelogic.items.consumables.RescueBeacon;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.Syringe;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.EquipmentSlot;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.Loadout;
+import com.toozo.asteriumwebserver.gamelogic.items.equipment.TinfoilHatEquipmentItem;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
 import actiondata.ActionData;
@@ -55,6 +56,7 @@ public class GameState {
 		probs.put(Bandage::new, 0.40);
 		probs.put(Medkit::new, 0.20);
 		probs.put(Syringe::new, 0.05);
+		probs.put(TinfoilHatEquipmentItem::new, 0.25);
 		probs.put(RescueBeacon::new, 0.10);
 		
 		MEDBAY_LOOT_PROB = Collections.unmodifiableMap(probs);
