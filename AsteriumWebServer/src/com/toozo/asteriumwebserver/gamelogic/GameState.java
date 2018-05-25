@@ -65,7 +65,7 @@ public class GameState {
 	public static final Map<Supplier<? extends AbstractItem>, Double> CAFETERIA_LOOT_PROB;
 	static {
 		Map<Supplier<? extends AbstractItem>, Double> probs = new HashMap<Supplier<? extends AbstractItem>, Double>();
-		
+	
 		probs.put(FoodPack::new, 0.40);
 		probs.put(FoodCrate::new, 0.20);
 		probs.put(FoodChest::new, 0.05);
