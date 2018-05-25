@@ -1,7 +1,6 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
 .root {
     -fx-font: 16px "Arial";
-    -fx-padding: 10;
     -fx-background-color: #606060;
     -fx-background-color: linear-gradient(to top right, #7582a3, #3d4861) where ;
 }
