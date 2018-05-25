@@ -1,4 +1,4 @@
-package com.toozo.asterium.asteriumgameboard;
+package com.toozo.asterium.controllers;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -8,7 +8,7 @@
 
 <BorderPane xmlns:fx="http://javafx.com/fxml/"
 	id="PlayerPane"
-	fx:controller="com.toozo.asterium.asteriumgameboard.PlayerListController">
+	fx:controller="com.toozo.asterium.controllers.PlayerListController">
 	<center>
 		<!-- Why doesn't this center the names of player? -->
 		<VBox fx:id="playerList" />

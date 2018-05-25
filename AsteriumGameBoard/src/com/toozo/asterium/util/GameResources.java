@@ -3,10 +3,10 @@ package com.toozo.asterium.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.toozo.asterium.asteriumgameboard.GameSummaryController;
-import com.toozo.asterium.asteriumgameboard.MapController;
-import com.toozo.asterium.asteriumgameboard.PlayerListController;
-import com.toozo.asterium.asteriumgameboard.TurnSummaryController;
+import com.toozo.asterium.controllers.GameSummaryController;
+import com.toozo.asterium.controllers.MapController;
+import com.toozo.asterium.controllers.PlayerListController;
+import com.toozo.asterium.controllers.TurnSummaryController;
 import com.toozo.asterium.util.NodeNavigator.Display;
 
 import actiondata.ActionData;

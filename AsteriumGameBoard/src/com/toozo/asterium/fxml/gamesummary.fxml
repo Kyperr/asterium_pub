@@ -10,7 +10,7 @@
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity"
 	minHeight="-Infinity" minWidth="-Infinity" spacing="8.0"
 	xmlns:fx="http://javafx.com/fxml"
-	fx:controller="com.toozo.asterium.asteriumgameboard.GameSummaryController">
+	fx:controller="com.toozo.asterium.controllers.GameSummaryController">
 	<children>
 
 		<Label layoutX="100" layoutY="120" minHeight="16" minWidth="69"
