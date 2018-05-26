@@ -1,0 +1,9 @@
+package com.toozo.asteriumwebserver.gamelogic.items;
+
+public class ItemLoot {
+	/*
+	public ItemLoot(Supplier<? extends AbstractItem>) {
+		
+	}
+	*/
+}

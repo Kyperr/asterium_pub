@@ -15,7 +15,7 @@ public interface Activity {
 	public static Activity searchActivity = new Activity() {
 		@Override
 		public void doActivity(Game game, PlayerCharacter character, Location location) {
-			Collection<AbstractItem> loot = location.lootLocation();
+			Collection<AbstractItem> loot = location.lootLocation(character);
 			
 			for (AbstractItem item : loot) {
 				character.getInventory().add(item);

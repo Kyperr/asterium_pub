@@ -1,0 +1,34 @@
+package com.toozo.asteriumwebserver.gamelogic.items;
+
+import java.util.function.Supplier;
+
+import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
+import com.toozo.asteriumwebserver.gamelogic.Stat;
+
+/**
+ * Structure encompassing a constructor for an {@link AbstractItem} and its probability
+ * of being looted from a loot pool.
+ * 
+ * @author Daniel, Greg
+ */
+public class ItemLoot {
+	Supplier<? extends AbstractItem> constructor;
+	int base;
+	double lukMod;
+	double intMod;
+	
+	public ItemLoot(Supplier<? extends AbstractItem> itemConstructor,
+					int baseChance, 
+					double luckProbabilityModifier, double intuitionProbabilityModifier) {
+		this.constructor = itemConstructor;
+		this.base = baseChance;
+		this.lukMod = luckProbabilityModifier;
+		this.intMod = intuitionProbabilityModifier;
+	}
+	
+	public int getEffectiveChance(PlayerCharacter.StatBlock stats) {
+		double probability = this.base / 100;
+		chance += (stats.getStat(Stat.LUCK) * lukMod)
+		return Math.floor();
+	}
+}

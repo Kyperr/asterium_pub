@@ -1,0 +1,21 @@
+package com.toozo.asteriumwebserver.gamelogic.items;
+
+import java.util.function.Supplier;
+
+/**
+ * Structure encompassing a constructor for an {@link AbstractItem} and its probability
+ * of being looted from a loot pool.
+ * 
+ * @author Daniel, Greg
+ */
+public class ItemLoot {
+	Supplier<? extends AbstractItem> constructor;
+	double base;
+	double lukmod
+	
+	public ItemLoot(Supplier<? extends AbstractItem> itemConstructor,
+					double baseProbability, 
+					double luckProbabilityModifier, double intuitionProbabilityModifier) {
+		
+	}
+}
