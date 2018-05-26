@@ -245,6 +245,7 @@ public class Game extends Thread {
 	 *            The game board client.
 	 */
 	public void addGameBoard(final GameBoard gameBoard) {
+		System.out.println("adding game board: " + gameBoard.getAuthToken());
 		this.gameBoardList.put(gameBoard.getAuthToken(), gameBoard);
 	}
 
@@ -266,8 +267,9 @@ public class Game extends Thread {
 	public synchronized boolean areAllTurnsSubmitted() {
 		boolean bool = turnActionMap.size() > 0;
 		for(Player player : getPlayers()) {
-			bool &= turnActionMap.containsKey(player.getAuthToken());
+			bool = bool && turnActionMap.containsKey(player.getAuthToken());
 		}
+		System.out.println("All player turns tested as: " + bool);
 		return bool;
 	}
 

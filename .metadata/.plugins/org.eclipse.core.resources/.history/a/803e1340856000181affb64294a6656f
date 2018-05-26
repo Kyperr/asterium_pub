@@ -266,8 +266,9 @@ public class Game extends Thread {
 	public synchronized boolean areAllTurnsSubmitted() {
 		boolean bool = turnActionMap.size() > 0;
 		for(Player player : getPlayers()) {
-			bool &= turnActionMap.containsKey(player.getAuthToken());
+			bool = bool && turnActionMap.containsKey(player.getAuthToken());
 		}
+		System.out.println("All player turns tested as: " + bool);
 		return bool;
 	}
 

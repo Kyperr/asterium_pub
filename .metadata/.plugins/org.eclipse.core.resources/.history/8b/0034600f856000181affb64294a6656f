@@ -73,7 +73,7 @@ public class UseItemAction extends Action {
 						lastName = target.getCharacterName();
 					}
 					targetNames += "and " + lastName;
-					System.out.printf("%s has used %s on %s\n", 
+					System.out.printf("%s has used %s on %s", 
 									  user.getCharacterName(),
 									  item.getName(),
 									  targetNames);

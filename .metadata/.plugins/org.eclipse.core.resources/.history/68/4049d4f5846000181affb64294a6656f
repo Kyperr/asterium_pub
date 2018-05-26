@@ -79,7 +79,7 @@ public class JoinAsPlayerAction extends RequestAction {
 			game.addPlayer(player);
 			
 			if (Action.VERBOSE) {
-				System.out.printf("Player %s joined lobby %s\n",
+				System.out.printf("Player %s joined lobby %s.",
 								  player.getPlayerName(),
 								  game.getLobbyID());
 			}
