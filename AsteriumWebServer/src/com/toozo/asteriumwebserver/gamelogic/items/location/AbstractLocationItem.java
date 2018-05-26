@@ -7,8 +7,8 @@ import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
 
 public abstract class AbstractLocationItem extends AbstractItem {
-	protected AbstractLocationItem(final String name) {
-		super(name);
+	protected AbstractLocationItem(final String name, final String description, final String flavor, final String image) {
+		super(name, description, flavor, image);
 	}
 	
 	@Override

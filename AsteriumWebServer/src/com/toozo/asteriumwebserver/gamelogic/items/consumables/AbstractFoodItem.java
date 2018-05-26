@@ -9,14 +9,15 @@ public abstract class AbstractFoodItem extends AbstractConsumableItem {
 	// ===== FIELDS =====
 	private int addAmount;
 	// ==================
-	
+
 	// ===== CONSTRUCTORS =====
-	protected AbstractFoodItem(final String name, final int addAmount) {
-		super(name);
+	protected AbstractFoodItem(final String name, final String description, final String flavor, final String image,
+			final int addAmount) {
+		super(name, description, flavor, image);
 		this.addAmount = addAmount;
 	}
 	// ========================
-	
+
 	// ===== METHODS ======
 	@Override
 	public void applyEffect(GameState state, PlayerCharacter user, Collection<PlayerCharacter> targets) {
