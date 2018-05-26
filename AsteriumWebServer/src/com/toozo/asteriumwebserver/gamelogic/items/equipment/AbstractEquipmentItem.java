@@ -29,7 +29,7 @@ public abstract class AbstractEquipmentItem extends AbstractItem {
 	 * Abstract constructor which defines which type of equipment this is.
 	 * @param equipmentType the {@link EquipmentSlot} to which this item is native.
 	 */
-	protected AbstractEquipmentItem(final String name, final EquipmentSlot equipmentType,
+	public AbstractEquipmentItem(final String name, final EquipmentSlot equipmentType,
 									final Map<Stat, Integer> boosts) {
 		super(name);
 		this.equipmentType = equipmentType;
@@ -66,6 +66,11 @@ public abstract class AbstractEquipmentItem extends AbstractItem {
 					Collection<PlayerCharacter> targets,
 					boolean fromCommunalInventory) {
 		this.equip(user);
+		applyEffect(state, user, targets);
+	}
+	
+	@Override
+	public void applyEffect(GameState state, PlayerCharacter user, Collection<PlayerCharacter> targets) {
 		Map<Stat, Function<Integer, Integer>> statModifiers = new HashMap<Stat, Function<Integer, Integer>>();
 		for (Stat stat : this.boosts.keySet()) {
 			statModifiers.put(stat, (oldStat) -> (oldStat + this.boosts.get(stat)));
