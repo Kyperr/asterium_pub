@@ -15,6 +15,7 @@ LocationsDisplayController.prototype.constructor = LocationsDisplayController;
 LocationsDisplayController.prototype.init = function () {
 }
 
+
 LocationsDisplayController.prototype.display = function () {
     var div = document.getElementById("centralDiv");
 
@@ -27,15 +28,18 @@ LocationsDisplayController.prototype.display = function () {
 
         //Should map the id to a display-friendly string and get it here.
 
-        btnLocation.innerHTML = location.location_name ;
-        btnLocation.setAttribute("onClick", "locationsDisplayController.selectLocation(\'" + location.location_id + "\')");
+        btnLocation.innerHTML = location.location_name;
+        btnLocation.onclick = function(){
+            locationsDisplayController.selectLocation(location);
+        }
         btnLocation.setAttribute("class", "button");
         div.appendChild(btnLocation);
     });
 }
-LocationsDisplayController.prototype.selectLocation = function (location_id) {
+
+LocationsDisplayController.prototype.selectLocation = function (location) {
     console.log("location: " + location);
-    this.selectedLocation = locations[location_id];
+    this.selectedLocation = location;
     activityDisplayController.display();
 }
 

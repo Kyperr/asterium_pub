@@ -20,6 +20,7 @@ ActivityDisplayController.prototype.init = function () {
     this.btnCancel.setAttribute("class", "button");
 }
 
+
 ActivityDisplayController.prototype.display = function () {
     var div = document.getElementById("centralDiv");
 
