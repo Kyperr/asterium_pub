@@ -67,7 +67,7 @@ public class JoinAsGameBoardAction extends RequestAction {
 		game.addGameBoard(gameBoard);
 
 		if (Action.VERBOSE) {
-			System.out.printf("New game board joined lobby %s\n", game.getLobbyID());
+			System.out.printf("New game board joined lobby %s.\n", game.getLobbyID());
 		}
 		
 		// Construct success response.

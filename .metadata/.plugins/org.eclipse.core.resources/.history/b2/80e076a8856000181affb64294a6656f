@@ -298,17 +298,16 @@ public class GameState {
 	// ===== CONSTRUCTORS =====
 	public GameState(Game game) {
 		this.game = game;
+		this.gamePhase = GamePhase.PLAYERS_JOINING;
 		this.authCharacterMap = new ConcurrentHashMap<String, PlayerCharacter>();
 		this.nameCharacterMap = new ConcurrentHashMap<String, PlayerCharacter>();
 		this.victoryConditions = new ArrayList<VictoryCondition>();
 		this.communalInventory = new Inventory();
 		this.day = 0;
-		this.gamePhase = GamePhase.PLAYERS_JOINING;
 		
 		if (VERBOSE) {
 			System.out.println("Player join phase...");
 		}
-		
 	}
 	// ========================
 

@@ -45,7 +45,7 @@ public class CreateGameAction extends RequestAction {
 		// If game was created...
 		if (game != null) {
 			if (Action.VERBOSE) {
-				System.out.printf("Game created with lobby ID %s\n", game.getLobbyID());
+				System.out.printf("Game created with lobby ID %s.\n", game.getLobbyID());
 			}
 			
 			// Generate response data

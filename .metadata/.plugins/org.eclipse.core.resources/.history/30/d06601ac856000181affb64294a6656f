@@ -303,12 +303,12 @@ public class GameState {
 		this.victoryConditions = new ArrayList<VictoryCondition>();
 		this.communalInventory = new Inventory();
 		this.day = 0;
-		this.gamePhase = GamePhase.PLAYERS_JOINING;
 		
 		if (VERBOSE) {
 			System.out.println("Player join phase...");
 		}
-		
+
+		this.gamePhase = GamePhase.PLAYERS_JOINING;
 	}
 	// ========================
 

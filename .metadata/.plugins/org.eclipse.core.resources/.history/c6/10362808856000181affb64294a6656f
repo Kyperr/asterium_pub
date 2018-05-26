@@ -45,7 +45,7 @@ public class ToggleReadyUpAction extends RequestAction {
 			String playerName = game.getPlayer(auth).getPlayerName();
 			
 			if (Action.VERBOSE) {
-				System.out.printf("Player %s is %s\n", playerName, isReady? "ready" : "not ready");
+				System.out.printf("Player %s is %s\n", playerName, isReady? "ready!" : "not ready.");
 			}
 			
 			ToggleReadyUpResponseData data = new ToggleReadyUpResponseData(isReady);
