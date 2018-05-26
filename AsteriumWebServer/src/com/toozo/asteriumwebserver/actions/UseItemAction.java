@@ -81,6 +81,14 @@ public class UseItemAction extends Action {
 				
 				SuccessResponseData data = new SuccessResponseData(Action.USE_ITEM);
 				message = new Response(data, 0, this.getMessageID(), auth);
+				
+				//Update player clients
+				if(this.isCommunal) {
+					game.getGameState().syncPlayerClients();
+				} else {
+					game.getGameState().syncPlayerClient(auth);
+				}
+				
 			} else {
 				// No Such Item In Personal Inventory Error
 				ErroredResponseData data = new ErroredResponseData(Action.USE_ITEM);

@@ -308,7 +308,7 @@ public class GameState {
 		if (VERBOSE) {
 			System.out.println("Player join phase...");
 		}
-		
+
 	}
 	// ========================
 
@@ -517,20 +517,26 @@ public class GameState {
 		this.gamePhase.executePhase(this);
 	}
 
-	private final void syncPlayerClients() {
-		for (Player p : this.game.getPlayers()) {
+	public final void syncPlayerClients() {
+		for (String auth : this.game.getPlayerAuths()) {
+			this.syncPlayerClient(auth);
+		}
 
-			ActionData data = createSyncPlayerClientDataRequestData(p);
-			Request request = new Request(data, p.getAuthToken());
+	}
 
-			try {
-				Session session = SessionManager.getInstance().getSession(p.getAuthToken());
-				synchronized (session) {
-					session.getBasicRemote().sendText(request.jsonify().toString());
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
+	public final void syncPlayerClient(String auth) {
+		Player p = this.game.getPlayer(auth);
+
+		ActionData data = createSyncPlayerClientDataRequestData(p);
+		Request request = new Request(data, p.getAuthToken());
+
+		try {
+			Session session = SessionManager.getInstance().getSession(p.getAuthToken());
+			synchronized (session) {
+				session.getBasicRemote().sendText(request.jsonify().toString());
 			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
 	}

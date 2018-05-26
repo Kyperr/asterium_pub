@@ -8,6 +8,7 @@ public interface Activity {
 
 	public static final String SEARCH = "Search";
 	public static final String USE_LOCATION_ITEM = "Use Location Item";
+	public static final String REST = "Rest";
 	
 	public void doActivity(Game game, PlayerCharacter character, Location location);
 	
@@ -19,6 +20,20 @@ public interface Activity {
 			for (AbstractItem item : loot) {
 				character.getInventory().add(item);
 			}
+		}
+	};
+	
+	public static Activity useLocationItemActivity = new Activity() {
+		@Override
+		public void doActivity(Game game, PlayerCharacter character, Location location) {
+			//TODO use a location item. differs from use item action because it is the entire turn.
+		}
+	};
+	
+	public static Activity restActivity = new Activity() {
+		@Override
+		public void doActivity(Game game, PlayerCharacter character, Location location) {
+			character.rest();			
 		}
 	};
 }

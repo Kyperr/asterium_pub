@@ -11,6 +11,7 @@ import com.toozo.asteriumwebserver.gamelogic.statuseffects.AbstractStatusEffect;
 public class PlayerCharacter {
 	// ===== CONSTANTS =====
 	private static final String DEFAULT_NAME = "";
+	private static final int REST_HEAL = 2;
 	// =====================
 	
 	// ===== FIELDS =====
@@ -166,6 +167,15 @@ public class PlayerCharacter {
 	// ===================
 	
 	// ===== OTHER INSTANCE METHODS =====
+	
+	public void rest() {
+		//reduce exposure once we implement that
+		StatBlock stats = this.getEffectiveStats();
+		int health = stats.getStat(Stat.HEALTH);
+		health = Math.min(StatBlock.MAX_HEALTH, health + REST_HEAL);
+		stats.setStat(Stat.HEALTH, health);
+	}
+	
 	/**
 	 * Add a {@link AbstractStatusEffect} to the PlayerCharacter.
 	 * 

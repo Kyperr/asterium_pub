@@ -113,6 +113,10 @@ public class Game extends Thread {
 	public Player getPlayer(String authToken) {
 		return playerList.get(authToken);
 	}
+	
+	public Collection<String> getPlayerAuths() {
+		return this.playerList.keySet();
+	}
 
 	public GameState getGameState() {
 		return gameState;
