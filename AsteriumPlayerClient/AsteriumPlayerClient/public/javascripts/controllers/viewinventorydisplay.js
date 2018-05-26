@@ -43,7 +43,7 @@ ViewInventoryDisplayController.prototype.init = function () {
 ViewInventoryDisplayController.prototype.display = function () {
     var div = document.getElementById("centralDiv");
 
-    div.innerHTML = "<b>What item would you like to use?</b>";
+    div.innerHTML = "";
 
     div.appendChild(document.createElement("br"));
     div.appendChild(document.createElement("br"));
@@ -124,6 +124,7 @@ ViewInventoryDisplayController.prototype.useItem = function () {
     var item = viewInventoryDisplayController.selectedInventory;
     var isCommunal = viewInventoryDisplayController.isCommunal;
 
+    this.modal.style.display = "none";
     useItemAction(item, targets, isCommunal);
 }
 

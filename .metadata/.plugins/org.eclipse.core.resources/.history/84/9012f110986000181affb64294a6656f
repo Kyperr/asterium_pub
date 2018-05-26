@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import javax.websocket.Session;
 
@@ -51,6 +52,7 @@ public class GameState {
 	public static final boolean VERBOSE = true;
 
 	// LOOT POOLS
+<<<<<<< HEAD
 	// 		Medbay
 	public static final List<ItemLoot> MEDBAY_ITEM_LOOT;
 	static {
@@ -80,6 +82,37 @@ public class GameState {
 	}
 	public static final LootPool CAFETERIA_LOOT_POOL = new LootPool(CAFETERIA_ITEM_LOOT);
 	
+=======
+	// Medbay
+	public static final Map<Supplier<? extends AbstractItem>, Double> MEDBAY_LOOT_PROB;
+	static {
+		Map<Supplier<? extends AbstractItem>, Double> probs = new HashMap<Supplier<? extends AbstractItem>, Double>();
+
+		probs.put(Bandage::new, 0.40);
+		probs.put(Medkit::new, 0.20);
+		probs.put(Syringe::new, 0.05);
+		probs.put(TinfoilHatEquipmentItem::new, 0.25);
+		probs.put(RescueBeacon::new, 0.10);
+
+		MEDBAY_LOOT_PROB = Collections.unmodifiableMap(probs);
+	}
+	public static final LootPool MEDBAY_LOOT_POOL = new LootPool(MEDBAY_LOOT_PROB);
+
+	// Mess Hall
+	public static final Map<Supplier<? extends AbstractItem>, Double> CAFETERIA_LOOT_PROB;
+	static {
+		Map<Supplier<? extends AbstractItem>, Double> probs = new HashMap<Supplier<? extends AbstractItem>, Double>();
+
+		probs.put(FoodPack::new, 0.40);
+		probs.put(FoodCrate::new, 0.20);
+		probs.put(FoodChest::new, 0.05);
+		probs.put(RescueBeacon::new, 0.10);
+
+		CAFETERIA_LOOT_PROB = Collections.unmodifiableMap(probs);
+	}
+	public static final LootPool CAFETERIA_LOOT_POOL = new LootPool(CAFETERIA_LOOT_PROB);
+
+>>>>>>> 4c43432b73571d64aa76b41a2db5547087741419
 	public enum GamePhase {
 
 		PLAYERS_JOINING(GameState::playerJoining),

@@ -8,7 +8,11 @@ function syncPlayerClientData(request) {
     locations = [];
 
     request.sync_player_client_data.locations.forEach(location => {
-        locations[location.location_id] = location;
+        if(location.location_id == 1) {
+            controlRoom = location;
+        } else {
+            locations[location.location_id] = location;
+        }
     });
 
     communalInventory = request.sync_player_client_data.communal_inventory;

@@ -341,21 +341,33 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 
 	public static class InventoryData {
 		private String name;
+		private String description;
+		private String flavorText;
+		private String imagePath;
 
-		public InventoryData(final String name) {
+		public InventoryData(final String name, final String description, final String flavor, final String image) {
 			this.name = name;
+			this.description = description;
+			this.flavorText = flavor;
+			this.imagePath = image;
 		}
 
 		public JSONObject jsonify() {
 			JSONObject data = new JSONObject();
 			data.put(ActionData.ITEM_NAME, this.name);
+			data.put(ActionData.ITEM_DESC, this.description);
+			data.put(ActionData.ITEM_FLAVOR_TEXT, this.flavorText);
+			data.put(ActionData.ITEM_IMG, this.imagePath);
 
 			return data;
 		}
 
 		public static InventoryData parseArgs(final JSONObject jsonObj) {
 			String name = jsonObj.getString(ActionData.ITEM_NAME);
-			return new InventoryData(name);
+			String desc = jsonObj.getString(ActionData.ITEM_DESC);
+			String flavor = jsonObj.getString(ActionData.ITEM_FLAVOR_TEXT);
+			String img = jsonObj.getString(ActionData.ITEM_IMG);
+			return new InventoryData(name, desc, flavor, img);
 		}
 	}
 }
