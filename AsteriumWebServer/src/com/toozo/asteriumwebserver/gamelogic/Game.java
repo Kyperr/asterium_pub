@@ -2,7 +2,6 @@ package com.toozo.asteriumwebserver.gamelogic;
 
 import java.security.SecureRandom;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -124,7 +123,7 @@ public class Game extends Thread {
 	}
 	
 	public boolean turnTaken(final Player player) {
-		if (turnActionMap.get(player) != null) {
+		if (turnActionMap.get(player.getAuthToken()) != null) {
 			return true;
 		} else {
 			return false;
@@ -179,7 +178,6 @@ public class Game extends Thread {
 				synchronized (this) {
 					wait();
 				}
-				System.err.println("Executing game phase.");
 				GameState state = this.getGameState();
 				state.executePhase();
 			} catch (InterruptedException e) {
@@ -247,7 +245,6 @@ public class Game extends Thread {
 	 *            The game board client.
 	 */
 	public void addGameBoard(final GameBoard gameBoard) {
-		System.out.println("adding game board: " + gameBoard.getAuthToken());
 		this.gameBoardList.put(gameBoard.getAuthToken(), gameBoard);
 	}
 
@@ -269,9 +266,8 @@ public class Game extends Thread {
 	public synchronized boolean areAllTurnsSubmitted() {
 		boolean bool = turnActionMap.size() > 0;
 		for(Player player : getPlayers()) {
-			bool = bool && turnActionMap.containsKey(player.getAuthToken());
+			bool &= turnActionMap.containsKey(player.getAuthToken());
 		}
-		System.out.println("All player turns tested as: " + bool);
 		return bool;
 	}
 

@@ -41,8 +41,14 @@ public class ToggleReadyUpAction extends RequestAction {
 		// Check to see if the player auth token was invalid / they are not a real
 		// player
 		if (game != null) {
-			// GameState state = game.getGameState();
-			ToggleReadyUpResponseData data = new ToggleReadyUpResponseData(game.toggleReady(auth));
+			boolean isReady = game.toggleReady(auth);
+			String playerName = game.getPlayer(auth).getPlayerName();
+			
+			if (Action.VERBOSE) {
+				System.out.printf("Player %s is %s\n", playerName, isReady? "ready" : "not ready");
+			}
+			
+			ToggleReadyUpResponseData data = new ToggleReadyUpResponseData(isReady);
 			message = new Response(data, 0, this.getMessageID(), this.getCallingAuthToken());
 		} else {
 			ErroredResponseData ead = new ErroredResponseData(this.getName());

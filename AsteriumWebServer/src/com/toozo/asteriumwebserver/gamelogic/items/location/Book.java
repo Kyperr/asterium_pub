@@ -24,25 +24,25 @@ import com.toozo.asteriumwebserver.gamelogic.statuseffects.AffectStats;
  */
 public class Book extends AbstractLocationItem {
 	// ===== CONSTANTS =====
-	// Map from Stat to a collection of book names associated with that stat
-	public static final Map<Stat, Collection<String>> BOOK_NAMES;
+	// Map from Stat to a collection of book flavor texts associated with that stat
+	public static final Map<Stat, Collection<String>> BOOK_FLAVOR_TEXTS;
 	static {
 		Map<Stat, Collection<String>> namesMap = new HashMap<Stat, Collection<String>>();
 
-		// Stamina Book Names
+		// Stamina Book Flavor Texts
 		namesMap.put(Stat.STAMINA,
 				Arrays.asList("Workouts for the Lazy", "Bunches of Punches and Crunches", "Hernia-Free Deadlifts",
 						"Wrastlin': A Review", "Push-ups and Pull-ups", "Weightlifting in Zero-G", "Creatinism",
 						"The Peccing Order"));
 
-		// Luck Book Names
+		// Luck Book Flavor Texts
 		namesMap.put(Stat.LUCK,
 				Arrays.asList("The Ace Up My Sleeve", "History of Space Poker", "Turns, Rivers, and Flops, Oh My!",
 						"How to Win at Games of Chance", "Living With Paraskevidekatriaphobia", "On Horseshoes",
 						"Quadrifolium", "21: Triple Seven", "Space Albatross: More Than A Myth?",
 						"Outsmarting Statistics"));
 
-		// Intuition Book Names
+		// Intuition Book Flavor Texts
 		namesMap.put(Stat.INTUITION,
 				Arrays.asList("Elementary Crystallography", "Cellular Automata for Dummies",
 						"Chicken Soup for the Neurobiologist's Soul", "Defibrillation and You",
@@ -51,7 +51,7 @@ public class Book extends AbstractLocationItem {
 						"Forceps and Foresight", "Preventing the Helvetica Scenario",
 						"Everything You Need To Know About Exsanguination"));
 
-		BOOK_NAMES = Collections.unmodifiableMap(namesMap);
+		BOOK_FLAVOR_TEXTS = Collections.unmodifiableMap(namesMap);
 	};
 
 	// Single Stat Collections
@@ -67,6 +67,7 @@ public class Book extends AbstractLocationItem {
 			Stat.INTUITION);
 	// Other
 	public static final String ERROR_NAME = "Squashing Bugs, 1st Edition";
+	public static final String IMG = "book.png";
 	public static final int DEFAULT_STAT_BOOST = 1;
 	public static final double SINGLE_PROBABILITY = 0.8;
 	public static final double DOUBLE_PROBABILITY = 0.15;
@@ -110,14 +111,16 @@ public class Book extends AbstractLocationItem {
 		}
 
 		// Generate weights distribution (e.g. {0.8, 0.15, 0.05} -> {0.8, 0.95, 1.0})
-		double[] weights = {SINGLE_PROBABILITY, DOUBLE_PROBABILITY, TRIPLE_PROBABILITY};
+		double[] weights = { SINGLE_PROBABILITY, DOUBLE_PROBABILITY, TRIPLE_PROBABILITY };
 		for (int i = 1; i < weights.length; i++) {
 			weights[i] += weights[i - 1];
 		}
-		
-		// Determine number of Stats which should be in result based on weights distribution.
+
+		// Determine number of Stats which should be in result based on weights
+		// distribution.
 		double random = RNG.nextDouble();
-		for (numberOfStats = 1; random > weights[numberOfStats - 1]; numberOfStats++) {}
+		for (numberOfStats = 1; random > weights[numberOfStats - 1]; numberOfStats++) {
+		}
 
 		// Randomly return that many Stats
 		Collections.shuffle(result, RNG);
@@ -125,30 +128,80 @@ public class Book extends AbstractLocationItem {
 	}
 
 	/**
+	 * Generates a book name based on the stats given. 
+	 * Ex: A book which boosts luck will be called "Luck Book".
+	 * 
 	 * @param stats
 	 *            The {@link Stat}s which the returned name should be related to.
-	 * @return a random name related to a {@link Stat} in stats, or ERROR_NAME if
+	 * @return a generated name containing the stats the book improves and "Book".
+	 */
+	private static String generateName(Collection<Stat> stats) {
+		StringBuilder name = new StringBuilder();
+
+		for (Stat stat : stats) {
+			name.append(stat.toString());
+			name.append(" ");
+		}
+		name.append("Book");
+
+		return name.toString();
+	}
+	
+	/**
+	 * Generates a book description based on the stats given.
+	 * Ex: A book which boosts luck will have the description
+	 * "Permanently increases your Luck by 1."
+	 * Books which boost more than one stat will look like this:
+	 * "Permanently increases your Luck, Intuition, and Stamina by 1."
+	 * 
+	 * @param stats The {@link Stat}s which the returned description should be related to.
+	 * @return a generated description containing the stats the book improves.
+	 */
+	private static String generateDescription(Collection<Stat> stats) {
+		StringBuilder desc = new StringBuilder("Permanently increases your ");
+        String lastStat = null;		
+
+		//Permanently increases your (Stat, Stat, Stat,) by 1.
+
+		for (Stat stat : stats) {
+			if (lastStat != null) {
+				desc.append(lastStat);
+				desc.append(", ");
+			}
+			lastStat = stat.toString();
+		}
+		desc.append("and ");
+		desc.append(lastStat);
+		desc.append(" by 1.");
+		
+		return desc.toString();
+	}
+
+	/**
+	 * @param stats
+	 *            The {@link Stat}s which the returned flavor text should be related to.
+	 * @return a random flavor text related to a {@link Stat} in stats, or ERROR_NAME if
 	 *         stats is empty or an error has occurred.
 	 */
-	private static String getRandomName(Collection<Stat> stats) {
-		List<String> possibleNames = new ArrayList<String>();
+	private static String getRandomFlavorText(Collection<Stat> stats) {
+		List<String> possibleTexts = new ArrayList<String>();
 
-		// Assemble list of possible names
+		// Assemble list of possible flavor texts
 		for (Stat stat : stats) {
-			if (BOOK_NAMES.get(stat) != null) {
-				possibleNames.addAll(BOOK_NAMES.get(stat));
+			if (BOOK_FLAVOR_TEXTS.get(stat) != null) {
+				possibleTexts.addAll(BOOK_FLAVOR_TEXTS.get(stat));
 			}
 		}
 
-		if (possibleNames.isEmpty()) {
+		if (possibleTexts.isEmpty()) {
 			return ERROR_NAME;
 		} else {
-			// Pick a random name
-			return possibleNames.get(RNG.nextInt(possibleNames.size() - 1));
+			// Pick a random flavor texts
+			return possibleTexts.get(RNG.nextInt(possibleTexts.size() - 1));
 		}
 	}
 	// ==========================
-	
+
 	// ===== FACTORIES =====
 	public static Book createBook() {
 		// Generate a book which boosts random stats by 1
@@ -180,8 +233,8 @@ public class Book extends AbstractLocationItem {
 	}
 
 	/**
-	 * Construct a book with a random name which boosts defined stats by a defined
-	 * amount.
+	 * Construct a book with a name, description, and random flavor text which
+	 * boosts defined stats by a defined amount.
 	 * 
 	 * @param stats
 	 *            The {@link Stat}s which this book will boost.
@@ -189,7 +242,7 @@ public class Book extends AbstractLocationItem {
 	 *            The amount by which this book will boost stats.
 	 */
 	public Book(Collection<Stat> stats, final int amount) {
-		this(getRandomName(stats), stats, amount);
+		this(generateName(stats), generateDescription(stats), getRandomFlavorText(stats), stats, amount);
 	}
 
 	/**
@@ -202,8 +255,9 @@ public class Book extends AbstractLocationItem {
 	 * @param amount
 	 *            The amount by which this book will boost stats.
 	 */
-	public Book(final String name, final Collection<Stat> stats, final int amount) {
-		super(name);
+	public Book(final String name, final String description, final String flavor, final Collection<Stat> stats,
+			final int amount) {
+		super(name, description, flavor, IMG);
 		this.stats = stats;
 		this.effect = (oldStat) -> (oldStat + amount);
 	}

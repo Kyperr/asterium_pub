@@ -44,6 +44,10 @@ public class CreateGameAction extends RequestAction {
 		Message message;
 		// If game was created...
 		if (game != null) {
+			if (Action.VERBOSE) {
+				System.out.printf("Game created with lobby ID %s\n", game.getLobbyID());
+			}
+			
 			// Generate response data
 			CreateGameResponseData cgrData = new CreateGameResponseData(game.getLobbyID(),
 					this.getCallingAuthToken());

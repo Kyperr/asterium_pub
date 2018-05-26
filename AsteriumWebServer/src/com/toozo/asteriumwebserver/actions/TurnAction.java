@@ -51,6 +51,14 @@ public class TurnAction extends RequestAction {
 			if (state != null) {
 				// use character to search (uses their stats)
 				PlayerCharacter character = state.getCharacter(auth);
+				
+				if (Action.VERBOSE) {
+					System.out.printf("%s is performing activity %s in %s\n",
+									  player.getPlayerName(),
+									  activityName,
+									  location.getName());
+				}
+				
 				if (character != null) {
 					Runnable runnable = new Runnable() {
 						@Override

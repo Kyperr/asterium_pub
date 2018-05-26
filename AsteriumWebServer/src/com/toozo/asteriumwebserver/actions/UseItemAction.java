@@ -61,6 +61,24 @@ public class UseItemAction extends Action {
 			AbstractItem item = AbstractItem.getItem(this.itemData.getItemID());
 			if (user != null && item != null && user.getInventory().contains(item)) {
 				item.use(state, user, targets, this.isCommunal);
+				
+				if (Action.VERBOSE) {
+					// Build list of target names
+					String targetNames = "";
+					String lastName = null;
+					for (PlayerCharacter target : targets) {
+						if (lastName != null) {
+							targetNames += lastName + ", ";
+						}
+						lastName = target.getCharacterName();
+					}
+					targetNames += "and " + lastName;
+					System.out.printf("%s has used %s on %s\n", 
+									  user.getCharacterName(),
+									  item.getName(),
+									  targetNames);
+				}
+				
 				SuccessResponseData data = new SuccessResponseData(Action.USE_ITEM);
 				message = new Response(data, 0, this.getMessageID(), auth);
 			} else {

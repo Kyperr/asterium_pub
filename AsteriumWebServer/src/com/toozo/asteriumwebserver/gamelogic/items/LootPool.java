@@ -38,7 +38,7 @@ public class LootPool {
 		for (Supplier<? extends AbstractItem> constructor : this.probabilities.keySet()) {
 			double probability = this.probabilities.get(constructor);
 			double random = RNG.nextDouble();
-			if (random > probability) {
+			if (random < probability) {
 				result.add(constructor.get());
 			}
 		}

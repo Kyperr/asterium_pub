@@ -7,14 +7,11 @@ import javax.websocket.Session;
 
 import com.toozo.asteriumwebserver.gamelogic.Game;
 import com.toozo.asteriumwebserver.gamelogic.GameManager;
-import com.toozo.asteriumwebserver.gamelogic.GameState;
 import com.toozo.asteriumwebserver.gamelogic.Player;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
 import actiondata.ActionData;
-import actiondata.ErroredResponseData;
 import actiondata.QueryIsInGameResponseData;
-import actiondata.SuccessResponseData;
 import message.Message;
 import message.Request;
 import message.Response;
