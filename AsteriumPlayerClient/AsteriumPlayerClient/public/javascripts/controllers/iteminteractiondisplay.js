@@ -40,6 +40,18 @@ ItemInteractionDisplayController.prototype.useItem = function () {
     var targets = [user];
     var item = viewInventoryDisplayController.selectedInventory;
     var isCommunal = viewInventoryDisplayController.isCommunal;
+
+    var div = document.getElementById("centralDiv");
+
+    var modalDiv = document.createElement("div");
+    modalDiv.class = "modal-dialog";
+
+    modalDiv.innerHTML = item + ":<br/>";
+    modalDiv.innerHTML += item + "Item Description";
+
+    modalDiv.appendChild();
+
+
     if (confirm('Are you sure you want to use this ' + item + '?')) {
         useItemAction(item, targets, isCommunal);
     } else {
