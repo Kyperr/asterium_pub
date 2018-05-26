@@ -169,14 +169,17 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 		SyncGameBoardDataRequestData.ItemData item;
 		for (int i = 0; i < communalInventoryArray.length(); i++) {
 			itemObject = communalInventoryArray.getJSONObject(i);
-			item = new SyncGameBoardDataRequestData.ItemData(itemObject.getString(ActionData.NAME));
+			item = new SyncGameBoardDataRequestData.ItemData(itemObject.getString(ActionData.ITEM_NAME),
+					itemObject.getString(ActionData.ITEM_DESC), itemObject.getString(ActionData.ITEM_FLAVOR_TEXT),
+					itemObject.getString(ActionData.ITEM_IMG));
 			communalInventory.add(item);
 		}
 
 		String gamePhaseName = jsonObj.getString(ActionData.GAME_PHASE_NAME);
 
 		// Construct and return
-		return new SyncGameBoardDataRequestData(food, fuel, day, locations, players, victories, communalInventory, gamePhaseName);
+		return new SyncGameBoardDataRequestData(food, fuel, day, locations, players, victories, communalInventory,
+				gamePhaseName);
 	}
 
 	public Integer getFood() {
@@ -187,7 +190,6 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 		return gamePhaseName;
 	}
 
-	
 	public void setFood(Integer food) {
 		this.food = food;
 	}
@@ -309,10 +311,7 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 		private Set<String> activities;
 
 		public enum LocationType {
-			CONTROL_ROOM("control_room"),
-			MED_BAY("med_bay"), 
-			MESS_HALL("mess_hall"), 
-			RESIDENTAIL("residential");
+			CONTROL_ROOM("control_room"), MED_BAY("med_bay"), MESS_HALL("mess_hall"), RESIDENTAIL("residential");
 
 			private final String jsonVersion;
 
@@ -415,32 +414,34 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 
 	// ===== ITEM DATA INNER CLASS =====
 	public static class ItemData {
-		private final String name;
+		private String name;
+		private String description;
+		private String flavorText;
+		private String imagePath;
 
-		public ItemData(String name) {
+		public ItemData(final String name, final String description, final String flavor, final String image) {
 			this.name = name;
+			this.description = description;
+			this.flavorText = flavor;
+			this.imagePath = image;
 		}
 
-		public String getName() {
-			return this.name;
-		}
-
-		/**
-		 * @return {@link JSONObject} representation of the data.
-		 */
 		public JSONObject jsonify() {
 			JSONObject data = new JSONObject();
-			data.put(ActionData.NAME, this.name);
+			data.put(ActionData.ITEM_NAME, this.name);
+			data.put(ActionData.ITEM_DESC, this.description);
+			data.put(ActionData.ITEM_FLAVOR_TEXT, this.flavorText);
+			data.put(ActionData.ITEM_IMG, this.imagePath);
+
 			return data;
 		}
 
-		public boolean equals(final Object other) {
-			if (other instanceof SyncGameBoardDataRequestData.ItemData) {
-				SyncGameBoardDataRequestData.ItemData otherItem = (SyncGameBoardDataRequestData.ItemData) other;
-				return otherItem.name.equals(this.name);
-			} else {
-				return false;
-			}
+		public static ItemData parseArgs(final JSONObject jsonObj) {
+			String name = jsonObj.getString(ActionData.ITEM_NAME);
+			String desc = jsonObj.getString(ActionData.ITEM_DESC);
+			String flavor = jsonObj.getString(ActionData.ITEM_FLAVOR_TEXT);
+			String img = jsonObj.getString(ActionData.ITEM_IMG);
+			return new ItemData(name, desc, flavor, img);
 		}
 	}
 	// =================================

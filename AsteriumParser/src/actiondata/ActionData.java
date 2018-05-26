@@ -81,6 +81,9 @@ public interface ActionData {
 	public static final String TARGETS = "targets";
 	public static final String ITEM_ID = "item_id";
 	public static final String ITEM_NAME = "item_name";
+	public static final String ITEM_DESC = "item_description";
+	public static final String ITEM_FLAVOR_TEXT = "item_flavor_text";
+	public static final String ITEM_IMG = "item_image";
 	public static final String ICON = "icon";
 	public static final String LOCATION_ID = "location_id";
 	public static final String LOCATION_TYPE = "location_type";

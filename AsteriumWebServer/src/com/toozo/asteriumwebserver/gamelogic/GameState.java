@@ -24,6 +24,7 @@ import com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodPack;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.Medkit;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.RescueBeacon;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.Syringe;
+import com.toozo.asteriumwebserver.gamelogic.items.equipment.AbstractEquipmentItem;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.EquipmentSlot;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.Loadout;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.TinfoilHatEquipmentItem;
@@ -46,39 +47,39 @@ public class GameState {
 	public static final int STARTING_FOOD_PER_PLAYER = 5;
 	public static final int STARTING_FUEL = 100;
 	public static final int STARTING_DAY = 0;
-	
+
 	public static final boolean VERBOSE = true;
-	
+
 	// LOOT POOLS
-	// 		Medbay
+	// Medbay
 	public static final Map<Supplier<? extends AbstractItem>, Double> MEDBAY_LOOT_PROB;
 	static {
 		Map<Supplier<? extends AbstractItem>, Double> probs = new HashMap<Supplier<? extends AbstractItem>, Double>();
-		
+
 		probs.put(Bandage::new, 0.40);
 		probs.put(Medkit::new, 0.20);
 		probs.put(Syringe::new, 0.05);
 		probs.put(TinfoilHatEquipmentItem::new, 0.25);
 		probs.put(RescueBeacon::new, 0.10);
-		
+
 		MEDBAY_LOOT_PROB = Collections.unmodifiableMap(probs);
 	}
 	public static final LootPool MEDBAY_LOOT_POOL = new LootPool(MEDBAY_LOOT_PROB);
-	
-	//		Mess Hall
+
+	// Mess Hall
 	public static final Map<Supplier<? extends AbstractItem>, Double> CAFETERIA_LOOT_PROB;
 	static {
 		Map<Supplier<? extends AbstractItem>, Double> probs = new HashMap<Supplier<? extends AbstractItem>, Double>();
-	
+
 		probs.put(FoodPack::new, 0.40);
 		probs.put(FoodCrate::new, 0.20);
 		probs.put(FoodChest::new, 0.05);
 		probs.put(RescueBeacon::new, 0.10);
-		
+
 		CAFETERIA_LOOT_PROB = Collections.unmodifiableMap(probs);
 	}
 	public static final LootPool CAFETERIA_LOOT_POOL = new LootPool(CAFETERIA_LOOT_PROB);
-	
+
 	public enum GamePhase {
 
 		PLAYERS_JOINING(GameState::playerJoining),
@@ -124,7 +125,7 @@ public class GameState {
 		Location med_bay = new Location("Med Bay", Location.LocationType.MED_BAY, MEDBAY_LOOT_POOL);
 		med_bay.addActivity(Activity.SEARCH, Activity.searchActivity);
 		locations.put("2", med_bay);
-		
+
 		Location cafeteria = new Location("Cafeteria", Location.LocationType.MESS_HALL, CAFETERIA_LOOT_POOL);
 		cafeteria.addActivity(Activity.SEARCH, Activity.searchActivity);
 		locations.put("3", cafeteria);
@@ -156,11 +157,11 @@ public class GameState {
 			// Here is where we would validate game state to make sure everything is ready
 			// to start.
 			// if(validateGameState()){
-			
+
 			if (VERBOSE) {
 				System.out.println("Game initializing...");
 			}
-			
+
 			state.setGamePhase(GamePhase.GAME_INITIALIZING);
 			state.game.setAllCharactersNotReady();
 			state.gamePhase.executePhase(state);
@@ -173,11 +174,11 @@ public class GameState {
 		state.fuel = STARTING_FUEL;
 		state.day = STARTING_DAY;
 		state.addVictoryCondition(new VictoryCondition(VictoryCondition::getBeaconProgress));
-		
+
 		if (VERBOSE) {
 			System.out.println("Game initialized. Starting game...");
 		}
-		
+
 		state.setGamePhase(GamePhase.PLAYER_TURNS);
 		state.gamePhase.executePhase(state);
 	}
@@ -252,7 +253,6 @@ public class GameState {
 
 			loc.add(locData);
 		}
-		
 
 		// Construct collection of PlayerData
 		Collection<SyncGameBoardDataRequestData.PlayerCharacterData> playerDatas = new ArrayList<SyncGameBoardDataRequestData.PlayerCharacterData>();
@@ -276,12 +276,13 @@ public class GameState {
 		Collection<SyncGameBoardDataRequestData.ItemData> itemDatas = new ArrayList<SyncGameBoardDataRequestData.ItemData>();
 		SyncGameBoardDataRequestData.ItemData itemData;
 		for (final AbstractItem item : state.getCommunalInventory()) {
-			itemData = new SyncGameBoardDataRequestData.ItemData(item.getName());
+			itemData = new SyncGameBoardDataRequestData.ItemData(item.getName(), item.getDescription(),
+					item.getFlavorText(), item.getImagePath());
 			itemDatas.add(itemData);
 		}
 
-		ActionData syncGBRequestData = new SyncGameBoardDataRequestData(food, fuel, day, loc, playerDatas,
-				victoryDatas, itemDatas, state.getGamePhase().toString());
+		ActionData syncGBRequestData = new SyncGameBoardDataRequestData(food, fuel, day, loc, playerDatas, victoryDatas,
+				itemDatas, state.getGamePhase().toString());
 
 		// Send sync to all GameBoards
 		for (GameBoard gameBoard : state.game.getGameBoards()) {
@@ -304,7 +305,7 @@ public class GameState {
 		this.victoryConditions = new ArrayList<VictoryCondition>();
 		this.communalInventory = new Inventory();
 		this.day = 0;
-		
+
 		if (VERBOSE) {
 			System.out.println("Game created. Players joining...");
 		}
@@ -336,7 +337,7 @@ public class GameState {
 	public PlayerCharacter getCharacter(final String auth) {
 		return authCharacterMap.get(auth);
 	}
-	
+
 	public PlayerCharacter getCharacterByName(final String name) {
 		return nameCharacterMap.get(name);
 	}
@@ -449,7 +450,7 @@ public class GameState {
 		this.nameCharacterMap.put(pc.getCharacterName(), pc);
 		syncGameBoardsPlayerList();
 	}
-	
+
 	public void addVictoryCondition(final VictoryCondition victory) {
 		this.victoryConditions.add(victory);
 	}
@@ -552,7 +553,7 @@ public class GameState {
 		String auth = player.getAuthToken();
 
 		PlayerCharacter pChar = getCharacter(auth);
-		
+
 		Collection<String> characters = new ArrayList<String>();
 		for (PlayerCharacter pc : getCharacters()) {
 			characters.add(pc.getCharacterName());
@@ -565,7 +566,7 @@ public class GameState {
 		List<SyncPlayerClientDataRequestData.InventoryData> personalInv = new ArrayList<SyncPlayerClientDataRequestData.InventoryData>();
 		for (AbstractItem item : pChar.getInventory()) {
 			SyncPlayerClientDataRequestData.InventoryData itemData = new SyncPlayerClientDataRequestData.InventoryData(
-					item.getName());
+					item.getName(), item.getDescription(), item.getFlavorText(), item.getImagePath());
 			personalInv.add(itemData);
 		}
 
@@ -575,8 +576,10 @@ public class GameState {
 			if (load.slotFull(slot)) {
 				SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType type = SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType
 						.valueOf(slot.toString());
+				AbstractEquipmentItem equipmentItem = load.itemIn(slot);
 				SyncPlayerClientDataRequestData.InventoryData item = new SyncPlayerClientDataRequestData.InventoryData(
-						load.itemIn(slot).getName());
+						equipmentItem.getName(), equipmentItem.getDescription(), equipmentItem.getFlavorText(),
+						equipmentItem.getImagePath());
 				equipment.put(type, item);
 			}
 		}
@@ -585,17 +588,18 @@ public class GameState {
 				equipment);
 
 		SyncPlayerClientDataRequestData.PlayerCharacterData dChar = new SyncPlayerClientDataRequestData.PlayerCharacterData(
-				pChar.getCharacterName(), stat, personalInv, loadout, game.turnTaken(player), game.getPlayerIsReady(auth));
+				pChar.getCharacterName(), stat, personalInv, loadout, game.turnTaken(player),
+				game.getPlayerIsReady(auth));
 
 		List<SyncPlayerClientDataRequestData.InventoryData> inventory = new ArrayList<SyncPlayerClientDataRequestData.InventoryData>();
 		for (AbstractItem item : getCommunalInventory()) {
 			SyncPlayerClientDataRequestData.InventoryData itemData = new SyncPlayerClientDataRequestData.InventoryData(
-					item.getName());
+					item.getName(), item.getDescription(), item.getFlavorText(), item.getImagePath());
 			inventory.add(itemData);
 		}
 
-		SyncPlayerClientDataRequestData data = new SyncPlayerClientDataRequestData(getFood(), getFuel(), getDay(), loc, dChar, characters,
-				getGamePhase().toString(), inventory);
+		SyncPlayerClientDataRequestData data = new SyncPlayerClientDataRequestData(getFood(), getFuel(), getDay(), loc,
+				dChar, characters, getGamePhase().toString(), inventory);
 
 		return data;
 
