@@ -12,8 +12,8 @@ import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
  * @author Studio Toozo
  */
 public abstract class AbstractConsumableItem extends AbstractItem {
-	protected AbstractConsumableItem(String name) {
-		super(name);
+	protected AbstractConsumableItem(String name, final String description, final String flavor, final String image) {
+		super(name, description, flavor, image);
 	}
 	
 	@Override

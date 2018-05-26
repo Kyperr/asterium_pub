@@ -24,6 +24,9 @@ import com.toozo.asteriumwebserver.gamelogic.items.equipment.TinfoilHatEquipment
 public abstract class AbstractItem {
 	// ===== CONSTANTS =====
 	public static final String DEFAULT_NAME = "";
+	public static final String DEFAULT_DESC = "";
+	public static final String DEFAULT_FLAV = "";
+	public static final String DEFAULT_IMG = "";
 	
 	private static final Map<String, Supplier<AbstractItem>> ITEM_LOOKUP = new HashMap<String, Supplier<AbstractItem>>() {
 		/**
@@ -53,11 +56,17 @@ public abstract class AbstractItem {
 	
 	// ===== FIELDS =====
 	private String name;
+	private String description;
+	private String flavor;
+	private String image;
 	// ==================
 	
 	// ===== CONSTRUCTORS =====
-	protected AbstractItem(final String name) {
+	protected AbstractItem(final String name, final String description, final String flavor, final String image) {
 		this.name = name;
+		this.description = description;
+		this.flavor = flavor;
+		this.image = image;
 	}
 	// ========================
 	
@@ -67,6 +76,30 @@ public abstract class AbstractItem {
 			return this.name;
 		} else {
 			return DEFAULT_NAME;
+		}
+	}
+	
+	public String getDescription() {
+		if (this.description != null) {
+			return this.description;
+		} else {
+			return DEFAULT_DESC;
+		}
+	}
+	
+	public String getFlavorText() {
+		if (this.flavor != null) {
+			return this.flavor;
+		} else {
+			return DEFAULT_FLAV;
+		}
+	}
+	
+	public String getImagePath() {
+		if (this.image != null) {
+			return this.image;
+		} else {
+			return DEFAULT_IMG;
 		}
 	}
 	// ===================
@@ -82,6 +115,45 @@ public abstract class AbstractItem {
 			this.name = newName;
 		} else if (this.name == null) {
 			this.name = DEFAULT_NAME;
+		}
+	}
+
+	/**
+	 * Change the description of this Item.
+	 * 
+	 * @param newDescription The new description. If null, description will be unchanged.
+	 */
+	public void setDescription(final String newDescription) {
+		if (newDescription != null) {
+			this.description = newDescription;
+		} else if (this.description == null) {
+			this.description = DEFAULT_DESC;
+		}
+	}
+
+	/**
+	 * Change the flavor text of this Item.
+	 * 
+	 * @param newFlavor The new flavor text. If null, flavor text will be unchanged.
+	 */
+	public void setFlavorText(final String newFlavor) {
+		if (newFlavor != null) {
+			this.flavor = newFlavor;
+		} else if (this.flavor == null) {
+			this.flavor = DEFAULT_FLAV;
+		}
+	}
+
+	/**
+	 * Change the image path of this Item.
+	 * 
+	 * @param newPath The new image path. If null, image path will be unchanged.
+	 */
+	public void setImagePath(final String newPath) {
+		if (newPath != null) {
+			this.image = newPath;
+		} else if (this.image == null) {
+			this.image = DEFAULT_IMG;
 		}
 	}
 	// ===================

@@ -22,8 +22,8 @@ public class AbstractHealItem extends AbstractConsumableItem {
 	 * @param name The name of this HealItem.
 	 * @param healAmount The amount this healItem should heal each of its targets.
 	 */
-	public AbstractHealItem(final String name, final int healAmount) {
-		super(name);
+	public AbstractHealItem(final String name, final String description, final String flavor, final String image, final int healAmount) {
+		super(name, description, flavor, image);
 		this.healAmount = healAmount;
 	}
 	// ========================

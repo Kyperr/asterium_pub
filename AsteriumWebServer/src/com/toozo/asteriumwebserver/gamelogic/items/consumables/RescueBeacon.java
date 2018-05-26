@@ -8,6 +8,9 @@ import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 public class RescueBeacon extends AbstractConsumableItem {
 	// ===== CONSTANTS =====
 	public static final String NAME = "Rescue Beacon";
+	public static final String DESC = "This beacon will allow you to contact rescuers to save you.";
+	public static final String FLAV = "";
+	public static final String IMG = "rescue.png";
 
 	/*public static final Map<Supplier<? extends AbstractItem>, Double> FACTORY_PROBABILITIES;
 	static {
@@ -23,7 +26,7 @@ public class RescueBeacon extends AbstractConsumableItem {
 	
 	// ====== CONSTRUCTORS =====
 	public RescueBeacon() {
-		super(NAME);
+		super(NAME, DESC, FLAV, IMG);
 		
 	}
 	// =========================
