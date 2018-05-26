@@ -33,7 +33,7 @@ public abstract class AbstractEquipmentItem extends AbstractItem {
 	 */
 	public AbstractEquipmentItem(final String name, final String description, final String flavor, final String image,
 			final EquipmentSlot equipmentType, final Map<Stat, Integer> boosts) {
-		super(name, description, flavor, image);
+		super(name, description, flavor, image, false);
 		this.equipmentType = equipmentType;
 		this.boosts = boosts;
 	}

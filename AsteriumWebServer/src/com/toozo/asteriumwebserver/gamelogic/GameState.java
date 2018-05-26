@@ -15,6 +15,7 @@ import java.util.function.Supplier;
 
 import javax.websocket.Session;
 
+import com.toozo.asteriumwebserver.gamelogic.Location.LocationType;
 import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
 import com.toozo.asteriumwebserver.gamelogic.items.LootPool;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.Bandage;
@@ -28,6 +29,7 @@ import com.toozo.asteriumwebserver.gamelogic.items.equipment.AbstractEquipmentIt
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.EquipmentSlot;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.Loadout;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.TinfoilHatEquipmentItem;
+import com.toozo.asteriumwebserver.gamelogic.items.location.AbstractLocationItem;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
 import actiondata.ActionData;
@@ -292,9 +294,20 @@ public class GameState {
 		// Get communal inventory data
 		Collection<SyncGameBoardDataRequestData.ItemData> itemDatas = new ArrayList<SyncGameBoardDataRequestData.ItemData>();
 		SyncGameBoardDataRequestData.ItemData itemData;
+		boolean isLocationItem;
+		Collection<SyncGameBoardDataRequestData.LocationData.LocationType> useLocations = new ArrayList<SyncGameBoardDataRequestData.LocationData.LocationType>();
 		for (final AbstractItem item : state.getCommunalInventory()) {
+			isLocationItem = item.getIsLocationItem();
+			if (isLocationItem) {
+				AbstractLocationItem loc_item = AbstractLocationItem.class.cast(item);
+				for (LocationType locType : loc_item.getUseLocations()) {
+					useLocations
+							.add(SyncGameBoardDataRequestData.LocationData.LocationType.valueOf(locType.toString()));
+				}
+			}
+
 			itemData = new SyncGameBoardDataRequestData.ItemData(item.getName(), item.getDescription(),
-					item.getFlavorText(), item.getImagePath());
+					item.getFlavorText(), item.getImagePath(), isLocationItem, useLocations);
 			itemDatas.add(itemData);
 		}
 
@@ -586,23 +599,35 @@ public class GameState {
 				pChar.getEffectiveStats().getStat(Stat.HEALTH), pChar.getEffectiveStats().getStat(Stat.STAMINA),
 				pChar.getEffectiveStats().getStat(Stat.LUCK), pChar.getEffectiveStats().getStat(Stat.INTUITION));
 
-		List<SyncPlayerClientDataRequestData.InventoryData> personalInv = new ArrayList<SyncPlayerClientDataRequestData.InventoryData>();
+		List<SyncPlayerClientDataRequestData.ItemData> personalInv = new ArrayList<SyncPlayerClientDataRequestData.ItemData>();
+		boolean isLocationItem;
+		Collection<SyncPlayerClientDataRequestData.LocationData.LocationType> useLocations = new ArrayList<SyncPlayerClientDataRequestData.LocationData.LocationType>();
 		for (AbstractItem item : pChar.getInventory()) {
-			SyncPlayerClientDataRequestData.InventoryData itemData = new SyncPlayerClientDataRequestData.InventoryData(
-					item.getName(), item.getDescription(), item.getFlavorText(), item.getImagePath());
+			isLocationItem = item.getIsLocationItem();
+			if (isLocationItem) {
+				AbstractLocationItem loc_item = AbstractLocationItem.class.cast(item);
+				for (LocationType locType : loc_item.getUseLocations()) {
+					useLocations
+							.add(SyncPlayerClientDataRequestData.LocationData.LocationType.valueOf(locType.toString()));
+				}
+			}
+			SyncPlayerClientDataRequestData.ItemData itemData = new SyncPlayerClientDataRequestData.ItemData(
+					item.getName(), item.getDescription(), item.getFlavorText(), item.getImagePath(), isLocationItem,
+					useLocations);
 			personalInv.add(itemData);
 		}
 
-		Map<SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType, SyncPlayerClientDataRequestData.InventoryData> equipment = new HashMap<SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType, SyncPlayerClientDataRequestData.InventoryData>();
+		Map<SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType, SyncPlayerClientDataRequestData.ItemData> equipment = new HashMap<SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType, SyncPlayerClientDataRequestData.ItemData>();
 		Loadout load = pChar.getEquipment();
+		useLocations.clear();
 		for (EquipmentSlot slot : EquipmentSlot.values()) {
 			if (load.slotFull(slot)) {
 				SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType type = SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType
 						.valueOf(slot.toString());
 				AbstractEquipmentItem equipmentItem = load.itemIn(slot);
-				SyncPlayerClientDataRequestData.InventoryData item = new SyncPlayerClientDataRequestData.InventoryData(
+				SyncPlayerClientDataRequestData.ItemData item = new SyncPlayerClientDataRequestData.ItemData(
 						equipmentItem.getName(), equipmentItem.getDescription(), equipmentItem.getFlavorText(),
-						equipmentItem.getImagePath());
+						equipmentItem.getImagePath(), false, useLocations);
 				equipment.put(type, item);
 			}
 		}
@@ -614,10 +639,20 @@ public class GameState {
 				pChar.getCharacterName(), stat, personalInv, loadout, game.turnTaken(player),
 				game.getPlayerIsReady(auth));
 
-		List<SyncPlayerClientDataRequestData.InventoryData> inventory = new ArrayList<SyncPlayerClientDataRequestData.InventoryData>();
+		List<SyncPlayerClientDataRequestData.ItemData> inventory = new ArrayList<SyncPlayerClientDataRequestData.ItemData>();
+		useLocations.clear();
 		for (AbstractItem item : getCommunalInventory()) {
-			SyncPlayerClientDataRequestData.InventoryData itemData = new SyncPlayerClientDataRequestData.InventoryData(
-					item.getName(), item.getDescription(), item.getFlavorText(), item.getImagePath());
+			isLocationItem = item.getIsLocationItem();
+			if (isLocationItem) {
+				AbstractLocationItem loc_item = AbstractLocationItem.class.cast(item);
+				for (LocationType locType : loc_item.getUseLocations()) {
+					useLocations
+							.add(SyncPlayerClientDataRequestData.LocationData.LocationType.valueOf(locType.toString()));
+				}
+			}
+			SyncPlayerClientDataRequestData.ItemData itemData = new SyncPlayerClientDataRequestData.ItemData(
+					item.getName(), item.getDescription(), item.getFlavorText(), item.getImagePath(), isLocationItem,
+					useLocations);
 			inventory.add(itemData);
 		}
 
