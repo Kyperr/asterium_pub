@@ -47,6 +47,8 @@ public class GameState {
 	public static final int STARTING_FUEL = 100;
 	public static final int STARTING_DAY = 0;
 	
+	public static final boolean VERBOSE = true;
+	
 	// LOOT POOLS
 	// 		Medbay
 	public static final Map<Supplier<? extends AbstractItem>, Double> MEDBAY_LOOT_PROB;
@@ -150,11 +152,15 @@ public class GameState {
 	 *            The current state of the game.
 	 */
 	private static final void playerJoining(GameState state) {
-		System.err.println("Running Player Joining Phase.");
 		if (state.game.allCharactersReady()) {
 			// Here is where we would validate game state to make sure everything is ready
 			// to start.
 			// if(validateGameState()){
+			
+			if (VERBOSE) {
+				System.out.println("Game initializing...");
+			}
+			
 			state.setGamePhase(GamePhase.GAME_INITIALIZING);
 			state.game.setAllCharactersNotReady();
 			state.gamePhase.executePhase(state);
@@ -163,7 +169,15 @@ public class GameState {
 	}
 
 	private static final void initializeGame(GameState state) {
+		state.food = STARTING_FOOD_PER_PLAYER * state.game.getPlayers().size();
+		state.fuel = STARTING_FUEL;
+		state.day = STARTING_DAY;
 		state.addVictoryCondition(new VictoryCondition(VictoryCondition::getBeaconProgress));
+		
+		if (VERBOSE) {
+			System.out.println("Game initialized. Starting game...");
+		}
+		
 		state.setGamePhase(GamePhase.PLAYER_TURNS);
 		state.gamePhase.executePhase(state);
 	}
@@ -175,6 +189,9 @@ public class GameState {
 
 		// Is there an action for every player and is everyone ready?? If so:
 		if (state.game.areAllTurnsSubmitted() && state.game.allCharactersReady()) {
+			if (VERBOSE) {
+				System.out.println("Resolving player turns...");
+			}
 			state.setGamePhase(GamePhase.TURN_RESOLVE);
 		}
 	}
@@ -187,8 +204,14 @@ public class GameState {
 		syncGameBoards(state);
 
 		if (state.getCompleteVictoryConditions().size() >= 1) {
+			if (VERBOSE) {
+				System.out.println("Game complete. Displaying end summary...");
+			}
 			state.setGamePhase(GamePhase.END_SUMMARY);
 		} else {
+			if (VERBOSE) {
+				System.out.println("Turns resolved. New turns phase...");
+			}
 			state.setGamePhase(GamePhase.PLAYER_TURNS);
 
 			// Should run everyone's actions here.
@@ -262,8 +285,6 @@ public class GameState {
 
 		// Send sync to all GameBoards
 		for (GameBoard gameBoard : state.game.getGameBoards()) {
-			System.out.println("Game board: " + gameBoard.getAuthToken());
-
 			Message syncGBMessage = new Request(syncGBRequestData, gameBoard.getAuthToken());
 
 			Session session = SessionManager.getInstance().getSession(gameBoard.getAuthToken());
@@ -278,13 +299,15 @@ public class GameState {
 	public GameState(Game game) {
 		this.game = game;
 		this.gamePhase = GamePhase.PLAYERS_JOINING;
-		this.food = STARTING_FOOD_PER_PLAYER * this.game.getPlayers().size();
-		this.fuel = STARTING_FUEL;
 		this.authCharacterMap = new ConcurrentHashMap<String, PlayerCharacter>();
 		this.nameCharacterMap = new ConcurrentHashMap<String, PlayerCharacter>();
-		this.day = STARTING_DAY;
 		this.victoryConditions = new ArrayList<VictoryCondition>();
 		this.communalInventory = new Inventory();
+		this.day = 0;
+		
+		if (VERBOSE) {
+			System.out.println("Game created. Players joining...");
+		}
 	}
 	// ========================
 
@@ -512,7 +535,6 @@ public class GameState {
 	}
 
 	public SyncPlayerClientDataRequestData createSyncPlayerClientDataRequestData(Player player) {
-		System.err.println("Sending player client sync.");
 		List<SyncPlayerClientDataRequestData.LocationData> loc = new ArrayList<SyncPlayerClientDataRequestData.LocationData>();
 
 		for (String s : getMapLocations()) {

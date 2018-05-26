@@ -14,7 +14,6 @@ import javax.websocket.server.ServerEndpoint;
 import org.json.JSONException;
 
 import com.toozo.asteriumwebserver.actions.Action;
-import com.toozo.asteriumwebserver.gamelogic.GameManager;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
 import main.Parser;
@@ -35,8 +34,6 @@ public class WebSocketServer {
 
 	@OnMessage
 	public void onMessage(Session session, String message) {
-
-		System.out.println(message);
 		Message parsedMessage = new Parser().parse(message);
 		try {
 

@@ -77,6 +77,13 @@ public class JoinAsPlayerAction extends RequestAction {
 		// Try adding the player to the game.
 		try {
 			game.addPlayer(player);
+			
+			if (Action.VERBOSE) {
+				System.out.printf("Player %s joined lobby %s.",
+								  player.getPlayerName(),
+								  game.getLobbyID());
+			}
+			
 			// Construct success response.
 			JoinAsPlayerRequestData jpaData = new JoinAsPlayerRequestData(this.lobby_id, this.playerData);
 			message = new Response(jpaData, 0, this.getMessageID(), this.getCallingAuthToken());
