@@ -20,6 +20,11 @@ ActionDisplayController.prototype.init = function () {
     this.btnExplore.innerHTML = "EXPLORE";
 
     this.btnStay.innerHTML = "STAY";
+    //this.btnStay.setAttribute("onClick", "locationsDisplayController.display()");
+    this.btnStay.onclick = function(){
+        locationsDisplayController.selectLocation(controlRoom);
+
+    }
     this.btnStay.setAttribute("class", "button");
 
     this.btnInventory.setAttribute("onClick", "viewInventoryDisplayController.display()");
