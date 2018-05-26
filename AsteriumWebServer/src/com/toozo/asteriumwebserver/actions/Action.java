@@ -39,6 +39,7 @@ public abstract class Action implements Runnable {
 	public static final String USE_ITEM = "use_item";
 	public static final String LEAVE_GAME = "leave_game";
 
+	// Also controls verbosity of children.
 	public static final boolean VERBOSE = true;
 	// ===================
 

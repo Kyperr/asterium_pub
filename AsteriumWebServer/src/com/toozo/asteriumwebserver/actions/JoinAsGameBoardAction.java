@@ -59,12 +59,17 @@ public class JoinAsGameBoardAction extends RequestAction {
 			return;
 		}
 
+		
 		// Construct the GameBoard.
 		GameBoard gameBoard = new GameBoard(this.getCallingAuthToken());
 
 		// Add the game board to the game.
 		game.addGameBoard(gameBoard);
 
+		if (Action.VERBOSE) {
+			System.out.printf("New game board joined lobby %s.", game.getLobbyID());
+		}
+		
 		// Construct success response.
 		JoinAsGameBoardResponseData jpaData = new JoinAsGameBoardResponseData(this.getCallingAuthToken());
 		message = new Response(jpaData, 0, this.getMessageID(), this.getCallingAuthToken());

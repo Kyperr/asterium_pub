@@ -12,7 +12,6 @@ public class ClientToServerResponseAction extends ResponseAction {
 
 	@Override
 	protected void doAction() {
-		System.out.println("No error from " + this.getName());
 	}
 
 	/**

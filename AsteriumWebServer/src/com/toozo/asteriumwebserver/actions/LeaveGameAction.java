@@ -27,6 +27,10 @@ public class LeaveGameAction extends RequestAction {
 		Game game = gameManager.getGameForPlayer(auth);
 		Message message;
 		if (game != null) {
+			if (Action.VERBOSE) {
+				System.out.printf("Player %s has left the game.", 
+								  game.getPlayer(auth).getPlayerName());
+			}
 			game.removeClient(auth);
 			gameManager.removeClient(auth);			
 			SuccessResponseData data = new SuccessResponseData(Action.LEAVE_GAME);
