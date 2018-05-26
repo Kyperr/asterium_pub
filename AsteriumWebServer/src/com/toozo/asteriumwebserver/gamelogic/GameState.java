@@ -16,6 +16,7 @@ import java.util.function.Supplier;
 import javax.websocket.Session;
 
 import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
+import com.toozo.asteriumwebserver.gamelogic.items.ItemLoot;
 import com.toozo.asteriumwebserver.gamelogic.items.LootPool;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.Bandage;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodChest;
@@ -51,33 +52,33 @@ public class GameState {
 	
 	// LOOT POOLS
 	// 		Medbay
-	public static final Map<Supplier<? extends AbstractItem>, Double> MEDBAY_LOOT_PROB;
+	public static final List<ItemLoot> MEDBAY_ITEM_LOOT;
 	static {
-		Map<Supplier<? extends AbstractItem>, Double> probs = new HashMap<Supplier<? extends AbstractItem>, Double>();
+		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 		
-		probs.put(Bandage::new, 0.40);
-		probs.put(Medkit::new, 0.20);
-		probs.put(Syringe::new, 0.05);
-		probs.put(TinfoilHatEquipmentItem::new, 0.25);
-		probs.put(RescueBeacon::new, 0.10);
+		probs.add(new ItemLoot(Bandage::new, 40, 0.0, 0.0));
+		probs.add(new ItemLoot(Medkit::new, 20, 0.0, 0.0));
+		probs.add(new ItemLoot(Syringe::new, 5, 0.0, 0.0));
+		probs.add(new ItemLoot(TinfoilHatEquipmentItem::new, 25, 0.0, 0.0));
+		probs.add(new ItemLoot(RescueBeacon::new, 10, 0.0, 0.0));
 		
-		MEDBAY_LOOT_PROB = Collections.unmodifiableMap(probs);
+		MEDBAY_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
-	public static final LootPool MEDBAY_LOOT_POOL = new LootPool(MEDBAY_LOOT_PROB);
+	public static final LootPool MEDBAY_LOOT_POOL = new LootPool(MEDBAY_ITEM_LOOT);
 	
 	//		Mess Hall
-	public static final Map<Supplier<? extends AbstractItem>, Double> CAFETERIA_LOOT_PROB;
+	public static final List<ItemLoot> CAFETERIA_ITEM_LOOT;
 	static {
-		Map<Supplier<? extends AbstractItem>, Double> probs = new HashMap<Supplier<? extends AbstractItem>, Double>();
+		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 	
-		probs.put(FoodPack::new, 0.40);
-		probs.put(FoodCrate::new, 0.20);
-		probs.put(FoodChest::new, 0.05);
-		probs.put(RescueBeacon::new, 0.10);
+		probs.add(new ItemLoot(FoodPack::new, 40, 0.0, 0.0));
+		probs.add(new ItemLoot(FoodCrate::new, 20, 0.0, 0.0));
+		probs.add(new ItemLoot(FoodChest::new, 5, 0.0, 0.0));
+		probs.add(new ItemLoot(RescueBeacon::new, 10, 0.0, 0.0));
 		
-		CAFETERIA_LOOT_PROB = Collections.unmodifiableMap(probs);
+		CAFETERIA_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
-	public static final LootPool CAFETERIA_LOOT_POOL = new LootPool(CAFETERIA_LOOT_PROB);
+	public static final LootPool CAFETERIA_LOOT_POOL = new LootPool(CAFETERIA_ITEM_LOOT);
 	
 	public enum GamePhase {
 
