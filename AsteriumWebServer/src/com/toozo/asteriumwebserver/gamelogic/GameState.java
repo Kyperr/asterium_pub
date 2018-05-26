@@ -120,6 +120,8 @@ public class GameState {
 	{
 		// Make a new location
 		Location home = new Location("Control Room", Location.LocationType.CONTROL_ROOM, MEDBAY_LOOT_POOL);
+		home.addActivity(Activity.REST, Activity.restActivity);
+		home.addActivity(Activity.USE_LOCATION_ITEM, Activity.useLocationItemActivity);
 		locations.put("1", home);
 
 		Location med_bay = new Location("Med Bay", Location.LocationType.MED_BAY, MEDBAY_LOOT_POOL);
@@ -186,7 +188,12 @@ public class GameState {
 	private static final void initiatePlayerTurnPhase(GameState state) {
 		state.setDay(state.getDay() + 1);
 		state.syncPlayerClients();
-		syncGameBoards(state);
+		try {
+			syncGameBoards(state);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		// Is there an action for every player and is everyone ready?? If so:
 		if (state.game.areAllTurnsSubmitted() && state.game.allCharactersReady()) {
@@ -202,7 +209,12 @@ public class GameState {
 		state.game.setAllCharactersNotReady();
 
 		state.syncPlayerClients();
-		syncGameBoards(state);
+		try {
+			syncGameBoards(state);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		if (state.getCompleteVictoryConditions().size() >= 1) {
 			if (VERBOSE) {
@@ -231,10 +243,15 @@ public class GameState {
 		// TODO Notify game board the game is over and clients that the game is over and
 		// if they won or lost. Wrap up.
 		state.syncPlayerClients();
-		syncGameBoards(state);
+		try {
+			syncGameBoards(state);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	private static final void syncGameBoards(GameState state) {
+	private static final void syncGameBoards(GameState state) throws IOException {
 		int food = state.getFood();
 		int fuel = state.getFuel();
 		int day = state.getDay();
@@ -290,7 +307,7 @@ public class GameState {
 
 			Session session = SessionManager.getInstance().getSession(gameBoard.getAuthToken());
 			synchronized (session) {
-				session.getAsyncRemote().sendText(syncGBMessage.jsonify().toString());
+				session.getBasicRemote().sendText(syncGBMessage.jsonify().toString());
 			}
 		}
 	}
