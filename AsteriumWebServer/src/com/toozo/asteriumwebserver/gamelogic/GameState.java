@@ -27,9 +27,13 @@ import com.toozo.asteriumwebserver.gamelogic.items.consumables.RescueBeacon;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.Syringe;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.AbstractEquipmentItem;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.EquipmentSlot;
+import com.toozo.asteriumwebserver.gamelogic.items.equipment.HareyGlovesEquipmentItem;
+import com.toozo.asteriumwebserver.gamelogic.items.equipment.HoverSkatesEquipmentItem;
+import com.toozo.asteriumwebserver.gamelogic.items.equipment.LettermanJacketEquipmentItem;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.Loadout;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.TinfoilHatEquipmentItem;
 import com.toozo.asteriumwebserver.gamelogic.items.location.AbstractLocationItem;
+import com.toozo.asteriumwebserver.gamelogic.items.location.Book;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
 import actiondata.ActionData;
@@ -55,16 +59,26 @@ public class GameState {
 	public static final boolean VERBOSE = true;
 
 	// LOOT POOLS
+	// Control Room
+	public static final List<ItemLoot> CONTROL_ROOM_ITEM_LOOT;
+	static {
+		List<ItemLoot> probs = new ArrayList<ItemLoot>();
+		
+		probs.add(new ItemLoot(RescueBeacon::new, 100, 0.0, 0.0));
+
+		CONTROL_ROOM_ITEM_LOOT = Collections.unmodifiableList(probs);
+	}
+	public static final LootPool CONTROL_ROOM_LOOT_POOL = new LootPool(CONTROL_ROOM_ITEM_LOOT);
+	
 	// Medbay
 	public static final List<ItemLoot> MEDBAY_ITEM_LOOT;
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 
-		probs.add(new ItemLoot(Bandage::new, 40, 0.0, 0.0));
-		probs.add(new ItemLoot(Medkit::new, 20, 0.0, 0.0));
-		probs.add(new ItemLoot(Syringe::new, 5, 0.0, 0.0));
-		probs.add(new ItemLoot(TinfoilHatEquipmentItem::new, 25, 0.0, 0.0));
-		probs.add(new ItemLoot(RescueBeacon::new, 10, 0.0, 0.0));
+		probs.add(new ItemLoot(Bandage::new, 60, 0.0, 0.0));
+		probs.add(new ItemLoot(Medkit::new, 30, 0.0, 0.0));
+		probs.add(new ItemLoot(Syringe::new, 9, 0.0, 0.0));
+		probs.add(new ItemLoot(RescueBeacon::new, 1, 0.0, 0.0));
 
 		MEDBAY_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
@@ -75,14 +89,41 @@ public class GameState {
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 
-		probs.add(new ItemLoot(FoodPack::new, 40, 0.0, 0.0));
-		probs.add(new ItemLoot(FoodCrate::new, 20, 0.0, 0.0));
-		probs.add(new ItemLoot(FoodChest::new, 5, 0.0, 0.0));
-		probs.add(new ItemLoot(RescueBeacon::new, 10, 0.0, 0.0));
+		probs.add(new ItemLoot(FoodPack::new, 60, 0.0, 0.0));
+		probs.add(new ItemLoot(FoodCrate::new, 30, 0.0, 0.0));
+		probs.add(new ItemLoot(FoodChest::new, 9, 0.0, 0.0));
+		probs.add(new ItemLoot(RescueBeacon::new, 1, 0.0, 0.0));
 
 		CAFETERIA_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
 	public static final LootPool CAFETERIA_LOOT_POOL = new LootPool(CAFETERIA_ITEM_LOOT);
+	
+	// Armory
+	public static final List<ItemLoot> ARMORY_ITEM_LOOT;
+	static {
+		List<ItemLoot> probs = new ArrayList<ItemLoot>();
+
+		probs.add(new ItemLoot(TinfoilHatEquipmentItem::new, 24, 0.0, 0.0));
+		probs.add(new ItemLoot(HareyGlovesEquipmentItem::new, 24, 0.0, 0.0));
+		probs.add(new ItemLoot(HoverSkatesEquipmentItem::new, 24, 0.0, 0.0));
+		probs.add(new ItemLoot(LettermanJacketEquipmentItem::new, 24, 0.0, 0.0));
+		probs.add(new ItemLoot(RescueBeacon::new, 4, 0.0, 0.0));
+
+		ARMORY_ITEM_LOOT = Collections.unmodifiableList(probs);
+	}
+	public static final LootPool ARMORY_LOOT_POOL = new LootPool(ARMORY_ITEM_LOOT);
+	
+	// Library
+	public static final List<ItemLoot> LIBRARY_ITEM_LOOT;
+	static {
+		List<ItemLoot> probs = new ArrayList<ItemLoot>();
+
+		probs.add(new ItemLoot(Book::new, 99, 0.0, 0.0));
+		probs.add(new ItemLoot(RescueBeacon::new, 1, 0.0, 0.0));
+
+		LIBRARY_ITEM_LOOT = Collections.unmodifiableList(probs);
+	}
+	public static final LootPool LIBRARY_LOOT_POOL = new LootPool(LIBRARY_ITEM_LOOT);
 
 	public enum GamePhase {
 
@@ -123,7 +164,7 @@ public class GameState {
 	// Initialize the locations
 	{
 		// Make a new location
-		Location home = new Location("Control Room", Location.LocationType.CONTROL_ROOM, MEDBAY_LOOT_POOL, 0);
+		Location home = new Location("Control Room", Location.LocationType.CONTROL_ROOM, CONTROL_ROOM_LOOT_POOL, 0);
 		home.addActivity(Activity.REST, Activity.restActivity);
 		home.addActivity(Activity.USE_LOCATION_ITEM, Activity.useLocationItemActivity);
 		locations.put("1", home);
@@ -135,6 +176,15 @@ public class GameState {
 		Location cafeteria = new Location("Cafeteria", Location.LocationType.MESS_HALL, CAFETERIA_LOOT_POOL, 2);
 		cafeteria.addActivity(Activity.SEARCH, Activity.searchActivity);
 		locations.put("3", cafeteria);
+		
+		Location library = new Location("Library", Location.LocationType.LIBRARY, LIBRARY_LOOT_POOL, 3);
+		library.addActivity(Activity.SEARCH, Activity.searchActivity);
+		locations.put("4", library);
+		
+		Location armory = new Location("Armory", Location.LocationType.ARMORY, ARMORY_LOOT_POOL, 4);
+		armory.addActivity(Activity.SEARCH, Activity.searchActivity);
+		locations.put("5", armory);
+		
 	};
 	// =========================
 

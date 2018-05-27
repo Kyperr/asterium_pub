@@ -9,13 +9,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 import com.toozo.asteriumwebserver.gamelogic.GameState;
 import com.toozo.asteriumwebserver.gamelogic.Location.LocationType;
 import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 import com.toozo.asteriumwebserver.gamelogic.Stat;
-import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
 import com.toozo.asteriumwebserver.gamelogic.statuseffects.AffectStats;
 
 /**
@@ -66,19 +64,15 @@ public class Book extends AbstractLocationItem {
 	// Triple Stat Collections
 	public static final Collection<Stat> STAMINA_LUCK_INTUITION = Arrays.asList(Stat.STAMINA, Stat.LUCK,
 			Stat.INTUITION);
+	// Don't judge me.
+	
 	// Other
 	public static final String ERROR_NAME = "Squashing Bugs, 1st Edition";
 	public static final String IMG = "book.png";
 	public static final int DEFAULT_STAT_BOOST = 1;
-	public static final double SINGLE_PROBABILITY = 0.8;
-	public static final double DOUBLE_PROBABILITY = 0.15;
-	public static final double TRIPLE_PROBABILITY = 0.05;
-	public static final Map<Supplier<? extends AbstractItem>, Double> FACTORY_PROBABILITIES;
-	static {
-		Map<Supplier<? extends AbstractItem>, Double> probsMap = new HashMap<Supplier<? extends AbstractItem>, Double>();
-		probsMap.put(Book::createBook, 1.0);
-		FACTORY_PROBABILITIES = Collections.unmodifiableMap(probsMap);
-	}
+	public static final double SINGLE_PROBABILITY = 0.9;
+	public static final double DOUBLE_PROBABILITY = 0.09;
+	public static final double TRIPLE_PROBABILITY = 0.01;
 	private static final Collection<LocationType> BOOK_LOCATIONS = Arrays.asList(LocationType.CONTROL_ROOM);
 	private static final Random RNG = new Random();
 	// =====================
@@ -120,8 +114,8 @@ public class Book extends AbstractLocationItem {
 		// Determine number of Stats which should be in result based on weights
 		// distribution.
 		double random = RNG.nextDouble();
-		for (numberOfStats = 1; random > weights[numberOfStats - 1]; numberOfStats++) {
-		}
+		for (numberOfStats = 1; numberOfStats - 1 < weights.length && 
+								random > weights[numberOfStats - 1]; numberOfStats++);
 
 		// Randomly return that many Stats
 		Collections.shuffle(result, RNG);
@@ -203,14 +197,14 @@ public class Book extends AbstractLocationItem {
 	}
 	// ==========================
 
-	// ===== FACTORIES =====
-	public static Book createBook() {
-		// Generate a book which boosts random stats by 1
-		return new Book(1, BOOK_LOCATIONS);
-	}
-	// =====================
-
 	// ===== CONSTRUCTORS =====
+	/**
+	 * Construct a book with a random name and stats which boosts stats by DEFAULT_STAT_BOOST.
+	 */
+	public Book() {
+		this(generateStats());
+	}
+	
 	/**
 	 * Construct a book with a random name which boosts defined stats by
 	 * DEFAULT_STAT_BOOST.
@@ -218,8 +212,8 @@ public class Book extends AbstractLocationItem {
 	 * @param stats
 	 *            The {@link Stat}s which this book will boost.
 	 */
-	public Book(Collection<Stat> stats, Collection<LocationType> locations) {
-		this(stats, DEFAULT_STAT_BOOST, locations);
+	public Book(Collection<Stat> stats) {
+		this(stats, DEFAULT_STAT_BOOST);
 	}
 
 	/**
@@ -229,8 +223,8 @@ public class Book extends AbstractLocationItem {
 	 * @param amount
 	 *            The amount by which this book will boost stats.
 	 */
-	public Book(final int amount, Collection<LocationType> locations) {
-		this(generateStats(), amount, locations);
+	public Book(final int amount) {
+		this(generateStats(), amount);
 	}
 
 	/**
@@ -242,8 +236,8 @@ public class Book extends AbstractLocationItem {
 	 * @param amount
 	 *            The amount by which this book will boost stats.
 	 */
-	public Book(Collection<Stat> stats, final int amount, Collection<LocationType> locations) {
-		this(generateName(stats), generateDescription(stats), getRandomFlavorText(stats), stats, amount, locations);
+	public Book(Collection<Stat> stats, final int amount) {
+		this(generateName(stats), generateDescription(stats), getRandomFlavorText(stats), stats, amount);
 	}
 
 	/**
@@ -257,8 +251,8 @@ public class Book extends AbstractLocationItem {
 	 *            The amount by which this book will boost stats.
 	 */
 	public Book(final String name, final String description, final String flavor, final Collection<Stat> stats,
-			final int amount, Collection<LocationType> locationsCanBeUsedIn) {
-		super(name, description, flavor, IMG, locationsCanBeUsedIn);
+			final int amount) {
+		super(name, description, flavor, IMG, BOOK_LOCATIONS);
 		this.stats = stats;
 		this.effect = (oldStat) -> (oldStat + amount);
 	}
