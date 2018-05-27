@@ -20,9 +20,6 @@ ViewInventoryDisplayController.prototype = Object.create(AbstractDisplayControll
 ViewInventoryDisplayController.prototype.constructor = ViewInventoryDisplayController;
 
 ViewInventoryDisplayController.prototype.init = function () {
-    this.cancelButton.innerHTML = "CANCEL";
-    this.cancelButton.setAttribute("onClick", "actionDisplayController.display()");
-    this.cancelButton.setAttribute("class", "button");
 
     //Modal Dialog:
     this.modal.setAttribute("class", "modal");
@@ -92,8 +89,6 @@ ViewInventoryDisplayController.prototype.display = function () {
     }
 
     div.appendChild(communalItemDiv);
-
-    div.appendChild(this.cancelButton);
 
     //Modal stuff.
     div.appendChild(this.modal);

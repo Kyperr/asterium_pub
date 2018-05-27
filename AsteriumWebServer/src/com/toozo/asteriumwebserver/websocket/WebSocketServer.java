@@ -42,7 +42,6 @@ public class WebSocketServer {
 
 	@OnMessage
 	public void onMessage(Session session, String message) {
-		System.out.println(message);
 		Message parsedMessage = new Parser().parse(message);
 		try {
 

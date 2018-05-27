@@ -8,10 +8,10 @@ function syncPlayerClientData(request) {
     locations = [];
 
     request.sync_player_client_data.locations.forEach(location => {
-        if(location.location_id == 1) {
+        if(location.map_location == 1) {
             controlRoom = location;
         } else {
-            locations[location.location_id] = location;
+            locations[location.map_location] = location;
         }
     });
 
