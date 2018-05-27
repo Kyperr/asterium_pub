@@ -199,9 +199,7 @@ public class GameState {
 	private boolean playersWon;
 	private Map<String, PlayerCharacter> authCharacterMap;
 	private Map<String, PlayerCharacter> nameCharacterMap;
-	// An ordered list of victory conditions, where the index is the tie-breaker priority.
-	// i.e. if victoryConditions = [A, B], A == true and B == true, B will take precedence.
-	private List<VictoryCondition> victoryConditions;
+	private Collection<VictoryCondition> victoryConditions;
 	private Inventory communalInventory;
 	// ===========================
 
@@ -281,8 +279,6 @@ public class GameState {
 			if (VERBOSE) {
 				System.out.println("Game complete. Displaying end summary...");
 			}
-			state.gameOver = true;
-			
 			state.setGamePhase(GamePhase.END_SUMMARY);
 		} else {
 			if (VERBOSE) {
@@ -439,7 +435,7 @@ public class GameState {
 	}
 	
 	public boolean playersWon() {
-		return this.gameOver() && this.playersWon;
+		return this.gameOver && this.playersWon;
 	}
 
 	/**
@@ -541,14 +537,6 @@ public class GameState {
 	 */
 	public void setDay(final int newDay) {
 		this.day = newDay;
-	}
-	
-	public void setGameOver(boolean gameOver) {
-		this.gameOver = gameOver;
-	}
-	
-	public void setPlayersWon(boolean playersWon) {
-		this.playersWon = playersWon;
 	}
 	// ===================
 
@@ -741,7 +729,6 @@ public class GameState {
 		SyncPlayerClientDataRequestData data = new SyncPlayerClientDataRequestData(getFood(), 
 																				   getFuel(), 
 																				   getDay(),
-																				   this.playersWon(),
 																				   loc,
 																				   dChar, 
 																				   characters, 
