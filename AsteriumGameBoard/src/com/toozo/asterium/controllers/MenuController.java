@@ -2,12 +2,11 @@ package com.toozo.asterium.controllers;
 
 import javax.resource.spi.IllegalStateException;
 
-import com.toozo.asterium.util.GameResources;
-import com.toozo.asterium.util.NodeNavigator;
 import com.toozo.asterium.util.NodeNavigator.Display;
 
-import actiondata.CreateGameRequestData;
+import actiondata.ActionData;
 import actiondata.CreateGameResponseData;
+import actiondata.GeneralRequestData;
 import actiondata.JoinAsGameBoardRequestData;
 import actiondata.JoinAsGameBoardRequestData.GameBoardData;
 import javafx.application.Platform;
@@ -15,7 +14,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Pane;
 import message.Request;
 
 /**
@@ -38,7 +36,7 @@ public class MenuController extends AbstractAsteriumController {
 	@FXML
 	private void handleLobbyIdButtonAction(ActionEvent event) {
 
-		CreateGameRequestData cgrData = new CreateGameRequestData();
+		GeneralRequestData cgrData = new GeneralRequestData(ActionData.CREATE_GAME);
 
 		Request request = new Request(cgrData, "");
 

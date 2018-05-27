@@ -34,6 +34,7 @@ public abstract class Action implements Runnable {
 	public static final String PLAYER_SYNC = "player_sync";
 	public static final String ALLOCATE_STATS = "allocate_stats";
 	public static final String TURN = "turn";
+	public static final String SET_READY_STATUS = "set_ready_status";
 	public static final String SYNC_LOCATIONS = "sync_locations";
 	public static final String SYNC_PLAYER_LIST = "sync_player_list";
 	public static final String USE_ITEM = "use_item";
@@ -78,6 +79,7 @@ public abstract class Action implements Runnable {
 			put(ActionData.USE_ITEM, UseItemAction::fromMessage);
 			
 			put(ActionData.QUERY_IS_IN_GAME, QueryIsInGameAction::fromMessage);
+			put(ActionData.SET_READY_STATUS, SetReadyStatusAction::fromMessage);
 			put(ActionData.TOGGLE_READY_UP, ToggleReadyUpAction::fromMessage);
 			
 			

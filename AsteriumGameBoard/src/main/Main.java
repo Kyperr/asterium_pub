@@ -1,10 +1,8 @@
 package main;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-
-import actiondata.CreateGameRequestData;
+import actiondata.ActionData;
 import actiondata.CreateGameResponseData;
+import actiondata.GeneralRequestData;
 import actiondata.JoinAsGameBoardRequestData;
 import message.Request;
 
@@ -25,7 +23,7 @@ public class Main {
 	public static void main(String[] args) {
 		ClientConnectionHandler ccHandler = new ClientConnectionHandler(SERVER_ADDRESS);
 
-		CreateGameRequestData cgaData = new CreateGameRequestData();
+		GeneralRequestData cgaData = new GeneralRequestData(ActionData.CREATE_GAME);
 
 		Request request = new Request(cgaData, "");
 		String msg = request.jsonify().toString();

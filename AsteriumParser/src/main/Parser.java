@@ -10,17 +10,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import actiondata.ActionData;
-import actiondata.CreateGameRequestData;
 import actiondata.CreateGameResponseData;
+import actiondata.GeneralRequestData;
 import actiondata.JoinAsGameBoardRequestData;
 import actiondata.JoinAsGameBoardResponseData;
 import actiondata.JoinAsPlayerRequestData;
 import actiondata.JoinAsPlayerResponseData;
-import actiondata.QueryIsInGameRequestData;
 import actiondata.QueryIsInGameResponseData;
+import actiondata.SetReadyStatusRequestData;
 import actiondata.SyncGameBoardDataRequestData;
 import actiondata.SyncPlayerListRequestData;
-import actiondata.ToggleReadyUpRequestData;
 import actiondata.ToggleReadyUpResponseData;
 import actiondata.TurnRequestData;
 import actiondata.UseItemRequestData;
@@ -40,7 +39,7 @@ public class Parser {
 	private static HashMap<List<Object>, Function<JSONObject, ActionData>> actionDataLookup = new HashMap<List<Object>, Function<JSONObject, ActionData>>(){
 		private static final long serialVersionUID = 1L;
 	{
-		put(Arrays.asList(true, ActionData.CREATE_GAME), CreateGameRequestData::parseArgs);
+		put(Arrays.asList(true, ActionData.CREATE_GAME), GeneralRequestData::parseArgs);
 		put(Arrays.asList(false, ActionData.CREATE_GAME), CreateGameResponseData::parseArgs);
 		
 		put(Arrays.asList(true, ActionData.JOIN_AS_PLAYER), JoinAsPlayerRequestData::parseArgs);
@@ -49,11 +48,13 @@ public class Parser {
 		put(Arrays.asList(true, ActionData.JOIN_AS_GAMEBOARD), JoinAsGameBoardRequestData::parseArgs);
 		put(Arrays.asList(false, ActionData.JOIN_AS_GAMEBOARD), JoinAsGameBoardResponseData::parseArgs);
 
-		put(Arrays.asList(true, ActionData.QUERY_IS_IN_GAME), QueryIsInGameRequestData::parseArgs);
+		put(Arrays.asList(true, ActionData.QUERY_IS_IN_GAME), GeneralRequestData::parseArgs);
 		put(Arrays.asList(false, ActionData.QUERY_IS_IN_GAME), QueryIsInGameResponseData::parseArgs);
 
-		put(Arrays.asList(true, ActionData.TOGGLE_READY_UP), ToggleReadyUpRequestData::parseArgs);
+		put(Arrays.asList(true, ActionData.TOGGLE_READY_UP), GeneralRequestData::parseArgs);
 		put(Arrays.asList(false, ActionData.TOGGLE_READY_UP), ToggleReadyUpResponseData::parseArgs);
+		
+		put(Arrays.asList(true, ActionData.SET_READY_STATUS), SetReadyStatusRequestData::parseArgs);
 		
 		put(Arrays.asList(true, ActionData.TURN_ACTION), TurnRequestData::parseArgs);
 

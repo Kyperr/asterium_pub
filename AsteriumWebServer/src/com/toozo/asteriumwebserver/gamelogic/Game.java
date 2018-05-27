@@ -166,6 +166,15 @@ public class Game extends Thread {
 		}
 		return isReady;
 	}
+	
+	public synchronized void setReadyStatus(final String authToken, final boolean ready) {
+		this.playerReadyMap.put(authToken, ready);
+		this.getGameState().executePhase();
+		this.getGameState().syncGameBoardsPlayerList();
+		synchronized (this) {
+			notify();
+		}
+	}
 
 	public void setAllCharactersNotReady() {
 		for (String auth : playerReadyMap.keySet()) {
