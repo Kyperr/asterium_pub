@@ -26,10 +26,10 @@ import message.Request;
  */
 public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 
-	private int food = 0;
-	private int fuel = 0;
-	private int day = 0;
-	private boolean youWon = false;
+	private int food;
+	private int fuel;
+	private int day;
+	private boolean youWon;
 	private List<LocationData> locations;
 	private SyncPlayerClientDataRequestData.PlayerCharacterData yourCharacter;
 	private Collection<String> characterNames;
@@ -49,7 +49,6 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		this.food = food;
 		this.fuel = fuel;
 		this.day = day;
-		this.youWon = youWon;
 		this.locations = locations;
 		this.yourCharacter = you;
 		this.characterNames = characterNames;
@@ -69,7 +68,6 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		data.put(ActionData.FOOD, this.food);
 		data.put(ActionData.FUEL, this.fuel);
 		data.put(ActionData.DAY, this.day);
-		data.put(ActionData.YOU_WON, youWon);
 		data.put(ActionData.LOCATIONS, array);
 		data.put(ActionData.CHARACTER, this.yourCharacter.jsonify());
 		JSONArray charactersArray = new JSONArray();
@@ -98,7 +96,7 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		int food = jsonObj.getInt(ActionData.FOOD);
 		int fuel = jsonObj.getInt(ActionData.FUEL);
 		int day = jsonObj.getInt(ActionData.DAY);
-		boolean youWon = jsonObj.getBoolean(ActionData.YOU_WON);
+		boolean youWon = jsonObj.getBoolean(ActionData.YOU_WON)
 		
 		// build character
 		PlayerCharacterData character;
@@ -188,8 +186,7 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		}
 
 		String gamePhaseName = jsonObj.getString(ActionData.GAME_PHASE_NAME);
-		return new SyncPlayerClientDataRequestData(food, fuel, day, youWon, locations, character, 
-												   characters, gamePhaseName, inventory);
+		return new SyncPlayerClientDataRequestData(food, fuel, day, locations, character, characters, gamePhaseName, inventory);
 	}
 
 	/**
@@ -210,9 +207,7 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 			CONTROL_ROOM("control_room"),
 			MED_BAY("med_bay"), 
 			MESS_HALL("mess_hall"), 
-			RESIDENTAIL("residential"),
-			ARMORY("armory"),
-			LIBRARY("library");
+			RESIDENTAIL("residential");
 
 			private final String jsonVersion;
 
