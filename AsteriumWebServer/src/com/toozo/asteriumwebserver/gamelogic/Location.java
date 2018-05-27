@@ -93,9 +93,6 @@ public class Location {
 	}
 	
 	public final int getCost() {
-		System.out.println("Position" + this.position);
-		System.out.println("Tier" + this.tier);
-		System.out.println("Tier.getTier()" + this.tier.getTier());
 		return this.position + (2 * this.tier.getTier());
 	}
 	
