@@ -24,6 +24,7 @@ public interface ActionData {
 	public static final String SYNC_GAME_BOARD_DATA = "sync_game_board_data";
 	public static final String SYNC_PLAYER_CLIENT_DATA = "sync_player_client_data";
 	public static final String TURN_ACTION = "turn_action";
+	public static final String ITEM_TURN_ACTION = "item_turn_action";
 	public static final String SET_READY_STATUS = "set_ready_status";
 	public static final String SYNC_PLAYER_LIST = "sync_player_list";
 	public static final String USE_ITEM = "use_item";

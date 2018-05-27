@@ -17,7 +17,7 @@ LocationsDisplayController.prototype.init = function () {
 
 
 LocationsDisplayController.prototype.display = function () {
-    var div = document.getElementById("centralDiv");
+    var div = document.getElementById("action");
 
     div.innerHTML = "<b>What location would you like to explore?</b>";
 
