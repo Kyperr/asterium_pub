@@ -13,7 +13,7 @@ public class LootPool {
 	// ===== CONSTANTS =====
 	// index = number of items, array[index] = chance of getting that many
 	public static final double[] NUMBER_ITEMS_PROBABILITIES = {0.00, 0.50, 0.25, 0.15, 0.07, 0.03};
-	public static final boolean VERBOSE = false;
+	public static final boolean VERBOSE = true;
 	
 	private static final Random RNG = new Random();
 	// =====================
@@ -43,12 +43,11 @@ public class LootPool {
 		
 		// Cascade NUMBER_ITEMS_PROBABILITIES
 		// e.g. [0.0, 0.4, 0.2, 0.1, 0.05, 0.05] -> [0.0, 0.4, 0.6, 0.7, 0.75,
-		int probLength = NUMBER_ITEMS_PROBABILITIES.length;
-		double[] cascade = new double[probLength];
-		if (probLength > 0) {
+		double[] cascade = new double[NUMBER_ITEMS_PROBABILITIES.length];
+		if (cascade.length > 0) {
 			cascade[0] = NUMBER_ITEMS_PROBABILITIES[0];
 		
-			for (int i = 1; i < probLength; i++) {
+			for (int i = 1; i < cascade.length; i++) {
 				cascade[i] = cascade[i - 1] + NUMBER_ITEMS_PROBABILITIES[i];
 			}
 		}
@@ -56,8 +55,7 @@ public class LootPool {
 		// Determine the number of items that should be returned
 		double random = RNG.nextDouble();
 		int itemsToLoot;
-		for (itemsToLoot = 0; itemsToLoot < probLength &&
-							  random > NUMBER_ITEMS_PROBABILITIES[itemsToLoot]; itemsToLoot++);
+		for (itemsToLoot = 0; random < NUMBER_ITEMS_PROBABILITIES[itemsToLoot]; itemsToLoot++);
 		
 		// Maybe get extra item for luck
 		random = RNG.nextDouble();
