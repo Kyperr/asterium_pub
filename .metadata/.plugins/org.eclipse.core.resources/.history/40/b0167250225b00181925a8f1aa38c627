@@ -1,8 +1,0 @@
-package com.toozo.asteriumwebserver.gamelogic;
-
-public enum Stats {
-	HEALTH,
-	STAMINA,
-	LUCK,
-	INTUITION;
-}
