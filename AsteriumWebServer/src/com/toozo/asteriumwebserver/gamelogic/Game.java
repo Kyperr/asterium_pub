@@ -40,6 +40,7 @@ public class Game extends Thread {
 
 	// ===== INSTANCE FIELDS =====
 	// Indicates that players still need this game object.
+	private boolean hasBeenJoined = false;
 	private boolean isAbandoned = false;
 
 	private final String lobbyID;
@@ -205,7 +206,7 @@ public class Game extends Thread {
 				state.executePhase();
 				
 				// Check if this game should be removed.
-				if (this.gameBoardList.isEmpty() && this.playerList.isEmpty()) {
+				if (this.hasBeenJoined) {
 					SessionManager manager = SessionManager.getInstance();
 					String auth;
 					Session session;
@@ -295,6 +296,7 @@ public class Game extends Thread {
 			// Add PlayerCharacter to GameState
 			PlayerCharacter character = new PlayerCharacter(player.getPlayerName());
 			this.getGameState().addPlayerCharacter(authToken, character);
+			this.hasBeenJoined = true;
 
 			// Register with GameManager
 			GameManager.getInstance().registerPlayerToGame(player.getAuthToken(), this);
@@ -312,6 +314,7 @@ public class Game extends Thread {
 	 */
 	public void addGameBoard(final GameBoard gameBoard) {
 		this.gameBoardList.put(gameBoard.getAuthToken(), gameBoard);
+		this.hasBeenJoined = true;
 	}
 
 	/**

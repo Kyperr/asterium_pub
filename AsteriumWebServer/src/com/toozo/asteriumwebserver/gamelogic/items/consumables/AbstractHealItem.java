@@ -12,6 +12,10 @@ import com.toozo.asteriumwebserver.gamelogic.Stat;
  * @author Greg Schmitt
  */
 public class AbstractHealItem extends AbstractConsumableItem {
+	// ===== CONSTANTS =====
+	public static final String DESC = "Adds %d to your health.";
+	// =====================
+	
 	// ===== FIELDS =====
 	private int healAmount;
 	// ==================
@@ -22,8 +26,8 @@ public class AbstractHealItem extends AbstractConsumableItem {
 	 * @param name The name of this HealItem.
 	 * @param healAmount The amount this healItem should heal each of its targets.
 	 */
-	public AbstractHealItem(final String name, final String description, final String flavor, final String image, final int healAmount) {
-		super(name, description, flavor, image);
+	public AbstractHealItem(final String name, final String flavor, final String image, final int healAmount) {
+		super(name, String.format(DESC, healAmount), flavor, image);
 		this.healAmount = healAmount;
 	}
 	// ========================

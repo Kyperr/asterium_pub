@@ -6,14 +6,18 @@ import com.toozo.asteriumwebserver.gamelogic.GameState;
 import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 
 public abstract class AbstractFoodItem extends AbstractConsumableItem {
+	// ===== CONSTANTS =====
+	public static final String DESC = "Adds %d food to the supply.";
+	// =====================
+	
 	// ===== FIELDS =====
 	private int addAmount;
 	// ==================
 
 	// ===== CONSTRUCTORS =====
-	protected AbstractFoodItem(final String name, final String description, final String flavor, final String image,
+	protected AbstractFoodItem(final String name, final String flavor, final String image,
 			final int addAmount) {
-		super(name, description, flavor, image);
+		super(name, String.format(DESC, addAmount), flavor, image);
 		this.addAmount = addAmount;
 	}
 	// ========================
