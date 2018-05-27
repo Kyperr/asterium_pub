@@ -26,8 +26,14 @@ public class SyncData {
 		private Set<String> activities;
 
 		public enum LocationType {
-			CONTROL_ROOM("control_room"), MED_BAY("med_bay"), MESS_HALL("mess_hall"), RESIDENTAIL(
-					"residential"), ARMORY("armory"), LIBRARY("library");
+			CONTROL_ROOM("control_room"),
+			MED_BAY("med_bay"), 
+			MESS_HALL("mess_hall"), 
+			RESIDENTAIL("residential"),
+			ARMORY("armory"),
+			LIBRARY("library"), 
+			VEHICLE_BAY("vehicle_bay"),
+			ENGINE_ROOM("engine_room");
 
 			private final String jsonVersion;
 
