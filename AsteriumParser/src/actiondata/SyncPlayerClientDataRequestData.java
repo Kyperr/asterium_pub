@@ -12,7 +12,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import actiondata.SyncPlayerClientDataRequestData.LocationData.LocationType;
+import actiondata.SyncData.ItemData;
+import actiondata.SyncData.LocationData;
+import actiondata.SyncData.LocationData.LocationType;
 import actiondata.SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData;
 import actiondata.SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType;
 import actiondata.SyncPlayerClientDataRequestData.PlayerCharacterData.StatsData;
@@ -162,7 +164,7 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		List<LocationData> locations = new ArrayList<LocationData>();
 		for (int i = 0; i < locationsArray.length(); i++) {
 			JSONObject locationObject = locationsArray.getJSONObject(i);
-			String locationID = locationObject.getString(ActionData.LOCATION_ID);
+			String locationID = locationObject.getString(ActionData.MAP_LOCATION);
 			String name = locationObject.getString(ActionData.LOCATION_NAME);
 			LocationType type;
 			JSONObject typeObject = locationObject.getJSONObject(ActionData.LOCATION_TYPE);
@@ -192,62 +194,6 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 												   characters, gamePhaseName, inventory);
 	}
 
-	/**
-	 * {@link LocationData} is an inner class of
-	 * {@link SyncPlayerClientDataRequestData} that holds data for a location only
-	 * for the purpose of updating a player client.
-	 * 
-	 * @author Studio Toozo
-	 */
-	public static class LocationData {
-
-		private String locationID;
-		private final String name;
-		private final LocationType type;
-		private Set<String> activities;
-
-		public enum LocationType {
-			CONTROL_ROOM("control_room"),
-			MED_BAY("med_bay"), 
-			MESS_HALL("mess_hall"), 
-			RESIDENTAIL("residential"),
-			ARMORY("armory"),
-			LIBRARY("library");
-
-			private final String jsonVersion;
-
-			LocationType(String jsonVersion) {
-				this.jsonVersion = jsonVersion;
-			}
-
-			public String getJSONVersion() {
-				return this.jsonVersion;
-			}
-		}
-
-		public LocationData(final String locationID, final String name, final LocationType type,
-				final Set<String> activities) {
-			this.locationID = locationID;
-			this.name = name;
-			this.type = type;
-			this.activities = activities;
-		}
-
-		public JSONObject jsonify() {
-			JSONObject data = new JSONObject();
-			data.put(ActionData.LOCATION_ID, this.locationID);
-			data.put(ActionData.LOCATION_NAME, this.name);
-			data.put(ActionData.LOCATION_TYPE, this.type.getJSONVersion());
-			JSONArray array = new JSONArray();
-
-			for (String s : this.activities) {
-				array.put(s);
-			}
-			data.put(ActionData.ACTIVITIES, array);
-
-			return data;
-		}
-	}
 
 	/**
 	 * {@link PlayerCharacterData} is an inner class of
@@ -365,54 +311,5 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		}
 	}
 
-	public static class ItemData {
-		private String name;
-		private String description;
-		private String flavorText;
-		private String imagePath;
-		private boolean isLocationItem;
-		private Collection<LocationType> useLocations;
-
-		public ItemData(final String name, final String description, final String flavor, final String image,
-				final boolean isLocationItem, final Collection<LocationType> locations) {
-			this.name = name;
-			this.description = description;
-			this.flavorText = flavor;
-			this.imagePath = image;
-			this.isLocationItem = isLocationItem;
-			this.useLocations = locations;
-		}
-
-		public JSONObject jsonify() {
-			JSONObject data = new JSONObject();
-			data.put(ActionData.ITEM_NAME, this.name);
-			data.put(ActionData.ITEM_DESC, this.description);
-			data.put(ActionData.ITEM_FLAVOR_TEXT, this.flavorText);
-			data.put(ActionData.ITEM_IMG, this.imagePath);
-			data.put(ActionData.IS_LOCATION_ITEM, this.isLocationItem);
-			JSONArray use = new JSONArray();
-			for (LocationType type : this.useLocations) {
-				use.put(type.toString());
-			}
-			data.put(ActionData.USE_LOCATIONS, use);
-
-			return data;
-		}
-
-		public static ItemData parseArgs(final JSONObject jsonObj) {
-			String name = jsonObj.getString(ActionData.ITEM_NAME);
-			String desc = jsonObj.getString(ActionData.ITEM_DESC);
-			String flavor = jsonObj.getString(ActionData.ITEM_FLAVOR_TEXT);
-			String img = jsonObj.getString(ActionData.ITEM_IMG);
-			boolean isLocItem = jsonObj.getBoolean(ActionData.IS_LOCATION_ITEM);
-			Collection<LocationType> locs = new ArrayList<LocationType>();
-			JSONArray locArray = jsonObj.getJSONArray(ActionData.USE_LOCATIONS);
-			for (int i = 0; i < locArray.length(); i++) {
-				String type = locArray.get(i).toString();
-				locs.add(LocationType.valueOf(type));
-			}
-			
-			return new ItemData(name, desc, flavor, img, isLocItem, locs);
-		}
-	}
+	
 }

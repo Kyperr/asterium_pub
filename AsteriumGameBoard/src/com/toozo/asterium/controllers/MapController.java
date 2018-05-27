@@ -2,7 +2,7 @@ package com.toozo.asterium.controllers;
 
 import javax.resource.spi.IllegalStateException;
 
-import actiondata.SyncGameBoardDataRequestData.LocationData;
+import actiondata.SyncData.LocationData;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
