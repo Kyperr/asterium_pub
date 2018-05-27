@@ -115,11 +115,11 @@ function turnActivity(){
     responseActions[uuid] = processTurnActionResponse;
 }
 
-function useItemAction(itemName, targets, isCommunal){//Should use itemID later.  
+function useItemAction(item, targets, isCommunal){//Should use itemID later.  
     console.log("Sending use-item!");
 
     //Ew, remove this after the MVP
-    if(itemName == "Rescue Beacon"){
+    if(item.item_name == "Rescue Beacon"){
         usedTheBeacon = true;
     }
 
@@ -133,7 +133,7 @@ function useItemAction(itemName, targets, isCommunal){//Should use itemID later.
                     "use_item":
                         {
                             "item": {
-                                "item_id": itemName
+                                "item_id": item.item_name
                             },
                             "targets": targets,
                             "is_communal": isCommunal

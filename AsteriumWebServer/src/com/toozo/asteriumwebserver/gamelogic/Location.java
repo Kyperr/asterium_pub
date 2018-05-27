@@ -57,8 +57,12 @@ public class Location {
 	public Set<String> getActivityNames(){
 		return this.activities.keySet();
 	}
-	
+
 	public void doActivity(String name, Game game, PlayerCharacter character) throws IllegalArgumentException{
+		activities.get(name).doActivity(game, character, this);
+	}
+	
+	public void useItem(String name, Game game, PlayerCharacter character) throws IllegalArgumentException{
 		activities.get(name).doActivity(game, character, this);
 	}
 	

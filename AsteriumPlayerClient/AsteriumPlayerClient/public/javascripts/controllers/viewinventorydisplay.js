@@ -27,7 +27,7 @@ ViewInventoryDisplayController.prototype.init = function () {
     //Modal Dialog:
     this.modal.setAttribute("class", "modal");
     this.modal.appendChild(this.modalContent);
-    
+
     this.modalContent.setAttribute("class", "modal-content");
 
     this.modalUse.innerHTML = "Use Item";
@@ -45,11 +45,10 @@ ViewInventoryDisplayController.prototype.display = function () {
 
     div.innerHTML = "";
 
-    div.appendChild(document.createElement("br"));
-    div.appendChild(document.createElement("br"));
-
-    div.innerHTML += "Personal Inventory:";
-    div.appendChild(document.createElement("br"));
+    var persInvDiv = document.createElement("div");
+    persInvDiv.setAttribute("class", "itemSpan");
+    persInvDiv.innerHTML = "Personal Inventory";
+    div.appendChild(persInvDiv);
 
     var personalItemDiv = document.createElement("div");
     personalItemDiv.setAttribute("class", "itemDiv");
@@ -57,8 +56,9 @@ ViewInventoryDisplayController.prototype.display = function () {
     personalInventory.forEach(inventory => {
         var btnInventory = document.createElement("BUTTON");
         btnInventory.innerHTML = inventory.item_name;
-        var actionString = "viewInventoryDisplayController.selectInventory(\'" + inventory.item_name + "\', false)";
-        btnInventory.setAttribute("onClick", actionString);
+        btnInventory.onclick = function(){
+            viewInventoryDisplayController.selectInventory(inventory, false);
+        }
         btnInventory.setAttribute("class", "button");
         personalItemDiv.appendChild(btnInventory);
     });
@@ -69,11 +69,10 @@ ViewInventoryDisplayController.prototype.display = function () {
 
     div.appendChild(personalItemDiv);
 
-    div.appendChild(document.createElement("br"));
-
-    div.innerHTML += "Communal Inventory:";
-
-    div.appendChild(document.createElement("br"));
+    var comInvDiv = document.createElement("div");
+    comInvDiv.setAttribute("class", "itemSpan");
+    comInvDiv.innerHTML = "Communal Inventory";
+    div.appendChild(comInvDiv);
 
     var communalItemDiv = document.createElement("div");
     communalItemDiv.setAttribute("class", "itemDiv");
@@ -81,7 +80,9 @@ ViewInventoryDisplayController.prototype.display = function () {
     communalInventory.forEach(inventory => {
         var btnInventory = document.createElement("BUTTON");
         btnInventory.innerHTML = inventory.item_name;
-        btnInventory.setAttribute("onClick", "viewInventoryDisplayController.selectInventory(\'" + inventory.item_name + "\', true)");//swap this to the item's I.D. later.
+        btnInventory.onclick = function(){
+            viewInventoryDisplayController.selectInventory(inventory, true);
+        }
         btnInventory.setAttribute("class", "button");
         communalItemDiv.appendChild(btnInventory);
     });
@@ -98,22 +99,37 @@ ViewInventoryDisplayController.prototype.display = function () {
     div.appendChild(this.modal);
 }
 
-ViewInventoryDisplayController.prototype.selectInventory = function (inventoryName, isCommunal) {
+ViewInventoryDisplayController.prototype.selectInventory = function (inventory, isCommunal) {
 
-    this.selectedInventory = inventoryName;
+    this.selectedInventory = inventory;
     this.isCommunal = isCommunal;
 
     var div = document.getElementById("centralDiv");
 
-    this.modalContent.innerHTML = inventoryName + ":<br/>";
+    this.modalContent.innerHTML = inventory.item_name + ":<br/>";
     this.modalContent.innerHTML += "Description: {Item Description}.";
 
     this.modalContent.appendChild(document.createElement("br"));
 
-    this.modalContent.appendChild(this.modalUse);
+    if(inventory.is_location_item){
+        var span = document.createElement("span");
 
+        span.innerHTML = "This item must be used at:";
+
+        inventory.use_locations.forEach((location) => {
+            console.log("Locations to use at:");
+            console.log(location);
+        });
+
+        this.modalContent.appendChild(span);
+
+        this.modalContent.appendChild(document.createElement("br"));
+    } else {
+        this.modalContent.appendChild(this.modalUse);
+    }
     this.modalContent.appendChild(this.modalClose);
-    
+
+    console.log("GETTING HERE~!");
     this.modal.style.display = "block";
 
     //itemInteractionDisplayController.display();

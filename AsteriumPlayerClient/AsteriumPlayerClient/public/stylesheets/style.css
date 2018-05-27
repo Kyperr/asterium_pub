@@ -207,6 +207,7 @@
    text-align: center;
  }
 
+
 .modal{
   
     display: none; /* Hidden by default */
@@ -229,3 +230,70 @@
   border: 1px solid #888;
   width: 80%;
 }
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.button {
+  margin: 10px auto;
+  font-size: medium;
+  display:block;
+  width: 100%;
+
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+  font-size: 1.5em;
+  text-transform: uppercase;
+  padding: 7px 20px;
+  left: 50%;
+  top: 50%;
+  border-radius: 10px;
+  color: white;
+  text-shadow: -1px -1px 1px rgba(0,0,0,0.8);
+  border: 5px solid transparent;
+  border-bottom-color: rgba(0,0,0,0.35);
+  background: rgb(22, 0, 65);
+  cursor: pointer;
+outline: 0 !important;
+
+  animation: pulse 1s infinite alternate;
+  transition: background 0.4s, border 0.2s, margin 0.2s;
+}
+
+.button:hover {
+  background: hsla(220, 100%, 60%, 1);
+  animation: none;
+}
+
+.itemSpan {
+  margin: auto;
+  text-align: center;
+
+  font-size: 28px;
+  font-weight: bold;
+  padding: 10px;
+ }
