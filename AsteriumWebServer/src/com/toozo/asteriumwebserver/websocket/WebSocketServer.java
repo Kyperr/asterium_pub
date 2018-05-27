@@ -1,8 +1,6 @@
 package com.toozo.asteriumwebserver.websocket;
 
 import java.io.IOException;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -44,6 +42,7 @@ public class WebSocketServer {
 
 	@OnMessage
 	public void onMessage(Session session, String message) {
+		System.out.println(message);
 		Message parsedMessage = new Parser().parse(message);
 		try {
 

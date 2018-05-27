@@ -19,6 +19,7 @@ public class GeneralRequestData extends AbstractRequestActionData {
 	@Override
 	public JSONObject jsonify() {
 		JSONObject data = new JSONObject();
+		data.put(ActionData.ACTION_NAME, this.getName());
 		return data;
 	}
 	
@@ -31,6 +32,7 @@ public class GeneralRequestData extends AbstractRequestActionData {
 	 */
 	public static GeneralRequestData parseArgs(final JSONObject jsonObj) throws JSONException {
 		// Construct and return
+		System.out.println(jsonObj.toString());
 		String name = jsonObj.getString(ActionData.ACTION_NAME);
 		return new GeneralRequestData(name);
 
