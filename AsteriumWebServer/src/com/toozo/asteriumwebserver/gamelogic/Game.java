@@ -149,9 +149,8 @@ public class Game extends Thread {
 			if (!bool) {
 				return false;
 			}
-		}
-		
-		return playerReadyMap.isEmpty();
+		}		
+		return !playerReadyMap.isEmpty();
 	}
 	
 	public Runnable getTurnAction(String auth) {
