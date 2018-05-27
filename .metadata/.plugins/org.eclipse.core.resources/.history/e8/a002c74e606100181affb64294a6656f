@@ -33,7 +33,6 @@ import com.toozo.asteriumwebserver.gamelogic.items.equipment.HareyGlovesEquipmen
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.LettermanJacketEquipmentItem;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.HoverSkatesEquipmentItem;
 import com.toozo.asteriumwebserver.gamelogic.items.location.AbstractLocationItem;
-import com.toozo.asteriumwebserver.gamelogic.items.location.Book;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
 import actiondata.ActionData;

@@ -119,6 +119,7 @@ public class GameState {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 
 		probs.add(new ItemLoot(Book::new, 99, 0.0, 0.0));
+		
 		probs.add(new ItemLoot(RescueBeacon::new, 1, 0.0, 0.0));
 
 		LIBRARY_ITEM_LOOT = Collections.unmodifiableList(probs);

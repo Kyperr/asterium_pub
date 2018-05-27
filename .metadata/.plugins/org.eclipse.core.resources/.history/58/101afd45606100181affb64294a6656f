@@ -33,7 +33,6 @@ import com.toozo.asteriumwebserver.gamelogic.items.equipment.HareyGlovesEquipmen
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.LettermanJacketEquipmentItem;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.HoverSkatesEquipmentItem;
 import com.toozo.asteriumwebserver.gamelogic.items.location.AbstractLocationItem;
-import com.toozo.asteriumwebserver.gamelogic.items.location.Book;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
 import actiondata.ActionData;
@@ -118,8 +117,11 @@ public class GameState {
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 
-		probs.add(new ItemLoot(Book::new, 99, 0.0, 0.0));
-		probs.add(new ItemLoot(RescueBeacon::new, 1, 0.0, 0.0));
+		probs.add(new ItemLoot(TinfoilHatEquipmentItem::new, 24, 0.0, 0.0));
+		probs.add(new ItemLoot(HareyGlovesEquipmentItem::new, 24, 0.0, 0.0));
+		probs.add(new ItemLoot(HoverSkatesEquipmentItem::new, 24, 0.0, 0.0));
+		probs.add(new ItemLoot(LettermanJacketEquipmentItem::new, 24, 0.0, 0.0));
+		probs.add(new ItemLoot(RescueBeacon::new, 4, 0.0, 0.0));
 
 		LIBRARY_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}

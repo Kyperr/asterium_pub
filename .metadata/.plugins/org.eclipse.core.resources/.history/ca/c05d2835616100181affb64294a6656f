@@ -114,8 +114,7 @@ public class Book extends AbstractLocationItem {
 		// Determine number of Stats which should be in result based on weights
 		// distribution.
 		double random = RNG.nextDouble();
-		for (numberOfStats = 1; numberOfStats - 1 < weights.length && 
-								random > weights[numberOfStats - 1]; numberOfStats++);
+		for (numberOfStats = 1; random > weights[numberOfStats - 1]; numberOfStats++);
 
 		// Randomly return that many Stats
 		Collections.shuffle(result, RNG);
