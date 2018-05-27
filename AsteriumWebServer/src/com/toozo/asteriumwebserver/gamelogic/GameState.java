@@ -126,7 +126,7 @@ public class GameState {
 		home.addActivity(Activity.USE_LOCATION_ITEM, Activity.useLocationItemActivity);
 		locations.put("1", home);
 
-		Location med_bay = new Location("Med Bay", Location.LocationType.MED_BAY, MEDBAY_LOOT_POOL, 1);
+		Location med_bay = new Location("Med Bay", Location.LocationType.MED_BAY, MEDBAY_LOOT_POOL, 7);
 		med_bay.addActivity(Activity.SEARCH, Activity.searchActivity);
 		locations.put("2", med_bay);
 
