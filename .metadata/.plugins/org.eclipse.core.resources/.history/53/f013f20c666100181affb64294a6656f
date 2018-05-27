@@ -195,13 +195,9 @@ public class GameState {
 	private int food;
 	private int fuel;
 	private int day;
-	private boolean gameOver;
-	private boolean playersWon;
 	private Map<String, PlayerCharacter> authCharacterMap;
 	private Map<String, PlayerCharacter> nameCharacterMap;
-	// An ordered list of victory conditions, where the index is the tie-breaker priority.
-	// i.e. if victoryConditions = [A, B], A == true and B == true, B will take precedence.
-	private List<VictoryCondition> victoryConditions;
+	private Collection<VictoryCondition> victoryConditions;
 	private Inventory communalInventory;
 	// ===========================
 
@@ -281,8 +277,6 @@ public class GameState {
 			if (VERBOSE) {
 				System.out.println("Game complete. Displaying end summary...");
 			}
-			state.gameOver = true;
-			
 			state.setGamePhase(GamePhase.END_SUMMARY);
 		} else {
 			if (VERBOSE) {
@@ -395,7 +389,6 @@ public class GameState {
 		this.victoryConditions = new ArrayList<VictoryCondition>();
 		this.communalInventory = new Inventory();
 		this.day = 0;
-		this.playersWon = false;
 		this.gamePhase = GamePhase.PLAYERS_JOINING;
 		if (VERBOSE) {
 			System.out.println("Player join phase...");
@@ -432,14 +425,6 @@ public class GameState {
 
 	public PlayerCharacter getCharacterByName(final String name) {
 		return nameCharacterMap.get(name);
-	}
-	
-	public boolean gameOver() {
-		return this.gameOver;
-	}
-	
-	public boolean playersWon() {
-		return this.gameOver() && this.playersWon;
 	}
 
 	/**
@@ -541,14 +526,6 @@ public class GameState {
 	 */
 	public void setDay(final int newDay) {
 		this.day = newDay;
-	}
-	
-	public void setGameOver(boolean gameOver) {
-		this.gameOver = gameOver;
-	}
-	
-	public void setPlayersWon(boolean playersWon) {
-		this.playersWon = playersWon;
 	}
 	// ===================
 
@@ -738,14 +715,8 @@ public class GameState {
 			inventory.add(itemData);
 		}
 
-		SyncPlayerClientDataRequestData data = new SyncPlayerClientDataRequestData(getFood(), 
-																				   getFuel(), 
-																				   getDay(),
-																				   this.playersWon(),
-																				   loc,
-																				   dChar, 
-																				   characters, 
-																				   getGamePhase().toString(), inventory);
+		SyncPlayerClientDataRequestData data = new SyncPlayerClientDataRequestData(getFood(), getFuel(), getDay(), loc,
+				dChar, characters, getGamePhase().toString(), inventory);
 
 		return data;
 

@@ -26,10 +26,10 @@ import message.Request;
  */
 public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 
-	private int food = 0;
-	private int fuel = 0;
-	private int day = 0;
-	private boolean youWon = false;
+	private int food;
+	private int fuel;
+	private int day;
+	private boolean youWon;
 	private List<LocationData> locations;
 	private SyncPlayerClientDataRequestData.PlayerCharacterData yourCharacter;
 	private Collection<String> characterNames;
