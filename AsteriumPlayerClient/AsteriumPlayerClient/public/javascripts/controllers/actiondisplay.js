@@ -6,7 +6,6 @@
 function ActionDisplayController() {
     this.btnExplore = document.createElement("BUTTON");
     this.btnStay = document.createElement("BUTTON");
-    this.btnInventory = document.createElement("BUTTON");
     this.init();
 }
 
@@ -26,10 +25,6 @@ ActionDisplayController.prototype.init = function () {
 
     }
     this.btnStay.setAttribute("class", "button");
-
-    this.btnInventory.setAttribute("onClick", "viewInventoryDisplayController.display()");
-    this.btnInventory.setAttribute("class", "button");
-    this.btnInventory.innerHTML = "INVENTORY";
 }
 
 ActionDisplayController.prototype.display = function () {
@@ -41,7 +36,6 @@ ActionDisplayController.prototype.display = function () {
 
     div.appendChild(this.btnExplore);
     div.appendChild(this.btnStay);
-    div.appendChild(this.btnInventory);
 }
 
 //Static instance. USE THIS ONE!
