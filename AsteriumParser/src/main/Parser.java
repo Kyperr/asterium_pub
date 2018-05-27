@@ -12,7 +12,6 @@ import org.json.JSONObject;
 import actiondata.ActionData;
 import actiondata.CreateGameRequestData;
 import actiondata.CreateGameResponseData;
-import actiondata.GeneralRequestData;
 import actiondata.JoinAsGameBoardRequestData;
 import actiondata.JoinAsGameBoardResponseData;
 import actiondata.JoinAsPlayerRequestData;

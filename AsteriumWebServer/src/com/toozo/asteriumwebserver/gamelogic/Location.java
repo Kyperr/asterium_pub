@@ -33,8 +33,9 @@ public class Location {
 	
 	public enum LocationTier {
 		TIER_0(0, 0, 2), 
-		TIER_1(1, 4, 5), 
-		TIER_2(2, 7, 8);
+		TIER_1(1, 3, 4), 
+		TIER_2(2, 5, 6), 
+		TIER_3(3, 7, 10);
 		
 		private final int tier;		
 		private final int start;		
@@ -92,7 +93,7 @@ public class Location {
 	}
 	
 	public final int getCost() {
-		return this.position + this.tier.getTier();
+		return this.position + (2 * this.tier.getTier());
 	}
 	
 	public void addActivity(final String name, final Activity activity) {
