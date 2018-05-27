@@ -5,9 +5,7 @@
 <fullyQualifiedTypeName name="actiondata.DisplayBoardRequestData.PlayerData"/>
 <fullyQualifiedTypeName name="actiondata.DisplayBoardRequestData"/>
 <fullyQualifiedTypeName name="actiondata.DisplayBoardRequestData.LocationData"/>
-<fullyQualifiedTypeName name="java.util.function.Supplier"/>
 <fullyQualifiedTypeName name="java.util.function.BiConsumer"/>
-<fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.GameState"/>
 <fullyQualifiedTypeName name="java.util.HashSet"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
@@ -15,7 +13,6 @@
 <fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.items.Item"/>
 <fullyQualifiedTypeName name="java.util.Collection"/>
 <fullyQualifiedTypeName name="java.util.concurrent.ConcurrentHashMap"/>
-<fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.PlayerCharacter"/>
 <fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.items.equipment.AbstractEquipmentItem"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.items.equipment.Equipment"/>
@@ -30,9 +27,6 @@
 <fullyQualifiedTypeName name="message.Message"/>
 <fullyQualifiedTypeName name="java.util.Objects"/>
 <fullyQualifiedTypeName name="java.util.Map"/>
-<fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.Stat"/>
-<fullyQualifiedTypeName name="java.util.function.Function"/>
-<fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.PlayerCharacter.StatBlock"/>
 <fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodPack"/>
 <fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodCrate"/>
 <fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodChest"/>
@@ -40,4 +34,19 @@
 <fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.items.consumables.Medkit"/>
 <fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.items.consumables.Syringe"/>
 <fullyQualifiedTypeName name="java.util.Iterator"/>
+<fullyQualifiedTypeName name="java.util.function.Supplier"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.PlayerCharacter.StatBlock"/>
+<fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.Stat"/>
+<fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.items.ItemLoot"/>
+<fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.PlayerCharacter"/>
+<fullyQualifiedTypeName name="java.util.function.Function"/>
+<fullyQualifiedTypeName name="actiondata.SyncPlayerClientDataRequestData"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="java.util.Timer"/>
+<fullyQualifiedTypeName name="java.util.TimerTask"/>
+<fullyQualifiedTypeName name="com.toozo.asteriumwebserver.sessionmanager.SessionManager"/>
+<fullyQualifiedTypeName name="javax.websocket.Session"/>
+<fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.Location.LocationType"/>
+<fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.items.location.Book"/>
 </qualifiedTypeNameHistroy>

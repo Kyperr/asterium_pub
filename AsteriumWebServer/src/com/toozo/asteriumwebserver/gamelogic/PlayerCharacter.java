@@ -17,6 +17,7 @@ public class PlayerCharacter {
 	// ===== FIELDS =====
 	private String characterName;
 	private boolean isParasite;
+	private boolean isDiscovered;
 	private double exposure;
 	private StatBlock stats;
 	private Inventory inventory;
@@ -39,6 +40,7 @@ public class PlayerCharacter {
 	public PlayerCharacter(final String name) {
 		this.characterName = name;
 		this.isParasite = false;
+		this.isDiscovered = false;
 		this.exposure = 0.0;
 		this.stats = new StatBlock();
 		this.inventory = new Inventory();
@@ -129,6 +131,10 @@ public class PlayerCharacter {
 	public boolean isParasite() {
 		return this.isParasite;
 	}
+	
+	public boolean isDiscoveredParasite() {
+		return this.isParasite() && this.isDiscovered;
+	}
 
 	/**
 	 * @return This PlayerCharacter's infection percentage.
@@ -206,6 +212,15 @@ public class PlayerCharacter {
 		// Make the player a parasite if infection is at 100%.
 		if (this.exposure >= 1.0) {
 			this.makeParasite();
+		}
+	}
+	
+	/**
+	 * If this PlayerCharacter is a parasite, notes that they are discovered.
+	 */
+	public void discover() {
+		if (this.isParasite()) {
+			this.isDiscovered = true;
 		}
 	}
 	
