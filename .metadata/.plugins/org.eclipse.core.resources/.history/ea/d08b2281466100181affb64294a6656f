@@ -64,7 +64,6 @@ public class Location {
 		if (VERBOSE) {
 			System.out.printf("\tLocation says: %s performed in %s.\n", name, this.getName());
 		}
-		
 		activities.get(name).doActivity(game, character, this);
 	}
 	
@@ -72,7 +71,6 @@ public class Location {
 		if (VERBOSE) {
 			System.out.printf("\tLocation says: %s looted.\n", this.getName());
 		}
-		
 		return loot.loot(looter);
 	}
 }
