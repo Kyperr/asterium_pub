@@ -38,7 +38,7 @@ JoinLobbyDisplayController.prototype.display = function () {
 
     var joinDiv = document.createElement("div");
     joinDiv.setAttribute("class", "leading");
-    joinDiv.innerHTML = "Join A lobby";
+    joinDiv.innerHTML = "Join A Lobby";
     div.appendChild(joinDiv);
     
     div.appendChild(document.createElement("br"));

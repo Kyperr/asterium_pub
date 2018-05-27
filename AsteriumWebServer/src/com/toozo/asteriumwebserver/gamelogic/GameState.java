@@ -27,9 +27,13 @@ import com.toozo.asteriumwebserver.gamelogic.items.consumables.RescueBeacon;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.Syringe;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.AbstractEquipmentItem;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.EquipmentSlot;
+import com.toozo.asteriumwebserver.gamelogic.items.equipment.HareyGlovesEquipmentItem;
+import com.toozo.asteriumwebserver.gamelogic.items.equipment.HoverSkatesEquipmentItem;
+import com.toozo.asteriumwebserver.gamelogic.items.equipment.LettermanJacketEquipmentItem;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.Loadout;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.TinfoilHatEquipmentItem;
 import com.toozo.asteriumwebserver.gamelogic.items.location.AbstractLocationItem;
+import com.toozo.asteriumwebserver.gamelogic.items.location.Book;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
 import actiondata.ActionData;
@@ -47,22 +51,34 @@ import message.Request;
 public class GameState {
 	// ===== CONSTANTS & ENUMS =====
 	public static final int STARTING_FOOD_PER_PLAYER = 5;
+	public static final int FOOD_DECREMENT_PER_PLAYER = 1;
 	public static final int STARTING_FUEL = 100;
+	public static final int FUEL_DECREMENT = 10;
 	public static final int STARTING_DAY = 0;
 
 	public static final boolean VERBOSE = true;
 
 	// LOOT POOLS
+	// Control Room
+	public static final List<ItemLoot> CONTROL_ROOM_ITEM_LOOT;
+	static {
+		List<ItemLoot> probs = new ArrayList<ItemLoot>();
+		
+		probs.add(new ItemLoot(RescueBeacon::new, 100, 0.0, 0.0));
+
+		CONTROL_ROOM_ITEM_LOOT = Collections.unmodifiableList(probs);
+	}
+	public static final LootPool CONTROL_ROOM_LOOT_POOL = new LootPool(CONTROL_ROOM_ITEM_LOOT);
+	
 	// Medbay
 	public static final List<ItemLoot> MEDBAY_ITEM_LOOT;
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 
-		probs.add(new ItemLoot(Bandage::new, 40, 0.0, 0.0));
-		probs.add(new ItemLoot(Medkit::new, 20, 0.0, 0.0));
-		probs.add(new ItemLoot(Syringe::new, 5, 0.0, 0.0));
-		probs.add(new ItemLoot(TinfoilHatEquipmentItem::new, 25, 0.0, 0.0));
-		probs.add(new ItemLoot(RescueBeacon::new, 10, 0.0, 0.0));
+		probs.add(new ItemLoot(Bandage::new, 60, 0.0, 0.0));
+		probs.add(new ItemLoot(Medkit::new, 30, 0.0, 0.0));
+		probs.add(new ItemLoot(Syringe::new, 9, 0.0, 0.0));
+		probs.add(new ItemLoot(RescueBeacon::new, 1, 0.0, 0.0));
 
 		MEDBAY_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
@@ -73,14 +89,41 @@ public class GameState {
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 
-		probs.add(new ItemLoot(FoodPack::new, 40, 0.0, 0.0));
-		probs.add(new ItemLoot(FoodCrate::new, 20, 0.0, 0.0));
-		probs.add(new ItemLoot(FoodChest::new, 5, 0.0, 0.0));
-		probs.add(new ItemLoot(RescueBeacon::new, 10, 0.0, 0.0));
+		probs.add(new ItemLoot(FoodPack::new, 60, 0.0, 0.0));
+		probs.add(new ItemLoot(FoodCrate::new, 30, 0.0, 0.0));
+		probs.add(new ItemLoot(FoodChest::new, 9, 0.0, 0.0));
+		probs.add(new ItemLoot(RescueBeacon::new, 1, 0.0, 0.0));
 
 		CAFETERIA_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
 	public static final LootPool CAFETERIA_LOOT_POOL = new LootPool(CAFETERIA_ITEM_LOOT);
+	
+	// Armory
+	public static final List<ItemLoot> ARMORY_ITEM_LOOT;
+	static {
+		List<ItemLoot> probs = new ArrayList<ItemLoot>();
+
+		probs.add(new ItemLoot(TinfoilHatEquipmentItem::new, 24, 0.0, 0.0));
+		probs.add(new ItemLoot(HareyGlovesEquipmentItem::new, 24, 0.0, 0.0));
+		probs.add(new ItemLoot(HoverSkatesEquipmentItem::new, 24, 0.0, 0.0));
+		probs.add(new ItemLoot(LettermanJacketEquipmentItem::new, 24, 0.0, 0.0));
+		probs.add(new ItemLoot(RescueBeacon::new, 4, 0.0, 0.0));
+
+		ARMORY_ITEM_LOOT = Collections.unmodifiableList(probs);
+	}
+	public static final LootPool ARMORY_LOOT_POOL = new LootPool(ARMORY_ITEM_LOOT);
+	
+	// Library
+	public static final List<ItemLoot> LIBRARY_ITEM_LOOT;
+	static {
+		List<ItemLoot> probs = new ArrayList<ItemLoot>();
+
+		probs.add(new ItemLoot(Book::new, 99, 0.0, 0.0));
+		probs.add(new ItemLoot(RescueBeacon::new, 1, 0.0, 0.0));
+
+		LIBRARY_ITEM_LOOT = Collections.unmodifiableList(probs);
+	}
+	public static final LootPool LIBRARY_LOOT_POOL = new LootPool(LIBRARY_ITEM_LOOT);
 
 	public enum GamePhase {
 
@@ -121,7 +164,7 @@ public class GameState {
 	// Initialize the locations
 	{
 		// Make a new location
-		Location home = new Location("Control Room", Location.LocationType.CONTROL_ROOM, MEDBAY_LOOT_POOL, 0);
+		Location home = new Location("Control Room", Location.LocationType.CONTROL_ROOM, CONTROL_ROOM_LOOT_POOL, 0);
 		home.addActivity(Activity.REST, Activity.restActivity);
 		home.addActivity(Activity.USE_LOCATION_ITEM, Activity.useLocationItemActivity);
 		locations.put("1", home);
@@ -133,6 +176,15 @@ public class GameState {
 		Location cafeteria = new Location("Cafeteria", Location.LocationType.MESS_HALL, CAFETERIA_LOOT_POOL, 2);
 		cafeteria.addActivity(Activity.SEARCH, Activity.searchActivity);
 		locations.put("3", cafeteria);
+		
+		Location library = new Location("Library", Location.LocationType.LIBRARY, LIBRARY_LOOT_POOL, 3);
+		library.addActivity(Activity.SEARCH, Activity.searchActivity);
+		locations.put("4", library);
+		
+		Location armory = new Location("Armory", Location.LocationType.ARMORY, ARMORY_LOOT_POOL, 4);
+		armory.addActivity(Activity.SEARCH, Activity.searchActivity);
+		locations.put("5", armory);
+		
 	};
 	// =========================
 
@@ -177,7 +229,8 @@ public class GameState {
 		state.food = STARTING_FOOD_PER_PLAYER * state.game.getPlayers().size();
 		state.fuel = STARTING_FUEL;
 		state.day = STARTING_DAY;
-		state.addVictoryCondition(new VictoryCondition(VictoryCondition::getBeaconProgress));
+		state.addVictoryCondition(new VictoryCondition(VictoryCondition::getBeaconProgress, false));
+		state.addVictoryCondition(new VictoryCondition(VictoryCondition::getFuelProgress, true));
 
 		if (VERBOSE) {
 			System.out.println("Game initialized. Starting game...");
@@ -193,7 +246,6 @@ public class GameState {
 		try {
 			syncGameBoards(state);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -217,6 +269,9 @@ public class GameState {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		state.setFood(state.getFood() - (FOOD_DECREMENT_PER_PLAYER * state.game.getPlayers().size()));
+		state.setFuel(state.getFuel() - FUEL_DECREMENT);
 
 		if (state.getCompleteVictoryConditions().size() >= 1) {
 			if (VERBOSE) {

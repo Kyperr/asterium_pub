@@ -65,6 +65,10 @@ public final class SessionManager {
 		sessions.put(authToken, session);
 		return authToken;
 	}
+	
+	public void removeSession(String authToken) {
+		sessions.remove(authToken);
+	}
 
 	/**
 	 * Generates an auth token for this session.

@@ -12,12 +12,14 @@ import org.json.JSONObject;
 import actiondata.ActionData;
 import actiondata.CreateGameRequestData;
 import actiondata.CreateGameResponseData;
+import actiondata.GeneralRequestData;
 import actiondata.JoinAsGameBoardRequestData;
 import actiondata.JoinAsGameBoardResponseData;
 import actiondata.JoinAsPlayerRequestData;
 import actiondata.JoinAsPlayerResponseData;
 import actiondata.QueryIsInGameRequestData;
 import actiondata.QueryIsInGameResponseData;
+import actiondata.SetReadyStatusRequestData;
 import actiondata.SyncGameBoardDataRequestData;
 import actiondata.SyncPlayerListRequestData;
 import actiondata.ToggleReadyUpRequestData;
@@ -54,6 +56,8 @@ public class Parser {
 
 		put(Arrays.asList(true, ActionData.TOGGLE_READY_UP), ToggleReadyUpRequestData::parseArgs);
 		put(Arrays.asList(false, ActionData.TOGGLE_READY_UP), ToggleReadyUpResponseData::parseArgs);
+		
+		put(Arrays.asList(true, ActionData.SET_READY_STATUS), SetReadyStatusRequestData::parseArgs);
 		
 		put(Arrays.asList(true, ActionData.TURN_ACTION), TurnRequestData::parseArgs);
 

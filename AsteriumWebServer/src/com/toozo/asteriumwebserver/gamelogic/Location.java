@@ -16,7 +16,9 @@ public class Location {
 		CONTROL_ROOM("control_room"),
 		MED_BAY("med_bay"), 
 		MESS_HALL("mess_hall"), 
-		RESIDENTAIL("residential");
+		RESIDENTAIL("residential"),
+		ARMORY("armory"),
+		LIBRARY("library");
 		
 		private final String jsonVersion;
 		
