@@ -1,5 +1,7 @@
 package com.toozo.asterium.controllers;
 
+import java.net.URISyntaxException;
+
 import javax.resource.spi.IllegalStateException;
 
 import actiondata.SyncData.LocationData;
@@ -9,33 +11,58 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 
 public class MapController extends AbstractAsteriumController {
 
 	private Node locationList;
+	
+	private Image image;
+	private ImageView imageView;
 
 	@FXML
 	private BorderPane mapInfoBorderPane;
 	
 	@FXML
 	private Label foodLabel;
-
+	
 	@FXML
-	private ScrollPane mapScrollPane;
+	private StackPane mapStackPane;
 
 	@Override
 	protected void setup() {
+		try {
+			image = new Image(
+					getClass().getResource("/com/toozo/asterium/resources/map.jpg").toURI().toString());
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		imageView = new ImageView(image);
+		mapStackPane.getChildren().add(imageView);
+		
+	}
+	
+	public MapController() {
+		
 	}
 	
 	public void update() {
+		
 		try {
 			
 			foodLabel.setText("Food storage: [" + getGameResources().getFood() + "]");
 			
-			GridPane gridPane = new GridPane();
-			gridPane.setStyle("-fx-background-color: rgba(255, 255, 255, 0.0);");
+			/*
 			int i = 0;
 			for (LocationData loc : getGameResources().getLocations()) {
 				Label locLabel = new Label(loc.getName() + "(" + loc.getType().toString() + ")");
@@ -44,11 +71,16 @@ public class MapController extends AbstractAsteriumController {
 				gridPane.setPadding(new Insets(5,2,5,2));
 				i++;
 			}
-
-			mapScrollPane.setContent(gridPane);
+			*/
+			
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		drawLocations();
+	}
+	
+	private void drawLocations() {
+		
 	}
 }

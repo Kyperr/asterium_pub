@@ -43,6 +43,10 @@ public class SyncData {
 		public String getName() {
 			return this.name;
 		}
+		
+		public Integer getPosition() {
+			return Integer.valueOf(this.mapLocation);
+		}
 
 		public LocationType getType() {
 			return this.type;

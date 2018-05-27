@@ -17,9 +17,7 @@
 		</BorderPane>
 	</top>
 	<center>
-		<ScrollPane fx:id="mapScrollPane" >
-		<VBox fx:id="mapVBox"/>
-		</ScrollPane>
+		<StackPane fx:id="mapStackPane" />
 	</center>
 
 </BorderPane>

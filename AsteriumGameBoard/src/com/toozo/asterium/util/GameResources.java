@@ -1,7 +1,9 @@
 package com.toozo.asterium.util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.toozo.asterium.controllers.GameSummaryController;
 import com.toozo.asterium.controllers.MapController;
@@ -47,6 +49,8 @@ public final class GameResources {
 	private Integer food = 0;
 	
 	private Integer fuel = 0;
+	
+	private Map<Integer, String> locationMap = new HashMap<Integer, String>();
 	
 	private List<PlayerData> players = new ArrayList<PlayerData>();
 	
@@ -144,6 +148,7 @@ public final class GameResources {
 					 fuel = data.getFuel();
 					 victoryConditions = (List<VictoryData>) data.getVictoryConditions();
 					 locations = (List<LocationData>) data.getLocations();
+					 putMapLocations();
 					 communalInventory = (List<ItemData>) data.getCommunalInventory();
 					 characters = (List<PlayerCharacterData>) data.getPlayers();
 					 
@@ -186,4 +191,20 @@ public final class GameResources {
 		
 	}
 	
+	/**
+	 * Map locations to positions based on sync data
+	 */
+	private void putMapLocations() {
+		// Clear previous locations
+		locationMap.clear();
+		
+		// Map each location
+		for (LocationData loc : locations) {
+			locationMap.put(loc.getPosition(), loc.getName());
+		}
+		
+		// Update map?
+		MapController map = nodeNavigator.getController(Display.MAP);
+		map.update();
+	}
 }
