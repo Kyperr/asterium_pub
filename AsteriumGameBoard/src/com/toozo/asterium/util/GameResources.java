@@ -10,9 +10,9 @@ import com.toozo.asterium.controllers.TurnSummaryController;
 import com.toozo.asterium.util.NodeNavigator.Display;
 
 import actiondata.ActionData;
+import actiondata.SyncData.ItemData;
+import actiondata.SyncData.LocationData;
 import actiondata.SyncGameBoardDataRequestData;
-import actiondata.SyncGameBoardDataRequestData.ItemData;
-import actiondata.SyncGameBoardDataRequestData.LocationData;
 import actiondata.SyncGameBoardDataRequestData.PlayerCharacterData;
 import actiondata.SyncGameBoardDataRequestData.VictoryData;
 import actiondata.SyncPlayerListRequestData;
@@ -75,7 +75,7 @@ public final class GameResources {
 	}
 
 	public void setAuthToken(String authToken) {
-		authToken = authToken;
+		this.authToken = authToken;
 	}
 	
 	public String getAuthToken() {

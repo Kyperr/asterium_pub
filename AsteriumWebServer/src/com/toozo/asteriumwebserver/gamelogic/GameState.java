@@ -37,6 +37,7 @@ import com.toozo.asteriumwebserver.gamelogic.items.location.Book;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
 import actiondata.ActionData;
+import actiondata.SyncData;
 import actiondata.SyncGameBoardDataRequestData;
 import actiondata.SyncPlayerClientDataRequestData;
 import actiondata.SyncPlayerListRequestData;
@@ -235,6 +236,7 @@ public class GameState {
 		state.day = STARTING_DAY;
 		state.addVictoryCondition(new VictoryCondition(VictoryCondition::getBeaconProgress, false));
 		state.addVictoryCondition(new VictoryCondition(VictoryCondition::getFuelProgress, true));
+		state.addVictoryCondition(new VictoryCondition(VictoryCondition::isParasiteUndiscovered, true));
 
 		if (VERBOSE) {
 			System.out.println("Game initialized. Starting game...");
@@ -320,15 +322,15 @@ public class GameState {
 		int day = state.getDay();
 
 		// Construct collection of LocationData
-		List<SyncGameBoardDataRequestData.LocationData> loc = new ArrayList<SyncGameBoardDataRequestData.LocationData>();
+		List<SyncData.LocationData> loc = new ArrayList<SyncData.LocationData>();
 
 		for (String s : state.getMapLocations()) {
 			Location l = state.getAtMapLocation(s);
 			// if(l.distance <= player.stamina)//pseudocode
-			SyncGameBoardDataRequestData.LocationData.LocationType type = SyncGameBoardDataRequestData.LocationData.LocationType
+			SyncData.LocationData.LocationType type = SyncData.LocationData.LocationType
 					.valueOf(l.getType().toString());
 
-			SyncGameBoardDataRequestData.LocationData locData = new SyncGameBoardDataRequestData.LocationData(s,
+			SyncData.LocationData locData = new SyncData.LocationData(s,
 					l.getName(), type, l.getActivityNames());
 
 			loc.add(locData);
@@ -353,21 +355,21 @@ public class GameState {
 		}
 
 		// Get communal inventory data
-		Collection<SyncGameBoardDataRequestData.ItemData> itemDatas = new ArrayList<SyncGameBoardDataRequestData.ItemData>();
-		SyncGameBoardDataRequestData.ItemData itemData;
+		Collection<SyncData.ItemData> itemDatas = new ArrayList<SyncData.ItemData>();
+		SyncData.ItemData itemData;
 		boolean isLocationItem;
-		Collection<SyncGameBoardDataRequestData.LocationData.LocationType> useLocations = new ArrayList<SyncGameBoardDataRequestData.LocationData.LocationType>();
+		Collection<SyncData.LocationData.LocationType> useLocations = new ArrayList<SyncData.LocationData.LocationType>();
 		for (final AbstractItem item : state.getCommunalInventory()) {
 			isLocationItem = item.getIsLocationItem();
 			if (isLocationItem) {
 				AbstractLocationItem loc_item = AbstractLocationItem.class.cast(item);
 				for (LocationType locType : loc_item.getUseLocations()) {
 					useLocations
-							.add(SyncGameBoardDataRequestData.LocationData.LocationType.valueOf(locType.toString()));
+							.add(SyncData.LocationData.LocationType.valueOf(locType.toString()));
 				}
 			}
 
-			itemData = new SyncGameBoardDataRequestData.ItemData(item.getName(), item.getDescription(),
+			itemData = new SyncData.ItemData(item.getName(), item.getDescription(),
 					item.getFlavorText(), item.getImagePath(), isLocationItem, useLocations);
 			itemDatas.add(itemData);
 		}
@@ -650,7 +652,7 @@ public class GameState {
 	}
 
 	public SyncPlayerClientDataRequestData createSyncPlayerClientDataRequestData(Player player) {
-		List<SyncPlayerClientDataRequestData.LocationData> loc = new ArrayList<SyncPlayerClientDataRequestData.LocationData>();
+		List<SyncData.LocationData> loc = new ArrayList<SyncData.LocationData>();
 
 		PlayerCharacter tpc = getCharacter(player.getAuthToken());
 
@@ -658,10 +660,10 @@ public class GameState {
 			Location l = getAtMapLocation(s);
 			// if the character's stamina allows them to access this location
 			if (l.getCost() <= tpc.getEffectiveStats().getStat(Stat.STAMINA)) {
-				SyncPlayerClientDataRequestData.LocationData.LocationType type = SyncPlayerClientDataRequestData.LocationData.LocationType
+				SyncData.LocationData.LocationType type = SyncData.LocationData.LocationType
 						.valueOf(l.getType().toString());
 
-				SyncPlayerClientDataRequestData.LocationData locData = new SyncPlayerClientDataRequestData.LocationData(
+				SyncData.LocationData locData = new SyncData.LocationData(
 						s, l.getName(), type, l.getActivityNames());
 
 				loc.add(locData);
@@ -681,25 +683,25 @@ public class GameState {
 				pChar.getEffectiveStats().getStat(Stat.HEALTH), pChar.getEffectiveStats().getStat(Stat.STAMINA),
 				pChar.getEffectiveStats().getStat(Stat.LUCK), pChar.getEffectiveStats().getStat(Stat.INTUITION));
 
-		List<SyncPlayerClientDataRequestData.ItemData> personalInv = new ArrayList<SyncPlayerClientDataRequestData.ItemData>();
+		List<SyncData.ItemData> personalInv = new ArrayList<SyncData.ItemData>();
 		boolean isLocationItem;
-		Collection<SyncPlayerClientDataRequestData.LocationData.LocationType> useLocations = new ArrayList<SyncPlayerClientDataRequestData.LocationData.LocationType>();
+		Collection<SyncData.LocationData.LocationType> useLocations = new ArrayList<SyncData.LocationData.LocationType>();
 		for (AbstractItem item : pChar.getInventory()) {
 			isLocationItem = item.getIsLocationItem();
 			if (isLocationItem) {
 				AbstractLocationItem loc_item = AbstractLocationItem.class.cast(item);
 				for (LocationType locType : loc_item.getUseLocations()) {
 					useLocations
-							.add(SyncPlayerClientDataRequestData.LocationData.LocationType.valueOf(locType.toString()));
+							.add(SyncData.LocationData.LocationType.valueOf(locType.toString()));
 				}
 			}
-			SyncPlayerClientDataRequestData.ItemData itemData = new SyncPlayerClientDataRequestData.ItemData(
+			SyncData.ItemData itemData = new SyncData.ItemData(
 					item.getName(), item.getDescription(), item.getFlavorText(), item.getImagePath(), isLocationItem,
 					useLocations);
 			personalInv.add(itemData);
 		}
 
-		Map<SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType, SyncPlayerClientDataRequestData.ItemData> equipment = new HashMap<SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType, SyncPlayerClientDataRequestData.ItemData>();
+		Map<SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType, SyncData.ItemData> equipment = new HashMap<SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType, SyncData.ItemData>();
 		Loadout load = pChar.getEquipment();
 		useLocations.clear();
 		for (EquipmentSlot slot : EquipmentSlot.values()) {
@@ -707,7 +709,7 @@ public class GameState {
 				SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType type = SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType
 						.valueOf(slot.toString());
 				AbstractEquipmentItem equipmentItem = load.itemIn(slot);
-				SyncPlayerClientDataRequestData.ItemData item = new SyncPlayerClientDataRequestData.ItemData(
+				SyncData.ItemData item = new SyncData.ItemData(
 						equipmentItem.getName(), equipmentItem.getDescription(), equipmentItem.getFlavorText(),
 						equipmentItem.getImagePath(), false, useLocations);
 				equipment.put(type, item);
@@ -721,7 +723,7 @@ public class GameState {
 				pChar.getCharacterName(), pChar.isParasite(), stat, personalInv, loadout, game.turnTaken(player),
 				game.getPlayerIsReady(auth));
 
-		List<SyncPlayerClientDataRequestData.ItemData> inventory = new ArrayList<SyncPlayerClientDataRequestData.ItemData>();
+		List<SyncData.ItemData> inventory = new ArrayList<SyncData.ItemData>();
 		useLocations.clear();
 		for (AbstractItem item : getCommunalInventory()) {
 			isLocationItem = item.getIsLocationItem();
@@ -729,10 +731,10 @@ public class GameState {
 				AbstractLocationItem loc_item = AbstractLocationItem.class.cast(item);
 				for (LocationType locType : loc_item.getUseLocations()) {
 					useLocations
-							.add(SyncPlayerClientDataRequestData.LocationData.LocationType.valueOf(locType.toString()));
+							.add(SyncData.LocationData.LocationType.valueOf(locType.toString()));
 				}
 			}
-			SyncPlayerClientDataRequestData.ItemData itemData = new SyncPlayerClientDataRequestData.ItemData(
+			SyncData.ItemData itemData = new SyncData.ItemData(
 					item.getName(), item.getDescription(), item.getFlavorText(), item.getImagePath(), isLocationItem,
 					useLocations);
 			inventory.add(itemData);

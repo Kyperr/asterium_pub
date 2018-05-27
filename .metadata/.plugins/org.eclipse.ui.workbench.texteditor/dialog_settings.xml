@@ -2,12 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="super" key="selection"/>
+		<item value="RESOLVE" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="resolve"/>
+			<item value="CONTROL_ROOM(&quot;control_room&quot;), MED_BAY(&quot;med_bay&quot;), MESS_HALL(&quot;mess_hall&quot;), RESIDENTAIL(&quot;residential&quot;);"/>
+			<item value="isNo"/>
+			<item value="print"/>
+			<item value="add"/>
+			<item value="dd"/>
+			<item value="println"/>
+			<item value="verbose"/>
 			<item value="super"/>
 			<item value="runnable"/>
 			<item value="doActivity"/>

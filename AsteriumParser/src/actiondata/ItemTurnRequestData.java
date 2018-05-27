@@ -35,7 +35,7 @@ public class ItemTurnRequestData extends AbstractRequestActionData {
 	public JSONObject jsonify() {
 		JSONObject data = new JSONObject();
 
-		data.put(ActionData.LOCATION, this.locationID);
+		data.put(ActionData.MAP_LOCATION, this.locationID);
 
 		data.put(ActionData.ITEM_NAME, this.itemName);
 
@@ -52,7 +52,7 @@ public class ItemTurnRequestData extends AbstractRequestActionData {
 	public static ItemTurnRequestData parseArgs(final JSONObject jsonObj) throws JSONException {
 
 		// Get Location object
-		String roomID = jsonObj.getString(ActionData.LOCATION_ID);
+		String roomID = jsonObj.getString(ActionData.MAP_LOCATION);
 
 		// Get activity name
 		String itemName = jsonObj.getString(ActionData.ITEM_NAME);
