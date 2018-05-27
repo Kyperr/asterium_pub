@@ -53,35 +53,35 @@ public class GameState {
 	public static final boolean VERBOSE = true;
 
 	// LOOT POOLS
-	// 		Medbay
+	// Medbay
 	public static final List<ItemLoot> MEDBAY_ITEM_LOOT;
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
-		
+
 		probs.add(new ItemLoot(Bandage::new, 40, 0.0, 0.0));
 		probs.add(new ItemLoot(Medkit::new, 20, 0.0, 0.0));
 		probs.add(new ItemLoot(Syringe::new, 5, 0.0, 0.0));
 		probs.add(new ItemLoot(TinfoilHatEquipmentItem::new, 25, 0.0, 0.0));
 		probs.add(new ItemLoot(RescueBeacon::new, 10, 0.0, 0.0));
-		
+
 		MEDBAY_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
 	public static final LootPool MEDBAY_LOOT_POOL = new LootPool(MEDBAY_ITEM_LOOT);
-	
-	//		Mess Hall
+
+	// Mess Hall
 	public static final List<ItemLoot> CAFETERIA_ITEM_LOOT;
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
-	
+
 		probs.add(new ItemLoot(FoodPack::new, 40, 0.0, 0.0));
 		probs.add(new ItemLoot(FoodCrate::new, 20, 0.0, 0.0));
 		probs.add(new ItemLoot(FoodChest::new, 5, 0.0, 0.0));
 		probs.add(new ItemLoot(RescueBeacon::new, 10, 0.0, 0.0));
-		
+
 		CAFETERIA_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
 	public static final LootPool CAFETERIA_LOOT_POOL = new LootPool(CAFETERIA_ITEM_LOOT);
-	
+
 	public enum GamePhase {
 
 		PLAYERS_JOINING(GameState::playerJoining),
@@ -121,16 +121,16 @@ public class GameState {
 	// Initialize the locations
 	{
 		// Make a new location
-		Location home = new Location("Control Room", Location.LocationType.CONTROL_ROOM, MEDBAY_LOOT_POOL);
+		Location home = new Location("Control Room", Location.LocationType.CONTROL_ROOM, MEDBAY_LOOT_POOL, 0);
 		home.addActivity(Activity.REST, Activity.restActivity);
 		home.addActivity(Activity.USE_LOCATION_ITEM, Activity.useLocationItemActivity);
 		locations.put("1", home);
 
-		Location med_bay = new Location("Med Bay", Location.LocationType.MED_BAY, MEDBAY_LOOT_POOL);
+		Location med_bay = new Location("Med Bay", Location.LocationType.MED_BAY, MEDBAY_LOOT_POOL, 1);
 		med_bay.addActivity(Activity.SEARCH, Activity.searchActivity);
 		locations.put("2", med_bay);
 
-		Location cafeteria = new Location("Cafeteria", Location.LocationType.MESS_HALL, CAFETERIA_LOOT_POOL);
+		Location cafeteria = new Location("Cafeteria", Location.LocationType.MESS_HALL, CAFETERIA_LOOT_POOL, 2);
 		cafeteria.addActivity(Activity.SEARCH, Activity.searchActivity);
 		locations.put("3", cafeteria);
 	};
@@ -574,16 +574,20 @@ public class GameState {
 	public SyncPlayerClientDataRequestData createSyncPlayerClientDataRequestData(Player player) {
 		List<SyncPlayerClientDataRequestData.LocationData> loc = new ArrayList<SyncPlayerClientDataRequestData.LocationData>();
 
+		PlayerCharacter tpc = getCharacter(player.getAuthToken());
+
 		for (String s : getMapLocations()) {
 			Location l = getAtMapLocation(s);
-			// if(l.distance <= player.stamina)//pseudocode
-			SyncPlayerClientDataRequestData.LocationData.LocationType type = SyncPlayerClientDataRequestData.LocationData.LocationType
-					.valueOf(l.getType().toString());
+			// if the character's stamina allows them to access this location
+			if (l.getCost() <= tpc.getEffectiveStats().getStat(Stat.STAMINA)) {
+				SyncPlayerClientDataRequestData.LocationData.LocationType type = SyncPlayerClientDataRequestData.LocationData.LocationType
+						.valueOf(l.getType().toString());
 
-			SyncPlayerClientDataRequestData.LocationData locData = new SyncPlayerClientDataRequestData.LocationData(s,
-					l.getName(), type, l.getActivityNames());
+				SyncPlayerClientDataRequestData.LocationData locData = new SyncPlayerClientDataRequestData.LocationData(
+						s, l.getName(), type, l.getActivityNames());
 
-			loc.add(locData);
+				loc.add(locData);
+			}
 		}
 
 		String auth = player.getAuthToken();
