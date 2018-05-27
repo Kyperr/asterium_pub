@@ -10,7 +10,7 @@ import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
 import com.toozo.asteriumwebserver.gamelogic.items.LootPool;
 
 public class Location {
-	public static final boolean VERBOSE = false;
+	public static final boolean VERBOSE = true;
 
 	public enum LocationType {
 		CONTROL_ROOM("control_room"),
