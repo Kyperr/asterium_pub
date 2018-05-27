@@ -48,7 +48,7 @@ public class JoinAsPlayerAction extends RequestAction {
 	public JoinAsPlayerAction(final String lobbyID, final String authToken,
 			final JoinAsPlayerRequestData.PlayerData playerData, final UUID messageID) {
 		super(Action.JOIN_AS_PLAYER, authToken, messageID);
-		this.lobby_id = lobbyID;
+		this.lobby_id = lobbyID.toUpperCase();
 		this.playerData = playerData;
 	}
 

@@ -47,7 +47,9 @@ import message.Request;
 public class GameState {
 	// ===== CONSTANTS & ENUMS =====
 	public static final int STARTING_FOOD_PER_PLAYER = 5;
+	public static final int FOOD_DECREMENT_PER_PLAYER = 1;
 	public static final int STARTING_FUEL = 100;
+	public static final int FUEL_DECREMENT = 10;
 	public static final int STARTING_DAY = 0;
 
 	public static final boolean VERBOSE = true;
@@ -177,7 +179,8 @@ public class GameState {
 		state.food = STARTING_FOOD_PER_PLAYER * state.game.getPlayers().size();
 		state.fuel = STARTING_FUEL;
 		state.day = STARTING_DAY;
-		state.addVictoryCondition(new VictoryCondition(VictoryCondition::getBeaconProgress));
+		state.addVictoryCondition(new VictoryCondition(VictoryCondition::getBeaconProgress, false));
+		state.addVictoryCondition(new VictoryCondition(VictoryCondition::getFuelProgress, true));
 
 		if (VERBOSE) {
 			System.out.println("Game initialized. Starting game...");
@@ -193,7 +196,6 @@ public class GameState {
 		try {
 			syncGameBoards(state);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -217,6 +219,9 @@ public class GameState {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		state.setFood(state.getFood() - (FOOD_DECREMENT_PER_PLAYER * state.game.getPlayers().size()));
+		state.setFuel(state.getFuel() - FUEL_DECREMENT);
 
 		if (state.getCompleteVictoryConditions().size() >= 1) {
 			if (VERBOSE) {

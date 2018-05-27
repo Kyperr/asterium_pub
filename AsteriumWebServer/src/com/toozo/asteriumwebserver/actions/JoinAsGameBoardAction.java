@@ -40,7 +40,7 @@ public class JoinAsGameBoardAction extends RequestAction {
 	public JoinAsGameBoardAction(final String authToken, final String lobbyID,
 			final JoinAsGameBoardRequestData.GameBoardData gameBoardData, final UUID messageID) {
 		super(Action.JOIN_AS_GAMEBOARD, authToken, messageID);
-		this.lobby_id = lobbyID;
+		this.lobby_id = lobbyID.toUpperCase();
 		this.gameBoardData = gameBoardData;
 	}
 

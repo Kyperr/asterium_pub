@@ -46,6 +46,7 @@ public class AllocateStatsAction extends RequestAction {
 			PlayerCharacter character = state.getCharacter(auth);
 			StatBlock stats = new StatBlock(this.stamina, this.luck, this.intuition);
 			character.setStats(stats);
+			state.syncGameBoardsPlayerList();
 
 			if (Action.VERBOSE) {
 				System.out.printf("Player %s allocated stats: [Stamina: %d, Luck: %d, Intuition: %d]\n",

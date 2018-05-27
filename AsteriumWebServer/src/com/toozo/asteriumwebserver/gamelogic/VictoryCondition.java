@@ -33,11 +33,25 @@ public class VictoryCondition {
 		
 		return 0.0;
 	}
+	
+	/**
+	 * Function to determine if the fuel has run out.
+	 * @param state The current {@link GameState}.
+	 * @return COMPLETE_THRESHOLD if there is, 0.0 if there isn't.
+	 */
+	public static final double getFuelProgress(GameState state) {
+		if (state.getFuel() <= 0) {
+			return COMPLETE_THRESHOLD;
+		} else {
+			return 0.0;
+		}
+	}
 	// =====================
 	
 	// ===== FIELDS =====
 	private String name;
 	private boolean active;
+	private boolean forParasite;
 	
 	/*
 	 * A {@link Function} which takes a GameState and 
@@ -53,10 +67,11 @@ public class VictoryCondition {
 	 * @param name The name of this action.
 
 	 */
-	public VictoryCondition(String name, final Function<GameState, Double> progressFunction, boolean isActive) {
+	public VictoryCondition(String name, final Function<GameState, Double> progressFunction, boolean isActive, final boolean forParasite) {
 		setName(name);
 		setProgressFunction(progressFunction);
 		setActive(isActive);
+		setIsForParasite(forParasite);
 	}
 	
 	/**
@@ -66,8 +81,8 @@ public class VictoryCondition {
 	 * @param progressFunction A function which takes a {@link GameState} 
 	 * 						   and returns a progress percentage.
 	 */
-	public VictoryCondition(String name, Function<GameState, Double> progressFunction) {
-		this(name, progressFunction, true);
+	public VictoryCondition(String name, Function<GameState, Double> progressFunction, final boolean forParasite) {
+		this(name, progressFunction, true, forParasite);
 	}
 	
 	/**
@@ -77,8 +92,8 @@ public class VictoryCondition {
 	 * 						   and returns a progress percentage.
 	 * @param isActive Whether or not this is an active action.
 	 */
-	public VictoryCondition(Function<GameState, Double> progressFunction, boolean isActive) {
-		this(DEFAULT_NAME, progressFunction, isActive);
+	public VictoryCondition(Function<GameState, Double> progressFunction, boolean isActive, final boolean forParasite) {
+		this(DEFAULT_NAME, progressFunction, isActive, forParasite);
 	}
 	
 	/**
@@ -87,8 +102,8 @@ public class VictoryCondition {
 	 * @param progressFunction A function which takes a {@link GameState} 
 	 * 						   and returns a progress percentage.
 	 */
-	public VictoryCondition(Function<GameState, Double> progressFunction) {
-		this(DEFAULT_NAME, progressFunction, true);
+	public VictoryCondition(final Function<GameState, Double> progressFunction, final boolean forParasite) {
+		this(DEFAULT_NAME, progressFunction, true, forParasite);
 	}
 	// ========================
 	
@@ -124,6 +139,13 @@ public class VictoryCondition {
 	 */
 	public boolean isActive() {
 		return this.active;
+	}
+
+	/**
+	 * @return If this VictoryConditio is a parasite victory condition. 
+	 */
+	public boolean isForParasite() {
+		return this.forParasite;
 	}
 	
 	/**
@@ -182,6 +204,10 @@ public class VictoryCondition {
 	 */
 	public void setActive(boolean isActive) {
 		this.active = isActive;
+	}
+	
+	public void setIsForParasite(final boolean forParasite) {
+		this.forParasite = forParasite;
 	}
 
 	/**
