@@ -261,6 +261,7 @@ public class GameState {
 				System.out.println("Resolving player turns...");
 			}
 			state.setGamePhase(GamePhase.TURN_RESOLVE);
+			state.gamePhase.executePhase(state);
 		}
 	}
 

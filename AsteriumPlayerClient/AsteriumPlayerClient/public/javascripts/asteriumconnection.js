@@ -108,7 +108,7 @@ function turnActivity(){
                     "action_name": "turn_action",
                     "turn_action":
                         {
-                            "location_id": locationsDisplayController.selectedLocation.location_id,
+                            "map_location": locationsDisplayController.selectedLocation.map_location,
                             "activity_name": activityDisplayController.selectedActivity
                         },
                     "auth_token": getAuthToken(),
