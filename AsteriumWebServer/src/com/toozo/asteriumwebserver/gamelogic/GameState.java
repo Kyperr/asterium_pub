@@ -196,7 +196,6 @@ public class GameState {
 		try {
 			syncGameBoards(state);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
