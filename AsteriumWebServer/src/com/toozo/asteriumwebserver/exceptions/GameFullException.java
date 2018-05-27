@@ -8,6 +8,7 @@ package com.toozo.asteriumwebserver.exceptions;
 public class GameFullException extends Exception {
 
 	private static final long serialVersionUID = 1L;
+	
 	// Error message
 	private static final String MESSAGE = "This game is full. Choose another.";
 

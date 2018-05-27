@@ -22,6 +22,8 @@ public class SendErrorAction extends ResponseAction {
 	public static final Integer FAILED_TO_CREATE_GAME = 20;
 	public static final Integer GAME_NOT_FOUND = 22;
 	public static final Integer GAME_FULL = 30;
+	public static final Integer NAME_TAKEN = 31;
+	public static final Integer INVALID_NAME = 32;
 
 	/**
 	 * Construct a {@link SendErrorAction}.

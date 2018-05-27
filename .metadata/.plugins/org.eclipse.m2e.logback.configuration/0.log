@@ -12038,3 +12038,259 @@ Caused by: java.io.FileNotFoundException: /home/gpschmitt/git/asterium2/.metadat
 2018-05-27 15:45:19,626 [Worker-72] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumParser/src/main/resources
 2018-05-27 15:45:19,628 [Worker-72] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
 2018-05-27 15:45:19,639 [Worker-72] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumParser/src/test/resources
+2018-05-27 16:15:34,416 [Worker-82] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:15:34,421 [Worker-82] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:15:34,425 [Worker-82] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:15:34,426 [Worker-82] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:16:02,865 [Worker-84] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:16:02,869 [Worker-84] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:16:02,871 [Worker-84] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:16:02,879 [Worker-84] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:16:15,644 [Worker-82] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:16:15,645 [Worker-82] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:16:15,652 [Worker-82] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:16:15,653 [Worker-82] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:16:26,082 [Worker-83] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:16:26,084 [Worker-83] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:16:26,090 [Worker-83] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:16:26,091 [Worker-83] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:16:32,946 [Worker-84] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:16:32,947 [Worker-84] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:16:32,954 [Worker-84] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:16:32,955 [Worker-84] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:16:40,996 [Worker-75] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:16:41,004 [Worker-75] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:16:41,006 [Worker-75] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:16:41,018 [Worker-75] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:17:05,059 [Worker-75] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:17:05,060 [Worker-75] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:17:05,062 [Worker-75] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:17:05,063 [Worker-75] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:17:13,156 [Worker-79] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:17:13,157 [Worker-79] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:17:13,160 [Worker-79] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:17:13,161 [Worker-79] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:17:20,583 [Worker-84] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:17:20,584 [Worker-84] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:17:20,586 [Worker-84] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:17:20,587 [Worker-84] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:17:29,322 [Worker-79] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:17:29,328 [Worker-79] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:17:29,331 [Worker-79] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:17:29,336 [Worker-79] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:17:42,274 [Worker-83] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:17:42,279 [Worker-83] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:17:42,289 [Worker-83] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:17:42,290 [Worker-83] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:17:49,714 [Worker-85] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:17:49,715 [Worker-85] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:17:49,717 [Worker-85] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:17:49,718 [Worker-85] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:17:56,364 [Worker-82] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:17:56,366 [Worker-82] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:17:56,370 [Worker-82] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:17:56,373 [Worker-82] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:18:03,788 [Worker-79] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:18:03,790 [Worker-79] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:18:03,793 [Worker-79] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:18:03,797 [Worker-79] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:18:10,384 [Worker-79] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:18:10,390 [Worker-79] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:18:10,394 [Worker-79] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:18:10,410 [Worker-79] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:18:14,938 [Worker-79] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:18:14,941 [Worker-79] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:18:14,943 [Worker-79] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:18:14,949 [Worker-79] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:18:30,565 [Worker-85] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:18:30,566 [Worker-85] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:18:30,568 [Worker-85] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:18:30,569 [Worker-85] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:20:23,615 [Worker-85] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:20:23,616 [Worker-85] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:20:23,618 [Worker-85] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:20:23,619 [Worker-85] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:20:36,263 [Worker-75] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:20:36,265 [Worker-75] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:20:36,267 [Worker-75] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:20:36,268 [Worker-75] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:22:34,412 [Worker-87] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:22:34,418 [Worker-87] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:22:34,421 [Worker-87] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:22:34,429 [Worker-87] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:23:30,042 [Worker-89] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:23:30,048 [Worker-89] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:23:30,050 [Worker-89] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:23:30,051 [Worker-89] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:23:41,864 [Worker-88] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:23:41,865 [Worker-88] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:23:41,868 [Worker-88] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:23:41,869 [Worker-88] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:23:43,046 [Worker-88] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:23:43,047 [Worker-88] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:23:43,050 [Worker-88] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:23:43,051 [Worker-88] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:23:45,502 [Worker-90] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:23:45,505 [Worker-90] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:23:45,510 [Worker-90] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:23:45,516 [Worker-90] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:23:48,986 [Worker-87] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:23:48,992 [Worker-87] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:23:48,994 [Worker-87] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:23:48,996 [Worker-87] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:23:59,325 [Worker-90] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:23:59,327 [Worker-90] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:23:59,329 [Worker-90] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:23:59,330 [Worker-90] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:24:15,254 [Worker-88] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:24:15,256 [Worker-88] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:24:15,258 [Worker-88] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:24:15,260 [Worker-88] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:24:45,408 [Worker-86] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:24:45,409 [Worker-86] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:24:45,411 [Worker-86] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:24:45,412 [Worker-86] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:25:29,481 [Worker-87] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:25:29,482 [Worker-87] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:25:29,485 [Worker-87] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:25:29,486 [Worker-87] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:25:53,261 [Worker-89] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:25:53,272 [Worker-89] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:25:53,275 [Worker-89] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:25:53,277 [Worker-89] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:26:11,701 [Worker-87] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:26:11,708 [Worker-87] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:26:11,710 [Worker-87] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:26:11,711 [Worker-87] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:26:30,139 [Worker-86] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:26:30,140 [Worker-86] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:26:30,142 [Worker-86] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:26:30,143 [Worker-86] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:26:53,974 [Worker-89] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:26:53,975 [Worker-89] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:26:53,978 [Worker-89] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:26:53,979 [Worker-89] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:27:24,807 [Worker-90] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:27:24,808 [Worker-90] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:27:24,811 [Worker-90] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:27:24,814 [Worker-90] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:28:12,098 [Worker-90] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:28:12,107 [Worker-90] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:28:12,109 [Worker-90] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:28:12,110 [Worker-90] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:29:17,182 [Worker-87] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:29:17,183 [Worker-87] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:29:17,186 [Worker-87] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:29:17,187 [Worker-87] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:29:21,791 [Worker-75] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:29:21,793 [Worker-75] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:29:21,796 [Worker-75] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:29:21,797 [Worker-75] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:30:01,703 [Worker-92] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:30:01,704 [Worker-92] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:30:01,707 [Worker-92] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:30:01,708 [Worker-92] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:30:05,124 [Worker-75] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:30:05,129 [Worker-75] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:30:05,131 [Worker-75] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:30:05,134 [Worker-75] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:30:28,491 [Worker-91] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:30:28,496 [Worker-91] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:30:28,505 [Worker-91] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:30:28,507 [Worker-91] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:30:48,811 [Worker-88] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:30:48,819 [Worker-88] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:30:48,822 [Worker-88] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:30:48,823 [Worker-88] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:30:50,954 [Worker-89] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:30:50,955 [Worker-89] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:30:50,957 [Worker-89] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:30:50,958 [Worker-89] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:30:58,094 [Worker-88] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:30:58,096 [Worker-88] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:30:58,098 [Worker-88] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:30:58,100 [Worker-88] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:31:00,264 [Worker-86] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:31:00,266 [Worker-86] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:31:00,268 [Worker-86] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:31:00,269 [Worker-86] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:31:02,336 [Worker-87] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:31:02,337 [Worker-87] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:31:02,340 [Worker-87] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:31:02,341 [Worker-87] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:31:12,036 [Worker-89] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:31:12,037 [Worker-89] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:31:12,039 [Worker-89] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:31:12,041 [Worker-89] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:31:31,595 [Worker-90] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:31:31,597 [Worker-90] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:31:31,600 [Worker-90] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:31:31,601 [Worker-90] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:31:35,207 [Worker-90] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:31:35,208 [Worker-90] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:31:35,220 [Worker-90] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:31:35,222 [Worker-90] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:31:39,962 [Worker-91] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:31:39,963 [Worker-91] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:31:39,971 [Worker-91] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:31:39,973 [Worker-91] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:31:42,065 [Worker-92] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:31:42,066 [Worker-92] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:31:42,069 [Worker-92] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:31:42,071 [Worker-92] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:31:51,218 [Worker-90] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:31:51,219 [Worker-90] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:31:51,221 [Worker-90] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:31:51,223 [Worker-90] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:32:40,370 [Worker-75] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:32:40,373 [Worker-75] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:32:40,375 [Worker-75] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:32:40,379 [Worker-75] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:35:13,994 [Worker-89] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:35:13,996 [Worker-89] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:35:13,998 [Worker-89] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:35:13,999 [Worker-89] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:37:47,549 [Worker-95] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:37:47,550 [Worker-95] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:37:47,552 [Worker-95] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:37:47,553 [Worker-95] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:38:15,831 [Worker-95] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:38:15,832 [Worker-95] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:38:15,835 [Worker-95] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:38:15,836 [Worker-95] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:38:26,628 [Worker-96] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:38:26,629 [Worker-96] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:38:26,635 [Worker-96] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:38:26,643 [Worker-96] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:38:55,410 [Worker-94] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:38:55,415 [Worker-94] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:38:55,418 [Worker-94] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:38:55,419 [Worker-94] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:39:20,808 [Worker-95] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:39:20,810 [Worker-95] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:39:20,812 [Worker-95] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:39:20,813 [Worker-95] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:39:34,120 [Worker-94] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:39:34,121 [Worker-94] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:39:34,123 [Worker-94] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:39:34,124 [Worker-94] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:39:47,906 [Worker-94] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:39:47,907 [Worker-94] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:39:47,910 [Worker-94] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:39:47,911 [Worker-94] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:40:35,777 [Worker-94] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:40:35,778 [Worker-94] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:40:35,780 [Worker-94] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:40:35,782 [Worker-94] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:41:12,153 [Worker-95] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:41:12,154 [Worker-95] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:41:12,156 [Worker-95] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:41:12,158 [Worker-95] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:41:20,659 [Worker-98] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:41:20,661 [Worker-98] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:41:20,663 [Worker-98] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:41:20,664 [Worker-98] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-05-27 16:41:47,163 [Worker-95] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:41:47,170 [Worker-95] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
+2018-05-27 16:41:47,173 [Worker-95] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-05-27 16:41:47,174 [Worker-95] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
