@@ -207,7 +207,7 @@ public class Game extends Thread {
 				state.executePhase();
 				
 				// Check if this game should be removed.
-				if (this.hasBeenJoined) {
+				if (!this.gameBoardList.isEmpty() && !this.playerList.isEmpty()) {
 					SessionManager manager = SessionManager.getInstance();
 					String auth;
 					Session session;
@@ -315,7 +315,6 @@ public class Game extends Thread {
 	 */
 	public void addGameBoard(final GameBoard gameBoard) {
 		this.gameBoardList.put(gameBoard.getAuthToken(), gameBoard);
-		this.hasBeenJoined = true;
 	}
 
 	/**
