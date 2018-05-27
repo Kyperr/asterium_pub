@@ -66,7 +66,7 @@ public class Location {
 		activities.get(name).doActivity(game, character, this);
 	}
 	
-	public Collection<AbstractItem> lootLocation() {
-		return loot.loot();
+	public Collection<AbstractItem> lootLocation(PlayerCharacter looter) {
+		return loot.loot(looter);
 	}
 }

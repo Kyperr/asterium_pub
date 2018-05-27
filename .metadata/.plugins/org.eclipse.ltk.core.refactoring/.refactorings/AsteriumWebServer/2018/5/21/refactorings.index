@@ -12,3 +12,6 @@
 1526968023321	Rename type 'HealItem'
 1526969674092	Delete elements
 1527296343258	Rename local variable 'names'
+1527374099299	Delete element
+1527376554148	Rename field 'infection'
+1527378184584	Rename type 'ReduceExposure'

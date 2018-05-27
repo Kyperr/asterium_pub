@@ -30,22 +30,22 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 	private int fuel;
 	private int day;
 	private List<LocationData> locations;
-	private PlayerCharacterData character;
-	private Collection<String> characters;
-	private List<InventoryData> inventory;
+	private SyncPlayerClientDataRequestData.PlayerCharacterData yourCharacter;
+	private Collection<String> characterNames;
+	private List<ItemData> inventory;
 	private String gamePhaseName;
 
 	public SyncPlayerClientDataRequestData(final int food, final int fuel, final int day,
 			final List<LocationData> locations, final PlayerCharacterData character, 
 			final Collection<String> characters, final String gamePhaseName,
-			final List<InventoryData> inventory) {
+			final List<ItemData> inventory) {
 		super(ActionData.SYNC_PLAYER_CLIENT_DATA);
 		this.food = food;
 		this.fuel = fuel;
 		this.day = day;
 		this.locations = locations;
-		this.character = character;
-		this.characters = characters;
+		this.yourCharacter = character;
+		this.characterNames = characters;
 		this.inventory = inventory;
 		this.gamePhaseName = gamePhaseName;
 	}
@@ -63,14 +63,14 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		data.put(ActionData.FUEL, this.fuel);
 		data.put(ActionData.DAY, this.day);
 		data.put(ActionData.LOCATIONS, array);
-		data.put(ActionData.CHARACTER, this.character.jsonify());
+		data.put(ActionData.CHARACTER, this.yourCharacter.jsonify());
 		JSONArray charactersArray = new JSONArray();
-		for (String s : this.characters) {
+		for (String s : this.characterNames) {
 			charactersArray.put(s);
 		}
 		data.put(ActionData.CHARACTERS, charactersArray);
 		JSONArray inventoryArray = new JSONArray();
-		for (InventoryData item : this.inventory) {
+		for (ItemData item : this.inventory) {
 			data.put(ActionData.ITEM, item.jsonify());
 		}
 		data.put(ActionData.COMMUNAL_INVENTORY, inventoryArray);
@@ -95,6 +95,7 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		PlayerCharacterData character;
 		JSONObject characterObj = jsonObj.getJSONObject(ActionData.CHARACTER);
 		String characterName = characterObj.getString(ActionData.CHARACTER_NAME);
+		boolean isParasite = characterObj.getBoolean(ActionData.IS_PARASITE);
 		// character stats
 		JSONObject statsObj = characterObj.getJSONObject(ActionData.STATS);
 		Integer health = statsObj.getInt(ActionData.HEALTH);
@@ -111,27 +112,27 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 
 		// character personal inventory
 		JSONArray personalInvArray = characterObj.getJSONArray(ActionData.PERSONAL_INVENTORY);
-		List<InventoryData> personalInv = new ArrayList<InventoryData>();
+		List<ItemData> personalInv = new ArrayList<ItemData>();
 		JSONObject personalInvObject;
-		InventoryData personalInvItem;
+		ItemData personalInvItem;
 		for (int g = 0; g < personalInvArray.length(); g++) {
 			personalInvObject = personalInvArray.getJSONObject(g);
-			personalInvItem = InventoryData.parseArgs(personalInvObject);
+			personalInvItem = ItemData.parseArgs(personalInvObject);
 			personalInv.add(personalInvItem);
 		}
 
 		// character loadout
 		JSONArray loadoutArray = characterObj.getJSONArray(ActionData.LOADOUT);
-		Map<EquipmentType, InventoryData> equipments = new HashMap<EquipmentType, InventoryData>();
+		Map<EquipmentType, ItemData> equipments = new HashMap<EquipmentType, ItemData>();
 		LoadoutData loadout;
 		JSONObject equipmentObject;
-		InventoryData equipment;
+		ItemData equipment;
 
 		for (int i = 0; i < loadoutArray.length(); i++) {
 			JSONObject jo = loadoutArray.getJSONObject(i);
 			EquipmentType type = EquipmentType.valueOf(jo.getString(ActionData.SLOT));
 			equipmentObject = jo.getJSONObject(ActionData.EQUIPMENT);
-			equipment = InventoryData.parseArgs(equipmentObject);
+			equipment = ItemData.parseArgs(equipmentObject);
 			equipments.put(type, equipment);
 		}
 		loadout = new LoadoutData(equipments);
@@ -139,7 +140,13 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		boolean turnTaken = characterObj.getBoolean(ActionData.TURN_TAKEN);
 		boolean ready = characterObj.getBoolean(ActionData.READY);
 
-		character = new PlayerCharacterData(characterName, stats, personalInv, loadout, turnTaken, ready);
+		character = new PlayerCharacterData(characterName, 
+											isParasite, 
+											stats, 
+											personalInv, 
+											loadout, 
+											turnTaken, 
+											ready);
 
 		// build locations
 		JSONArray locationsArray = jsonObj.getJSONArray(ActionData.LOCATIONS);
@@ -162,12 +169,12 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 
 		// build communal inventory
 		JSONArray inventoryArray = jsonObj.getJSONArray(ActionData.COMMUNAL_INVENTORY);
-		List<InventoryData> inventory = new ArrayList<InventoryData>();
+		List<ItemData> inventory = new ArrayList<ItemData>();
 		JSONObject itemObject;
-		InventoryData item;
+		ItemData item;
 		for (int j = 0; j < inventoryArray.length(); j++) {
 			itemObject = inventoryArray.getJSONObject(j);
-			item = InventoryData.parseArgs(itemObject);
+			item = ItemData.parseArgs(itemObject);
 			inventory.add(item);
 		}
 
@@ -240,16 +247,22 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 	public static class PlayerCharacterData {
 
 		private String name;
+		private boolean isParasite;
 		private StatsData stats;
-		private List<InventoryData> inventory;
+		private List<ItemData> inventory;
 		private LoadoutData equipped;
 		private boolean turnTaken;
 		private boolean ready;
 
-		public PlayerCharacterData(final String characterName, final StatsData stats,
-				final List<InventoryData> inventory, final LoadoutData equipped, 
-				final boolean turnTaken, final boolean ready) {
+		public PlayerCharacterData(final String characterName, 
+								   final boolean isParasite,
+								   final StatsData stats,
+								   final List<ItemData> inventory, 
+								   final LoadoutData equipped, 
+								   final boolean turnTaken, 
+								   final boolean ready) {
 			this.name = characterName;
+			this.isParasite = isParasite;
 			this.stats = stats;
 			this.inventory = inventory;
 			this.equipped = equipped;
@@ -260,9 +273,10 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		public JSONObject jsonify() {
 			JSONObject data = new JSONObject();
 			data.put(ActionData.CHARACTER_NAME, this.name);
+			data.put(ActionData.IS_PARASITE, this.isParasite);
 			data.put(ActionData.STATS, this.stats.jsonify());
 			JSONArray inventoryArray = new JSONArray();
-			for (InventoryData item : this.inventory) {
+			for (ItemData item : this.inventory) {
 				inventoryArray.put(item.jsonify());
 			}
 			data.put(ActionData.PERSONAL_INVENTORY, inventoryArray);
@@ -306,9 +320,9 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		}
 
 		public static class LoadoutData {
-			private Map<EquipmentType, InventoryData> equipment;
+			private Map<EquipmentType, ItemData> equipment;
 
-			public LoadoutData(final Map<EquipmentType, InventoryData> equipment) {
+			public LoadoutData(final Map<EquipmentType, ItemData> equipment) {
 				this.equipment = equipment;
 			}
 
@@ -339,17 +353,22 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		}
 	}
 
-	public static class InventoryData {
+	public static class ItemData {
 		private String name;
 		private String description;
 		private String flavorText;
 		private String imagePath;
+		private boolean isLocationItem;
+		private Collection<LocationType> useLocations;
 
-		public InventoryData(final String name, final String description, final String flavor, final String image) {
+		public ItemData(final String name, final String description, final String flavor, final String image,
+				final boolean isLocationItem, final Collection<LocationType> locations) {
 			this.name = name;
 			this.description = description;
 			this.flavorText = flavor;
 			this.imagePath = image;
+			this.isLocationItem = isLocationItem;
+			this.useLocations = locations;
 		}
 
 		public JSONObject jsonify() {
@@ -358,16 +377,30 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 			data.put(ActionData.ITEM_DESC, this.description);
 			data.put(ActionData.ITEM_FLAVOR_TEXT, this.flavorText);
 			data.put(ActionData.ITEM_IMG, this.imagePath);
+			data.put(ActionData.IS_LOCATION_ITEM, this.isLocationItem);
+			JSONArray use = new JSONArray();
+			for (LocationType type : this.useLocations) {
+				use.put(type.toString());
+			}
+			data.put(ActionData.USE_LOCATIONS, use);
 
 			return data;
 		}
 
-		public static InventoryData parseArgs(final JSONObject jsonObj) {
+		public static ItemData parseArgs(final JSONObject jsonObj) {
 			String name = jsonObj.getString(ActionData.ITEM_NAME);
 			String desc = jsonObj.getString(ActionData.ITEM_DESC);
 			String flavor = jsonObj.getString(ActionData.ITEM_FLAVOR_TEXT);
 			String img = jsonObj.getString(ActionData.ITEM_IMG);
-			return new InventoryData(name, desc, flavor, img);
+			boolean isLocItem = jsonObj.getBoolean(ActionData.IS_LOCATION_ITEM);
+			Collection<LocationType> locs = new ArrayList<LocationType>();
+			JSONArray locArray = jsonObj.getJSONArray(ActionData.USE_LOCATIONS);
+			for (int i = 0; i < locArray.length(); i++) {
+				String type = locArray.get(i).toString();
+				locs.add(LocationType.valueOf(type));
+			}
+			
+			return new ItemData(name, desc, flavor, img, isLocItem, locs);
 		}
 	}
 }

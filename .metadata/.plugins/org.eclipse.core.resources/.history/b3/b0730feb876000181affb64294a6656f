@@ -1,0 +1,13 @@
+package com.toozo.asteriumwebserver.gamelogic.items;
+
+import java.util.function.Supplier;
+
+public class ItemLoot {
+	Supplier<? extends AbstractItem> constructor;
+	
+	public ItemLoot(Supplier<? extends AbstractItem> itemConstructor,
+					double baseProbability, 
+					double lukProbabilityModifier, double intProbabilityModifier) {
+		
+	}
+}

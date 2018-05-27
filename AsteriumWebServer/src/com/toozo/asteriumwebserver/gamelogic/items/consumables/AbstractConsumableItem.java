@@ -13,7 +13,7 @@ import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
  */
 public abstract class AbstractConsumableItem extends AbstractItem {
 	protected AbstractConsumableItem(String name, final String description, final String flavor, final String image) {
-		super(name, description, flavor, image);
+		super(name, description, flavor, image, false);
 	}
 	
 	@Override

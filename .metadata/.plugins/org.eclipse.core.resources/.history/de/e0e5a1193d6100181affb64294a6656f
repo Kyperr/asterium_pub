@@ -1,0 +1,32 @@
+package com.toozo.asteriumwebserver.gamelogic.statuseffects;
+
+import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
+
+public class ReduceExposure extends AbstractStatusEffect {
+	/**
+	 * {@inheritDoc}
+	 */
+	public ReduceExposure(final PlayerCharacter owner) {
+		super(owner);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public ReduceExposure(final PlayerCharacter owner, final String name) {
+		super(owner, name);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public ReduceExposure(final PlayerCharacter owner, final String name, final int duration, 
+							Function<double, double> exposureModifier) {
+		super(owner, name, duration);
+	}
+	
+	@Override
+	public double affectExposureGained(double unmodifiedExposureGained) {
+		
+	}
+}

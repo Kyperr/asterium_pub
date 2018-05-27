@@ -11,11 +11,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 import javax.websocket.Session;
 
+import com.toozo.asteriumwebserver.gamelogic.Location.LocationType;
 import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
+import com.toozo.asteriumwebserver.gamelogic.items.ItemLoot;
 import com.toozo.asteriumwebserver.gamelogic.items.LootPool;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.Bandage;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodChest;
@@ -28,6 +29,7 @@ import com.toozo.asteriumwebserver.gamelogic.items.equipment.AbstractEquipmentIt
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.EquipmentSlot;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.Loadout;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.TinfoilHatEquipmentItem;
+import com.toozo.asteriumwebserver.gamelogic.items.location.AbstractLocationItem;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
 import actiondata.ActionData;
@@ -51,35 +53,35 @@ public class GameState {
 	public static final boolean VERBOSE = true;
 
 	// LOOT POOLS
-	// Medbay
-	public static final Map<Supplier<? extends AbstractItem>, Double> MEDBAY_LOOT_PROB;
+	// 		Medbay
+	public static final List<ItemLoot> MEDBAY_ITEM_LOOT;
 	static {
-		Map<Supplier<? extends AbstractItem>, Double> probs = new HashMap<Supplier<? extends AbstractItem>, Double>();
-
-		probs.put(Bandage::new, 0.40);
-		probs.put(Medkit::new, 0.20);
-		probs.put(Syringe::new, 0.05);
-		probs.put(TinfoilHatEquipmentItem::new, 0.25);
-		probs.put(RescueBeacon::new, 0.10);
-
-		MEDBAY_LOOT_PROB = Collections.unmodifiableMap(probs);
+		List<ItemLoot> probs = new ArrayList<ItemLoot>();
+		
+		probs.add(new ItemLoot(Bandage::new, 40, 0.0, 0.0));
+		probs.add(new ItemLoot(Medkit::new, 20, 0.0, 0.0));
+		probs.add(new ItemLoot(Syringe::new, 5, 0.0, 0.0));
+		probs.add(new ItemLoot(TinfoilHatEquipmentItem::new, 25, 0.0, 0.0));
+		probs.add(new ItemLoot(RescueBeacon::new, 10, 0.0, 0.0));
+		
+		MEDBAY_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
-	public static final LootPool MEDBAY_LOOT_POOL = new LootPool(MEDBAY_LOOT_PROB);
-
-	// Mess Hall
-	public static final Map<Supplier<? extends AbstractItem>, Double> CAFETERIA_LOOT_PROB;
+	public static final LootPool MEDBAY_LOOT_POOL = new LootPool(MEDBAY_ITEM_LOOT);
+	
+	//		Mess Hall
+	public static final List<ItemLoot> CAFETERIA_ITEM_LOOT;
 	static {
-		Map<Supplier<? extends AbstractItem>, Double> probs = new HashMap<Supplier<? extends AbstractItem>, Double>();
-
-		probs.put(FoodPack::new, 0.40);
-		probs.put(FoodCrate::new, 0.20);
-		probs.put(FoodChest::new, 0.05);
-		probs.put(RescueBeacon::new, 0.10);
-
-		CAFETERIA_LOOT_PROB = Collections.unmodifiableMap(probs);
+		List<ItemLoot> probs = new ArrayList<ItemLoot>();
+	
+		probs.add(new ItemLoot(FoodPack::new, 40, 0.0, 0.0));
+		probs.add(new ItemLoot(FoodCrate::new, 20, 0.0, 0.0));
+		probs.add(new ItemLoot(FoodChest::new, 5, 0.0, 0.0));
+		probs.add(new ItemLoot(RescueBeacon::new, 10, 0.0, 0.0));
+		
+		CAFETERIA_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
-	public static final LootPool CAFETERIA_LOOT_POOL = new LootPool(CAFETERIA_LOOT_PROB);
-
+	public static final LootPool CAFETERIA_LOOT_POOL = new LootPool(CAFETERIA_ITEM_LOOT);
+	
 	public enum GamePhase {
 
 		PLAYERS_JOINING(GameState::playerJoining),
@@ -120,6 +122,8 @@ public class GameState {
 	{
 		// Make a new location
 		Location home = new Location("Control Room", Location.LocationType.CONTROL_ROOM, MEDBAY_LOOT_POOL);
+		home.addActivity(Activity.REST, Activity.restActivity);
+		home.addActivity(Activity.USE_LOCATION_ITEM, Activity.useLocationItemActivity);
 		locations.put("1", home);
 
 		Location med_bay = new Location("Med Bay", Location.LocationType.MED_BAY, MEDBAY_LOOT_POOL);
@@ -186,7 +190,12 @@ public class GameState {
 	private static final void initiatePlayerTurnPhase(GameState state) {
 		state.setDay(state.getDay() + 1);
 		state.syncPlayerClients();
-		syncGameBoards(state);
+		try {
+			syncGameBoards(state);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		// Is there an action for every player and is everyone ready?? If so:
 		if (state.game.areAllTurnsSubmitted() && state.game.allCharactersReady()) {
@@ -202,7 +211,12 @@ public class GameState {
 		state.game.setAllCharactersNotReady();
 
 		state.syncPlayerClients();
-		syncGameBoards(state);
+		try {
+			syncGameBoards(state);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		if (state.getCompleteVictoryConditions().size() >= 1) {
 			if (VERBOSE) {
@@ -231,10 +245,15 @@ public class GameState {
 		// TODO Notify game board the game is over and clients that the game is over and
 		// if they won or lost. Wrap up.
 		state.syncPlayerClients();
-		syncGameBoards(state);
+		try {
+			syncGameBoards(state);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	private static final void syncGameBoards(GameState state) {
+	private static final void syncGameBoards(GameState state) throws IOException {
 		int food = state.getFood();
 		int fuel = state.getFuel();
 		int day = state.getDay();
@@ -275,9 +294,20 @@ public class GameState {
 		// Get communal inventory data
 		Collection<SyncGameBoardDataRequestData.ItemData> itemDatas = new ArrayList<SyncGameBoardDataRequestData.ItemData>();
 		SyncGameBoardDataRequestData.ItemData itemData;
+		boolean isLocationItem;
+		Collection<SyncGameBoardDataRequestData.LocationData.LocationType> useLocations = new ArrayList<SyncGameBoardDataRequestData.LocationData.LocationType>();
 		for (final AbstractItem item : state.getCommunalInventory()) {
+			isLocationItem = item.getIsLocationItem();
+			if (isLocationItem) {
+				AbstractLocationItem loc_item = AbstractLocationItem.class.cast(item);
+				for (LocationType locType : loc_item.getUseLocations()) {
+					useLocations
+							.add(SyncGameBoardDataRequestData.LocationData.LocationType.valueOf(locType.toString()));
+				}
+			}
+
 			itemData = new SyncGameBoardDataRequestData.ItemData(item.getName(), item.getDescription(),
-					item.getFlavorText(), item.getImagePath());
+					item.getFlavorText(), item.getImagePath(), isLocationItem, useLocations);
 			itemDatas.add(itemData);
 		}
 
@@ -290,7 +320,7 @@ public class GameState {
 
 			Session session = SessionManager.getInstance().getSession(gameBoard.getAuthToken());
 			synchronized (session) {
-				session.getAsyncRemote().sendText(syncGBMessage.jsonify().toString());
+				session.getBasicRemote().sendText(syncGBMessage.jsonify().toString());
 			}
 		}
 	}
@@ -308,7 +338,7 @@ public class GameState {
 		if (VERBOSE) {
 			System.out.println("Player join phase...");
 		}
-		
+
 	}
 	// ========================
 
@@ -517,20 +547,26 @@ public class GameState {
 		this.gamePhase.executePhase(this);
 	}
 
-	private final void syncPlayerClients() {
-		for (Player p : this.game.getPlayers()) {
+	public final void syncPlayerClients() {
+		for (String auth : this.game.getPlayerAuths()) {
+			this.syncPlayerClient(auth);
+		}
 
-			ActionData data = createSyncPlayerClientDataRequestData(p);
-			Request request = new Request(data, p.getAuthToken());
+	}
 
-			try {
-				Session session = SessionManager.getInstance().getSession(p.getAuthToken());
-				synchronized (session) {
-					session.getBasicRemote().sendText(request.jsonify().toString());
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
+	public final void syncPlayerClient(String auth) {
+		Player p = this.game.getPlayer(auth);
+
+		ActionData data = createSyncPlayerClientDataRequestData(p);
+		Request request = new Request(data, p.getAuthToken());
+
+		try {
+			Session session = SessionManager.getInstance().getSession(p.getAuthToken());
+			synchronized (session) {
+				session.getBasicRemote().sendText(request.jsonify().toString());
 			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
 	}
@@ -563,23 +599,35 @@ public class GameState {
 				pChar.getEffectiveStats().getStat(Stat.HEALTH), pChar.getEffectiveStats().getStat(Stat.STAMINA),
 				pChar.getEffectiveStats().getStat(Stat.LUCK), pChar.getEffectiveStats().getStat(Stat.INTUITION));
 
-		List<SyncPlayerClientDataRequestData.InventoryData> personalInv = new ArrayList<SyncPlayerClientDataRequestData.InventoryData>();
+		List<SyncPlayerClientDataRequestData.ItemData> personalInv = new ArrayList<SyncPlayerClientDataRequestData.ItemData>();
+		boolean isLocationItem;
+		Collection<SyncPlayerClientDataRequestData.LocationData.LocationType> useLocations = new ArrayList<SyncPlayerClientDataRequestData.LocationData.LocationType>();
 		for (AbstractItem item : pChar.getInventory()) {
-			SyncPlayerClientDataRequestData.InventoryData itemData = new SyncPlayerClientDataRequestData.InventoryData(
-					item.getName(), item.getDescription(), item.getFlavorText(), item.getImagePath());
+			isLocationItem = item.getIsLocationItem();
+			if (isLocationItem) {
+				AbstractLocationItem loc_item = AbstractLocationItem.class.cast(item);
+				for (LocationType locType : loc_item.getUseLocations()) {
+					useLocations
+							.add(SyncPlayerClientDataRequestData.LocationData.LocationType.valueOf(locType.toString()));
+				}
+			}
+			SyncPlayerClientDataRequestData.ItemData itemData = new SyncPlayerClientDataRequestData.ItemData(
+					item.getName(), item.getDescription(), item.getFlavorText(), item.getImagePath(), isLocationItem,
+					useLocations);
 			personalInv.add(itemData);
 		}
 
-		Map<SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType, SyncPlayerClientDataRequestData.InventoryData> equipment = new HashMap<SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType, SyncPlayerClientDataRequestData.InventoryData>();
+		Map<SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType, SyncPlayerClientDataRequestData.ItemData> equipment = new HashMap<SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType, SyncPlayerClientDataRequestData.ItemData>();
 		Loadout load = pChar.getEquipment();
+		useLocations.clear();
 		for (EquipmentSlot slot : EquipmentSlot.values()) {
 			if (load.slotFull(slot)) {
 				SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType type = SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType
 						.valueOf(slot.toString());
 				AbstractEquipmentItem equipmentItem = load.itemIn(slot);
-				SyncPlayerClientDataRequestData.InventoryData item = new SyncPlayerClientDataRequestData.InventoryData(
+				SyncPlayerClientDataRequestData.ItemData item = new SyncPlayerClientDataRequestData.ItemData(
 						equipmentItem.getName(), equipmentItem.getDescription(), equipmentItem.getFlavorText(),
-						equipmentItem.getImagePath());
+						equipmentItem.getImagePath(), false, useLocations);
 				equipment.put(type, item);
 			}
 		}
@@ -588,13 +636,23 @@ public class GameState {
 				equipment);
 
 		SyncPlayerClientDataRequestData.PlayerCharacterData dChar = new SyncPlayerClientDataRequestData.PlayerCharacterData(
-				pChar.getCharacterName(), stat, personalInv, loadout, game.turnTaken(player),
+				pChar.getCharacterName(), pChar.isParasite(), stat, personalInv, loadout, game.turnTaken(player),
 				game.getPlayerIsReady(auth));
 
-		List<SyncPlayerClientDataRequestData.InventoryData> inventory = new ArrayList<SyncPlayerClientDataRequestData.InventoryData>();
+		List<SyncPlayerClientDataRequestData.ItemData> inventory = new ArrayList<SyncPlayerClientDataRequestData.ItemData>();
+		useLocations.clear();
 		for (AbstractItem item : getCommunalInventory()) {
-			SyncPlayerClientDataRequestData.InventoryData itemData = new SyncPlayerClientDataRequestData.InventoryData(
-					item.getName(), item.getDescription(), item.getFlavorText(), item.getImagePath());
+			isLocationItem = item.getIsLocationItem();
+			if (isLocationItem) {
+				AbstractLocationItem loc_item = AbstractLocationItem.class.cast(item);
+				for (LocationType locType : loc_item.getUseLocations()) {
+					useLocations
+							.add(SyncPlayerClientDataRequestData.LocationData.LocationType.valueOf(locType.toString()));
+				}
+			}
+			SyncPlayerClientDataRequestData.ItemData itemData = new SyncPlayerClientDataRequestData.ItemData(
+					item.getName(), item.getDescription(), item.getFlavorText(), item.getImagePath(), isLocationItem,
+					useLocations);
 			inventory.add(itemData);
 		}
 

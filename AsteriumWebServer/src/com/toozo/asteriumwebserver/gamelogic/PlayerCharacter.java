@@ -10,11 +10,14 @@ import com.toozo.asteriumwebserver.gamelogic.statuseffects.AbstractStatusEffect;
 
 public class PlayerCharacter {
 	// ===== CONSTANTS =====
-	private static final String DEFAULT_NAME = "";
+	private static final String DEFAULT_NAME = "DEFAULT_PC_NAME";
+	private static final int REST_HEAL = 2;
 	// =====================
 	
 	// ===== FIELDS =====
 	private String characterName;
+	private boolean isParasite;
+	private double exposure;
 	private StatBlock stats;
 	private Inventory inventory;
 	private Collection<AbstractStatusEffect> effects;
@@ -22,8 +25,21 @@ public class PlayerCharacter {
 	// ==================
 	
 	// ===== CONSTRUCTORS =====
+	/**
+	 * Constructs a PlayerCharacter with default name.
+	 */
 	public PlayerCharacter() {
-		this.characterName = DEFAULT_NAME;
+		this(DEFAULT_NAME);
+	}
+	
+	/**
+	 * Constructs a PlayerCharacter with name.
+	 * @param name The name of this PlayerCharacter.
+	 */
+	public PlayerCharacter(final String name) {
+		this.characterName = name;
+		this.isParasite = false;
+		this.exposure = 0.0;
 		this.stats = new StatBlock();
 		this.inventory = new Inventory();
 		this.effects = new HashSet<AbstractStatusEffect>();
@@ -106,7 +122,21 @@ public class PlayerCharacter {
 	public String getCharacterName() {
 		return this.characterName;
 	}
+	
+	/**
+	 * @return true if this PlayerCharacter is a parasite, false otherwise.
+	 */
+	public boolean isParasite() {
+		return this.isParasite;
+	}
 
+	/**
+	 * @return This PlayerCharacter's infection percentage.
+	 */
+	public double getExposure() {
+		return this.exposure;
+	}
+	
 	/**
 	 * @return A copy of this character's {@link StatBlock} before any status effects are applied.
 	 */
@@ -150,8 +180,52 @@ public class PlayerCharacter {
 		}
 	}
 	
+	/**
+	 * Make this PlayerCharacter a parasite.
+	 */
+	public void makeParasite() {
+		this.isParasite = true;
+	}
+	
+	/**
+	 * Set this PlayerCharacter's exposure to a new exposure value.
+	 * If newExposure >= 1.0, this Player becomes a parasite.
+	 * 
+	 * @param newExposure The new exposure value of this PlayerCharacter. Should be positif.
+	 * @throws IllegalArgumentException If newExposure is negative.
+	 */
+	public void setExposure(double newExposure) throws IllegalArgumentException {
+		// Check that newInfection is positif.
+		if (newExposure < 0.0) {
+			throw new IllegalArgumentException();
+		}
+		
+		// Set new infection
+		this.exposure = newExposure;
+		
+		// Make the player a parasite if infection is at 100%.
+		if (this.exposure >= 1.0) {
+			this.makeParasite();
+		}
+	}
+	
+	/**
+	 * Adds exposureToAdd to this PlayerCharacter's exposure, after passing it through status effects.
+	 * e.g. PC w/ no status effects: 	addExposure(0.10) == setExposure(getExposure() + 0.10)
+	 * 		PC w/ -50% exposure effect: addExposure(0.10) == setExposure(getExposure() + 0.05)
+	 * 
+	 * @param exposureToAdd The amount of exposure (before status effects) to add.
+	 */
+	public void addExposure(double exposureToAdd) {
+		for (AbstractStatusEffect ase : this.getStatusEffects()) {
+			exposureToAdd = ase.affectExposureGained(exposureToAdd);
+		}
+		
+		this.setExposure(this.getExposure() + exposureToAdd);
+	}
+	
 	public void setStats(final StatBlock stats) {
-		this.stats = stats;
+		this.stats = stats.deepCopy();
 	}
 	
 	/**
@@ -166,6 +240,15 @@ public class PlayerCharacter {
 	// ===================
 	
 	// ===== OTHER INSTANCE METHODS =====
+	
+	public void rest() {
+		//reduce exposure once we implement that
+		StatBlock stats = this.getEffectiveStats();
+		int health = stats.getStat(Stat.HEALTH);
+		health = Math.min(StatBlock.MAX_HEALTH, health + REST_HEAL);
+		stats.setStat(Stat.HEALTH, health);
+	}
+	
 	/**
 	 * Add a {@link AbstractStatusEffect} to the PlayerCharacter.
 	 * 

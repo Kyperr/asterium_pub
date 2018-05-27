@@ -59,14 +59,16 @@ public abstract class AbstractItem {
 	private String description;
 	private String flavor;
 	private String image;
+	private final boolean isLocationItem;
 	// ==================
 	
 	// ===== CONSTRUCTORS =====
-	protected AbstractItem(final String name, final String description, final String flavor, final String image) {
+	protected AbstractItem(final String name, final String description, final String flavor, final String image, final boolean isLocationItem) {
 		this.name = name;
 		this.description = description;
 		this.flavor = flavor;
 		this.image = image;
+		this.isLocationItem = isLocationItem;
 	}
 	// ========================
 	
@@ -101,6 +103,10 @@ public abstract class AbstractItem {
 		} else {
 			return DEFAULT_IMG;
 		}
+	}
+	
+	public boolean getIsLocationItem() {
+		return this.isLocationItem;
 	}
 	// ===================
 	

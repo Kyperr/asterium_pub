@@ -63,24 +63,42 @@ public class UseItemAction extends Action {
 				item.use(state, user, targets, this.isCommunal);
 				
 				if (Action.VERBOSE) {
-					// Build list of target names
 					String targetNames = "";
-					String lastName = null;
-					for (PlayerCharacter target : targets) {
-						if (lastName != null) {
-							targetNames += lastName + ", ";
+					boolean hasTargets = !targets.isEmpty();
+					
+					if (hasTargets) {
+						// Add all but last target name
+						String lastName = null;
+						for (PlayerCharacter target : targets) {
+							if (lastName != null) {
+								targetNames += lastName + ", ";
+							}
+							lastName = target.getCharacterName();
 						}
-						lastName = target.getCharacterName();
+						
+						// Add last target name
+						if (targetNames != "") {
+							targetNames += "and ";
+						}
+						targetNames += lastName;
 					}
-					targetNames += "and " + lastName;
-					System.out.printf("%s has used %s on %s\n", 
+					
+					System.out.printf("%s has used %s%s\n", 
 									  user.getCharacterName(),
 									  item.getName(),
-									  targetNames);
+									  hasTargets? "" : " on " + targetNames);
 				}
 				
 				SuccessResponseData data = new SuccessResponseData(Action.USE_ITEM);
 				message = new Response(data, 0, this.getMessageID(), auth);
+				
+				//Update player clients
+				if(this.isCommunal) {
+					game.getGameState().syncPlayerClients();
+				} else {
+					game.getGameState().syncPlayerClient(auth);
+				}
+				
 			} else {
 				// No Such Item In Personal Inventory Error
 				ErroredResponseData data = new ErroredResponseData(Action.USE_ITEM);

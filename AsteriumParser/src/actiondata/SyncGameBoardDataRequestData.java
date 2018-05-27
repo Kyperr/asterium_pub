@@ -166,13 +166,9 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 		JSONArray communalInventoryArray = jsonObj.getJSONArray(ActionData.COMMUNAL_INVENTORY);
 		Collection<SyncGameBoardDataRequestData.ItemData> communalInventory = new ArrayList<SyncGameBoardDataRequestData.ItemData>();
 		JSONObject itemObject;
-		SyncGameBoardDataRequestData.ItemData item;
 		for (int i = 0; i < communalInventoryArray.length(); i++) {
-			itemObject = communalInventoryArray.getJSONObject(i);
-			item = new SyncGameBoardDataRequestData.ItemData(itemObject.getString(ActionData.ITEM_NAME),
-					itemObject.getString(ActionData.ITEM_DESC), itemObject.getString(ActionData.ITEM_FLAVOR_TEXT),
-					itemObject.getString(ActionData.ITEM_IMG));
-			communalInventory.add(item);
+			itemObject = communalInventoryArray.getJSONObject(i);					
+			communalInventory.add(SyncGameBoardDataRequestData.ItemData.parseArgs(itemObject));
 		}
 
 		String gamePhaseName = jsonObj.getString(ActionData.GAME_PHASE_NAME);
@@ -418,12 +414,17 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 		private String description;
 		private String flavorText;
 		private String imagePath;
+		private boolean isLocationItem;
+		private Collection<LocationType> useLocations;
 
-		public ItemData(final String name, final String description, final String flavor, final String image) {
+		public ItemData(final String name, final String description, final String flavor, final String image,
+				final boolean isLocationItem, final Collection<LocationType> locations) {
 			this.name = name;
 			this.description = description;
 			this.flavorText = flavor;
 			this.imagePath = image;
+			this.isLocationItem = isLocationItem;
+			this.useLocations = locations;
 		}
 
 		public JSONObject jsonify() {
@@ -432,6 +433,12 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 			data.put(ActionData.ITEM_DESC, this.description);
 			data.put(ActionData.ITEM_FLAVOR_TEXT, this.flavorText);
 			data.put(ActionData.ITEM_IMG, this.imagePath);
+			data.put(ActionData.IS_LOCATION_ITEM, this.isLocationItem);
+			JSONArray use = new JSONArray();
+			for (LocationType type : this.useLocations) {
+				use.put(type.toString());
+			}
+			data.put(ActionData.USE_LOCATIONS, use);
 
 			return data;
 		}
@@ -441,7 +448,15 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 			String desc = jsonObj.getString(ActionData.ITEM_DESC);
 			String flavor = jsonObj.getString(ActionData.ITEM_FLAVOR_TEXT);
 			String img = jsonObj.getString(ActionData.ITEM_IMG);
-			return new ItemData(name, desc, flavor, img);
+			boolean isLocItem = jsonObj.getBoolean(ActionData.IS_LOCATION_ITEM);
+			Collection<LocationType> locs = new ArrayList<LocationType>();
+			JSONArray locArray = jsonObj.getJSONArray(ActionData.USE_LOCATIONS);
+			for (int i = 0; i < locArray.length(); i++) {
+				String type = locArray.get(i).toString();
+				locs.add(LocationType.valueOf(type));
+			}
+			
+			return new ItemData(name, desc, flavor, img, isLocItem, locs);
 		}
 	}
 	// =================================

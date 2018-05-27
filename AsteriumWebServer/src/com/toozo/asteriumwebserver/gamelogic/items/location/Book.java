@@ -12,6 +12,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import com.toozo.asteriumwebserver.gamelogic.GameState;
+import com.toozo.asteriumwebserver.gamelogic.Location.LocationType;
 import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 import com.toozo.asteriumwebserver.gamelogic.Stat;
 import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
@@ -78,7 +79,7 @@ public class Book extends AbstractLocationItem {
 		probsMap.put(Book::createBook, 1.0);
 		FACTORY_PROBABILITIES = Collections.unmodifiableMap(probsMap);
 	}
-
+	private static final Collection<LocationType> BOOK_LOCATIONS = Arrays.asList(LocationType.CONTROL_ROOM);
 	private static final Random RNG = new Random();
 	// =====================
 
@@ -205,7 +206,7 @@ public class Book extends AbstractLocationItem {
 	// ===== FACTORIES =====
 	public static Book createBook() {
 		// Generate a book which boosts random stats by 1
-		return new Book(1);
+		return new Book(1, BOOK_LOCATIONS);
 	}
 	// =====================
 
@@ -217,8 +218,8 @@ public class Book extends AbstractLocationItem {
 	 * @param stats
 	 *            The {@link Stat}s which this book will boost.
 	 */
-	public Book(Collection<Stat> stats) {
-		this(stats, DEFAULT_STAT_BOOST);
+	public Book(Collection<Stat> stats, Collection<LocationType> locations) {
+		this(stats, DEFAULT_STAT_BOOST, locations);
 	}
 
 	/**
@@ -228,8 +229,8 @@ public class Book extends AbstractLocationItem {
 	 * @param amount
 	 *            The amount by which this book will boost stats.
 	 */
-	public Book(final int amount) {
-		this(generateStats(), amount);
+	public Book(final int amount, Collection<LocationType> locations) {
+		this(generateStats(), amount, locations);
 	}
 
 	/**
@@ -241,8 +242,8 @@ public class Book extends AbstractLocationItem {
 	 * @param amount
 	 *            The amount by which this book will boost stats.
 	 */
-	public Book(Collection<Stat> stats, final int amount) {
-		this(generateName(stats), generateDescription(stats), getRandomFlavorText(stats), stats, amount);
+	public Book(Collection<Stat> stats, final int amount, Collection<LocationType> locations) {
+		this(generateName(stats), generateDescription(stats), getRandomFlavorText(stats), stats, amount, locations);
 	}
 
 	/**
@@ -256,8 +257,8 @@ public class Book extends AbstractLocationItem {
 	 *            The amount by which this book will boost stats.
 	 */
 	public Book(final String name, final String description, final String flavor, final Collection<Stat> stats,
-			final int amount) {
-		super(name, description, flavor, IMG);
+			final int amount, Collection<LocationType> locationsCanBeUsedIn) {
+		super(name, description, flavor, IMG, locationsCanBeUsedIn);
 		this.stats = stats;
 		this.effect = (oldStat) -> (oldStat + amount);
 	}

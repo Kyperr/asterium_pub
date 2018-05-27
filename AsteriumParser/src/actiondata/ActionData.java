@@ -86,6 +86,8 @@ public interface ActionData {
 	public static final String ITEM_FLAVOR_TEXT = "item_flavor_text";
 	public static final String ITEM_IMG = "item_image";
 	public static final String ICON = "icon";
+	public static final String IS_LOCATION_ITEM = "is_location_item";
+	public static final String USE_LOCATIONS = "use_locations";
 	public static final String LOCATION_ID = "location_id";
 	public static final String LOCATION_TYPE = "location_type";
 	public static final String LOCATION_NAME = "location_name";
@@ -95,6 +97,7 @@ public interface ActionData {
 	public static final String VICTORY_CONDITIONS = "victory_conditions";
 	public static final String PLAYER_READY_STATUS = "player_ready_status";
 	public static final String DISPLAY_STATS = "display_stats";
+	public static final String IS_PARASITE = "is_parasite";
 	
 	/**
 	 * 
