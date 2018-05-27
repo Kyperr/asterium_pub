@@ -6,6 +6,8 @@ function processQueryIsInGameResponse(response) {
         var isInGame = response.query_is_in_game.is_in_game;
         if (isInGame) {
             waitingForPlayersDisplayController.display();
+            gameTabsDisplayController.display();
+            viewInventoryDisplayController.display();
         } else {
             joinLobbyDisplayController.display();
         }

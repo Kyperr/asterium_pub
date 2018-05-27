@@ -17,11 +17,11 @@ JoinLobbyDisplayController.prototype.constructor = JoinLobbyDisplayController;
 JoinLobbyDisplayController.prototype.init = function () {
     this.nameInput.setAttribute("id", "name");
     this.nameInput.setAttribute("name", "name");
-    this.nameInput.setAttribute("class", "inputField");
+    this.nameInput.setAttribute("class", "input-text");
 
     this.lobby_id.setAttribute("id", "lobby_id");
     this.lobby_id.setAttribute("name", "lobby_id");
-    this.lobby_id.setAttribute("class", "inputField");
+    this.lobby_id.setAttribute("class", "input-text");
 
     this.btn.innerHTML = 'Join Lobby';
     this.btn.setAttribute("onClick", "joinAsPlayer()");
@@ -29,15 +29,18 @@ JoinLobbyDisplayController.prototype.init = function () {
 }
 
 JoinLobbyDisplayController.prototype.display = function () {
-    var div = document.getElementById("centralDiv");
+    var div = document.getElementById("action");
+    div.style.display = "block";
     
     div.innerHTML = "";
 
     div.appendChild(document.createElement("br"));//Ew, all these br's. Use CSS, Daniel! Sincerely, Daniel.
 
-    div.innerHTML += "<b>Join a lobby:</b>";
+    var joinDiv = document.createElement("div");
+    joinDiv.setAttribute("class", "leading");
+    joinDiv.innerHTML = "Join A Lobby";
+    div.appendChild(joinDiv);
     
-    div.appendChild(document.createElement("br"));
     div.appendChild(document.createElement("br"));
 
     div.innerHTML += "Name:";
@@ -46,7 +49,6 @@ JoinLobbyDisplayController.prototype.display = function () {
 
     div.appendChild(this.nameInput);
 
-    div.appendChild(document.createElement("br"));
     div.appendChild(document.createElement("br"));
 
     div.innerHTML += "Lobby ID:";

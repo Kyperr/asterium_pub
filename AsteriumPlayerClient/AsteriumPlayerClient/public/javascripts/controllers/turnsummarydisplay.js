@@ -18,7 +18,7 @@ TurnSummaryDisplayController.prototype.init = function () {
 }
 
 TurnSummaryDisplayController.prototype.display = function () {
-    var div = document.getElementById("centralDiv");
+    var div = document.getElementById("action");
 
     div.innerHTML = "<b>Turn Summary(Not implemented).</b>";
     div.innerHTML += "<br/>";
