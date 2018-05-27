@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;probLen&apos; in &apos;com.toozo.asteriumwebserver.gamelogic.items.LootPool.loot(...)&apos; to &apos;probLength&apos;&#x0A;- Original project: &apos;AsteriumWebServer&apos;&#x0A;- Original element: &apos;com.toozo.asteriumwebserver.gamelogic.items.LootPool.loot(PlayerCharacter).probLen&apos;&#x0A;- Renamed element: &apos;probLen&apos;&#x0A;- Update references to refactored element" description="Rename local variable &apos;probLen&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;com.toozo.asteriumwebserver.gamelogic.items{LootPool.java[LootPool~loot~QPlayerCharacter;@probLen!1441!1488!1445!1451!I!0!false" name="probLength" references="true" stamp="1527383143523" version="1.0"/>
+</session>
