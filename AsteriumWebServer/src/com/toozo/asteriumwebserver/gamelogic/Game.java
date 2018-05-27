@@ -5,8 +5,11 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.websocket.Session;
+
 import com.toozo.asteriumwebserver.actions.Action;
 import com.toozo.asteriumwebserver.exceptions.GameFullException;
+import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
 /**
  * {@link Game} representing a single game state.
@@ -16,6 +19,11 @@ import com.toozo.asteriumwebserver.exceptions.GameFullException;
 public class Game extends Thread {
 
 	// ===== STATIC FIELDS =====
+	// This thread will wake itself up every WAKEUP_MS milliseconds.
+	public static final long WAKEUP_MS = 10000;
+	
+	public static final boolean VERBOSE = true;
+	
 	// The character set used to generate random strings.
 	private static final String CHAR_SET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -27,11 +35,12 @@ public class Game extends Thread {
 
 	// The length of lobby IDs generated.
 	private static final int TOKEN_LENGTH = 5;
+	
 	// =========================
 
 	// ===== INSTANCE FIELDS =====
 	// Indicates that players still need this game object.
-	private boolean isNotAbandoned = true;
+	private boolean isAbandoned = false;
 
 	private final String lobbyID;
 
@@ -186,18 +195,62 @@ public class Game extends Thread {
 	// ===== OTHER INSTANCE METHODS =====
 	@Override
 	public void run() {
-		while (isNotAbandoned) {
+		while (!this.isAbandoned) {
 			try {
 				synchronized (this) {
-					wait();
+					wait(WAKEUP_MS);
 				}
+				
 				GameState state = this.getGameState();
 				state.executePhase();
+				
+				// Check if this game should be removed.
+				if (this.gameBoardList.isEmpty() && this.playerList.isEmpty()) {
+					SessionManager manager = SessionManager.getInstance();
+					String auth;
+					Session session;
+					
+					// Assume all GBs and PCs are not open.
+					this.isAbandoned = true;
+					
+					// Check if any GBs are open.
+					for (GameBoard gb : this.gameBoardList.values()) {
+						auth = gb.getAuthToken();
+						session = manager.getSession(auth);
+						
+						this.isAbandoned &= !session.isOpen();
+						
+						if (!this.isAbandoned) {
+							break;
+						}
+					}
+					
+					// If no GBs were open, check if any PCs are open.
+					if (this.isAbandoned) {
+						for (Player p : this.playerList.values()) {
+							auth = p.getAuthToken();
+							session = manager.getSession(auth);
+							
+							this.isAbandoned &= !session.isOpen();
+							
+							if (!this.isAbandoned) {
+								break;
+							}
+						}
+					}
+				}
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+		
+		// this.isAbandoned == true, so remove this game from GameManager's map of games
+		if (VERBOSE) {
+			System.out.println("Game was abandoned. Removing game...");
+		}
+		GameManager.getInstance().removeGame(this.getLobbyID());
+		
 	}
 
 	public synchronized void executePhase() {
