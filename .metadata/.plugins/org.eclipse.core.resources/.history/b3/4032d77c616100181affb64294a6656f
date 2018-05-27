@@ -27,11 +27,11 @@ import com.toozo.asteriumwebserver.gamelogic.items.consumables.RescueBeacon;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.Syringe;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.AbstractEquipmentItem;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.EquipmentSlot;
-import com.toozo.asteriumwebserver.gamelogic.items.equipment.HareyGlovesEquipmentItem;
-import com.toozo.asteriumwebserver.gamelogic.items.equipment.HoverSkatesEquipmentItem;
-import com.toozo.asteriumwebserver.gamelogic.items.equipment.LettermanJacketEquipmentItem;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.Loadout;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.TinfoilHatEquipmentItem;
+import com.toozo.asteriumwebserver.gamelogic.items.equipment.HareyGlovesEquipmentItem;
+import com.toozo.asteriumwebserver.gamelogic.items.equipment.LettermanJacketEquipmentItem;
+import com.toozo.asteriumwebserver.gamelogic.items.equipment.HoverSkatesEquipmentItem;
 import com.toozo.asteriumwebserver.gamelogic.items.location.AbstractLocationItem;
 import com.toozo.asteriumwebserver.gamelogic.items.location.Book;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
@@ -178,7 +178,7 @@ public class GameState {
 		locations.put("3", cafeteria);
 		
 		Location library = new Location("Library", Location.LocationType.LIBRARY, LIBRARY_LOOT_POOL, 3);
-		library.addActivity(Activity.SEARCH, Activity.searchActivity);
+		armory.addActivity(Activity.SEARCH, Activity.searchActivity);
 		locations.put("4", library);
 		
 		Location armory = new Location("Armory", Location.LocationType.ARMORY, ARMORY_LOOT_POOL, 4);
