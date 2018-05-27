@@ -66,6 +66,12 @@ public final class GameManager {
 		// Put the Game in the game map. 
 		gameMap.put(game.getLobbyID(), game);
 	}
+	
+	public void removeGame(final String lobbyID) {
+		if (lobbyID != null) {
+			this.gameMap.remove(lobbyID);
+		}
+	}
 
 	/**
 	 * Checks to see if the given lobby ID is already in use by a {@link Game}.
