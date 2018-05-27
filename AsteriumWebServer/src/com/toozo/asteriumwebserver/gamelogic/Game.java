@@ -231,7 +231,7 @@ public class Game extends Thread {
 			this.playerReadyMap.put(authToken, false);
 
 			// Add PlayerCharacter to GameState
-			PlayerCharacter character = new PlayerCharacter();
+			PlayerCharacter character = new PlayerCharacter(player.getPlayerName());
 			this.getGameState().addPlayerCharacter(authToken, character);
 
 			// Register with GameManager

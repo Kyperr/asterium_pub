@@ -10,47 +10,6 @@ import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 import com.toozo.asteriumwebserver.gamelogic.Stat;
 
 public class LootPool {
-	/*
-	ItemSupplier(Supplier<Item> item, float basePercentChange, float luckWeight, float intuitionWeight)
-    -getItem
-    -getBaseChance
-    -getLuckWeight
-    -getIntuitionWeight
-    -getEffectiveChance(Stats stats)//Idk about this.
-    
-Note: The above ItemSupplier class could also take a Function<Game, Boolean> that could be used
-to make the item conditional. An example of this would be an item that is only available if 
-nobody already has the item, such as a victory condition item. Essentially, if the function 
-supplier returns false, the getEffectiveChance() will return 0.0
-
-    
-LootPool(List<ItemSupplier> itemSuppliers)
-    -List<ItemSupplier>
-    -getRandomItem()//This would simply use the ItemSupplier.baseChance
-    -getRandomItemFor(Player p)//This would weight probabilities on the p's stats.
-    
-	// Here is a rough example of how this could work.
-    public Item getRandomItemFor(Player p){
-    
-        int totalSumChance = 0f;
-        
-        for(ItemSupplier is : this.itemSuppliers){
-            totalSumChance += is.getEffectiveChance(p.getStats());
-        }
-        
-        int index = this.(secure rand).nextFloat(totalSumChance);
-        int sum = 0;
-        int i = 0;
-        while(sum < index){
-            sum += this.itemSuppliers.get(i++).getEffectiveChance(p.getStats());
-        }
-        
-        ItemSupplier randIS = this.itemSuppliers.get(Math.max(0, i-1));
-        return randIS.getItem();
-    
-    }
-    */
-	
 	// ===== CONSTANTS =====
 	// index = number of items, array[index] = chance of getting that many
 	public static final double[] NUMBER_ITEMS_PROBABILITIES = {0.00, 0.50, 0.25, 0.15, 0.07, 0.03};

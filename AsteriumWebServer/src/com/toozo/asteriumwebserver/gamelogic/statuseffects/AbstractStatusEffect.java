@@ -165,7 +165,7 @@ public abstract class AbstractStatusEffect {
 	 * @param unmodifiedExposureGained The amount of exposure would have been gained before this took effect.
 	 * @return The amount of exposure which should be gained after this took effect.
 	 */
-	public int affectExposureGained(int unmodifiedExposureGained) {
+	public double affectExposureGained(double unmodifiedExposureGained) {
 		return unmodifiedExposureGained;
 	}
 	// ===================

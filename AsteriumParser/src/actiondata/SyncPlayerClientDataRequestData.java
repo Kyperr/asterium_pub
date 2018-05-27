@@ -30,8 +30,8 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 	private int fuel;
 	private int day;
 	private List<LocationData> locations;
-	private PlayerCharacterData character;
-	private Collection<String> characters;
+	private SyncPlayerClientDataRequestData.PlayerCharacterData yourCharacter;
+	private Collection<String> characterNames;
 	private List<InventoryData> inventory;
 	private String gamePhaseName;
 
@@ -44,8 +44,8 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		this.fuel = fuel;
 		this.day = day;
 		this.locations = locations;
-		this.character = character;
-		this.characters = characters;
+		this.yourCharacter = character;
+		this.characterNames = characters;
 		this.inventory = inventory;
 		this.gamePhaseName = gamePhaseName;
 	}
@@ -63,9 +63,9 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		data.put(ActionData.FUEL, this.fuel);
 		data.put(ActionData.DAY, this.day);
 		data.put(ActionData.LOCATIONS, array);
-		data.put(ActionData.CHARACTER, this.character.jsonify());
+		data.put(ActionData.CHARACTER, this.yourCharacter.jsonify());
 		JSONArray charactersArray = new JSONArray();
-		for (String s : this.characters) {
+		for (String s : this.characterNames) {
 			charactersArray.put(s);
 		}
 		data.put(ActionData.CHARACTERS, charactersArray);
@@ -95,6 +95,7 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		PlayerCharacterData character;
 		JSONObject characterObj = jsonObj.getJSONObject(ActionData.CHARACTER);
 		String characterName = characterObj.getString(ActionData.CHARACTER_NAME);
+		boolean isParasite = characterObj.getBoolean(ActionData.IS_PARASITE);
 		// character stats
 		JSONObject statsObj = characterObj.getJSONObject(ActionData.STATS);
 		Integer health = statsObj.getInt(ActionData.HEALTH);
@@ -139,7 +140,13 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		boolean turnTaken = characterObj.getBoolean(ActionData.TURN_TAKEN);
 		boolean ready = characterObj.getBoolean(ActionData.READY);
 
-		character = new PlayerCharacterData(characterName, stats, personalInv, loadout, turnTaken, ready);
+		character = new PlayerCharacterData(characterName, 
+											isParasite, 
+											stats, 
+											personalInv, 
+											loadout, 
+											turnTaken, 
+											ready);
 
 		// build locations
 		JSONArray locationsArray = jsonObj.getJSONArray(ActionData.LOCATIONS);
@@ -240,16 +247,22 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 	public static class PlayerCharacterData {
 
 		private String name;
+		private boolean isParasite;
 		private StatsData stats;
 		private List<InventoryData> inventory;
 		private LoadoutData equipped;
 		private boolean turnTaken;
 		private boolean ready;
 
-		public PlayerCharacterData(final String characterName, final StatsData stats,
-				final List<InventoryData> inventory, final LoadoutData equipped, 
-				final boolean turnTaken, final boolean ready) {
+		public PlayerCharacterData(final String characterName, 
+								   final boolean isParasite,
+								   final StatsData stats,
+								   final List<InventoryData> inventory, 
+								   final LoadoutData equipped, 
+								   final boolean turnTaken, 
+								   final boolean ready) {
 			this.name = characterName;
+			this.isParasite = isParasite;
 			this.stats = stats;
 			this.inventory = inventory;
 			this.equipped = equipped;
@@ -260,6 +273,7 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		public JSONObject jsonify() {
 			JSONObject data = new JSONObject();
 			data.put(ActionData.CHARACTER_NAME, this.name);
+			data.put(ActionData.IS_PARASITE, this.isParasite);
 			data.put(ActionData.STATS, this.stats.jsonify());
 			JSONArray inventoryArray = new JSONArray();
 			for (InventoryData item : this.inventory) {

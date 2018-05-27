@@ -27,7 +27,8 @@ public class AffectStats extends AbstractStatusEffect {
 	 *            (e.g. (x) -> x + 1).
 	 */
 	public AffectStats(PlayerCharacter owner, Map<Stat, Function<Integer, Integer>> statModifiers) {
-		this(owner, AbstractStatusEffect.DEFAULT_NAME, statModifiers);
+		super(owner);
+		this.initialize(statModifiers);
 	}
 
 	/**
@@ -37,7 +38,8 @@ public class AffectStats extends AbstractStatusEffect {
 	 *            The name of this AffectStats (e.g. "Reduced Luck").
 	 */
 	public AffectStats(PlayerCharacter owner, String name, Map<Stat, Function<Integer, Integer>> statModifiers) {
-		this(owner, name, AbstractStatusEffect.DEFAULT_DURATION, statModifiers);
+		super(owner, name);
+		this.initialize(statModifiers);
 	}
 
 	/**
@@ -57,9 +59,13 @@ public class AffectStats extends AbstractStatusEffect {
 	public AffectStats(PlayerCharacter owner, String name, int duration,
 			Map<Stat, Function<Integer, Integer>> statModifiers) {
 		super(owner, name, duration);
-		this.statModifiers = statModifiers;
+		this.initialize(statModifiers);
 	}
 
+	private void initialize(Map<Stat, Function<Integer, Integer>> modifiers) {
+		this.statModifiers = modifiers;
+	}
+	
 	@Override
 	/**
 	 * Applies the statModifier to the stat.
