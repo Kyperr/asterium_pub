@@ -29,7 +29,8 @@ JoinLobbyDisplayController.prototype.init = function () {
 }
 
 JoinLobbyDisplayController.prototype.display = function () {
-    var div = document.getElementById("centralDiv");
+    var div = document.getElementById("action");
+    div.style.display = "block";
     
     div.innerHTML = "";
 

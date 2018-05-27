@@ -110,9 +110,10 @@
    background-color: #44424d;
    color: #ffffff;
  }
+
  header {
    font-family: 'Quicksand';
-   padding: 50px 10px;
+   padding: 20px 10px;
    color: #fff;
    font-size: 25px;
    text-align: center;
@@ -128,13 +129,14 @@
    /*width: 500px;
    margin: 50px auto;*/
    overflow: hidden;
-   width: 75%;
+   width: 100%;
    margin: auto;
  }
  .main-content {
    float: center;
    /*width: 300px;*/
    max-width: 500px;
+   width: 100%;
    margin: auto;
  }
  .main-content p {
@@ -143,7 +145,7 @@
  
  .sidebar {
    float: left;
-   width: 200px;
+   width: 100%;
  }
  
  .sidebar .widget h1 {
@@ -166,7 +168,7 @@
  }
  
  footer {
-   width: 500px;
+   width: 100%;
    margin: 50px auto;
    border-top: 1px dotted #ccc;
    padding-top: 5px;
@@ -180,7 +182,7 @@
    font-size: medium;
  }
  
-  #centralDiv {
+  #action, #inventory, #character {
    padding-right: 10px;
    padding-left: 10px;
    padding-top: 20px;
@@ -209,7 +211,6 @@
 
 
 .modal{
-  
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -224,7 +225,7 @@
 }
 
  .modal-content {
-  background-color: #fefefe;
+  background-color: #44424d;
   margin: auto;
   padding: 20px;
   border: 1px solid #888;
@@ -305,7 +306,6 @@ outline: 0 !important;
 
 .input-text {
   display: block;
-  margin: 10px;
   padding: var(--inputPaddingV) var(--inputPaddingH);
   color: inherit;
   width: 100%;
@@ -364,4 +364,34 @@ outline: 0 !important;
     transform var(--inputTransitionDuration),
     visibility 0ms,
     z-index 0ms;
+}
+
+/* Style tab links */
+.tabDiv {
+  display: none; 
+  width: 100%; 
+}
+
+.tablink {
+  background-color: #555;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  margin-bottom: 2em;
+  font-size: 17px;
+  width: 33.333%;
+}
+
+.tablink:hover {
+  background-color: #777;
+}
+
+.tabcontent {
+  color: white;
+  display: none;
+  padding-top: 100px;
+  height: 100%;
 }

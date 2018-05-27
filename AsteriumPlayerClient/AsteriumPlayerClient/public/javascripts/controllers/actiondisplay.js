@@ -33,7 +33,7 @@ ActionDisplayController.prototype.init = function () {
 }
 
 ActionDisplayController.prototype.display = function () {
-    var div = document.getElementById("centralDiv");
+    var div = document.getElementById("action");
 
     console.log("action");
 

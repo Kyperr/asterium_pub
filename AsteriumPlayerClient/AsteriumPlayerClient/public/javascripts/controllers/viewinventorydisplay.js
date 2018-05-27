@@ -41,7 +41,7 @@ ViewInventoryDisplayController.prototype.init = function () {
 }
 
 ViewInventoryDisplayController.prototype.display = function () {
-    var div = document.getElementById("centralDiv");
+    var div = document.getElementById("inventory");
 
     div.innerHTML = "";
 
@@ -104,10 +104,10 @@ ViewInventoryDisplayController.prototype.selectInventory = function (inventory, 
     this.selectedInventory = inventory;
     this.isCommunal = isCommunal;
 
-    var div = document.getElementById("centralDiv");
+    var div = document.getElementById("action");
 
     this.modalContent.innerHTML = inventory.item_name + ":<br/>";
-    this.modalContent.innerHTML += "Description: {Item Description}.";
+    this.modalContent.innerHTML += inventory.item_description;
 
     this.modalContent.appendChild(document.createElement("br"));
 

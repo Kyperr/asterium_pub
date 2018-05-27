@@ -22,7 +22,7 @@ ActivityDisplayController.prototype.init = function () {
 
 
 ActivityDisplayController.prototype.display = function () {
-    var div = document.getElementById("centralDiv");
+    var div = document.getElementById("action");
 
     var location = locationsDisplayController.selectedLocation;
 
@@ -45,12 +45,13 @@ ActivityDisplayController.prototype.display = function () {
     var locationItemDiv = document.createElement("div");
     locationItemDiv.setAttribute("class", "itemDiv");
 
+    var counter = 0;
     personalInventory.forEach(inventory => {
 
         if (inventory.is_location_item) {
             inventory.use_locations.forEach((location) => {
                 if (location.location_type == location.location_type) {
-
+                    counter++;
                     var btnInventory = document.createElement("BUTTON");
                     btnInventory.innerHTML = inventory.item_name;
                     btnInventory.onclick = function () {
@@ -64,7 +65,7 @@ ActivityDisplayController.prototype.display = function () {
         }
     });
 
-    if (personalInventory.length == 0) {
+    if (counter == 0) {
         locationItemDiv.innerHTML = "Empty..."
     }
 

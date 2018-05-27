@@ -29,15 +29,52 @@ public class Location {
 		}
 	}
 	
+	public enum LocationTier {
+		TIER_0(0, 0, 2), 
+		TIER_1(1, 4, 5), 
+		TIER_2(2, 7, 8);
+		
+		private final int tier;		
+		private final int start;		
+		private final int end;
+		
+		LocationTier(final int tier, final int start, final int end) {
+			this.tier = tier;
+			this.start = start;
+			this.end = end;
+		}
+		
+		public int getTier() {
+			return this.tier;
+		}
+		
+		public int getStartPosition() {
+			return this.start;
+		}
+		
+		public int getEndPosition() {
+			return this.end;
+		}
+	}
+	
 	private final LocationType type;
 	private final String name;
 	private LootPool loot;
+	private int position;
+	private LocationTier tier;
 	private Map<String, Activity> activities = new HashMap<String, Activity>();
 	
-	public Location(final String name, final LocationType type, final LootPool lootPool) {
+	public Location(final String name, final LocationType type, final LootPool lootPool, final int position) {
 		this.name = name;
 		this.type = type; 
 		this.loot = lootPool;
+		this.position = position;
+		for (LocationTier ltier : LocationTier.values()) {
+			if (position <= ltier.getEndPosition() && position >= ltier.getStartPosition()) {
+				this.tier = ltier;
+				break;
+			}
+		}
 	}
 	
 	public final String getName() {
@@ -46,6 +83,14 @@ public class Location {
 	
 	public final LocationType getType() {
 		return this.type;
+	}
+	
+	public final LocationTier getTier() {
+		return this.tier;
+	}
+	
+	public final int getCost() {
+		return this.position + this.tier.getTier();
 	}
 	
 	public void addActivity(final String name, final Activity activity) {
