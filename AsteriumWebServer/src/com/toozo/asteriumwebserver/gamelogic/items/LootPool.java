@@ -56,8 +56,13 @@ public class LootPool {
 		// Determine the number of items that should be returned
 		double random = RNG.nextDouble();
 		int itemsToLoot;
-		for (itemsToLoot = 0; itemsToLoot < probLength &&
-							  random > NUMBER_ITEMS_PROBABILITIES[itemsToLoot]; itemsToLoot++);
+		
+		//for (itemsToLoot = 0; itemsToLoot < probLength && random > NUMBER_ITEMS_PROBABILITIES[itemsToLoot]; itemsToLoot++);
+		
+		itemsToLoot = 0;
+		while (itemsToLoot < probLength && random > NUMBER_ITEMS_PROBABILITIES[itemsToLoot]) {
+			itemsToLoot++;
+		}
 		
 		// Maybe get extra item for luck
 		random = RNG.nextDouble();
