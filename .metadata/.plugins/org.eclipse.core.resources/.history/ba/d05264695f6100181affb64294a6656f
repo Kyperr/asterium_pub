@@ -91,11 +91,10 @@ public class GameState {
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 
-		probs.add(new ItemLoot(TinfoilHatEquipmentItem::new, 25, 0.0, 0.0));
-		probs.add(new ItemLoot(HareyGlovesEquipmentItem::new, 25, 0.0, 0.0));
-		probs.add(new ItemLoot(HoverSkatesEquipmentItem::new, 25, 0.0, 0.0));
-		probs.add(new ItemLoot(LettermanJacketEquipmentItem::new, 25, 0.0, 0.0));
-		probs.add(new ItemLoot(RescueBeacon::new, 1, 0.0, 0.0));
+		probs.add(new ItemLoot(TinfoilHatEquipmentItem::new, 40, 0.0, 0.0));
+		probs.add(new ItemLoot(HareyGlovesEquipmentItem::new, 20, 0.0, 0.0));
+		probs.add(new ItemLoot(HoverSkatesEquipmentItem::new, 5, 0.0, 0.0));
+		probs.add(new ItemLoot(LettermanJacketEquipmentItem::new, 10, 0.0, 0.0));
 
 		ARMORY_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}

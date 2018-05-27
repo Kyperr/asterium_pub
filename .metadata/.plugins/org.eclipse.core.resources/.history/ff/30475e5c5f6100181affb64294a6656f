@@ -63,10 +63,10 @@ public class GameState {
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 
-		probs.add(new ItemLoot(Bandage::new, 60, 0.0, 0.0));
-		probs.add(new ItemLoot(Medkit::new, 30, 0.0, 0.0));
-		probs.add(new ItemLoot(Syringe::new, 9, 0.0, 0.0));
-		probs.add(new ItemLoot(RescueBeacon::new, 1, 0.0, 0.0));
+		probs.add(new ItemLoot(Bandage::new, 40, 0.0, 0.0));
+		probs.add(new ItemLoot(Medkit::new, 20, 0.0, 0.0));
+		probs.add(new ItemLoot(Syringe::new, 5, 0.0, 0.0));
+		probs.add(new ItemLoot(RescueBeacon::new, 10, 0.0, 0.0));
 
 		MEDBAY_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
@@ -77,10 +77,10 @@ public class GameState {
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 
-		probs.add(new ItemLoot(FoodPack::new, 60, 0.0, 0.0));
-		probs.add(new ItemLoot(FoodCrate::new, 30, 0.0, 0.0));
-		probs.add(new ItemLoot(FoodChest::new, 9, 0.0, 0.0));
-		probs.add(new ItemLoot(RescueBeacon::new, 1, 0.0, 0.0));
+		probs.add(new ItemLoot(FoodPack::new, 40, 0.0, 0.0));
+		probs.add(new ItemLoot(FoodCrate::new, 20, 0.0, 0.0));
+		probs.add(new ItemLoot(FoodChest::new, 5, 0.0, 0.0));
+		probs.add(new ItemLoot(RescueBeacon::new, 10, 0.0, 0.0));
 
 		CAFETERIA_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
@@ -91,11 +91,10 @@ public class GameState {
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 
-		probs.add(new ItemLoot(TinfoilHatEquipmentItem::new, 25, 0.0, 0.0));
-		probs.add(new ItemLoot(HareyGlovesEquipmentItem::new, 25, 0.0, 0.0));
-		probs.add(new ItemLoot(HoverSkatesEquipmentItem::new, 25, 0.0, 0.0));
-		probs.add(new ItemLoot(LettermanJacketEquipmentItem::new, 25, 0.0, 0.0));
-		probs.add(new ItemLoot(RescueBeacon::new, 1, 0.0, 0.0));
+		probs.add(new ItemLoot(TinfoilHatEquipmentItem::new, 40, 0.0, 0.0));
+		probs.add(new ItemLoot(HareyGlovesEquipmentItem::new, 20, 0.0, 0.0));
+		probs.add(new ItemLoot(HoverSkatesEquipmentItem::new, 5, 0.0, 0.0));
+		probs.add(new ItemLoot(LettermanJacketEquipmentItem::new, 10, 0.0, 0.0));
 
 		ARMORY_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
