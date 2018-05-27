@@ -22,6 +22,9 @@ import com.toozo.asteriumwebserver.gamelogic.items.consumables.Bandage;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodChest;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodCrate;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodPack;
+import com.toozo.asteriumwebserver.gamelogic.items.consumables.FuelBarrel;
+import com.toozo.asteriumwebserver.gamelogic.items.consumables.FuelCanister;
+import com.toozo.asteriumwebserver.gamelogic.items.consumables.FuelCell;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.Medkit;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.RescueBeacon;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.Syringe;
@@ -125,6 +128,33 @@ public class GameState {
 		LIBRARY_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
 	public static final LootPool LIBRARY_LOOT_POOL = new LootPool(LIBRARY_ITEM_LOOT);
+	
+	// Engine Room
+	public static final List<ItemLoot> ENGINE_ROOM_ITEM_LOOT;
+	static {
+		List<ItemLoot> probs = new ArrayList<ItemLoot>();
+
+		probs.add(new ItemLoot(FuelCanister::new, 30, 0.0, 0.0));
+		probs.add(new ItemLoot(FuelBarrel::new, 10, 0.0, 0.0));
+		probs.add(new ItemLoot(RescueBeacon::new, 60, 0.0, 0.0));
+
+		ENGINE_ROOM_ITEM_LOOT = Collections.unmodifiableList(probs);
+	}
+	public static final LootPool ENGINE_ROOM_LOOT_POOL = new LootPool(ENGINE_ROOM_ITEM_LOOT);
+	
+	// Vehicle Bay
+	public static final List<ItemLoot> VEHICLE_BAY_ITEM_LOOT;
+	static {
+		List<ItemLoot> probs = new ArrayList<ItemLoot>();
+
+		probs.add(new ItemLoot(FuelCell::new, 50, 0.0, 0.0));
+		probs.add(new ItemLoot(FuelCanister::new, 25, 0.0, 0.0));
+		probs.add(new ItemLoot(FuelBarrel::new, 10, 0.0, 0.0));
+		probs.add(new ItemLoot(RescueBeacon::new, 15, 0.0, 0.0));
+
+		VEHICLE_BAY_ITEM_LOOT = Collections.unmodifiableList(probs);
+	}
+	public static final LootPool VEHICLE_BAY_LOOT_POOL = new LootPool(VEHICLE_BAY_ITEM_LOOT);
 
 	public enum GamePhase {
 
@@ -186,6 +216,13 @@ public class GameState {
 		armory.addActivity(Activity.SEARCH, Activity.searchActivity);
 		locations.put("5", armory);
 		
+		Location vehicleBay = new Location("Vehicle Bay", Location.LocationType.VEHICLE_BAY, VEHICLE_BAY_LOOT_POOL, 5);
+		vehicleBay.addActivity(Activity.SEARCH, Activity.searchActivity);
+		locations.put("6", vehicleBay);
+		
+		Location engineRoom = new Location("Engine Room", Location.LocationType.ENGINE_ROOM, ENGINE_ROOM_LOOT_POOL, 6);
+		engineRoom.addActivity(Activity.SEARCH, Activity.searchActivity);
+		locations.put("7", engineRoom);
 	};
 	// =========================
 

@@ -1,0 +1,16 @@
+package com.toozo.asteriumwebserver.gamelogic.items.consumables;
+
+import java.util.Collection;
+
+import com.toozo.asteriumwebserver.gamelogic.GameState;
+import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
+
+public abstract class AbstractFuelItem extends AbstractConsumableItem {
+
+	@Override
+	public void applyEffect(GameState state, PlayerCharacter user, Collection<PlayerCharacter> targets) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
