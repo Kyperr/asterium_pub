@@ -29,6 +29,8 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 	private int food;
 	private int fuel;
 	private int day;
+	private boolean gameOver;
+	private boolean humansWon;
 	private Collection<LocationData> locations;
 	private Collection<SyncGameBoardDataRequestData.PlayerCharacterData> players;
 	private Collection<SyncGameBoardDataRequestData.VictoryData> victoryConditions;
@@ -49,14 +51,20 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 	 * @param victoryConditions
 	 *            The victory conditions.
 	 */
-	public SyncGameBoardDataRequestData(final Integer food, final Integer fuel, final Integer day,
-			final Collection<LocationData> locations,
-			final Collection<SyncGameBoardDataRequestData.PlayerCharacterData> players,
-			final Collection<SyncGameBoardDataRequestData.VictoryData> victoryConditions,
-			final Collection<ItemData> communalInventory, final String gamePhaseName) {
+	public SyncGameBoardDataRequestData(final int food, 
+										final int fuel, 
+										final int day,
+										final boolean gameOver,
+										final boolean humansWon,
+										final Collection<LocationData> locations,
+										final Collection<SyncGameBoardDataRequestData.PlayerCharacterData> players,
+										final Collection<SyncGameBoardDataRequestData.VictoryData> victoryConditions,
+										final Collection<ItemData> communalInventory, final String gamePhaseName) {
 		super(ActionData.SYNC_GAME_BOARD_DATA);
 		this.food = food;
 		this.fuel = fuel;
+		this.gameOver = gameOver;
+		this.humansWon = humansWon;
 		this.locations = locations;
 		this.players = players;
 		this.victoryConditions = victoryConditions;
@@ -72,6 +80,8 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 		data.put(ActionData.FOOD, this.food);
 		data.put(ActionData.FUEL, this.fuel);
 		data.put(ActionData.DAY, this.day);
+		data.put(ActionData.GAME_OVER, this.gameOver);
+		data.put(ActionData.HUMANS_WON, this.humansWon);
 
 		// Add players to data
 		JSONArray players = new JSONArray();
@@ -115,12 +125,13 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 	 */
 	public static SyncGameBoardDataRequestData parseArgs(final JSONObject jsonObj) throws JSONException {
 		// Parse resources
-		Integer food = jsonObj.getInt(ActionData.FOOD);
-		Integer fuel = jsonObj.getInt(ActionData.FUEL);
-		Integer day = jsonObj.getInt(ActionData.DAY);
+		int food = jsonObj.getInt(ActionData.FOOD);
+		int fuel = jsonObj.getInt(ActionData.FUEL);
+		int day = jsonObj.getInt(ActionData.DAY);
+		boolean gameOver = jsonObj.getBoolean(ActionData.GAME_OVER);
+		boolean humansWon = jsonObj.getBoolean(ActionData.HUMANS_WON);
 
 		// Parse array of locations
-
 		JSONArray locationsArray = jsonObj.getJSONArray(ActionData.LOCATIONS);
 		List<LocationData> locations = new ArrayList<LocationData>();
 		for (int i = 0; i < locationsArray.length(); i++) {
@@ -176,8 +187,9 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 		String gamePhaseName = jsonObj.getString(ActionData.GAME_PHASE_NAME);
 
 		// Construct and return
-		return new SyncGameBoardDataRequestData(food, fuel, day, locations, players, victories, communalInventory,
-				gamePhaseName);
+		return new SyncGameBoardDataRequestData(food, fuel, day, gameOver, humansWon, 
+												locations, players, victories, 
+												communalInventory, gamePhaseName);
 	}
 
 	public Integer getFood() {

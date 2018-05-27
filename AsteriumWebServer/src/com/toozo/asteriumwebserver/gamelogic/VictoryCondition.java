@@ -158,10 +158,17 @@ public class VictoryCondition {
 	}
 
 	/**
-	 * @return If this VictoryConditio is a parasite victory condition. 
+	 * @return If this VictoryCondition is a parasite victory condition. 
 	 */
 	public boolean isForParasite() {
 		return this.forParasite;
+	}
+	
+	/**
+	 * @return If this VictoryCondition is for humans.
+	 */
+	public boolean isForHumans() {
+		return !this.isForParasite();
 	}
 	
 	/**

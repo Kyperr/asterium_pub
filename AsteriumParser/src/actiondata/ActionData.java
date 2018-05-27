@@ -95,6 +95,8 @@ public interface ActionData {
 	public static final String PLAYER_READY_STATUS = "player_ready_status";
 	public static final String DISPLAY_STATS = "display_stats";
 	public static final String IS_PARASITE = "is_parasite";
+	public static final String GAME_OVER = "is_game_over";
+	public static final String HUMANS_WON = "humans_won";
 	public static final String YOU_WON = "you_won";
 	
 	/**

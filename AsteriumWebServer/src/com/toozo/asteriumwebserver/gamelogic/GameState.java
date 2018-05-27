@@ -197,7 +197,7 @@ public class GameState {
 	private int fuel;
 	private int day;
 	private boolean gameOver;
-	private boolean playersWon;
+	private boolean humansWon;
 	private Map<String, PlayerCharacter> authCharacterMap;
 	private Map<String, PlayerCharacter> nameCharacterMap;
 	// An ordered list of victory conditions, where the index is the tie-breaker priority.
@@ -279,35 +279,45 @@ public class GameState {
 
 		state.setFood(state.getFood() - (FOOD_DECREMENT_PER_PLAYER * state.game.getPlayers().size()));
 		state.setFuel(state.getFuel() - FUEL_DECREMENT);
-
-		if (state.getCompleteVictoryConditions().size() >= 1) {
+		
+		// Check victory conditions
+		for (VictoryCondition vc : state.getVictoryConditions()) {
+			if (vc.isComplete(state)) {
+				state.setGameOver(true);
+				state.setHumansWon(vc.isForHumans());
+			}
+		}
+		
+		// Run all player's actions
+		for (Player player : state.game.getPlayers()) {
+			String auth = player.getAuthToken();
+			Runnable action = state.game.getTurnAction(auth);
+			action.run();
+		}
+		
+		// Clear action queue
+		state.game.resetTurnActionMap();
+		
+		// Resolve victory conditions or handle turn actions.
+		if (state.gameOver()) {
 			if (VERBOSE) {
 				System.out.println("Game complete. Displaying end summary...");
 			}
-			state.gameOver = true;
 			
 			state.setGamePhase(GamePhase.END_SUMMARY);
 		} else {
 			if (VERBOSE) {
 				System.out.println("Turns resolved. New turns phase...");
 			}
+
+			// TODO Implement turn summaries phase and go there instead.
 			state.setGamePhase(GamePhase.PLAYER_TURNS);
-
-			// Should run everyone's actions here.
-			for (Player player : state.game.getPlayers()) {
-				String auth = player.getAuthToken();
-				Runnable action = state.game.getTurnAction(auth);
-				action.run();
-			}
-
-			state.game.resetTurnActionMap();
 		}
+		
 		state.gamePhase.executePhase(state);
 	}
 
 	private static final void initiateEndSummaryPhase(GameState state) {
-		// TODO Notify game board the game is over and clients that the game is over and
-		// if they won or lost. Wrap up.
 		state.syncPlayerClients();
 		try {
 			syncGameBoards(state);
@@ -375,8 +385,13 @@ public class GameState {
 			itemDatas.add(itemData);
 		}
 
-		ActionData syncGBRequestData = new SyncGameBoardDataRequestData(food, fuel, day, loc, playerDatas, victoryDatas,
-				itemDatas, state.getGamePhase().toString());
+		ActionData syncGBRequestData = new SyncGameBoardDataRequestData(food, fuel, day, 
+																		state.gameOver(),
+																		state.humansWon(),
+																		loc, playerDatas, 
+																		victoryDatas,
+																		itemDatas, 
+																		state.getGamePhase().toString());
 
 		// Send sync to all GameBoards
 		for (GameBoard gameBoard : state.game.getGameBoards()) {
@@ -398,7 +413,7 @@ public class GameState {
 		this.victoryConditions = new ArrayList<VictoryCondition>();
 		this.communalInventory = new Inventory();
 		this.day = 0;
-		this.playersWon = false;
+		this.humansWon = false;
 		this.gamePhase = GamePhase.PLAYERS_JOINING;
 		if (VERBOSE) {
 			System.out.println("Player join phase...");
@@ -441,8 +456,8 @@ public class GameState {
 		return this.gameOver;
 	}
 	
-	public boolean playersWon() {
-		return this.gameOver() && this.playersWon;
+	public boolean humansWon() {
+		return this.gameOver() && this.humansWon;
 	}
 
 	/**
@@ -550,8 +565,8 @@ public class GameState {
 		this.gameOver = gameOver;
 	}
 	
-	public void setPlayersWon(boolean playersWon) {
-		this.playersWon = playersWon;
+	public void setHumansWon(boolean humansWon) {
+		this.humansWon = humansWon;
 	}
 	// ===================
 
@@ -652,6 +667,7 @@ public class GameState {
 
 	}
 
+	// This needs to be code reviewed, it's getting to be a mess.
 	public SyncPlayerClientDataRequestData createSyncPlayerClientDataRequestData(Player player) {
 		List<SyncData.LocationData> loc = new ArrayList<SyncData.LocationData>();
 
@@ -674,6 +690,9 @@ public class GameState {
 		String auth = player.getAuthToken();
 
 		PlayerCharacter pChar = getCharacter(auth);
+		
+		// Determine if this player has won or not.
+		boolean playerWon = this.gameOver() && (pChar.isParasite() ^ this.humansWon());
 
 		Collection<String> characters = new ArrayList<String>();
 		for (PlayerCharacter pc : getCharacters()) {
@@ -744,7 +763,7 @@ public class GameState {
 		SyncPlayerClientDataRequestData data = new SyncPlayerClientDataRequestData(getFood(), 
 																				   getFuel(), 
 																				   getDay(),
-																				   this.playersWon(),
+																				   playerWon,
 																				   loc,
 																				   dChar, 
 																				   characters, 
