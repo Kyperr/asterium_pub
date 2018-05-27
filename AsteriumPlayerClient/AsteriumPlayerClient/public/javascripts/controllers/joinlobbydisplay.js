@@ -35,7 +35,10 @@ JoinLobbyDisplayController.prototype.display = function () {
 
     div.appendChild(document.createElement("br"));//Ew, all these br's. Use CSS, Daniel! Sincerely, Daniel.
 
-    div.innerHTML += "<b>Join a lobby:</b>";
+    var joinDiv = document.createElement("div");
+    joinDiv.setAttribute("class", "leading");
+    joinDiv.innerHTML = "Join A lobby";
+    div.appendChild(joinDiv);
     
     div.appendChild(document.createElement("br"));
 

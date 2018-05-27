@@ -46,7 +46,7 @@ ViewInventoryDisplayController.prototype.display = function () {
     div.innerHTML = "";
 
     var persInvDiv = document.createElement("div");
-    persInvDiv.setAttribute("class", "itemSpan");
+    persInvDiv.setAttribute("class", "leading");
     persInvDiv.innerHTML = "Personal Inventory";
     div.appendChild(persInvDiv);
 
@@ -70,7 +70,7 @@ ViewInventoryDisplayController.prototype.display = function () {
     div.appendChild(personalItemDiv);
 
     var comInvDiv = document.createElement("div");
-    comInvDiv.setAttribute("class", "itemSpan");
+    comInvDiv.setAttribute("class", "leading");
     comInvDiv.innerHTML = "Communal Inventory";
     div.appendChild(comInvDiv);
 

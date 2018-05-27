@@ -108,7 +108,6 @@
  body {
    font-family: 'Georgia';
    background-color: #44424d;
-   text-decoration-color: white;
    color: #ffffff;
  }
  header {
@@ -290,7 +289,7 @@ outline: 0 !important;
   animation: none;
 }
 
-.itemSpan {
+.leading {
   margin: auto;
   text-align: center;
 
@@ -306,7 +305,7 @@ outline: 0 !important;
 
 .input-text {
   display: block;
-  margin: 0;
+  margin: 10px;
   padding: var(--inputPaddingV) var(--inputPaddingH);
   color: inherit;
   width: 100%;
@@ -317,6 +316,7 @@ outline: 0 !important;
   border: none;
   border-radius: 0.4rem;
   transition: box-shadow var(--transitionDuration);
+  color: #000000;
 }
 
 .input-text:focus {
@@ -327,6 +327,7 @@ outline: 0 !important;
 .input-label {
   display: block;
   position: absolute;
+  text-align: center; 
   bottom: 50%;
   left: 1rem;
   color: #311B92;
