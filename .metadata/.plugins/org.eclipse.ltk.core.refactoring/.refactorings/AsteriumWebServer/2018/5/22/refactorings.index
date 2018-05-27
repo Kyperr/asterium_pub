@@ -1,1 +1,5 @@
 1527383143523	Rename local variable 'probLen'
+1527457611184	Rename field 'playersWon'
+1527457649447	Rename method 'setPlayersWon'
+1527457656432	Rename local variable 'playersWon'
+1527457685457	Rename method 'playersWon'
