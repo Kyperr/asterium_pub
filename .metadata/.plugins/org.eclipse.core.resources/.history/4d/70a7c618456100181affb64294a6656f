@@ -13,9 +13,9 @@ public class LootPool {
 	// ===== CONSTANTS =====
 	// index = number of items, array[index] = chance of getting that many
 	public static final double[] NUMBER_ITEMS_PROBABILITIES = {0.00, 0.50, 0.25, 0.15, 0.07, 0.03};
-	public static final boolean VERBOSE = true;
-	
+
 	private static final Random RNG = new Random();
+	
 	// =====================
 	
 	// ===== FIELDS =====
@@ -36,7 +36,7 @@ public class LootPool {
 	
 	// ===== METHODS =====
 	/**
-	 * @return a {@link List} of {@link AbstractItem}s gained from looting this loot pool.
+	 * @return a {@link Collection} of {@link AbstractItem}s gained from looting this loot pool.
 	 */
 	public List<AbstractItem> loot(PlayerCharacter looter) {
 		List<AbstractItem> result = new ArrayList<AbstractItem>();
@@ -67,13 +67,6 @@ public class LootPool {
 		// Get that many loot items
 		for (int i = 0; i < itemsToLoot; i++) {
 			result.add(this.lootItem(looter));
-		}
-		
-		if (VERBOSE) {
-			System.out.println("\tLootPool says: Looted! Items gained:");
-			for (AbstractItem item : result) {
-				System.out.printf("\t\t%s:%s\n", item.getName(), item.getDescription());
-			}
 		}
 		
 		return result;

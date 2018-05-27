@@ -69,13 +69,6 @@ public class LootPool {
 			result.add(this.lootItem(looter));
 		}
 		
-		if (VERBOSE) {
-			System.out.println("\tLootPool says: Looted! Items gained:");
-			for (AbstractItem item : result) {
-				System.out.printf("\t\t%s:%s\n", item.getName(), item.getDescription());
-			}
-		}
-		
 		return result;
 	}
 	

@@ -17,11 +17,11 @@ JoinLobbyDisplayController.prototype.constructor = JoinLobbyDisplayController;
 JoinLobbyDisplayController.prototype.init = function () {
     this.nameInput.setAttribute("id", "name");
     this.nameInput.setAttribute("name", "name");
-    this.nameInput.setAttribute("class", "inputField");
+    this.nameInput.setAttribute("class", "input-text");
 
     this.lobby_id.setAttribute("id", "lobby_id");
     this.lobby_id.setAttribute("name", "lobby_id");
-    this.lobby_id.setAttribute("class", "inputField");
+    this.lobby_id.setAttribute("class", "input-text");
 
     this.btn.innerHTML = 'Join Lobby';
     this.btn.setAttribute("onClick", "joinAsPlayer()");
@@ -38,7 +38,6 @@ JoinLobbyDisplayController.prototype.display = function () {
     div.innerHTML += "<b>Join a lobby:</b>";
     
     div.appendChild(document.createElement("br"));
-    div.appendChild(document.createElement("br"));
 
     div.innerHTML += "Name:";
 
@@ -46,7 +45,6 @@ JoinLobbyDisplayController.prototype.display = function () {
 
     div.appendChild(this.nameInput);
 
-    div.appendChild(document.createElement("br"));
     div.appendChild(document.createElement("br"));
 
     div.innerHTML += "Lobby ID:";
