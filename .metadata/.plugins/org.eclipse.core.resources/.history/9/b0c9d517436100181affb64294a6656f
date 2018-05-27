@@ -254,13 +254,19 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		private boolean turnTaken;
 		private boolean ready;
 
+<<<<<<< HEAD
 		public PlayerCharacterData(final String characterName, 
 								   final boolean isParasite,
 								   final StatsData stats,
-								   final List<ItemData> inventory, 
+								   final List<InventoryData> inventory, 
 								   final LoadoutData equipped, 
 								   final boolean turnTaken, 
 								   final boolean ready) {
+=======
+		public PlayerCharacterData(final String characterName, final StatsData stats,
+				final List<ItemData> inventory, final LoadoutData equipped, 
+				final boolean turnTaken, final boolean ready) {
+>>>>>>> 1b58198eb7384d80d6ddd1d5dced652d24c60c46
 			this.name = characterName;
 			this.isParasite = isParasite;
 			this.stats = stats;
