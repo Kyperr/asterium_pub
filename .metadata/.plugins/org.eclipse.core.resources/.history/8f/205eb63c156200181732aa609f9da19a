@@ -1,0 +1,29 @@
+package com.toozo.asteriumwebserver.gamelogic.items.location;
+
+import java.util.Collection;
+
+import com.toozo.asteriumwebserver.gamelogic.GameState;
+import com.toozo.asteriumwebserver.gamelogic.Location;
+import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
+
+public class ParasiteTestKit extends AbstractLocationItem {
+	// ===== CONSTANTS =====
+	public static final String NAME = "Parasite Test Kit";
+	public static final String 
+	
+	public static final Collection<Location.LocationType> CAN_BE_USED_IN;
+	// =====================
+	
+	// ===== CONSTRUCTORS =====
+	public ParasiteTestKit() {
+		super(description, description, description, description, useLocations);
+	}
+	// ========================
+	
+	@Override
+	public void applyEffect(GameState state, PlayerCharacter user, Collection<PlayerCharacter> targets) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
