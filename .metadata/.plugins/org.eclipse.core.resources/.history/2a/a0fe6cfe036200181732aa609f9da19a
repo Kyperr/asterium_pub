@@ -1,0 +1,10 @@
+package com.toozo.asteriumwebserver.exceptions;
+
+public class NoSuchGameException extends Exception {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1857409905387094550L;
+
+}

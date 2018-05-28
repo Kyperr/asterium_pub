@@ -100,7 +100,7 @@ public class Book extends AbstractLocationItem {
 
 		// Initialize result with all non-variable Stats
 		for (Stat stat : Stat.values()) {
-			if (stat.isVariable()) {
+			if (!stat.isVariable()) {
 				result.add(stat);
 			}
 		}
