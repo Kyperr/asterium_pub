@@ -18,6 +18,7 @@ import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
 import actiondata.ActionData;
 import actiondata.ErroredResponseData;
+import actiondata.ItemTurnRequestData;
 import actiondata.SuccessResponseData;
 import actiondata.TurnRequestData;
 import message.Message;
@@ -127,7 +128,7 @@ public class ItemTurnAction extends RequestAction {
 	 * @return a {@link ItemTurnAction} containing the data from message.
 	 */
 	public static ItemTurnAction fromMessage(final Message message) {
-		TurnRequestData action = TurnRequestData.class.cast(message.getActionData());
+		ItemTurnRequestData action = ItemTurnRequestData.class.cast(message.getActionData());
 		return new ItemTurnAction(message.getAuthToken(), message.getMessageID(), 
 							  action.getLocationID(), 
 							  action.getActivityName());

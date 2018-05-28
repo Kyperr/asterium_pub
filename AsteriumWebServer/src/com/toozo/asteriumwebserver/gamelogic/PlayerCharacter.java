@@ -1,8 +1,11 @@
 package com.toozo.asteriumwebserver.gamelogic;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.Loadout;
@@ -24,6 +27,7 @@ public class PlayerCharacter {
 	private Inventory inventory;
 	private Collection<AbstractStatusEffect> effects;
 	private Loadout equipment;
+	private List<String> turnSummary;
 	// ==================
 	
 	// ===== CONSTRUCTORS =====
@@ -47,6 +51,7 @@ public class PlayerCharacter {
 		this.inventory = new Inventory();
 		this.effects = new HashSet<AbstractStatusEffect>();
 		this.equipment = new Loadout(this);
+		this.turnSummary = new ArrayList<String>();
 	}
 	// ========================
 	
@@ -178,6 +183,12 @@ public class PlayerCharacter {
 	public Loadout getEquipment() {
 		return this.equipment;
 	}
+	
+	public List<String> getTurnSummary() {
+		List<String> result = new ArrayList<String>();
+		Collections.copy(result, this.turnSummary);
+		return result;
+	}
 	// ===================
 	
 	// ===== SETTERS =====
@@ -252,6 +263,26 @@ public class PlayerCharacter {
 	 */
 	public void setInventory(final Inventory newInventory) {
 		this.inventory.replaceContents(newInventory);
+	}
+	
+	/**
+	 * Clear's this character's Turn Summary.
+	 */
+	public void clearSummary() {
+		this.turnSummary.clear();
+	}
+	
+	/**
+	 * If message is non-null, adds message to this character's Turn Summary.
+	 * 
+	 * @param message The new message which should be appended to the summary. Should not be null.
+	 */
+	public void addSummaryMessage(String message) {
+		while (this.turnSummary.contains(message)) {
+			this.turnSummary.remove(message);
+		}
+		
+		this.turnSummary.add(message);
 	}
 	// ===================
 	

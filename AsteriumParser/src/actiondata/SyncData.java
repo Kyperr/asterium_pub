@@ -108,7 +108,7 @@ public class SyncData {
 			data.put(ActionData.IS_LOCATION_ITEM, this.isLocationItem);
 			JSONArray use = new JSONArray();
 			for (LocationType type : this.useLocations) {
-				use.put(type.toString());
+				use.put(type.toString().toString());
 			}
 			data.put(ActionData.USE_LOCATIONS, use);
 

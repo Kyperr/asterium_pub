@@ -119,6 +119,28 @@ function turnActivity(){
     responseActions[uuid] = processTurnActionResponse;
 }
 
+function itemTurnActivity(item, location){
+    console.log("Sending turn action!");
+    var uuid = genUUID();
+    message =
+        {
+            "request":
+                {
+                    "action_name": "item_turn_action",
+                    "item_turn_action":
+                        {
+                            "map_location": location.map_location,
+                            "item_name": item.item_name
+                        },
+                    "auth_token": getAuthToken(),
+                    "message_id": uuid
+                }
+        }
+        console.log(JSON.stringify(message));
+    socket.send(JSON.stringify(message));
+    responseActions[uuid] = processTurnActionResponse;
+}
+
 function useItemAction(item, targets, isCommunal){//Should use itemID later.  
     console.log("Sending use-item!");
 

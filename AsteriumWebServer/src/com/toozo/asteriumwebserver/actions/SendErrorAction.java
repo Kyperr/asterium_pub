@@ -48,7 +48,7 @@ public class SendErrorAction extends ResponseAction {
 	 */
 	protected void doAction() {
 		// TODO Handle the error
-		System.out.println("Error from " + this.getName());
+		System.err.println("Error from " + this.getName() + " reporting with error code ["  + this.getErrorCode() + "].");
 	}
 
 	/**

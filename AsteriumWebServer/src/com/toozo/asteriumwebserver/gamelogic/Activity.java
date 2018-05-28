@@ -14,6 +14,8 @@ public interface Activity {
 
 	public static final String SEARCH = "Search";
 	public static final String USE_LOCATION_ITEM = "Use Location Item";
+	public static final String LOOT_SUMMARY_MESSAGE = "You looted the %s and got %s.";
+	public static final String NO_ITEMS_FOUND_PHRASE = "nothing";
 	public static final String REST = "Rest";
 	public static final boolean VERBOSE = false;
 
@@ -62,14 +64,6 @@ public interface Activity {
 			}
 		}
 
-	};
-
-	public static Activity useLocationItemActivity = new Activity() {
-		@Override
-		public void doActivity(Game game, PlayerCharacter character, Location location) {
-			// TODO use a location item. differs from use item action because it is the
-			// entire turn.
-		}
 	};
 
 	public static Activity restActivity = new Activity() {
