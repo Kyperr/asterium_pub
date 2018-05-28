@@ -8,6 +8,7 @@ function processQueryIsInGameResponse(response) {
             waitingForPlayersDisplayController.display();
             gameTabsDisplayController.display();
             viewInventoryDisplayController.display();
+            characterSheetDisplayController.display();
         } else {
             joinLobbyDisplayController.display();
         }

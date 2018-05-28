@@ -395,3 +395,16 @@ outline: 0 !important;
   padding-top: 100px;
   height: 100%;
 }
+
+.grid-container {
+  display: grid;
+  width: 100%;
+  grid-template-columns: auto auto;
+}
+
+.grid-content {
+  background-color: rgba(92, 92, 94, 0.918);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  text-align: center;
+  padding: 10px;
+}
