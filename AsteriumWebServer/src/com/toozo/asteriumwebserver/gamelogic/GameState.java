@@ -273,6 +273,7 @@ public class GameState {
 		state.day = STARTING_DAY;
 		state.addVictoryCondition(new VictoryCondition(VictoryCondition::getBeaconProgress, false));
 		state.addVictoryCondition(new VictoryCondition(VictoryCondition::getFuelProgress, true));
+		state.addVictoryCondition(new VictoryCondition(VictoryCondition::areAllPlayersParasites, true));
 		state.addVictoryCondition(new VictoryCondition(VictoryCondition::isParasiteUndiscovered, true));
 
 		if (VERBOSE) {
