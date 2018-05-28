@@ -11,6 +11,8 @@ import com.toozo.asteriumwebserver.gamelogic.items.LootPool;
 
 public class Location {
 	public static final boolean VERBOSE = false;
+	
+	private static Map<Location, Boolean> visitedByParasite = new HashMap<Location, Boolean>();
 
 	public enum LocationType {
 		CONTROL_ROOM("control_room"),
@@ -82,6 +84,12 @@ public class Location {
 		}
 	}
 	
+	public void initVisitedLocations(Collection<Location> locations) {
+		for (Location loc : locations) {
+			Location.visitedByParasite.put(loc, false);
+		}
+	}
+	
 	public final String getName() {
 		return this.name;
 	}
@@ -109,6 +117,10 @@ public class Location {
 	public Set<String> getActivityNames(){
 		return this.activities.keySet();
 	}
+	
+	public boolean wasVisited() {
+		return Location.visitedByParasite.get(this);
+	}
 
 	public void doActivity(String name, Game game, PlayerCharacter character) throws IllegalArgumentException{
 		if (VERBOSE) {
@@ -120,6 +132,16 @@ public class Location {
 	
 	public void useItem(String name, Game game, PlayerCharacter character) throws IllegalArgumentException{
 		activities.get(name).doActivity(game, character, this);
+	}
+	
+	public void setLocationVisited() {
+		Location.visitedByParasite.replace(this, true);
+	}
+	
+	public static void resetVisitedLcations() {
+		for (Location loc : Location.visitedByParasite.keySet()) {
+			Location.visitedByParasite.replace(loc, false);
+		}
 	}
 	
 	public List<AbstractItem> lootLocation(PlayerCharacter looter) {

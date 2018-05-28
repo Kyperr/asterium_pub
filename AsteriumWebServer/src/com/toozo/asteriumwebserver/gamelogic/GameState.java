@@ -336,6 +336,9 @@ public class GameState {
 		// Clear action queue
 		state.game.resetTurnActionMap();
 		
+		// Reset the map of locations the parasite(s) visited
+		Location.resetVisitedLcations();
+		
 		// Resolve victory conditions or handle turn actions.
 		if (state.gameOver()) {
 			if (VERBOSE) {
