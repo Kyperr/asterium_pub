@@ -62,31 +62,4 @@ public class TurnRequestData extends AbstractRequestActionData {
 		return new TurnRequestData(roomID, activityName);
 
 	}
-
-
-	
-	/*
-
-//Commented out because it probably isn't needed.
-
-	public static class Location {
-		private String locationID;
-
-		public Location(final String locationID) {
-			this.locationID = locationID;
-		}
-		
-		public String getLocationID() {
-			return this.locationID;
-		}
-
-		public JSONObject jsonify() {
-			JSONObject data = new JSONObject();
-
-			data.put(ActionData.LOCATION_ID, this.locationID);
-
-			return data;
-		}
-	}
-	*/
 }

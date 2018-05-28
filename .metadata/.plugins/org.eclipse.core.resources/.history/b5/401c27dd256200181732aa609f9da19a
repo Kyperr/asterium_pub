@@ -1,0 +1,10 @@
+package actiondata;
+
+public class TurnSummaryRequestData extends AbstractRequestActionData {
+
+	public TurnSummaryRequestData(String name, List<String> turnSummary) {
+		super(name);
+		// TODO Auto-generated constructor stub
+	}
+
+}

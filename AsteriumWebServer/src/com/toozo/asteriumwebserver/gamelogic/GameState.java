@@ -44,6 +44,7 @@ import actiondata.SyncData;
 import actiondata.SyncGameBoardDataRequestData;
 import actiondata.SyncPlayerClientDataRequestData;
 import actiondata.SyncPlayerListRequestData;
+import actiondata.TurnSummaryRequestData;
 import message.Message;
 import message.Request;
 
@@ -166,9 +167,7 @@ public class GameState {
 
 		TURN_RESOLVE(GameState::initiateTurnResolvePhase),
 
-		TURN_SUMMARY(game -> {
-
-		}),
+		TURN_SUMMARY(GameState::initiateTurnSummaryPhase),
 
 		END_SUMMARY(GameState::initiateEndSummaryPhase),
 
@@ -197,7 +196,6 @@ public class GameState {
 		// Make a new location
 		Location home = new Location("Control Room", Location.LocationType.CONTROL_ROOM, CONTROL_ROOM_LOOT_POOL, 0);
 		home.addActivity(Activity.REST, Activity.restActivity);
-		home.addActivity(Activity.USE_LOCATION_ITEM, Activity.useLocationItemActivity);
 		locations.put("1", home);
 
 		Location med_bay = new Location("Med Bay", Location.LocationType.MED_BAY, MEDBAY_LOOT_POOL, 1);
@@ -241,6 +239,7 @@ public class GameState {
 	// i.e. if victoryConditions = [A, B], A == true and B == true, B will take precedence.
 	private List<VictoryCondition> victoryConditions;
 	private Inventory communalInventory;
+	private List<String> communalSummary;
 	// ===========================
 
 	// ===== STATIC METHODS =====
@@ -314,16 +313,25 @@ public class GameState {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		List<String> playerMessages = new ArrayList<String>();
+		
+		// Use resources
 		state.setFood(state.getFood() - (FOOD_DECREMENT_PER_PLAYER * state.game.getPlayers().size()));
 		state.setFuel(state.getFuel() - FUEL_DECREMENT);
+		playerMessages.add("You consumed " + FOOD_DECREMENT_PER_PLAYER + " food.");
 		
 		// Check victory conditions
+		VictoryCondition lastVC = null;
 		for (VictoryCondition vc : state.getVictoryConditions()) {
 			if (vc.isComplete(state)) {
 				state.setGameOver(true);
-				state.setHumansWon(vc.isForHumans());
 			}
+			lastVC = vc;
+		}
+		if (lastVC != null) {
+			state.setHumansWon(lastVC.isForHumans());
+		} else {
+			System.err.println("ERROR FROM GAMESTATE: No victory conditions?");
 		}
 		
 		// Run all player's actions
@@ -339,7 +347,8 @@ public class GameState {
 		// Resolve victory conditions or handle turn actions.
 		if (state.gameOver()) {
 			if (VERBOSE) {
-				System.out.println("Game complete. Displaying end summary...");
+				System.out.println(String.format("Game complete. Victory condition: %s.", lastVC.getName()));
+				System.out.println("Displaying end summary...");
 			}
 			
 			state.setGamePhase(GamePhase.END_SUMMARY);
@@ -355,6 +364,51 @@ public class GameState {
 		state.gamePhase.executePhase(state);
 	}
 
+	private static final void initiateTurnSummaryPhase(GameState state) {
+		// Send turn summary to each player
+		String auth;
+		PlayerCharacter character;
+		TurnSummaryRequestData data;
+		Request request;
+		Session session;
+		
+		// Send turn summaries to players
+		for (Player player : state.game.getPlayers()) {
+			auth = player.getAuthToken();
+			character = state.getCharacter(auth);
+			data = new TurnSummaryRequestData(character.getTurnSummary());
+			request = new Request(data, auth);
+
+			try {
+				session = SessionManager.getInstance().getSession(auth);
+				synchronized (session) {
+					session.getBasicRemote().sendText(request.jsonify().toString());
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			character.clearSummary();
+		}
+		
+		for (GameBoard gameBoard : state.game.getGameBoards()) {
+			auth = gameBoard.getAuthToken();
+			data = new TurnSummaryRequestData(state.communalSummary);
+			request = new Request(data, auth);
+
+			try {
+				session = SessionManager.getInstance().getSession(auth);
+				synchronized (session) {
+					session.getBasicRemote().sendText(request.jsonify().toString());
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		state.clearSummary();
+	}
+	
 	private static final void initiateEndSummaryPhase(GameState state) {
 		state.syncPlayerClients();
 		try {
@@ -450,6 +504,7 @@ public class GameState {
 		this.nameCharacterMap = new ConcurrentHashMap<String, PlayerCharacter>();
 		this.victoryConditions = new ArrayList<VictoryCondition>();
 		this.communalInventory = new Inventory();
+		this.communalSummary = new ArrayList<String>();
 		this.day = 0;
 		this.humansWon = false;
 		this.gamePhase = GamePhase.PLAYERS_JOINING;
@@ -556,6 +611,12 @@ public class GameState {
 	public Location getAtMapLocation(String mapLocation) {
 		return GameState.locations.get(mapLocation);
 	}
+	
+	public List<String> getSummary() {
+		List<String> result = new ArrayList<String>();
+		Collections.copy(result, this.communalSummary);
+		return result;
+	}
 	// ===================
 
 	// ===== SETTERS =====
@@ -605,6 +666,17 @@ public class GameState {
 	
 	public void setHumansWon(boolean humansWon) {
 		this.humansWon = humansWon;
+	}
+	
+	public void addSummaryMessage(String message) {
+		while (this.communalSummary.contains(message)) {
+			this.communalSummary.remove(message);
+		}
+		this.communalSummary.add(message);
+	}
+	
+	public void clearSummary() {
+		this.communalSummary.clear();
 	}
 	// ===================
 
