@@ -1,7 +1,9 @@
 package com.toozo.asteriumwebserver.gamelogic;
 
 import java.util.List;
+import java.util.Random;
 
+import com.toozo.asteriumwebserver.gamelogic.Location.LocationType;
 import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
 
 public interface Activity {
@@ -21,17 +23,23 @@ public interface Activity {
 		// int luck = character.getEffectiveStats().getStat(Stat.LUCK);
 		double max = EXPOSURE_MAX; // impact by luck in some way.
 		double min = EXPOSURE_MIN;
+		Random r = new Random();
 		double rand = 0.0;
 		if (location.wasVisited()) {
 			min = PARASITE_EXPOSURE_MIN;
 		}
-		rand = min + (Math.random() * (max - min + 1));
+		//double randomValue = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
+		rand = min + (max - min) * r.nextDouble();
+		System.out.println("Exposure: " + character.getExposure());
 		double exp = character.getExposure() + rand;
+		System.out.println("Exposure after increase: " + exp);
 		character.setExposure(exp);
 	}
 
 	public static void increaseLocationExposure(Location location) {
-		location.setLocationVisited();
+		if (location.getType() != LocationType.CONTROL_ROOM) {
+			location.setLocationVisited();
+		}
 	}
 
 	public static Activity searchActivity = new Activity() {

@@ -314,6 +314,8 @@ public class GameState {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		Location.initVisitedLocations(locations.values());
 
 		state.setFood(state.getFood() - (FOOD_DECREMENT_PER_PLAYER * state.game.getPlayers().size()));
 		state.setFuel(state.getFuel() - FUEL_DECREMENT);
