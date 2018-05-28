@@ -3,6 +3,7 @@
 //
 
 function ViewInventoryDisplayController() {
+    this.displayDiv;
     this.cancelButton = document.createElement("BUTTON");
     this.selectedInventory;
     this.isCommunal;
@@ -21,6 +22,8 @@ ViewInventoryDisplayController.prototype.constructor = ViewInventoryDisplayContr
 
 ViewInventoryDisplayController.prototype.init = function () {
 
+    this.displayDiv = document.createElement("div");
+
     //Modal Dialog:
     this.modal.setAttribute("class", "modal");
     this.modal.appendChild(this.modalContent);
@@ -37,15 +40,15 @@ ViewInventoryDisplayController.prototype.init = function () {
 
 }
 
-ViewInventoryDisplayController.prototype.display = function () {
-    var div = document.getElementById("inventory");
 
-    div.innerHTML = "";
+ViewInventoryDisplayController.prototype.update = function () {
+    
+    this.displayDiv.innerHTML = "";
 
     var persInvDiv = document.createElement("div");
     persInvDiv.setAttribute("class", "leading");
     persInvDiv.innerHTML = "Personal Inventory";
-    div.appendChild(persInvDiv);
+    this.displayDiv.appendChild(persInvDiv);
 
     var personalItemDiv = document.createElement("div");
     personalItemDiv.setAttribute("class", "itemDiv");
@@ -64,12 +67,12 @@ ViewInventoryDisplayController.prototype.display = function () {
         personalItemDiv.innerHTML = "Empty..."
     }
 
-    div.appendChild(personalItemDiv);
+    this.displayDiv.appendChild(personalItemDiv);
 
     var comInvDiv = document.createElement("div");
     comInvDiv.setAttribute("class", "leading");
     comInvDiv.innerHTML = "Communal Inventory";
-    div.appendChild(comInvDiv);
+    this.displayDiv.appendChild(comInvDiv);
 
     var communalItemDiv = document.createElement("div");
     communalItemDiv.setAttribute("class", "itemDiv");
@@ -88,7 +91,18 @@ ViewInventoryDisplayController.prototype.display = function () {
         communalItemDiv.innerHTML = "Empty..."
     }
 
-    div.appendChild(communalItemDiv);
+    this.displayDiv.appendChild(communalItemDiv);
+}
+
+ViewInventoryDisplayController.prototype.display = function () {
+
+    this.update();
+
+    var div = document.getElementById("inventory");
+
+    div.innerHTML = "";
+
+    div.appendChild(this.displayDiv);
 
     //Modal stuff.
     div.appendChild(this.modal);
