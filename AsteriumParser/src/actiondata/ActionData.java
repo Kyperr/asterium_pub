@@ -19,6 +19,7 @@ public interface ActionData {
 	public static final String TOGGLE_READY_UP = "toggle_ready_up";	
 	public static final String CREATE_GAME = "create_game";
 	public static final String ALLOCATE_STATS = "allocate_stats";
+	public static final String TURN_SUMMARY = "turn_summary";
 	//public static final String PLAYER_SYNC = "player_sync";
 	public static final String SYNC_LOCATIONS = "sync_locations";
 	public static final String SYNC_GAME_BOARD_DATA = "sync_game_board_data";
@@ -98,6 +99,7 @@ public interface ActionData {
 	public static final String GAME_OVER = "is_game_over";
 	public static final String HUMANS_WON = "humans_won";
 	public static final String YOU_WON = "you_won";
+	public static final String SUMMARY = "summary";
 	
 	/**
 	 * 

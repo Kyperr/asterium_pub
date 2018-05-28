@@ -18,6 +18,11 @@ import com.toozo.asteriumwebserver.gamelogic.statuseffects.AffectStats;
  * @author Studio Toozo
  */
 public abstract class AbstractEquipmentItem extends AbstractItem {
+	// ===== CONSTANTS =====
+	public static final String EQUIP_MESSAGE = "You equipped %s.";
+	public static final String UNEQUIP_MESSAGE = "You unequipped %s.";
+	// =====================
+	
 	// ===== FIELDS =====
 	private boolean isEquipped;
 	private EquipmentSlot equipmentType;
@@ -88,6 +93,7 @@ public abstract class AbstractEquipmentItem extends AbstractItem {
 	 */
 	public void equip(PlayerCharacter equipper) {
 		equipper.getEquipment().equip(this);
+		equipper.addSummaryMessage(String.format(EQUIP_MESSAGE, this.getName()));
 	}
 
 	/**
@@ -110,6 +116,7 @@ public abstract class AbstractEquipmentItem extends AbstractItem {
 			// If item is in slot and inventory has room,
 			// move it to inventory and return whether it worked.
 			if (this == equipperEquipment.itemIn(mySlot) && !equipperInventory.isFull()) {
+				equipper.addSummaryMessage(String.format(UNEQUIP_MESSAGE, this.getName()));
 				return equipperInventory.add(equipperEquipment.removeFrom(mySlot));
 			}
 		}

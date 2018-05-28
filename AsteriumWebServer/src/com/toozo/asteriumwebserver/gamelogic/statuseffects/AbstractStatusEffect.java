@@ -13,7 +13,9 @@ import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
  */
 public abstract class AbstractStatusEffect {
 	// ===== CONSTANTS =====
-	public static final String DEFAULT_NAME = "";
+	public static final String DEFAULT_NAME = "DEFAULT STATUS EFFECT";
+	public static final String REMOVED_MESSAGE = "You lost a status effect: %s.";
+	public static final String ADDED_MESSAGE = "You gained a status effect: %s.";
 	public static final int DEFAULT_DURATION = Integer.MAX_VALUE;
 	// =====================
 	
@@ -45,12 +47,11 @@ public abstract class AbstractStatusEffect {
 	/**
 	 * Construct a StatusEffect with a given name and defined duration (in turns).
 	 * 
-	 * @param name The name of the StatusEffect.
+	 * @param name The name of the StatusEffect. If this is null, a default name will be used.
 	 * @param duration The number of turns before this StatusEffect should go away.
 	 */
 	public AbstractStatusEffect(final PlayerCharacter owner, final String name, final int duration) {
 		this.owner = Objects.requireNonNull(owner);
-		
 		if (name != null) {
 			this.name = name;
 		} else {
@@ -58,6 +59,7 @@ public abstract class AbstractStatusEffect {
 		}
 		
 		this.duration = duration;
+		this.owner.addSummaryMessage(String.format(ADDED_MESSAGE, this.getName()));
 	}
 	// ========================
 	
@@ -125,6 +127,7 @@ public abstract class AbstractStatusEffect {
 	 */
 	public void remove() {
 		this.owner.removeStatusEffect(this);
+		this.owner.addSummaryMessage(String.format(REMOVED_MESSAGE, this.getName()));
 	}
 	
 	/**
