@@ -5,6 +5,7 @@
 
 function LocationsDisplayController() {
     this.selectedLocation;
+    this.displayDiv;
     this.init();
 }
 
@@ -13,15 +14,13 @@ LocationsDisplayController.prototype.constructor = LocationsDisplayController;
 
 
 LocationsDisplayController.prototype.init = function () {
+    this.displayDiv = document.createElement("div");
 }
 
+LocationsDisplayController.prototype.update = function () {
+    this.displayDiv.innerHTML = "<b>What location would you like to explore?</b>";
 
-LocationsDisplayController.prototype.display = function () {
-    var div = document.getElementById("action");
-
-    div.innerHTML = "<b>What location would you like to explore?</b>";
-
-    div.appendChild(document.createElement("br"));
+    this.displayDiv.appendChild(document.createElement("br"));
 
     locations.forEach(location => {
         var btnLocation = document.createElement("BUTTON");
@@ -29,12 +28,22 @@ LocationsDisplayController.prototype.display = function () {
         //Should map the id to a display-friendly string and get it here.
 
         btnLocation.innerHTML = location.location_name;
-        btnLocation.onclick = function(){
+        btnLocation.onclick = function () {
             locationsDisplayController.selectLocation(location);
         }
         btnLocation.setAttribute("class", "button");
-        div.appendChild(btnLocation);
+        this.displayDiv.appendChild(btnLocation);
     });
+}
+
+
+LocationsDisplayController.prototype.display = function () {
+
+    this.update();
+
+    var div = document.getElementById("action");
+    div.innerHTML = "";
+    div.appendChild(this.displayDiv);
 }
 
 LocationsDisplayController.prototype.selectLocation = function (location) {

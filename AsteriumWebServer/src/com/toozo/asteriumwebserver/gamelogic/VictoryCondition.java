@@ -18,21 +18,7 @@ public class VictoryCondition {
 	public static final double COMPLETE_THRESHOLD = 1.0;
 	public static final double ERROR_VALUE = -1.0;
 	
-	public static final double isParasiteUndiscovered(GameState state) {
-		if (state.gameOver()) {
-			boolean undiscoveredParasites = false;
-			for (PlayerCharacter pc : state.getCharacters()) {
-				undiscoveredParasites |= pc.isParasite() && pc.isDiscoveredParasite();
-			}
-			if (undiscoveredParasites) {
-				return 1.0;
-			} else {
-				return 0.0;
-			}
-		} else {
-			return 0.0;
-		}
-	}
+	// ~~~~~~~ HUMAN VICTORY CONDITIONS ~~~~~~~~~~
 	
 	/**
 	 * Function to determine whether there is a used beacon in the communal inventory.
@@ -50,6 +36,9 @@ public class VictoryCondition {
 		return 0.0;
 	}
 	
+	
+	// ~~~~~~ PARASITE VICTORY CONDITIONS ~~~~~~~~~
+	
 	/**
 	 * Function to determine if the fuel has run out.
 	 * @param state The current {@link GameState}.
@@ -62,6 +51,38 @@ public class VictoryCondition {
 			return 0.0;
 		}
 	}
+	
+	/**
+	 * Function to determine if all players are parasites.
+	 * @param state The current {@link GameState}.
+	 * @return COMPLETE_THRESHOLD if true, 0.0 if false.
+	 */
+	public static final double areAllPlayersParasites(GameState state) {
+		for (PlayerCharacter pc : state.getCharacters()) {
+			if (!pc.isParasite()) {
+				return 0.0;
+			}
+		}
+		
+		return COMPLETE_THRESHOLD;
+	}
+	
+	public static final double isParasiteUndiscovered(GameState state) {
+		if (state.gameOver()) {
+			boolean undiscoveredParasites = false;
+			for (PlayerCharacter pc : state.getCharacters()) {
+				undiscoveredParasites |= pc.isParasite() && pc.isDiscoveredParasite();
+			}
+			if (undiscoveredParasites) {
+				return 1.0;
+			} else {
+				return 0.0;
+			}
+		} else {
+			return 0.0;
+		}
+	}
+	
 	// =====================
 	
 	// ===== FIELDS =====

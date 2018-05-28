@@ -272,6 +272,7 @@ public class GameState {
 		state.day = STARTING_DAY;
 		state.addVictoryCondition(new VictoryCondition(VictoryCondition::getBeaconProgress, false));
 		state.addVictoryCondition(new VictoryCondition(VictoryCondition::getFuelProgress, true));
+		state.addVictoryCondition(new VictoryCondition(VictoryCondition::areAllPlayersParasites, true));
 		state.addVictoryCondition(new VictoryCondition(VictoryCondition::isParasiteUndiscovered, true));
 
 		if (VERBOSE) {
@@ -814,8 +815,8 @@ public class GameState {
 
 		List<SyncData.ItemData> personalInv = new ArrayList<SyncData.ItemData>();
 		boolean isLocationItem;
-		Collection<SyncData.LocationData.LocationType> useLocations = new ArrayList<SyncData.LocationData.LocationType>();
 		for (AbstractItem item : pChar.getInventory()) {
+			Collection<SyncData.LocationData.LocationType> useLocations = new ArrayList<SyncData.LocationData.LocationType>();
 			isLocationItem = item.getIsLocationItem();
 			if (isLocationItem) {
 				AbstractLocationItem loc_item = AbstractLocationItem.class.cast(item);
@@ -832,8 +833,9 @@ public class GameState {
 
 		Map<SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType, SyncData.ItemData> equipment = new HashMap<SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType, SyncData.ItemData>();
 		Loadout load = pChar.getEquipment();
-		useLocations.clear();
+
 		for (EquipmentSlot slot : EquipmentSlot.values()) {
+			Collection<SyncData.LocationData.LocationType> useLocations = new ArrayList<SyncData.LocationData.LocationType>();
 			if (load.slotFull(slot)) {
 				SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType type = SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType
 						.valueOf(slot.toString());
@@ -853,8 +855,8 @@ public class GameState {
 				game.getPlayerIsReady(auth));
 
 		List<SyncData.ItemData> inventory = new ArrayList<SyncData.ItemData>();
-		useLocations.clear();
 		for (AbstractItem item : getCommunalInventory()) {
+			Collection<SyncData.LocationData.LocationType> useLocations = new ArrayList<SyncData.LocationData.LocationType>();
 			isLocationItem = item.getIsLocationItem();
 			if (isLocationItem) {
 				AbstractLocationItem loc_item = AbstractLocationItem.class.cast(item);
