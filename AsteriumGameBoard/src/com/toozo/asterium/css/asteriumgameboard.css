@@ -18,11 +18,12 @@
 #LobbyPane, #MapPane {/*Holds the lobbyVBox and the player scroll pane */
 	/*-fx-background-color: rgba(255,140,0, 0.0);/* */
 	-fx-padding: 75;
-	-fx-alignment: center;
 	-fx-border-color: #3d4861;
 	-fx-border-insets: 5;
 	-fx-border-width: 0;
+	-fx-fit-to-width: true;
 }
+
 
 #lobbyBorderPane, #mapInfoBorderPane{/*Where info is displayed */
 	-fx-alignment: center;
@@ -41,16 +42,13 @@
 	-fx-alignment: center;
 }
 
-#mapBorderPane {
-	-fx-alignment: center;
-}
 
 .scroll-pane > .viewport {/*In order to see through the scroll pane */
 	-fx-alignment: center;
    -fx-background-color: transparent;
 }
 
-#playersScrollPane, #mapScrollPane {
+#playersScrollPane {
 	-fx-alignment: center;
 	-fx-fit-to-width: true;
 	-fx-background-color: rgba(200, 200, 200, .5);/*Gray, half vis */

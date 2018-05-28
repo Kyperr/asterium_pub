@@ -118,6 +118,9 @@ public final class GameResources {
 		return victoryConditions;
 	}
 
+	public Map<Integer, String> getLocationMap() {
+		return locationMap;
+	}
 	
 	public void setGameWonStatus(boolean status) {
 		gameWonStatus = status;
