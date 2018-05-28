@@ -4,6 +4,7 @@ var requestActions = {};
 function syncPlayerClientData(request) {
 
     user = request.sync_player_client_data.character.character_name;
+    character = request.sync_player_client_data.character;
 
     locations = [];
 
@@ -29,6 +30,10 @@ function syncPlayerClientData(request) {
         }
         gamePhase = newPhase;
     }
+
+    characterSheetDisplayController.update();
+    locationsDisplayController.update();
+    viewInventoryDisplayController.update();
 }
 
 requestActions["sync_player_client_data"] = syncPlayerClientData;

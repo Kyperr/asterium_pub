@@ -9,6 +9,8 @@ import javax.websocket.Session;
 
 import com.toozo.asteriumwebserver.actions.Action;
 import com.toozo.asteriumwebserver.exceptions.GameFullException;
+import com.toozo.asteriumwebserver.exceptions.InvalidNameException;
+import com.toozo.asteriumwebserver.exceptions.PlayerNameTakenException;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
 /**
@@ -285,24 +287,36 @@ public class Game extends Thread {
 	 * @throws GameFullException
 	 *             When the game has already reached the max number of players.
 	 */
-	public synchronized void addPlayer(final Player player) throws GameFullException {
+	public synchronized void addPlayer(final Player player) throws GameFullException, 
+																   PlayerNameTakenException, 
+																   InvalidNameException {
 		// Check to see that the game is not already full.
-		if (this.playerList.size() <= MAX_PLAYERS) {
-			// Add Player to Game
-			String authToken = player.getAuthToken();
-			this.playerList.put(authToken, player);
-			this.playerReadyMap.put(authToken, false);
-
-			// Add PlayerCharacter to GameState
-			PlayerCharacter character = new PlayerCharacter(player.getPlayerName());
-			this.getGameState().addPlayerCharacter(authToken, character);
-			this.hasBeenJoined = true;
-
-			// Register with GameManager
-			GameManager.getInstance().registerPlayerToGame(player.getAuthToken(), this);
-		} else {
+		if (this.playerList.size() >= MAX_PLAYERS) {
 			throw new GameFullException();
 		}
+		
+		if (!player.nameValid()) {
+			throw new InvalidNameException();
+		}
+		
+		for (final Player otherPlayer : this.getPlayers()) {
+			if (player.getPlayerName().equals(otherPlayer.getPlayerName())) {
+				throw new PlayerNameTakenException();
+			}
+		}
+
+		// Add Player to Game
+		String authToken = player.getAuthToken();
+		this.playerList.put(authToken, player);
+		this.playerReadyMap.put(authToken, false);
+
+		// Add PlayerCharacter to GameState
+		PlayerCharacter character = new PlayerCharacter(player.getPlayerName());
+		this.getGameState().addPlayerCharacter(authToken, character);
+		this.hasBeenJoined = true;
+
+		// Register with GameManager
+		GameManager.getInstance().registerPlayerToGame(player.getAuthToken(), this);
 	}
 
 	/**

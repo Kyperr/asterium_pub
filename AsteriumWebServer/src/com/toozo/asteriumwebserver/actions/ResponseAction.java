@@ -8,6 +8,9 @@ import java.util.UUID;
  */
 public abstract class ResponseAction extends Action {
 
+	private final Integer errorCode;
+	
+	
 	/**
 	 * Constructs a new {@link ResponseAction}.
 	 * @param name The name of the {@link ResponseAction}.
@@ -15,7 +18,10 @@ public abstract class ResponseAction extends Action {
 	 */
 	public ResponseAction(final String name, final String authToken, final Integer errorCode, final UUID messageID) {
 		super(name, authToken, messageID);
+		this.errorCode = errorCode;
 	}
+	
+	
 
 	@Override
 	/**
@@ -23,6 +29,10 @@ public abstract class ResponseAction extends Action {
 	 */
 	public final void run() {
 		super.run();
+	}
+
+	public Integer getErrorCode() {
+		return errorCode;
 	}
 
 }

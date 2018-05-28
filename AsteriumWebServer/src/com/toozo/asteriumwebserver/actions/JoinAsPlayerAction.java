@@ -6,6 +6,8 @@ import java.util.UUID;
 import javax.websocket.Session;
 
 import com.toozo.asteriumwebserver.exceptions.GameFullException;
+import com.toozo.asteriumwebserver.exceptions.InvalidNameException;
+import com.toozo.asteriumwebserver.exceptions.PlayerNameTakenException;
 import com.toozo.asteriumwebserver.gamelogic.Game;
 import com.toozo.asteriumwebserver.gamelogic.GameManager;
 import com.toozo.asteriumwebserver.gamelogic.Player;
@@ -88,9 +90,19 @@ public class JoinAsPlayerAction extends RequestAction {
 			JoinAsPlayerRequestData jpaData = new JoinAsPlayerRequestData(this.lobby_id, this.playerData);
 			message = new Response(jpaData, 0, this.getMessageID(), this.getCallingAuthToken());
 		} catch (final GameFullException ex) { // If game is full...
-			// Construct game full response.
+			// Construct game full error response.
 			ErroredResponseData ead = new ErroredResponseData(this.getName());
 			message = new Response(ead, SendErrorAction.GAME_FULL, this.getMessageID(), this.getCallingAuthToken());
+		
+		} catch (PlayerNameTakenException e) {
+			// Construct name taken error response.
+			ErroredResponseData ead = new ErroredResponseData(this.getName());
+			message = new Response(ead, SendErrorAction.NAME_TAKEN, this.getMessageID(), this.getCallingAuthToken());
+				
+		} catch (InvalidNameException e) {
+			// Construct invalid name error response.
+			ErroredResponseData ead = new ErroredResponseData(this.getName());
+			message = new Response(ead, SendErrorAction.INVALID_NAME, this.getMessageID(), this.getCallingAuthToken());
 		}
 
 		// Send the response back to the calling session.

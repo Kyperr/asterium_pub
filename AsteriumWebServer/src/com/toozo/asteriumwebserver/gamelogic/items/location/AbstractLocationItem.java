@@ -8,6 +8,7 @@ import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
 
 public abstract class AbstractLocationItem extends AbstractItem {
+	public static final String USE_MESSAGE = "You used %s.";
 	private Collection<LocationType> useLocations;
 
 	protected AbstractLocationItem(final String name, final String description, final String flavor, final String image,
@@ -28,10 +29,8 @@ public abstract class AbstractLocationItem extends AbstractItem {
 	public void use(GameState state, PlayerCharacter user, Collection<PlayerCharacter> targets,
 			boolean fromCommunalInventory) {
 		applyEffect(state, user, targets);
-		if (fromCommunalInventory) {
-			state.getCommunalInventory().remove(this);
-		} else {
-			user.getInventory().remove(this);
-		}
+		
+		user.getInventory().remove(this);
+		user.addSummaryMessage(String.format(USE_MESSAGE, this.getName()));
 	}
 }

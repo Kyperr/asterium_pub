@@ -49,16 +49,16 @@ ActivityDisplayController.prototype.display = function () {
     personalInventory.forEach(inventory => {
 
         if (inventory.is_location_item) {
-            inventory.use_locations.forEach((location) => {
-                if (location.location_type == location.location_type) {
+            inventory.use_locations.forEach((innerlocation) => {
+                if (innerlocation.location_type == innerlocation.location_type) {
                     counter++;
                     var btnInventory = document.createElement("BUTTON");
                     btnInventory.innerHTML = inventory.item_name;
                     btnInventory.onclick = function () {
-                        viewInventoryDisplayController.selectInventory(inventory, false);
+                        itemTurnActivity(inventory, location);
                     }
                     btnInventory.setAttribute("class", "button");
-                    personalItemDiv.appendChild(btnInventory);
+                    locationItemDiv.appendChild(btnInventory);
 
                 }
             });

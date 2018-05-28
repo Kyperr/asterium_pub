@@ -65,7 +65,7 @@ public class Book extends AbstractLocationItem {
 	public static final Collection<Stat> STAMINA_LUCK_INTUITION = Arrays.asList(Stat.STAMINA, Stat.LUCK,
 			Stat.INTUITION);
 	// Don't judge me.
-	
+
 	// Other
 	public static final String ERROR_NAME = "Squashing Bugs, 1st Edition";
 	public static final String IMG = "book.png";
@@ -100,7 +100,7 @@ public class Book extends AbstractLocationItem {
 
 		// Initialize result with all non-variable Stats
 		for (Stat stat : Stat.values()) {
-			if (stat.isVariable()) {
+			if (!stat.isVariable()) {
 				result.add(stat);
 			}
 		}
@@ -114,8 +114,9 @@ public class Book extends AbstractLocationItem {
 		// Determine number of Stats which should be in result based on weights
 		// distribution.
 		double random = RNG.nextDouble();
-		for (numberOfStats = 1; numberOfStats - 1 < weights.length && 
-								random > weights[numberOfStats - 1]; numberOfStats++);
+		for (numberOfStats = 1; numberOfStats - 1 < weights.length
+				&& random > weights[numberOfStats - 1]; numberOfStats++)
+			;
 
 		// Randomly return that many Stats
 		Collections.shuffle(result, RNG);
@@ -123,8 +124,8 @@ public class Book extends AbstractLocationItem {
 	}
 
 	/**
-	 * Generates a book name based on the stats given. 
-	 * Ex: A book which boosts luck will be called "Luck Book".
+	 * Generates a book name based on the stats given. Ex: A book which boosts luck
+	 * will be called "Luck Book".
 	 * 
 	 * @param stats
 	 *            The {@link Stat}s which the returned name should be related to.
@@ -141,42 +142,43 @@ public class Book extends AbstractLocationItem {
 
 		return name.toString();
 	}
-	
+
 	/**
-	 * Generates a book description based on the stats given.
-	 * Ex: A book which boosts luck will have the description
-	 * "Permanently increases your Luck by 1."
-	 * Books which boost more than one stat will look like this:
-	 * "Permanently increases your Luck, Intuition, and Stamina by 1."
+	 * Generates a book description based on the stats given. Ex: A book which
+	 * boosts luck will have the description "Permanently increases your Luck by 1."
+	 * Books which boost more than one stat will look like this: "Permanently
+	 * increases your Luck, Intuition, and Stamina by 1."
 	 * 
-	 * @param stats The {@link Stat}s which the returned description should be related to.
+	 * @param stats
+	 *            The {@link Stat}s which the returned description should be related
+	 *            to.
 	 * @return a generated description containing the stats the book improves.
 	 */
 	private static String generateDescription(Collection<Stat> stats) {
-		StringBuilder desc = new StringBuilder("Permanently increases your ");
-        String lastStat = null;		
-
-		//Permanently increases your (Stat, Stat, Stat,) by 1.
-
+		String desc = "Permanently increases your %s by 1.";
+		String lastStat = null;
+		String statName = null;
+		
 		for (Stat stat : stats) {
 			if (lastStat != null) {
-				desc.append(lastStat);
-				desc.append(", ");
+				lastStat += lastStat + ", ";
 			}
-			lastStat = stat.toString();
+			statName = stat.toString();
+			lastStat = statName;
 		}
-		desc.append("and ");
-		desc.append(lastStat);
-		desc.append(" by 1.");
+		if (!lastStat.equals(statName)) {
+			lastStat += "and ";
+		}
 		
-		return desc.toString();
+		return String.format(desc, lastStat);
 	}
 
 	/**
 	 * @param stats
-	 *            The {@link Stat}s which the returned flavor text should be related to.
-	 * @return a random flavor text related to a {@link Stat} in stats, or ERROR_NAME if
-	 *         stats is empty or an error has occurred.
+	 *            The {@link Stat}s which the returned flavor text should be related
+	 *            to.
+	 * @return a random flavor text related to a {@link Stat} in stats, or
+	 *         ERROR_NAME if stats is empty or an error has occurred.
 	 */
 	private static String getRandomFlavorText(Collection<Stat> stats) {
 		List<String> possibleTexts = new ArrayList<String>();
@@ -199,12 +201,13 @@ public class Book extends AbstractLocationItem {
 
 	// ===== CONSTRUCTORS =====
 	/**
-	 * Construct a book with a random name and stats which boosts stats by DEFAULT_STAT_BOOST.
+	 * Construct a book with a random name and stats which boosts stats by
+	 * DEFAULT_STAT_BOOST.
 	 */
 	public Book() {
 		this(generateStats());
 	}
-	
+
 	/**
 	 * Construct a book with a random name which boosts defined stats by
 	 * DEFAULT_STAT_BOOST.

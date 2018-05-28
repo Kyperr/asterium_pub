@@ -1,0 +1,11 @@
+package actiondata;
+
+import java.util.List;
+
+public class TurnSummaryRequestData extends AbstractRequestActionData {
+
+	public TurnSummaryRequestData(String name, List<String> turnSummary) {
+		super(name);
+	}
+
+}
