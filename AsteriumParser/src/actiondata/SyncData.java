@@ -2,6 +2,7 @@ package actiondata;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
 
 import org.json.JSONArray;
@@ -81,12 +82,12 @@ public class SyncData {
 
 	// ===== ITEM DATA INNER CLASS =====
 	public static class ItemData {
-		private String name;
-		private String description;
-		private String flavorText;
-		private String imagePath;
-		private boolean isLocationItem;
-		private Collection<LocationType> useLocations;
+		private final String name;
+		private final String description;
+		private final String flavorText;
+		private final String imagePath;
+		private final boolean isLocationItem;
+		private final Collection<LocationType> useLocations;
 
 		public ItemData(final String name, final String description, final String flavor, final String image,
 				final boolean isLocationItem, final Collection<LocationType> locations) {

@@ -7,6 +7,8 @@ var gamePhase = "PLAYERS_JOINING";
 
 var user;
 
+var character;
+
 var turnActionSelectedLocation;
 
 var locations = [];
