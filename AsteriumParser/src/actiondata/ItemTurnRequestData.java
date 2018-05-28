@@ -17,7 +17,7 @@ public class ItemTurnRequestData extends AbstractRequestActionData {
 	private String itemName;
 
 	public ItemTurnRequestData(final String locationID, final String itemName) {
-		super(ActionData.TURN_ACTION);
+		super(ActionData.ITEM_TURN_ACTION);
 		this.locationID = locationID;
 		this.itemName = itemName;
 	}

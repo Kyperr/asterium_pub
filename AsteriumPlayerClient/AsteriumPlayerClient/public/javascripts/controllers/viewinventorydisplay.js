@@ -31,7 +31,9 @@ ViewInventoryDisplayController.prototype.init = function () {
     this.modalContent.setAttribute("class", "modal-content");
 
     this.modalUse.innerHTML = "Use Item";
-    this.modalUse.setAttribute("onClick", "viewInventoryDisplayController.useItem()");
+    this.modalUse.onclick = function () {
+        viewInventoryDisplayController.useItem(viewInventoryDisplayController.selectedInventory, viewInventoryDisplayController.isCommunal);
+    }
     this.modalUse.setAttribute("class", "button");
 
     this.modalClose.innerHTML = "Close";
@@ -42,7 +44,7 @@ ViewInventoryDisplayController.prototype.init = function () {
 
 
 ViewInventoryDisplayController.prototype.update = function () {
-    
+
     this.displayDiv.innerHTML = "";
 
     var persInvDiv = document.createElement("div");
@@ -56,7 +58,7 @@ ViewInventoryDisplayController.prototype.update = function () {
     personalInventory.forEach(inventory => {
         var btnInventory = document.createElement("BUTTON");
         btnInventory.innerHTML = inventory.item_name;
-        btnInventory.onclick = function(){
+        btnInventory.onclick = function () {
             viewInventoryDisplayController.selectInventory(inventory, false);
         }
         btnInventory.setAttribute("class", "button");
@@ -80,7 +82,7 @@ ViewInventoryDisplayController.prototype.update = function () {
     communalInventory.forEach(inventory => {
         var btnInventory = document.createElement("BUTTON");
         btnInventory.innerHTML = inventory.item_name;
-        btnInventory.onclick = function(){
+        btnInventory.onclick = function () {
             viewInventoryDisplayController.selectInventory(inventory, true);
         }
         btnInventory.setAttribute("class", "button");
@@ -115,19 +117,20 @@ ViewInventoryDisplayController.prototype.selectInventory = function (inventory, 
 
     var div = document.getElementById("action");
 
-    this.modalContent.innerHTML = inventory.item_name + ":<br/>";
-    this.modalContent.innerHTML += inventory.item_description;
+    this.modalContent.innerHTML = deshitify(inventory.item_name) + ":<br/>";
+    this.modalContent.innerHTML += deshitify(inventory.item_description);
 
     this.modalContent.appendChild(document.createElement("br"));
 
-    if(inventory.is_location_item){
+    if (inventory.is_location_item) {
         var span = document.createElement("span");
 
-        span.innerHTML = "This item must be used at:";
+        span.innerHTML = "Must be used in a:";
+        span.appendChild(document.createElement("br"));
 
         inventory.use_locations.forEach((location) => {
-            console.log("Locations to use at:");
-            console.log(location);
+            span.innerHTML += deshitify(location);
+            span.appendChild(document.createElement("br"));
         });
 
         this.modalContent.appendChild(span);
@@ -138,16 +141,11 @@ ViewInventoryDisplayController.prototype.selectInventory = function (inventory, 
     }
     this.modalContent.appendChild(this.modalClose);
 
-    console.log("GETTING HERE~!");
     this.modal.style.display = "block";
-
-    //itemInteractionDisplayController.display();
 }
 
-ViewInventoryDisplayController.prototype.useItem = function () {
+ViewInventoryDisplayController.prototype.useItem = function (item, isCommunal) {
     var targets = [user];
-    var item = viewInventoryDisplayController.selectedInventory;
-    var isCommunal = viewInventoryDisplayController.isCommunal;
 
     this.modal.style.display = "none";
     useItemAction(item, targets, isCommunal);
@@ -158,3 +156,13 @@ ViewInventoryDisplayController.prototype.setModalDisplay = function (display) {
 }
 //Static instance. USE THIS ONE!
 var viewInventoryDisplayController = new ViewInventoryDisplayController();
+
+var displayFriendlyLocationTypes = {};
+
+function deshitify(str) {
+    var frags = str.toLowerCase().split('_');
+    for (i = 0; i < frags.length; i++) {
+        frags[i] = frags[i].charAt(0).toUpperCase() + frags[i].slice(1);
+    }
+    return frags.join(' ');
+}
