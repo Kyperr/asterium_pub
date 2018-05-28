@@ -5,6 +5,9 @@ import java.util.List;
 import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
 
 public interface Activity {
+	
+	public static final double EXPOSURE_MAX = 0.1;
+	public static final double EXPOSURE_MIN = 0.0;
 
 	public static final String SEARCH = "Search";
 	public static final String USE_LOCATION_ITEM = "Use Location Item";
@@ -12,6 +15,14 @@ public interface Activity {
 	public static final boolean VERBOSE = false;
 	
 	public void doActivity(Game game, PlayerCharacter character, Location location);
+	
+	public static void addExposure(PlayerCharacter character) {
+		//int luck = character.getEffectiveStats().getStat(Stat.LUCK);
+			double max = EXPOSURE_MAX;  //impact by luck in some way.
+			double rand = EXPOSURE_MIN + (Math.random() * ( max - EXPOSURE_MIN + 1));
+			double exp = character.getExposure() + rand;
+			character.setExposure(exp);
+	};
 	
 	public static Activity searchActivity = new Activity() {
 		@Override
@@ -25,7 +36,10 @@ public interface Activity {
 			for (AbstractItem item : loot) {
 				character.getInventory().add(item);
 			}
+			
+			addExposure(character);
 		}
+
 	};
 	
 	public static Activity useLocationItemActivity = new Activity() {
@@ -41,4 +55,5 @@ public interface Activity {
 			character.rest();			
 		}
 	};
+	
 }
