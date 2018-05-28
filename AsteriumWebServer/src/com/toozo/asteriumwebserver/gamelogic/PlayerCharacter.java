@@ -12,6 +12,7 @@ public class PlayerCharacter {
 	// ===== CONSTANTS =====
 	private static final String DEFAULT_NAME = "DEFAULT_PC_NAME";
 	private static final int REST_HEAL = 2;
+	private static final double REST_EXPOSURE = 0.1;
 	// =====================
 	
 	// ===== FIELDS =====
@@ -257,7 +258,12 @@ public class PlayerCharacter {
 	// ===== OTHER INSTANCE METHODS =====
 	
 	public void rest() {
-		//reduce exposure once we implement that
+		//reduce exposure
+		double exp = this.getExposure();
+		exp -= REST_EXPOSURE;
+		this.setExposure(exp);
+		
+		//heal up
 		StatBlock stats = this.getEffectiveStats();
 		int health = stats.getStat(Stat.HEALTH);
 		health = Math.min(StatBlock.MAX_HEALTH, health + REST_HEAL);
