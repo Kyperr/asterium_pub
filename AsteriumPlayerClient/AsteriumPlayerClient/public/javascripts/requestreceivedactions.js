@@ -29,6 +29,9 @@ function syncPlayerClientData(request) {
         }
         gamePhase = newPhase;
     }
+
+    locationsDisplayController.update();
+    viewInventoryDisplayController.update();
 }
 
 requestActions["sync_player_client_data"] = syncPlayerClientData;
