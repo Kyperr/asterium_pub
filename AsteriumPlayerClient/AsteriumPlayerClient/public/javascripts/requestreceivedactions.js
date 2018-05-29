@@ -41,6 +41,8 @@ requestActions["sync_player_client_data"] = syncPlayerClientData;
 //
 
 function summary(request) {
+    summaryStrings = request.summary.summary;
+    turnSummaryDisplayController.update();
 }
 requestActions["summary"] = summary;
 
