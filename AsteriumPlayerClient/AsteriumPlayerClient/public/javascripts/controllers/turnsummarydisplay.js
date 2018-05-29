@@ -21,7 +21,15 @@ TurnSummaryDisplayController.prototype.init = function () {
 TurnSummaryDisplayController.prototype.update = function () {
     this.displayDiv.innerHTML = "";
 
-    summaryStrings.forEach(string => {this.displayDiv.innerHTML += string});
+    var summDiv = document.createElement("div");
+    summDiv.setAttribute("class", "leading");
+    summDiv.innerHTML = "Turn Summary";
+    this.displayDiv.appendChild(summDiv);
+
+    summaryStrings.forEach(string => {
+        this.displayDiv.innerHTML += string;
+        this.displayDiv.innerHTML += "<br/>";
+    });
     
     this.displayDiv.appendChild(this.continueButton);
 }

@@ -10,16 +10,32 @@
 	xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="com.toozo.asterium.controllers.MapController">
 	<top>
+	<HBox fx:id="titleHBox"><Label minHeight="20" minWidth="75" text="Asterium" /></HBox>
 		<BorderPane fx:id="mapInfoBorderPane">
-			<center>
-				<Label minHeight="16" minWidth="69" fx:id="foodLabel" />
-			</center>
+		
+			<left>
+				<HBox fx:id="infoHBox">
+					<Label minHeight="16" minWidth="69" fx:id="fuelLabel" />
+					<Label minHeight="16" minWidth="69" fx:id="foodLabel" />
+					
+				</HBox>
+				</left>
+				<right><Label minHeight="16" minWidth="69" fx:id="dayLabel" /></right>
+			
 		</BorderPane>
 	</top>
 	<center>
-		<ScrollPane fx:id="mapScrollPane" >
-		<VBox fx:id="mapVBox"/>
-		</ScrollPane>
+		<StackPane fx:id="mapStackPane" />
 	</center>
+	<right>
+		<VBox fx:id="playersVBox">
+			<Label minHeight="16" minWidth="69" fx:id="playersTitle" />
+		</VBox>
+	</right>
+	<bottom>
+	<VBox fx:id="summaryVBox">
+			<Label fx:id="turnSummaryLabel" />
+		</VBox>
+	</bottom>
 
 </BorderPane>
