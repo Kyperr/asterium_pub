@@ -70,7 +70,11 @@ public abstract class AbstractEquipmentItem extends AbstractItem {
 	@Override
 	public void use(GameState state, PlayerCharacter user, Collection<PlayerCharacter> targets,
 			boolean fromCommunalInventory) {
-		this.equip(user);
+		if (this.isEquipped) {
+			this.unequip(user);
+		} else {
+			this.equip(user);
+		}
 		applyEffect(state, user, targets);
 	}
 
@@ -117,6 +121,7 @@ public abstract class AbstractEquipmentItem extends AbstractItem {
 			// move it to inventory and return whether it worked.
 			if (this == equipperEquipment.itemIn(mySlot) && !equipperInventory.isFull()) {
 				equipper.addSummaryMessage(String.format(UNEQUIP_MESSAGE, this.getName()));
+				this.setEquipped(false);
 				return equipperInventory.add(equipperEquipment.removeFrom(mySlot));
 			}
 		}
