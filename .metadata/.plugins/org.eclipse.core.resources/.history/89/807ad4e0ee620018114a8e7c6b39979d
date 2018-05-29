@@ -524,9 +524,6 @@ public class GameState {
 		}
 
 		state.clearSummary();
-		
-		state.setGamePhase(GamePhase.PLAYERS_JOINING);
-		state.gamePhase.executePhase(state);
 	}
 
 	private static final void initiateEndSummaryPhase(GameState state) {
