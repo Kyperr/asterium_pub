@@ -32,7 +32,7 @@ public class TurnSummaryRequestData extends AbstractRequestActionData {
 		return result;
 	}
 	
-	public static TurnSummaryRequestData parseArgs(JSONObject jsonObj) throws JSONException {
+	public TurnSummaryRequestData parseArgs(JSONObject jsonObj) throws JSONException {
 		JSONArray summary = jsonObj.getJSONArray(ActionData.SUMMARY);
 		
 		List<String> messageList = new ArrayList<String>();

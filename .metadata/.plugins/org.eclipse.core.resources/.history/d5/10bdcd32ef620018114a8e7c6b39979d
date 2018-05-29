@@ -25,7 +25,6 @@ import actiondata.SyncPlayerListRequestData;
 import actiondata.ToggleReadyUpRequestData;
 import actiondata.ToggleReadyUpResponseData;
 import actiondata.TurnRequestData;
-import actiondata.TurnSummaryRequestData;
 import actiondata.UseItemRequestData;
 import message.Message;
 import message.Request;
