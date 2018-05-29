@@ -158,11 +158,6 @@ public abstract class AbstractItem {
 	 */
 	public abstract void applyEffect(final GameState state, final PlayerCharacter user, final Collection<PlayerCharacter> targets);
 	
-	/**
-	 * Removes this {@link AbstractItem} from user's {@link Inventory}, if it contains it.
-	 * 
-	 * @param user The {@link PlayerCharacter} who owns this {@link AbstractItem}.
-	 */
 	public void discard(final PlayerCharacter user) {
 		Inventory inventory = user.getInventory();
 		if (inventory.contains(this)) {
