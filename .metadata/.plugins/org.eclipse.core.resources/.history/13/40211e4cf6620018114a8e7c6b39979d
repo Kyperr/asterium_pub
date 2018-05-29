@@ -524,50 +524,45 @@ public class GameState {
 		for (Player player : state.game.getPlayers()) {
 			auth = player.getAuthToken();
 			character = state.getCharacter(auth);
-			List<String> summary = character.getTurnSummary();
-			
-			if (!summary.isEmpty()) {
-				data = new TurnSummaryRequestData(summary);
-				request = new Request(data, auth);
-	
-				try {
-					session = SessionManager.getInstance().getSession(auth);
-					synchronized (session) {
-						session.getBasicRemote().sendText(request.jsonify().toString());
-					}
-				} catch (IOException e) {
-					e.printStackTrace();
+			data = new TurnSummaryRequestData(character.getTurnSummary());
+			request = new Request(data, auth);
+
+			try {
+				session = SessionManager.getInstance().getSession(auth);
+				synchronized (session) {
+					session.getBasicRemote().sendText(request.jsonify().toString());
 				}
-	
-				character.clearSummary();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
+
+			character.clearSummary();
 		}
 	}
 
 	private static final void summarizeGameBoards(GameState state) throws IOException {
 		String auth;
+		PlayerCharacter character;
 		TurnSummaryRequestData data;
 		Request request;
 		Session session;
-		
-		if (!state.communalSummary.isEmpty()) {
-			for (GameBoard gameBoard : state.game.getGameBoards()) {
-				auth = gameBoard.getAuthToken();
-				data = new TurnSummaryRequestData(state.communalSummary);
-				request = new Request(data, auth);
-	
-				try {
-					session = SessionManager.getInstance().getSession(auth);
-					synchronized (session) {
-						session.getBasicRemote().sendText(request.jsonify().toString());
-					}
-				} catch (IOException e) {
-					e.printStackTrace();
+
+		for (GameBoard gameBoard : state.game.getGameBoards()) {
+			auth = gameBoard.getAuthToken();
+			data = new TurnSummaryRequestData(state.communalSummary);
+			request = new Request(data, auth);
+
+			try {
+				session = SessionManager.getInstance().getSession(auth);
+				synchronized (session) {
+					session.getBasicRemote().sendText(request.jsonify().toString());
 				}
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-	
-			state.clearSummary();
 		}
+
+		state.clearSummary();
 	}
 
 	private static final void syncGameBoards(GameState state) throws IOException {

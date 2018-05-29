@@ -161,7 +161,7 @@ public abstract class AbstractItem {
 	/**
 	 * Removes this {@link AbstractItem} from user's {@link Inventory}, if it contains it.
 	 * 
-	 * @param user The {@link PlayerCharacter} who owns this {@link AbstractItem}.
+	 * @param user The {@link PlayerCharacter} who owns this Item.
 	 */
 	public void discard(final PlayerCharacter user) {
 		Inventory inventory = user.getInventory();
