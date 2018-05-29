@@ -172,7 +172,9 @@ public final class GameResources {
 					 characters = (List<PlayerCharacterData>) data.getPlayers();
 					 gamePhase = data.getGamePhase();
 					 if (gamePhase.equals(END_SUMMARY)) {
-						 System.out.println("END OF GAME");
+						 MapController controller = nodeNavigator.getController(Display.MAP);
+						 controller.update();
+						 nodeNavigator.display(Display.MAP);
 						 
 					 } else if (data.getGamePhase() == TURN_SUMMARY) {
 						 gamePhase = TURN_SUMMARY; 
