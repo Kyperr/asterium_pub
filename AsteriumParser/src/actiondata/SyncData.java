@@ -2,7 +2,6 @@ package actiondata;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Set;
 
 import org.json.JSONArray;
@@ -27,14 +26,16 @@ public class SyncData {
 		private Set<String> activities;
 
 		public enum LocationType {
-			CONTROL_ROOM("control_room"),
+			CONTROL_ROOM("control_room"), 
 			MED_BAY("med_bay"), 
 			MESS_HALL("mess_hall"), 
-			RESIDENTAIL("residential"),
-			ARMORY("armory"),
+			RESIDENTIAL("residential"), 
+			ARMORY("armory"), 
 			LIBRARY("library"), 
-			VEHICLE_BAY("vehicle_bay"),
-			ENGINE_ROOM("engine_room");
+			VEHICLE_BAY("vehicle_bay"), 
+			ENGINE_ROOM("engine_room"),
+			HYDROPONICS("hydroponics_bay"),
+			RESEARCH_LAB("research_lab");
 
 			private final String jsonVersion;
 
