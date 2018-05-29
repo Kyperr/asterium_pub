@@ -38,6 +38,13 @@ function syncPlayerClientData(request) {
 
 requestActions["sync_player_client_data"] = syncPlayerClientData;
 
+//
+
+function summary(request) {
+}
+requestActions["summary"] = summary;
+
+//
 
 var phaseChangeStartingActions = {};
 

@@ -525,7 +525,7 @@ public class GameState {
 
 		state.clearSummary();
 		
-		state.setGamePhase(GamePhase.PLAYERS_JOINING);
+		state.setGamePhase(GamePhase.PLAYER_TURNS);
 		state.gamePhase.executePhase(state);
 	}
 
