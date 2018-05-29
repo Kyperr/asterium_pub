@@ -33,6 +33,7 @@ public interface ActionData {
 	public static final String SUCCESS_RESPONSE = "success_response";
 	public static final String ERRORED_RESPONSE = "errored_response";
 	public static final String GENERAL_REQUEST = "general_request";
+	public static final String DISCARD_ITEM = "discard_item";
 	
 	//Query action constants
 	public static final String QUERY_IS_IN_GAME = "query_is_in_game";

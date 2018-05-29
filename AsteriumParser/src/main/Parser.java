@@ -70,6 +70,7 @@ public class Parser {
 		put(Arrays.asList(true, ActionData.SYNC_PLAYER_LIST), SyncPlayerListRequestData::parseArgs);
 
 		put(Arrays.asList(true, ActionData.USE_ITEM), UseItemRequestData::parseArgs);
+		put(Arrays.asList(true, ActionData.DISCARD_ITEM), DiscardItemRequestData::parseArgs);
 		
 		put(Arrays.asList(true, ActionData.SUMMARY), TurnSummaryRequestData::parseArgs);
 	}};
