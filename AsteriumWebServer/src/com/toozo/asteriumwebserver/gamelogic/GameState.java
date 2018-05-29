@@ -156,6 +156,48 @@ public class GameState {
 		VEHICLE_BAY_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
 	public static final LootPool VEHICLE_BAY_LOOT_POOL = new LootPool(VEHICLE_BAY_ITEM_LOOT);
+	
+	// Dorms
+	public static final List<ItemLoot> DORMS_ITEM_LOOT;
+	static {
+		List<ItemLoot> probs = new ArrayList<ItemLoot>();
+
+		probs.add(new ItemLoot(FuelCell::new, 50, 0.0, 0.0));
+		probs.add(new ItemLoot(FuelCanister::new, 25, 0.0, 0.0));
+		probs.add(new ItemLoot(FuelBarrel::new, 10, 0.0, 0.0));
+		probs.add(new ItemLoot(RescueBeacon::new, 15, 0.0, 0.0));
+
+		DORMS_ITEM_LOOT = Collections.unmodifiableList(probs);
+	}
+	public static final LootPool DORMS_LOOT_POOL = new LootPool(DORMS_ITEM_LOOT);
+	
+	// Hydroponics
+	public static final List<ItemLoot> HYDROPONICS_ITEM_LOOT;
+	static {
+		List<ItemLoot> probs = new ArrayList<ItemLoot>();
+
+		probs.add(new ItemLoot(FuelCell::new, 50, 0.0, 0.0));
+		probs.add(new ItemLoot(FuelCanister::new, 25, 0.0, 0.0));
+		probs.add(new ItemLoot(FuelBarrel::new, 10, 0.0, 0.0));
+		probs.add(new ItemLoot(RescueBeacon::new, 15, 0.0, 0.0));
+
+		HYDROPONICS_ITEM_LOOT = Collections.unmodifiableList(probs);
+	}
+	public static final LootPool HYDROPONICS_LOOT_POOL = new LootPool(HYDROPONICS_ITEM_LOOT);
+	
+	// Research Lab
+	public static final List<ItemLoot> RESEARCH_ITEM_LOOT;
+	static {
+		List<ItemLoot> probs = new ArrayList<ItemLoot>();
+
+		probs.add(new ItemLoot(FuelCell::new, 50, 0.0, 0.0));
+		probs.add(new ItemLoot(FuelCanister::new, 25, 0.0, 0.0));
+		probs.add(new ItemLoot(FuelBarrel::new, 10, 0.0, 0.0));
+		probs.add(new ItemLoot(RescueBeacon::new, 15, 0.0, 0.0));
+
+		RESEARCH_ITEM_LOOT = Collections.unmodifiableList(probs);
+	}
+	public static final LootPool RESEARCH_LOOT_POOL = new LootPool(RESEARCH_ITEM_LOOT);
 
 	public enum GamePhase {
 
@@ -221,6 +263,18 @@ public class GameState {
 		Location engineRoom = new Location("Engine Room", Location.LocationType.ENGINE_ROOM, ENGINE_ROOM_LOOT_POOL, 6);
 		engineRoom.addActivity(Activity.SEARCH, Activity.searchActivity);
 		locations.put("7", engineRoom);
+		
+		Location dorms = new Location("Dorms", Location.LocationType.RESIDENTIAL, DORMS_LOOT_POOL, 7);
+		dorms.addActivity(Activity.SEARCH, Activity.searchActivity);
+		locations.put("8", dorms);
+		
+		Location hydroponics = new Location("Hydroponics Bay", Location.LocationType.HYDROPONICS, HYDROPONICS_LOOT_POOL, 8);
+		hydroponics.addActivity(Activity.SEARCH, Activity.searchActivity);
+		locations.put("9", hydroponics);
+		
+		Location research = new Location("Research Lab", Location.LocationType.RESEARCH_LAB, RESEARCH_LOOT_POOL, 9);
+		research.addActivity(Activity.SEARCH, Activity.searchActivity);
+		locations.put("10", research);
 	};
 	// =========================
 

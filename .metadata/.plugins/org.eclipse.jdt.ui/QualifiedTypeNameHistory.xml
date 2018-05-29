@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="java.awt.Color"/>
-<fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.Game"/>
-<fullyQualifiedTypeName name="actiondata.DisplayBoardRequestData.PlayerData"/>
 <fullyQualifiedTypeName name="actiondata.DisplayBoardRequestData"/>
 <fullyQualifiedTypeName name="actiondata.DisplayBoardRequestData.LocationData"/>
 <fullyQualifiedTypeName name="java.util.function.BiConsumer"/>
-<fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.GameState"/>
-<fullyQualifiedTypeName name="java.util.HashSet"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="message.Request"/>
 <fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.items.Item"/>
 <fullyQualifiedTypeName name="java.util.Collection"/>
@@ -33,7 +27,6 @@
 <fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.items.consumables.Bandage"/>
 <fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.items.consumables.Medkit"/>
 <fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.items.consumables.Syringe"/>
-<fullyQualifiedTypeName name="java.util.Iterator"/>
 <fullyQualifiedTypeName name="java.util.function.Supplier"/>
 <fullyQualifiedTypeName name="java.util.HashMap"/>
 <fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.PlayerCharacter.StatBlock"/>
@@ -42,11 +35,29 @@
 <fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.PlayerCharacter"/>
 <fullyQualifiedTypeName name="java.util.function.Function"/>
 <fullyQualifiedTypeName name="actiondata.SyncPlayerClientDataRequestData"/>
-<fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="java.util.Timer"/>
 <fullyQualifiedTypeName name="java.util.TimerTask"/>
 <fullyQualifiedTypeName name="com.toozo.asteriumwebserver.sessionmanager.SessionManager"/>
 <fullyQualifiedTypeName name="javax.websocket.Session"/>
-<fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.Location.LocationType"/>
 <fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.items.location.Book"/>
+<fullyQualifiedTypeName name="com.sun.corba.se.spi.orbutil.fsm.State"/>
+<fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.GameState"/>
+<fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.items.consumables.FuelCell"/>
+<fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.items.consumables.FuelBarrel"/>
+<fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.items.consumables.FuelCanister"/>
+<fullyQualifiedTypeName name="com.toozo.asteriumwebserver.exceptions.PlayerNameTakenException"/>
+<fullyQualifiedTypeName name="com.toozo.asteriumwebserver.exceptions.InvalidNameException"/>
+<fullyQualifiedTypeName name="java.util.Set"/>
+<fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.Location"/>
+<fullyQualifiedTypeName name="java.util.HashSet"/>
+<fullyQualifiedTypeName name="com.toozo.asteriumwebserver.gamelogic.Location.LocationType"/>
+<fullyQualifiedTypeName name="java.util.Random"/>
+<fullyQualifiedTypeName name="java.util.Iterator"/>
+<fullyQualifiedTypeName name="actiondata.AbstractRequestActionData"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="java.util.Collections"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="org.json.JSONException"/>
+<fullyQualifiedTypeName name="org.json.JSONArray"/>
+<fullyQualifiedTypeName name="actiondata.TurnSummaryRequestData"/>
 </qualifiedTypeNameHistroy>

@@ -8,3 +8,7 @@
 1527459396726	Copy compilation unit
 1527463223366	Copy compilation unit
 1527463236042	Copy compilation unit
+1527550628195	Copy compilation unit
+1527550869806	Rename field 'toCommunalFromPersonal'
+1527551115970	Rename field 'user'
+1527551122132	Rename local variable 'user'

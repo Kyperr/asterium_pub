@@ -100,6 +100,7 @@ public interface ActionData {
 	public static final String HUMANS_WON = "humans_won";
 	public static final String YOU_WON = "you_won";
 	public static final String SUMMARY = "summary";
+	public static final String PERSONAL_TO_COMMUNAL = "personal_to_communal";
 	
 	/**
 	 * 

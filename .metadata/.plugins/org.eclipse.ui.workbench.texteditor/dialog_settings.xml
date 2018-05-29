@@ -2,23 +2,27 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="RESOLVE" key="selection"/>
+		<item value="Summary" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="summary"/>
+			<item value="location"/>
+			<item value="add"/>
+			<item value="join"/>
+			<item value="humansWon"/>
+			<item value="players"/>
+			<item value="syncP"/>
+			<item value="sync"/>
 			<item value="resolve"/>
 			<item value="CONTROL_ROOM(&quot;control_room&quot;), MED_BAY(&quot;med_bay&quot;), MESS_HALL(&quot;mess_hall&quot;), RESIDENTAIL(&quot;residential&quot;);"/>
 			<item value="isNo"/>
 			<item value="print"/>
-			<item value="add"/>
 			<item value="dd"/>
 			<item value="println"/>
 			<item value="verbose"/>
-			<item value="super"/>
-			<item value="runnable"/>
-			<item value="doActivity"/>
 		</list>
 		<list key="replacehistory">
 		</list>
@@ -27,7 +31,7 @@
 		<item value="325" key="DIALOG_WIDTH"/>
 		<item value="1|Sans|10.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
 		<item value="383" key="DIALOG_HEIGHT"/>
-		<item value="940" key="DIALOG_X_ORIGIN"/>
-		<item value="261" key="DIALOG_Y_ORIGIN"/>
+		<item value="1004" key="DIALOG_X_ORIGIN"/>
+		<item value="289" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>
