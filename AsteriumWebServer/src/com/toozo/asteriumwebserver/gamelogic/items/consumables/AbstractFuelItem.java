@@ -8,6 +8,7 @@ import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 public abstract class AbstractFuelItem extends AbstractConsumableItem {
 	// ===== CONSTANTS =====
 	public final static String DESCRIPTION = "Adds %d fuel to the supply.";
+	public final static String COMMUNAL_USE_MESSAGE = "%d fuel was added to the supply.";
 	// =====================
 	
 	// ===== FIELDS =====
@@ -28,6 +29,7 @@ public abstract class AbstractFuelItem extends AbstractConsumableItem {
 	@Override
 	public void applyEffect(GameState state, PlayerCharacter user, Collection<PlayerCharacter> targets) {
 		state.setFuel(state.getFuel() + this.addAmount);
+		state.addSummaryMessage(String.format(COMMUNAL_USE_MESSAGE, this.addAmount));
 	}
 	// ====================
 }
