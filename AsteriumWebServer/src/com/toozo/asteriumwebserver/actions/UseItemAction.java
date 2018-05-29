@@ -18,7 +18,7 @@ import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 import actiondata.ErroredResponseData;
 import actiondata.SuccessResponseData;
 import actiondata.UseItemRequestData;
-import actiondata.UseItemRequestData.ItemData;
+import actiondata.InventoryData.ItemData;
 import message.Message;
 import message.Response;
 
@@ -35,8 +35,8 @@ public class UseItemAction extends Action {
 	private ItemData itemData;
 	private boolean isCommunal;
 
-	public UseItemAction(final String authToken, final UUID messageID,
-			final Collection<String> targets, final ItemData item, final boolean isCommunal) {
+	public UseItemAction(final String authToken, final UUID messageID, final Collection<String> targets,
+			final ItemData item, final boolean isCommunal) {
 		super(Action.USE_ITEM, authToken, messageID);
 		this.state = GameManager.getInstance().getGameForPlayer(authToken).getGameState();
 		this.user = this.state.getCharacter(authToken);
@@ -58,14 +58,23 @@ public class UseItemAction extends Action {
 			PlayerCharacter user = this.user;
 			Collection<PlayerCharacter> targets = this.targets;
 
-			AbstractItem item = AbstractItem.getItem(this.itemData.getItemID());
-			if (user != null && item != null && user.getInventory().contains(item)) {
-				item.use(state, user, targets, this.isCommunal);
-				
+			String item = this.itemData.getName();
+			AbstractItem use = null;
+			if (user != null && item != null) {
+				for (AbstractItem i : user.getInventory()) {
+					if (i.getName().equals(item)) {
+						use = i;
+						break;
+					}
+				}
+				if (use != null) {
+					use.use(state, user, targets, this.isCommunal);
+				}
+
 				if (Action.VERBOSE) {
 					String targetNames = "";
 					boolean hasTargets = !targets.isEmpty();
-					
+
 					if (hasTargets) {
 						// Add all but last target name
 						String lastName = null;
@@ -75,30 +84,28 @@ public class UseItemAction extends Action {
 							}
 							lastName = target.getCharacterName();
 						}
-						
+
 						// Add last target name
 						if (targetNames != "") {
 							targetNames += "and ";
 						}
 						targetNames += lastName;
 					}
-					
-					System.out.printf("%s has used %s%s\n", 
-									  user.getCharacterName(),
-									  item.getName(),
-									  hasTargets? "" : " on " + targetNames);
+
+					System.out.printf("%s has used %s%s\n", user.getCharacterName(), item,
+							hasTargets ? "" : " on " + targetNames);
 				}
-				
+
 				SuccessResponseData data = new SuccessResponseData(Action.USE_ITEM);
 				message = new Response(data, 0, this.getMessageID(), auth);
-				
-				//Update player clients
-				if(this.isCommunal) {
+
+				// Update player clients
+				if (this.isCommunal) {
 					game.getGameState().syncPlayerClients();
 				} else {
 					game.getGameState().syncPlayerClient(auth);
 				}
-				
+
 			} else {
 				// No Such Item In Personal Inventory Error
 				ErroredResponseData data = new ErroredResponseData(Action.USE_ITEM);
@@ -130,8 +137,8 @@ public class UseItemAction extends Action {
 	 */
 	public static UseItemAction fromMessage(final Message message) {
 		UseItemRequestData data = UseItemRequestData.class.cast(message.getActionData());
-		return new UseItemAction(message.getAuthToken(), message.getMessageID(), data.getTargets(),
-				data.getItem(), data.getIsCommunal());
+		return new UseItemAction(message.getAuthToken(), message.getMessageID(), data.getTargets(), data.getItem(),
+				data.getIsCommunal());
 
 	}
 

@@ -1,20 +1,9 @@
 package com.toozo.asteriumwebserver.gamelogic.items;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Supplier;
 
 import com.toozo.asteriumwebserver.gamelogic.GameState;
 import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
-import com.toozo.asteriumwebserver.gamelogic.items.consumables.Bandage;
-import com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodChest;
-import com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodCrate;
-import com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodPack;
-import com.toozo.asteriumwebserver.gamelogic.items.consumables.Medkit;
-import com.toozo.asteriumwebserver.gamelogic.items.consumables.RescueBeacon;
-import com.toozo.asteriumwebserver.gamelogic.items.consumables.Syringe;
-import com.toozo.asteriumwebserver.gamelogic.items.equipment.TinfoilHatEquipmentItem;
 
 /**
  * The abstract class for an item that can be used by a {@link PlayerCharacter}.
@@ -28,30 +17,6 @@ public abstract class AbstractItem {
 	public static final String DEFAULT_FLAV = "";
 	public static final String DEFAULT_IMG = "";
 	
-	private static final Map<String, Supplier<AbstractItem>> ITEM_LOOKUP = new HashMap<String, Supplier<AbstractItem>>() {
-		/**
-		 * Auto-generated unique identifier for ITEM_LOOKUP
-		 */
-		private static final long serialVersionUID = 3292064164504904735L;
-		
-		/*
-		 * Static block in which ITEM_LOOKUP is populated. As new Items are written,
-		 * their corresponding constructors should be added here.
-		 */
-		{
-			put(Bandage.NAME, Bandage::new);
-			put(Medkit.NAME, Medkit::new);
-			put(Syringe.NAME, Syringe::new);
-			
-			put(FoodPack.NAME, FoodPack::new);
-			put(FoodCrate.NAME, FoodCrate::new);
-			put(FoodChest.NAME, FoodChest::new);
-			
-			put(TinfoilHatEquipmentItem.NAME, TinfoilHatEquipmentItem::new);
-			
-			put(RescueBeacon.NAME, RescueBeacon::new);
-		}
-	};
 	// =====================
 	
 	// ===== FIELDS =====
@@ -165,15 +130,6 @@ public abstract class AbstractItem {
 	// ===================
 	
 	// ===== METHODS =====
-	/**
-	 * Constructs the appropriate Item based on itemName.
-	 * 
-	 * @param itemName The name of the item to construct.
-	 * @return A new Item based on itemName.
-	 */
-	public static AbstractItem getItem(final String itemName) {		
-		return AbstractItem.ITEM_LOOKUP.get(itemName).get();
-	}
 	
 	/**
 	 * Use this item.
@@ -225,4 +181,6 @@ public abstract class AbstractItem {
 			return false;
 		return true;
 	}
+	
+	
 }

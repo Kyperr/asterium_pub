@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import actiondata.InventoryData.ItemData;
 import message.Request;
 
 /**
@@ -81,34 +82,5 @@ public class UseItemRequestData extends AbstractRequestActionData {
 		boolean isCommunal = jsonObj.getBoolean(ActionData.IS_COMMUNAL);
 
 		return new UseItemRequestData(targets, item, isCommunal);
-	}
-
-	/**
-	 * {@link ItemData} is an inner class of {@link UseItemRequestData} that holds
-	 * data for an item only for the purpose of using it from a player character's
-	 * personal inventory.
-	 * 
-	 * @author Studio Toozo
-	 */
-	public static class ItemData {
-		private String itemID;
-
-		public ItemData(final String itemID) {
-			this.itemID = itemID;
-		}
-
-		public final String getItemID() {
-			return this.itemID;
-		}
-
-		/**
-		 * 
-		 * @return {@link JSONObject} representation of the data.
-		 */
-		public JSONObject jsonify() {
-			JSONObject data = new JSONObject();
-			data.put(ActionData.ITEM_ID, this.itemID);
-			return data;
-		}
 	}
 }

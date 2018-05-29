@@ -19,6 +19,7 @@ public class SendErrorAction extends ResponseAction {
 	public static final Integer NO_SUCH_LOBBY = 13;
 	public static final Integer ALLOCATED_STATS_TOO_HIGH = 14;
 	public static final Integer NO_SUCH_ITEM_IN_PERSONAL_INVENTORY = 15;
+	public static final Integer NO_SUCH_ITEM_IN_COMMUNAL_INVENTORY = 16;
 	public static final Integer FAILED_TO_CREATE_GAME = 20;
 	public static final Integer GAME_NOT_FOUND = 22;
 	public static final Integer GAME_FULL = 30;
