@@ -56,8 +56,8 @@ CharacterSheetDisplayController.prototype.update = function () {
     this.statDiv.appendChild(intuDiv);
 
     //Exposure
-    this.exposureDiv.innerHTML = "Exposure: " + character.;
-
+    this.displayDiv.appendChild(this.exposureDiv);
+    this.exposureDiv.innerHTML = "Exposure: " + character.exposure;
 
     //Gear
     this.displayDiv.appendChild(this.loadoutDiv);
@@ -144,7 +144,6 @@ CharacterSheetDisplayController.prototype.display = function () {
     div.innerHTML = "";
 
     div.appendChild(this.displayDiv);
-    div.appendChild(this.loadoutDiv);
 
 }
 
