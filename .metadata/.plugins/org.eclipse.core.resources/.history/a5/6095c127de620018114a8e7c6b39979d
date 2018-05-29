@@ -252,9 +252,8 @@ public class GameState {
 		library.addActivity(Activity.SEARCH, Activity.searchActivity);
 		locations.put("8", library);
 		
-		Location dorms = new Location("Dorms", Location.LocationType.RESIDENTIAL, DORMS_LOOT_POOL, 1);
-		dorms.addActivity(Activity.SEARCH, Activity.searchActivity);
-		locations.put("20", dorms);
+		//TODO Add Dorms here: 
+		//locations.put("20", dorms);
 		
 		// ~~~~~~~ X axis 2 ~~~~~~~~~~~
 		Location cafeteria = new Location("Cafeteria", Location.LocationType.MESS_HALL, CAFETERIA_LOOT_POOL, 2);
@@ -280,18 +279,34 @@ public class GameState {
 		// ============== Tier 2 ===============
 		
 		// ~~~~~~~ X axis 5 ~~~~~~~~~~~
-		Location hydroponics = new Location("Hydroponics Bay", Location.LocationType.HYDROPONICS, HYDROPONICS_LOOT_POOL, 8);
-		hydroponics.addActivity(Activity.SEARCH, Activity.searchActivity);
-		locations.put("18", hydroponics);
+		//TODO Add Hydroponics here: 
+		//locations.put("18", hydoponics);
 		
 		// ~~~~~~~ X axis 6 ~~~~~~~~~~~
 		Location vehicleBay = new Location("Vehicle Bay", Location.LocationType.VEHICLE_BAY, VEHICLE_BAY_LOOT_POOL, 6);
 		vehicleBay.addActivity(Activity.SEARCH, Activity.searchActivity);
 		locations.put("25", vehicleBay);
 		
+<<<<<<< HEAD
+		Location engineRoom = new Location("Engine Room", Location.LocationType.ENGINE_ROOM, ENGINE_ROOM_LOOT_POOL, 6);
+		engineRoom.addActivity(Activity.SEARCH, Activity.searchActivity);
+		locations.put("7", engineRoom);
+		
+		Location dorms = new Location("Dorms", Location.LocationType.RESIDENTIAL, DORMS_LOOT_POOL, 7);
+		dorms.addActivity(Activity.SEARCH, Activity.searchActivity);
+		locations.put("8", dorms);
+		
+		Location hydroponics = new Location("Hydroponics Bay", Location.LocationType.HYDROPONICS, HYDROPONICS_LOOT_POOL, 8);
+		hydroponics.addActivity(Activity.SEARCH, Activity.searchActivity);
+		locations.put("9", hydroponics);
+=======
+		//TODO Add Research Lab here: 
+		//locations.put("13", research);
+
 		Location research = new Location("Research Lab", Location.LocationType.RESEARCH_LAB, RESEARCH_LOOT_POOL, 6);
 		research.addActivity(Activity.SEARCH, Activity.searchActivity);
 		locations.put("13", research);
+>>>>>>> 5611c0070eb1f15b3270e1af10e4bbf48e84e258
 	};
 	// =========================
 

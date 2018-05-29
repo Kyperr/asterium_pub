@@ -280,14 +280,20 @@ public class GameState {
 		// ============== Tier 2 ===============
 		
 		// ~~~~~~~ X axis 5 ~~~~~~~~~~~
-		Location hydroponics = new Location("Hydroponics Bay", Location.LocationType.HYDROPONICS, HYDROPONICS_LOOT_POOL, 8);
-		hydroponics.addActivity(Activity.SEARCH, Activity.searchActivity);
-		locations.put("18", hydroponics);
+		//TODO Add Hydroponics here: 
+		//locations.put("18", hydoponics);
 		
 		// ~~~~~~~ X axis 6 ~~~~~~~~~~~
 		Location vehicleBay = new Location("Vehicle Bay", Location.LocationType.VEHICLE_BAY, VEHICLE_BAY_LOOT_POOL, 6);
 		vehicleBay.addActivity(Activity.SEARCH, Activity.searchActivity);
 		locations.put("25", vehicleBay);
+		
+<<<<<<< HEAD
+		
+		
+		Location hydroponics = new Location("Hydroponics Bay", Location.LocationType.HYDROPONICS, HYDROPONICS_LOOT_POOL, 8);
+		hydroponics.addActivity(Activity.SEARCH, Activity.searchActivity);
+		locations.put("9", hydroponics);
 		
 		Location research = new Location("Research Lab", Location.LocationType.RESEARCH_LAB, RESEARCH_LOOT_POOL, 6);
 		research.addActivity(Activity.SEARCH, Activity.searchActivity);
