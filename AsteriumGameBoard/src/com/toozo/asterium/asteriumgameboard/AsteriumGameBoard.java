@@ -48,7 +48,7 @@ public class AsteriumGameBoard extends Application {
 		GameBoardPane gameboardPane = new GameBoardPane(backgroundImage);
 
 		NodeNavigator navigator = new NodeNavigator(gameboardPane);
-
+		
 		stage.setTitle(GAME_BOARD_TITLE);
 		stage.setScene(createScene(gameboardPane));
 		stage.show();

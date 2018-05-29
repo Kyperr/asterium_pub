@@ -71,9 +71,6 @@ ActivityDisplayController.prototype.display = function () {
 
     div.appendChild(locationItemDiv);
 
-
-
-
     div.appendChild(this.btnCancel);
 }
 ActivityDisplayController.prototype.selectActivity = function (activity) {

@@ -4,6 +4,7 @@
 //
 
 function LocationsDisplayController() {
+    this.btnCancel = document.createElement("BUTTON");
     this.selectedLocation;
     this.displayDiv;
     this.init();
@@ -14,6 +15,9 @@ LocationsDisplayController.prototype.constructor = LocationsDisplayController;
 
 
 LocationsDisplayController.prototype.init = function () {
+    this.btnCancel.innerHTML = "CANCEL";
+    this.btnCancel.setAttribute("onClick", "actionDisplayController.display()");
+    this.btnCancel.setAttribute("class", "button");
     this.displayDiv = document.createElement("div");
 }
 
@@ -34,6 +38,10 @@ LocationsDisplayController.prototype.update = function () {
         btnLocation.setAttribute("class", "button");
         this.displayDiv.appendChild(btnLocation);
     });
+    this.displayDiv.appendChild(document.createElement("br"));
+    this.displayDiv.appendChild(document.createElement("br"));
+    this.displayDiv.appendChild(this.btnCancel);
+
 }
 
 
