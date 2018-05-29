@@ -422,8 +422,9 @@ public class GameState {
 		}
 
 		if (state.gameOver() && lastVC != null) { // GAME OVER
+			String lastVCname = lastVC.getName();
 			if (VERBOSE) {
-				System.out.println(String.format("Game complete. Victory condition: %s.", lastVC.getName()));
+				System.out.println(String.format("Game complete. Victory condition: %s.", lastVCname));
 				System.out.println("Displaying end summary...");
 			}
 
@@ -441,16 +442,16 @@ public class GameState {
 			for (PlayerCharacter character : state.getCharacters()) {
 				if (character.isParasite()) {
 					if (forHumans) {
-						character.addSummaryMessage(PARASITE_LOSS_MESSAGE);
+						character.addSummaryMessage(String.format(PARASITE_LOSS_MESSAGE, lastVCname));
 					} else {
-						character.addSummaryMessage(PARASITE_WIN_MESSAGE);
+						character.addSummaryMessage(String.format(PARASITE_WIN_MESSAGE, lastVCname));
 					}
 				} else {
 					// character is human
 					if (forHumans) {
-						character.addSummaryMessage(HUMAN_WIN_MESSAGE);
+						character.addSummaryMessage(String.format(HUMAN_WIN_MESSAGE, lastVCname));
 					} else {
-						character.addSummaryMessage(HUMAN_LOSS_MESSAGE);
+						character.addSummaryMessage(String.format(HUMAN_LOSS_MESSAGE, lastVCname));
 					}
 				}
 			}
