@@ -10,17 +10,21 @@ socket.onmessage = function (message) {
     if (jsonObj.hasOwnProperty("response")) {
         if (jsonObj.response.hasOwnProperty('message_id')) {
             var action = responseActions[jsonObj.response.message_id];
-            if (action !== null) {
+            if (action != null) {
                 action(jsonObj.response);
+            } else {
+                console.log("Warning! An action was not found for " + jsonObj.action_name);
             }
         }
     }
 
     if (jsonObj.hasOwnProperty("request")) {
-        if (action !== null) {
-            if (jsonObj.request.hasOwnProperty('action_name')) {
-                var action = requestActions[jsonObj.request.action_name];
+        if (jsonObj.request.hasOwnProperty('action_name')) {
+            var action = requestActions[jsonObj.request.action_name];
+            if (action != null) {
                 action(jsonObj.request);
+            } else {
+                console.log("Warning! An action was not found for " + jsonObj.request.action_name);
             }
         }
     }
@@ -98,7 +102,26 @@ function toggleReady() {
     responseActions[uuid] = processToggleReadyUpResponse;
 }
 
-function turnActivity(){
+function setReadyStatus(ready) {
+    console.log("Toggling ready!");
+    var uuid = genUUID();
+    message =
+        {
+            "request":
+                {
+                    "action_name": "set_ready_status",
+                    "set_ready_status":
+                        {
+                            "player_ready_status": ready
+                        },
+                    "auth_token": getAuthToken(),
+                    "message_id": uuid
+                }
+        }
+    socket.send(JSON.stringify(message));
+}
+
+function turnActivity() {
     console.log("Sending turn action!");
     var uuid = genUUID();
     message =
@@ -119,7 +142,7 @@ function turnActivity(){
     responseActions[uuid] = processTurnActionResponse;
 }
 
-function itemTurnActivity(item, location){
+function itemTurnActivity(item, location) {
     console.log("Sending turn action!");
     var uuid = genUUID();
     message =
@@ -136,16 +159,16 @@ function itemTurnActivity(item, location){
                     "message_id": uuid
                 }
         }
-        console.log(JSON.stringify(message));
+    console.log(JSON.stringify(message));
     socket.send(JSON.stringify(message));
     responseActions[uuid] = processTurnActionResponse;
 }
 
-function useItemAction(item, targets, isCommunal){//Should use itemID later.  
+function useItemAction(item, targets, isCommunal) {//Should use itemID later.  
     console.log("Sending use-item!");
 
     //Ew, remove this after the MVP
-    if(item.item_name == "Rescue Beacon"){
+    if (item.item_name == "Rescue Beacon") {
         usedTheBeacon = true;
     }
 

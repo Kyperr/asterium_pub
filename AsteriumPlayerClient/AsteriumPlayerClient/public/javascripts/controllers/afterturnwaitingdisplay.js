@@ -16,7 +16,10 @@ AfterTurnWaitingDisplayController.prototype.constructor = ActivityDisplayControl
 
 AfterTurnWaitingDisplayController.prototype.init = function () {
     this.btnCancelTurn.innerHTML = "CANCEL TURN";
-    this.btnCancelTurn.setAttribute("onClick", "actionDisplayController.display()");
+    this.btnCancelTurn.onclick = function(){
+        actionDisplayController.display();
+        setReadyStatus(false);
+    }
     this.btnCancelTurn.setAttribute("class", "button");
 
     this.btnReady.innerHTML = 'READY';
@@ -27,7 +30,7 @@ AfterTurnWaitingDisplayController.prototype.init = function () {
 AfterTurnWaitingDisplayController.prototype.update = function () {
     this.displayDiv.innerHTML = "";
 
-    this.displayDiv.innerHTML = "<b>Waiting on other players(Cancel doesn't work.)...</b>";
+    this.displayDiv.innerHTML = "<b>Waiting on other players...</b>";
     
         console.log("playerIsReady: " + playerIsReady);
     if (playerIsReady) {
