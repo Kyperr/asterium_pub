@@ -71,9 +71,11 @@ public class MapController extends AbstractAsteriumController {
 		try {
 
 			foodLabel.setText("Food storage: [" + getGameResources().getFood() + "]");
-			fuelLabel.setText("Fuel: [" + getGameResources().getFood() + "]");
+			fuelLabel.setText("Fuel: [" + getGameResources().getFuel() + "]");
+			dayLabel.setText("Day: " + getGameResources().getDay());
 			dayLabel.setText("Day: " + getGameResources().getDay()); 
 			StringBuilder builder = new StringBuilder();
+			builder.append("Turn Summary:\n");
 			for (String s : getGameResources().getTurnSummary()) {
 				builder.append(s);
 				builder.append("\n");
@@ -91,6 +93,24 @@ public class MapController extends AbstractAsteriumController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void endGame() {
+		mapStackPane.getChildren().clear();
+		turnSummaryLabel.setText("");
+		Label gameSummary = new Label();
+		StringBuilder builder = new StringBuilder();
+		try {
+			for (String s : getGameResources().getTurnSummary()) {
+				builder.append(s);
+				builder.append("\n");
+			}
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		gameSummary.setText(builder.toString()); 
+		mapStackPane.getChildren().add(gameSummary);
 	}
 
 }

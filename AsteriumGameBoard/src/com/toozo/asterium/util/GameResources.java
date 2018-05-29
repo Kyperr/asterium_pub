@@ -33,7 +33,7 @@ public final class GameResources {
 	
 	private final String URI = "ws://localhost:8080/AsteriumWebServer/Game";	
 	
-	private final String GAME_SUMMARY = "GAME_SUMMARY";
+	private final String END_SUMMARY = "END_SUMMARY";
 	
 	private final String TURN_SUMMARY = "TURN_SUMMARY";
 	
@@ -170,12 +170,10 @@ public final class GameResources {
 					 putMapLocations();
 					 communalInventory = (List<ItemData>) data.getCommunalInventory();
 					 characters = (List<PlayerCharacterData>) data.getPlayers();
-					 
-					 if (data.getGamePhase() == GAME_SUMMARY) {
-						 gamePhase = GAME_SUMMARY;
-						 GameSummaryController controller = nodeNavigator.getController(Display.GAME_SUMMARY);
-						 controller.update();
-						 nodeNavigator.display(Display.GAME_SUMMARY);
+					 gamePhase = data.getGamePhase();
+					 if (gamePhase.equals(END_SUMMARY)) {
+						 System.out.println("END OF GAME");
+						 
 					 } else if (data.getGamePhase() == TURN_SUMMARY) {
 						 gamePhase = TURN_SUMMARY; 
 						 TurnSummaryController controller = nodeNavigator.getController(Display.TURN_SUMMARY);
@@ -191,19 +189,18 @@ public final class GameResources {
 			});
 		});
 		
-		ccHandler.registerRequestCallback(ActionData.TURN_SUMMARY, (message) -> {
+		ccHandler.registerRequestCallback(ActionData.SUMMARY, (message) -> {
 			 System.err.println("Received turn_summary");
 			Platform.runLater(new Runnable() {
 				 @Override public void run() {
 					 // Get the data
 					 TurnSummaryRequestData data = TurnSummaryRequestData.class.cast(message.getActionData());
 					 // Sync the data
-					 List<String> summary = data.getSummary();
+					 turnSummary = data.getSummary();
 					 
-					 if (gamePhase == GAME_SUMMARY) {
+					 if (gamePhase == END_SUMMARY) {
 						 MapController controller = nodeNavigator.getController(Display.MAP);
-						 controller.update();
-						 nodeNavigator.display(Display.MAP);
+						 controller.endGame();
 					 } else {
 						 MapController controller = nodeNavigator.getController(Display.MAP);
 						 controller.update();

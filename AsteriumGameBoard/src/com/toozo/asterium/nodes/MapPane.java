@@ -68,13 +68,13 @@ public class MapPane extends Pane {
 				gc.clearRect(0, 0, getWidth(), getHeight());
 		        gc.drawImage(image, 0, 0, getWidth(), getHeight());
 		        
-		        for(Integer position : gameResources.getLocationMap().keySet()) {
-					Double xLocation = xTranslatorMap.get(position).apply(getWidth());
-					Double yLocation = yTranslatorMap.get(position).apply(getHeight());
-					gc.setFill(Color.web("#4bf221"));
-					gc.fillText(gameResources.getLocationMap().get(position), 
-							xLocation, yLocation);
-				}
+//		        for(Integer position : gameResources.getLocationMap().keySet()) {
+//					Double xLocation = xTranslatorMap.get(position).apply(getWidth());
+//					Double yLocation = yTranslatorMap.get(position).apply(getHeight());
+//					gc.setFill(Color.web("#4bf221"));
+//					gc.fillText(gameResources.getLocationMap().get(position), 
+//							xLocation, yLocation);
+//				}
 			}
 		};
 
