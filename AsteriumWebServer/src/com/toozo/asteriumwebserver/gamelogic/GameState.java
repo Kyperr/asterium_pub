@@ -156,6 +156,48 @@ public class GameState {
 		VEHICLE_BAY_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
 	public static final LootPool VEHICLE_BAY_LOOT_POOL = new LootPool(VEHICLE_BAY_ITEM_LOOT);
+	
+	// Dorms
+	public static final List<ItemLoot> DORMS_ITEM_LOOT;
+	static {
+		List<ItemLoot> probs = new ArrayList<ItemLoot>();
+
+		probs.add(new ItemLoot(FuelCell::new, 50, 0.0, 0.0));
+		probs.add(new ItemLoot(FuelCanister::new, 25, 0.0, 0.0));
+		probs.add(new ItemLoot(FuelBarrel::new, 10, 0.0, 0.0));
+		probs.add(new ItemLoot(RescueBeacon::new, 15, 0.0, 0.0));
+
+		DORMS_ITEM_LOOT = Collections.unmodifiableList(probs);
+	}
+	public static final LootPool DORMS_LOOT_POOL = new LootPool(DORMS_ITEM_LOOT);
+	
+	// Hydroponics
+	public static final List<ItemLoot> HYDROPONICS_ITEM_LOOT;
+	static {
+		List<ItemLoot> probs = new ArrayList<ItemLoot>();
+
+		probs.add(new ItemLoot(FuelCell::new, 50, 0.0, 0.0));
+		probs.add(new ItemLoot(FuelCanister::new, 25, 0.0, 0.0));
+		probs.add(new ItemLoot(FuelBarrel::new, 10, 0.0, 0.0));
+		probs.add(new ItemLoot(RescueBeacon::new, 15, 0.0, 0.0));
+
+		HYDROPONICS_ITEM_LOOT = Collections.unmodifiableList(probs);
+	}
+	public static final LootPool HYDROPONICS_LOOT_POOL = new LootPool(HYDROPONICS_ITEM_LOOT);
+	
+	// Research Lab
+	public static final List<ItemLoot> RESEARCH_ITEM_LOOT;
+	static {
+		List<ItemLoot> probs = new ArrayList<ItemLoot>();
+
+		probs.add(new ItemLoot(FuelCell::new, 50, 0.0, 0.0));
+		probs.add(new ItemLoot(FuelCanister::new, 25, 0.0, 0.0));
+		probs.add(new ItemLoot(FuelBarrel::new, 10, 0.0, 0.0));
+		probs.add(new ItemLoot(RescueBeacon::new, 15, 0.0, 0.0));
+
+		RESEARCH_ITEM_LOOT = Collections.unmodifiableList(probs);
+	}
+	public static final LootPool RESEARCH_LOOT_POOL = new LootPool(RESEARCH_ITEM_LOOT);
 
 	public enum GamePhase {
 
@@ -193,34 +235,63 @@ public class GameState {
 
 	// Initialize the locations
 	{
+		// ============== Tier 0 ===============
+		
+		// ~~~~~~~ X axis 0 ~~~~~~~~~~~
 		// Make a new location
+		//Name, location type, loot pool, X axis position. 
 		Location home = new Location("Control Room", Location.LocationType.CONTROL_ROOM, CONTROL_ROOM_LOOT_POOL, 0);
+		//add the activities that can be done at this location
 		home.addActivity(Activity.REST, Activity.restActivity);
+		//add this location to the map locations
+		//key is the map location, value is the location
 		locations.put("1", home);
 
-		Location med_bay = new Location("Med Bay", Location.LocationType.MED_BAY, MEDBAY_LOOT_POOL, 1);
-		med_bay.addActivity(Activity.SEARCH, Activity.searchActivity);
-		locations.put("2", med_bay);
-
+		// ~~~~~~~ X axis 1 ~~~~~~~~~~~		
+		Location library = new Location("Library", Location.LocationType.LIBRARY, LIBRARY_LOOT_POOL, 1);
+		library.addActivity(Activity.SEARCH, Activity.searchActivity);
+		locations.put("8", library);
+		
+		Location dorms = new Location("Dorms", Location.LocationType.RESIDENTIAL, DORMS_LOOT_POOL, 1);
+		dorms.addActivity(Activity.SEARCH, Activity.searchActivity);
+		locations.put("20", dorms);
+		
+		// ~~~~~~~ X axis 2 ~~~~~~~~~~~
 		Location cafeteria = new Location("Cafeteria", Location.LocationType.MESS_HALL, CAFETERIA_LOOT_POOL, 2);
 		cafeteria.addActivity(Activity.SEARCH, Activity.searchActivity);
 		locations.put("3", cafeteria);
 		
-		Location library = new Location("Library", Location.LocationType.LIBRARY, LIBRARY_LOOT_POOL, 3);
-		library.addActivity(Activity.SEARCH, Activity.searchActivity);
-		locations.put("4", library);
+		// ============== Tier 1 ===============
 		
+		// ~~~~~~~ X axis 3 ~~~~~~~~~~~
+		Location med_bay = new Location("Med Bay", Location.LocationType.MED_BAY, MEDBAY_LOOT_POOL, 3);
+		med_bay.addActivity(Activity.SEARCH, Activity.searchActivity);
+		locations.put("4", med_bay);
+		
+		// ~~~~~~~ X axis 4 ~~~~~~~~~~~
 		Location armory = new Location("Armory", Location.LocationType.ARMORY, ARMORY_LOOT_POOL, 4);
 		armory.addActivity(Activity.SEARCH, Activity.searchActivity);
-		locations.put("5", armory);
+		locations.put("17", armory);
 		
-		Location vehicleBay = new Location("Vehicle Bay", Location.LocationType.VEHICLE_BAY, VEHICLE_BAY_LOOT_POOL, 5);
-		vehicleBay.addActivity(Activity.SEARCH, Activity.searchActivity);
-		locations.put("6", vehicleBay);
-		
-		Location engineRoom = new Location("Engine Room", Location.LocationType.ENGINE_ROOM, ENGINE_ROOM_LOOT_POOL, 6);
+		Location engineRoom = new Location("Engine Room", Location.LocationType.ENGINE_ROOM, ENGINE_ROOM_LOOT_POOL, 4);
 		engineRoom.addActivity(Activity.SEARCH, Activity.searchActivity);
-		locations.put("7", engineRoom);
+		locations.put("23", engineRoom);
+		
+		// ============== Tier 2 ===============
+		
+		// ~~~~~~~ X axis 5 ~~~~~~~~~~~
+		Location hydroponics = new Location("Hydroponics Bay", Location.LocationType.HYDROPONICS, HYDROPONICS_LOOT_POOL, 8);
+		hydroponics.addActivity(Activity.SEARCH, Activity.searchActivity);
+		locations.put("18", hydroponics);
+		
+		// ~~~~~~~ X axis 6 ~~~~~~~~~~~
+		Location vehicleBay = new Location("Vehicle Bay", Location.LocationType.VEHICLE_BAY, VEHICLE_BAY_LOOT_POOL, 6);
+		vehicleBay.addActivity(Activity.SEARCH, Activity.searchActivity);
+		locations.put("25", vehicleBay);
+		
+		Location research = new Location("Research Lab", Location.LocationType.RESEARCH_LAB, RESEARCH_LOOT_POOL, 6);
+		research.addActivity(Activity.SEARCH, Activity.searchActivity);
+		locations.put("13", research);
 	};
 	// =========================
 
