@@ -62,12 +62,7 @@ public class GameState {
 	public static final int STARTING_DAY = 0;
 	public static final String HUMAN_VICTORY_MESSAGE = "The parasite has been defeated. Humans live another day!";
 	public static final String PARASITE_VICTORY_MESSAGE = "The parasite accomplished its goal, the humans are defeated.";
-	public static final String HUMAN_WIN_MESSAGE = "You win! The humans completed victory condition: %s.";
-	public static final String HUMAN_LOSS_MESSAGE = "You lost because the parasite completed victory condition: %s.";
-	public static final String PARASITE_WIN_MESSAGE = "You win! The parasite(s) completed victory condition: %s.";
-	public static final String PARASITE_LOSS_MESSAGE = "You lost because the humans completed victory condition: %s.";
-	
-	
+
 	public static final boolean VERBOSE = true;
 
 	// LOOT POOLS
@@ -406,13 +401,6 @@ public class GameState {
 		state.addSummaryMessage(foodToConsume + " food was consumed.");
 		state.addSummaryMessage(FUEL_DECREMENT + " fuel was used.");
 
-		// Add playerMessages to all PC's summaries
-		for (PlayerCharacter character : state.getCharacters()) {
-			for (String message : playerMessages) {
-				character.addSummaryMessage(message);
-			}
-		}
-		
 		// Check victory conditions
 		VictoryCondition lastVC = null;
 		for (VictoryCondition vc : state.getVictoryConditions()) {
@@ -430,30 +418,10 @@ public class GameState {
 			
 			boolean forHumans = lastVC.isForHumans();
 			state.setHumansWon(forHumans);
-			
-			// Add end summary message for GameBoards.
 			if (forHumans) {
 				state.addSummaryMessage(HUMAN_VICTORY_MESSAGE);
 			} else {
 				state.addSummaryMessage(PARASITE_VICTORY_MESSAGE);
-			}
-			
-			// Add end summary message for each Player.
-			for (PlayerCharacter character : state.getCharacters()) {
-				if (character.isParasite()) {
-					if (forHumans) {
-						character.addSummaryMessage(PARASITE_LOSS_MESSAGE);
-					} else {
-						character.addSummaryMessage(PARASITE_WIN_MESSAGE);
-					}
-				} else {
-					// character is human
-					if (forHumans) {
-						character.addSummaryMessage(HUMAN_WIN_MESSAGE);
-					} else {
-						character.addSummaryMessage(HUMAN_LOSS_MESSAGE);
-					}
-				}
 			}
 			
 			state.setGamePhase(GamePhase.END_SUMMARY);
@@ -534,9 +502,6 @@ public class GameState {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		// Send a turn summary with the victory/loss messages.
-		GameState.initiateTurnSummaryPhase(state);
 	}
 
 	private static final void syncGameBoards(GameState state) throws IOException {
