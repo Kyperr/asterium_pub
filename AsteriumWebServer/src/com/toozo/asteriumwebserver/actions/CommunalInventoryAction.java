@@ -14,7 +14,7 @@ import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
 import actiondata.CommunalInventoryRequestData;
-import actiondata.CommunalInventoryRequestData.ItemData;
+import actiondata.InventoryData.ItemData;
 import actiondata.ErroredResponseData;
 import actiondata.SuccessResponseData;
 import message.Message;
@@ -57,7 +57,7 @@ public class CommunalInventoryAction extends Action {
 			boolean success = false;
 			Inventory ownerInventory = owner.getInventory();
 			Inventory communalInventory = state.getCommunalInventory();
-			String nameToMatch = AbstractItem.getItem(this.itemData.getItemID()).getName();
+			String nameToMatch = this.itemData.getName();
 			AbstractItem matchingItem = null;
 			
 			if (this.personalToCommunal) {
