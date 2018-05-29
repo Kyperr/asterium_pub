@@ -12,7 +12,7 @@ EndGameDisplayController.prototype.init = function () {
 }
 
 EndGameDisplayController.prototype.display = function () {
-    var div = document.getElementById("action");
+    var div = document.getElementById("tabDiv");
 
     div.innerHTML = "";
 
