@@ -443,7 +443,7 @@ public class GameState {
 				System.out.println("Turns resolved. New turns phase...");
 			}
 			
-			state.setGamePhase(GamePhase.TURN_SUMMARY);
+			state.setGamePhase(GamePhase.PLAYER_TURNS);
 		}
 
 		state.gamePhase.executePhase(state);

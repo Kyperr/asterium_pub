@@ -60,8 +60,6 @@ public class GameState {
 	public static final int STARTING_FUEL = 100;
 	public static final int FUEL_DECREMENT = 10;
 	public static final int STARTING_DAY = 0;
-	public static final String HUMAN_VICTORY_MESSAGE = "The parasite has been defeated. Humans live another day!";
-	public static final String PARASITE_VICTORY_MESSAGE = "The parasite accomplished its goal, the humans are defeated.";
 
 	public static final boolean VERBOSE = true;
 
@@ -410,22 +408,19 @@ public class GameState {
 			}
 		}
 
-		if (state.gameOver() && lastVC != null) { // GAME OVER
+		if (state.gameOver() && lastVC != null) {
+			state.setHumansWon(lastVC.isForHumans());
+
 			if (VERBOSE) {
 				System.out.println(String.format("Game complete. Victory condition: %s.", lastVC.getName()));
 				System.out.println("Displaying end summary...");
 			}
-			
-			boolean forHumans = lastVC.isForHumans();
-			state.setHumansWon(forHumans);
-			if (forHumans) {
-				state.addSummaryMessage(HUMAN_VICTORY_MESSAGE);
-			} else {
-				state.addSummaryMessage(PARASITE_VICTORY_MESSAGE);
-			}
-			
+
 			state.setGamePhase(GamePhase.END_SUMMARY);
-		} else { // GAME NOT OVER
+		} else if (state.gameOver()) {
+			System.err.println("ERROR FROM GAMESTATE: Game over, but no victory conditions?");
+		} else {
+
 			// Run all player's actions
 			for (Player player : state.game.getPlayers()) {
 				String auth = player.getAuthToken();
@@ -438,12 +433,10 @@ public class GameState {
 
 			// Reset the map of locations the parasite(s) visited
 			Location.resetVisitedLcations();
-
 			if (VERBOSE) {
 				System.out.println("Turns resolved. New turns phase...");
 			}
-			
-			state.setGamePhase(GamePhase.TURN_SUMMARY);
+			state.setGamePhase(GamePhase.PLAYER_TURNS);
 		}
 
 		state.gamePhase.executePhase(state);
