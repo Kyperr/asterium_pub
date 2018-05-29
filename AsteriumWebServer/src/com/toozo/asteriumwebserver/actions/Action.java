@@ -39,6 +39,7 @@ public abstract class Action implements Runnable {
 	public static final String SYNC_LOCATIONS = "sync_locations";
 	public static final String SYNC_PLAYER_LIST = "sync_player_list";
 	public static final String USE_ITEM = "use_item";
+	public static final String DISCARD_ITEM = "discard_item";
 	public static final String COMMUNAL_INVENTORY = "communal_inventory";
 	public static final String LEAVE_GAME = "leave_game";
 
