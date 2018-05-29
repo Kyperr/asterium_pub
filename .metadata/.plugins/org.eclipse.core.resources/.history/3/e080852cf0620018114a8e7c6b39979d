@@ -26,8 +26,8 @@ public class TurnSummaryRequestData extends AbstractRequestActionData {
 		JSONObject result = new JSONObject();
 		JSONArray summary = new JSONArray();
 		
-		for (String message : this.turnSummary) {
-			summary.put(message);
+		for (String s : this.turnSummary) {
+			summary.put(s);
 		}
 		
 		result.put(ActionData.SUMMARY, summary);
