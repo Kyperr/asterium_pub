@@ -31,8 +31,10 @@ function processToggleReadyUpResponse(response) {
 
         if (playerIsReady) {
             waitingForPlayersDisplayController.btn.innerHTML = 'UNREADY';
+            afterTurnWaitingDisplayController.btn.innerHTML = 'UNREADY';
         } else {
             waitingForPlayersDisplayController.btn.innerHTML = 'READY';
+            afterTurnWaitingDisplayController.btn.innerHTML = 'READY';
         }
     } else {
         console.log("Failed to toggle ready up status, error_code: " + response.error_code);
@@ -56,7 +58,7 @@ function processTurnActionResponse(response){
 function processUseItemResponse(response){
     if (response.error_code == 0) {
         console.log("Item usage was a success.");
-        afterTurnWaitingDisplayController.display();
+        actionDisplay.display();
     } else {
         console.log("Failed to do turn, error_code: " + response.error_code);
     }
