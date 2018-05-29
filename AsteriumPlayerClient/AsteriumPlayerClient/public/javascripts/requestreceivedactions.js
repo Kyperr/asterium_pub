@@ -41,6 +41,8 @@ requestActions["sync_player_client_data"] = syncPlayerClientData;
 //
 
 function summary(request) {
+    summaryStrings = request.summary.summary;
+    turnSummaryDisplayController.update();
 }
 requestActions["summary"] = summary;
 
@@ -50,10 +52,6 @@ var phaseChangeStartingActions = {};
 
 phaseChangeStartingActions["PLAYER_TURNS"] = function () {
     
-    //Because I have secret server knowledge.
-    console.log("Setting playerisready = false");
-    playerIsReady = false;
-
     actionDisplayController.display();
 };
 

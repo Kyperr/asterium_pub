@@ -6,6 +6,7 @@
 function AfterTurnWaitingDisplayController() {
     this.btnReady = document.createElement("BUTTON");
     this.btnCancelTurn = document.createElement("BUTTON");
+    this.displayDiv = document.createElement("div");
     this.init();
 }
 
@@ -23,20 +24,31 @@ AfterTurnWaitingDisplayController.prototype.init = function () {
     this.btnReady.setAttribute("class", "button");
 }
 
-AfterTurnWaitingDisplayController.prototype.display = function () {
-    var div = document.getElementById("action");
+AfterTurnWaitingDisplayController.prototype.update = function () {
+    this.displayDiv.innerHTML = "";
 
-    div.innerHTML = "<b>Waiting on other players(Cancel doesn't work.)...</b>";
-
+    this.displayDiv.innerHTML = "<b>Waiting on other players(Cancel doesn't work.)...</b>";
+    
+        console.log("playerIsReady: " + playerIsReady);
     if (playerIsReady) {
+        console.log();
         afterTurnWaitingDisplayController.btnReady.innerHTML = 'UNREADY';
     } else {
         afterTurnWaitingDisplayController.btnReady.innerHTML = 'READY';
     }
 
-    div.appendChild(this.btnReady);
+    this.displayDiv.appendChild(this.btnReady);
 
-    div.appendChild(this.btnCancelTurn);
+    this.displayDiv.appendChild(this.btnCancelTurn);
+    
+}
+
+
+AfterTurnWaitingDisplayController.prototype.display = function () {
+    var div = document.getElementById("action");
+    div.innerHTML = "";
+    this.update();
+    div.appendChild(this.displayDiv);
 }
 
 //Static instance. USE THIS ONE!

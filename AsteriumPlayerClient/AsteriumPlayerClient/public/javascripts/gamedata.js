@@ -15,6 +15,8 @@ var locations = [];
 
 var personalInventory = [];
 
+var summaryStrings = [];
+
 //Just a variable for the mvp.
 var usedTheBeacon = false;
 
