@@ -423,7 +423,9 @@ outline: 0 !important;
 }
 .exposure{
   color: rgb(0, 129, 17);
+  padding-top: 5px;
+  padding-bottom: 5px;
   font-style: italic;
-  font-size: small;
+  font-size: medium;
   text-align: center;
 }

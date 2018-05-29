@@ -50,10 +50,6 @@ var phaseChangeStartingActions = {};
 
 phaseChangeStartingActions["PLAYER_TURNS"] = function () {
     
-    //Because I have secret server knowledge.
-    console.log("Setting playerisready = false");
-    playerIsReady = false;
-
     actionDisplayController.display();
 };
 
