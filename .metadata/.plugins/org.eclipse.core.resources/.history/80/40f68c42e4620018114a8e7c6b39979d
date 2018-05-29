@@ -60,8 +60,7 @@ public class GameState {
 	public static final int STARTING_FUEL = 100;
 	public static final int FUEL_DECREMENT = 10;
 	public static final int STARTING_DAY = 0;
-	public static final String HUMAN_VICTORY_MESSAGE = "The parasite has been defeated. Humans live another day!";
-	public static final String PARASITE_VICTORY_MESSAGE = "The parasite accomplished its goal, the humans are defeated.";
+	public static final String HUMAN_VICTORY_MESSAGE = "Congratulations, the humans win!";
 
 	public static final boolean VERBOSE = true;
 
@@ -416,14 +415,8 @@ public class GameState {
 				System.out.println("Displaying end summary...");
 			}
 			
-			boolean forHumans = lastVC.isForHumans();
-			state.setHumansWon(forHumans);
-			if (forHumans) {
-				state.addSummaryMessage(HUMAN_VICTORY_MESSAGE);
-			} else {
-				state.addSummaryMessage(PARASITE_VICTORY_MESSAGE);
-			}
-			
+			state.setHumansWon(lastVC.isForHumans());
+			state.addSummaryMessage("");
 			state.setGamePhase(GamePhase.END_SUMMARY);
 		} else { // GAME NOT OVER
 			// Run all player's actions
@@ -443,7 +436,7 @@ public class GameState {
 				System.out.println("Turns resolved. New turns phase...");
 			}
 			
-			state.setGamePhase(GamePhase.TURN_SUMMARY);
+			state.setGamePhase(GamePhase.PLAYER_TURNS);
 		}
 
 		state.gamePhase.executePhase(state);

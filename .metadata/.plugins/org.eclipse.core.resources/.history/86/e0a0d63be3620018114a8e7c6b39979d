@@ -60,8 +60,6 @@ public class GameState {
 	public static final int STARTING_FUEL = 100;
 	public static final int FUEL_DECREMENT = 10;
 	public static final int STARTING_DAY = 0;
-	public static final String HUMAN_VICTORY_MESSAGE = "The parasite has been defeated. Humans live another day!";
-	public static final String PARASITE_VICTORY_MESSAGE = "The parasite accomplished its goal, the humans are defeated.";
 
 	public static final boolean VERBOSE = true;
 
@@ -70,13 +68,13 @@ public class GameState {
 	public static final List<ItemLoot> CONTROL_ROOM_ITEM_LOOT;
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
-
+		
 		probs.add(new ItemLoot(RescueBeacon::new, 100, 0.0, 0.0));
 
 		CONTROL_ROOM_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
 	public static final LootPool CONTROL_ROOM_LOOT_POOL = new LootPool(CONTROL_ROOM_ITEM_LOOT);
-
+	
 	// Medbay
 	public static final List<ItemLoot> MEDBAY_ITEM_LOOT;
 	static {
@@ -104,7 +102,7 @@ public class GameState {
 		CAFETERIA_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
 	public static final LootPool CAFETERIA_LOOT_POOL = new LootPool(CAFETERIA_ITEM_LOOT);
-
+	
 	// Armory
 	public static final List<ItemLoot> ARMORY_ITEM_LOOT;
 	static {
@@ -119,7 +117,7 @@ public class GameState {
 		ARMORY_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
 	public static final LootPool ARMORY_LOOT_POOL = new LootPool(ARMORY_ITEM_LOOT);
-
+	
 	// Library
 	public static final List<ItemLoot> LIBRARY_ITEM_LOOT;
 	static {
@@ -131,7 +129,7 @@ public class GameState {
 		LIBRARY_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
 	public static final LootPool LIBRARY_LOOT_POOL = new LootPool(LIBRARY_ITEM_LOOT);
-
+	
 	// Engine Room
 	public static final List<ItemLoot> ENGINE_ROOM_ITEM_LOOT;
 	static {
@@ -144,7 +142,7 @@ public class GameState {
 		ENGINE_ROOM_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
 	public static final LootPool ENGINE_ROOM_LOOT_POOL = new LootPool(ENGINE_ROOM_ITEM_LOOT);
-
+	
 	// Vehicle Bay
 	public static final List<ItemLoot> VEHICLE_BAY_ITEM_LOOT;
 	static {
@@ -158,7 +156,7 @@ public class GameState {
 		VEHICLE_BAY_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
 	public static final LootPool VEHICLE_BAY_LOOT_POOL = new LootPool(VEHICLE_BAY_ITEM_LOOT);
-
+	
 	// Dorms
 	public static final List<ItemLoot> DORMS_ITEM_LOOT;
 	static {
@@ -172,7 +170,7 @@ public class GameState {
 		DORMS_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
 	public static final LootPool DORMS_LOOT_POOL = new LootPool(DORMS_ITEM_LOOT);
-
+	
 	// Hydroponics
 	public static final List<ItemLoot> HYDROPONICS_ITEM_LOOT;
 	static {
@@ -186,7 +184,7 @@ public class GameState {
 		HYDROPONICS_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
 	public static final LootPool HYDROPONICS_LOOT_POOL = new LootPool(HYDROPONICS_ITEM_LOOT);
-
+	
 	// Research Lab
 	public static final List<ItemLoot> RESEARCH_ITEM_LOOT;
 	static {
@@ -238,60 +236,59 @@ public class GameState {
 	// Initialize the locations
 	{
 		// ============== Tier 0 ===============
-
+		
 		// ~~~~~~~ X axis 0 ~~~~~~~~~~~
 		// Make a new location
-		// Name, location type, loot pool, X axis position.
+		//Name, location type, loot pool, X axis position. 
 		Location home = new Location("Control Room", Location.LocationType.CONTROL_ROOM, CONTROL_ROOM_LOOT_POOL, 0);
-		// add the activities that can be done at this location
+		//add the activities that can be done at this location
 		home.addActivity(Activity.REST, Activity.restActivity);
-		// add this location to the map locations
-		// key is the map location, value is the location
+		//add this location to the map locations
+		//key is the map location, value is the location
 		locations.put("1", home);
 
-		// ~~~~~~~ X axis 1 ~~~~~~~~~~~
+		// ~~~~~~~ X axis 1 ~~~~~~~~~~~		
 		Location library = new Location("Library", Location.LocationType.LIBRARY, LIBRARY_LOOT_POOL, 1);
 		library.addActivity(Activity.SEARCH, Activity.searchActivity);
 		locations.put("8", library);
-
+		
 		Location dorms = new Location("Dorms", Location.LocationType.RESIDENTIAL, DORMS_LOOT_POOL, 1);
 		dorms.addActivity(Activity.SEARCH, Activity.searchActivity);
 		locations.put("20", dorms);
-
+		
 		// ~~~~~~~ X axis 2 ~~~~~~~~~~~
 		Location cafeteria = new Location("Cafeteria", Location.LocationType.MESS_HALL, CAFETERIA_LOOT_POOL, 2);
 		cafeteria.addActivity(Activity.SEARCH, Activity.searchActivity);
 		locations.put("3", cafeteria);
-
+		
 		// ============== Tier 1 ===============
-
+		
 		// ~~~~~~~ X axis 3 ~~~~~~~~~~~
 		Location med_bay = new Location("Med Bay", Location.LocationType.MED_BAY, MEDBAY_LOOT_POOL, 3);
 		med_bay.addActivity(Activity.SEARCH, Activity.searchActivity);
 		locations.put("4", med_bay);
-
+		
 		// ~~~~~~~ X axis 4 ~~~~~~~~~~~
 		Location armory = new Location("Armory", Location.LocationType.ARMORY, ARMORY_LOOT_POOL, 4);
 		armory.addActivity(Activity.SEARCH, Activity.searchActivity);
 		locations.put("17", armory);
-
+		
 		Location engineRoom = new Location("Engine Room", Location.LocationType.ENGINE_ROOM, ENGINE_ROOM_LOOT_POOL, 4);
 		engineRoom.addActivity(Activity.SEARCH, Activity.searchActivity);
 		locations.put("23", engineRoom);
-
+		
 		// ============== Tier 2 ===============
-
+		
 		// ~~~~~~~ X axis 5 ~~~~~~~~~~~
-		Location hydroponics = new Location("Hydroponics Bay", Location.LocationType.HYDROPONICS, HYDROPONICS_LOOT_POOL,
-				8);
+		Location hydroponics = new Location("Hydroponics Bay", Location.LocationType.HYDROPONICS, HYDROPONICS_LOOT_POOL, 8);
 		hydroponics.addActivity(Activity.SEARCH, Activity.searchActivity);
 		locations.put("18", hydroponics);
-
+		
 		// ~~~~~~~ X axis 6 ~~~~~~~~~~~
 		Location vehicleBay = new Location("Vehicle Bay", Location.LocationType.VEHICLE_BAY, VEHICLE_BAY_LOOT_POOL, 6);
 		vehicleBay.addActivity(Activity.SEARCH, Activity.searchActivity);
 		locations.put("25", vehicleBay);
-
+		
 		Location research = new Location("Research Lab", Location.LocationType.RESEARCH_LAB, RESEARCH_LOOT_POOL, 6);
 		research.addActivity(Activity.SEARCH, Activity.searchActivity);
 		locations.put("13", research);
@@ -309,10 +306,8 @@ public class GameState {
 	private boolean humansWon;
 	private Map<String, PlayerCharacter> authCharacterMap;
 	private Map<String, PlayerCharacter> nameCharacterMap;
-	// An ordered list of victory conditions, where the index is the tie-breaker
-	// priority.
-	// i.e. if victoryConditions = [A, B], A == true and B == true, B will take
-	// precedence.
+	// An ordered list of victory conditions, where the index is the tie-breaker priority.
+	// i.e. if victoryConditions = [A, B], A == true and B == true, B will take precedence.
 	private List<VictoryCondition> victoryConditions;
 	private Inventory communalInventory;
 	private List<String> communalSummary;
@@ -388,11 +383,11 @@ public class GameState {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		
 		Location.initVisitedLocations(locations.values());
-
+		
 		List<String> playerMessages = new ArrayList<String>();
-
+		
 		// Use resources
 		int foodToConsume = FOOD_DECREMENT_PER_PLAYER * state.game.getPlayers().size();
 		state.setFood(state.getFood() - (foodToConsume));
@@ -400,52 +395,52 @@ public class GameState {
 		playerMessages.add("You consumed " + FOOD_DECREMENT_PER_PLAYER + " food.");
 		state.addSummaryMessage(foodToConsume + " food was consumed.");
 		state.addSummaryMessage(FUEL_DECREMENT + " fuel was used.");
-
+		
 		// Check victory conditions
 		VictoryCondition lastVC = null;
 		for (VictoryCondition vc : state.getVictoryConditions()) {
 			if (vc.isComplete(state)) {
 				state.setGameOver(true);
-				lastVC = vc;
 			}
+			lastVC = vc;
 		}
-
-		if (state.gameOver() && lastVC != null) { // GAME OVER
+		
+		// Run all player's actions
+		for (Player player : state.game.getPlayers()) {
+			String auth = player.getAuthToken();
+			Runnable action = state.game.getTurnAction(auth);
+			action.run();
+		}
+		
+		// Clear action queue
+		state.game.resetTurnActionMap();
+		
+		// Reset the map of locations the parasite(s) visited
+		Location.resetVisitedLcations();
+		
+		// Resolve victory conditions or handle turn actions.
+		if (state.gameOver()) {
 			if (VERBOSE) {
 				System.out.println(String.format("Game complete. Victory condition: %s.", lastVC.getName()));
 				System.out.println("Displaying end summary...");
 			}
 			
-			boolean forHumans = lastVC.isForHumans();
-			state.setHumansWon(forHumans);
-			if (forHumans) {
-				state.addSummaryMessage(HUMAN_VICTORY_MESSAGE);
+			if (lastVC != null) {
+				state.setHumansWon(lastVC.isForHumans());
 			} else {
-				state.addSummaryMessage(PARASITE_VICTORY_MESSAGE);
+				System.err.println("ERROR FROM GAMESTATE: Game over, but no victory conditions?");
 			}
 			
 			state.setGamePhase(GamePhase.END_SUMMARY);
-		} else { // GAME NOT OVER
-			// Run all player's actions
-			for (Player player : state.game.getPlayers()) {
-				String auth = player.getAuthToken();
-				Runnable action = state.game.getTurnAction(auth);
-				action.run();
-			}
-
-			// Clear action queue
-			state.game.resetTurnActionMap();
-
-			// Reset the map of locations the parasite(s) visited
-			Location.resetVisitedLcations();
-
+		} else {
 			if (VERBOSE) {
 				System.out.println("Turns resolved. New turns phase...");
 			}
-			
-			state.setGamePhase(GamePhase.TURN_SUMMARY);
-		}
 
+			// TODO Implement turn summaries phase and go there instead.
+			state.setGamePhase(GamePhase.PLAYER_TURNS);
+		}
+		
 		state.gamePhase.executePhase(state);
 	}
 
@@ -456,7 +451,7 @@ public class GameState {
 		TurnSummaryRequestData data;
 		Request request;
 		Session session;
-
+		
 		// Send turn summaries to players
 		for (Player player : state.game.getPlayers()) {
 			auth = player.getAuthToken();
@@ -472,10 +467,10 @@ public class GameState {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
+			
 			character.clearSummary();
 		}
-
+		
 		for (GameBoard gameBoard : state.game.getGameBoards()) {
 			auth = gameBoard.getAuthToken();
 			data = new TurnSummaryRequestData(state.communalSummary);
@@ -490,10 +485,10 @@ public class GameState {
 				e.printStackTrace();
 			}
 		}
-
+		
 		state.clearSummary();
 	}
-
+	
 	private static final void initiateEndSummaryPhase(GameState state) {
 		state.syncPlayerClients();
 		try {
@@ -518,7 +513,8 @@ public class GameState {
 			SyncData.LocationData.LocationType type = SyncData.LocationData.LocationType
 					.valueOf(l.getType().toString());
 
-			SyncData.LocationData locData = new SyncData.LocationData(s, l.getName(), type, l.getActivityNames());
+			SyncData.LocationData locData = new SyncData.LocationData(s,
+					l.getName(), type, l.getActivityNames());
 
 			loc.add(locData);
 		}
@@ -551,17 +547,23 @@ public class GameState {
 			if (isLocationItem) {
 				AbstractLocationItem loc_item = AbstractLocationItem.class.cast(item);
 				for (LocationType locType : loc_item.getUseLocations()) {
-					useLocations.add(SyncData.LocationData.LocationType.valueOf(locType.toString()));
+					useLocations
+							.add(SyncData.LocationData.LocationType.valueOf(locType.toString()));
 				}
 			}
 
-			itemData = new SyncData.ItemData(item.getName(), item.getDescription(), item.getFlavorText(),
-					item.getImagePath(), isLocationItem, useLocations);
+			itemData = new SyncData.ItemData(item.getName(), item.getDescription(),
+					item.getFlavorText(), item.getImagePath(), isLocationItem, useLocations);
 			itemDatas.add(itemData);
 		}
 
-		ActionData syncGBRequestData = new SyncGameBoardDataRequestData(food, fuel, day, state.gameOver(),
-				state.humansWon(), loc, playerDatas, victoryDatas, itemDatas, state.getGamePhase().toString());
+		ActionData syncGBRequestData = new SyncGameBoardDataRequestData(food, fuel, day, 
+																		state.gameOver(),
+																		state.humansWon(),
+																		loc, playerDatas, 
+																		victoryDatas,
+																		itemDatas, 
+																		state.getGamePhase().toString());
 
 		// Send sync to all GameBoards
 		for (GameBoard gameBoard : state.game.getGameBoards()) {
@@ -622,11 +624,11 @@ public class GameState {
 	public PlayerCharacter getCharacterByName(final String name) {
 		return nameCharacterMap.get(name);
 	}
-
+	
 	public boolean gameOver() {
 		return this.gameOver;
 	}
-
+	
 	public boolean humansWon() {
 		return this.gameOver() && this.humansWon;
 	}
@@ -689,7 +691,7 @@ public class GameState {
 	public Location getAtMapLocation(String mapLocation) {
 		return GameState.locations.get(mapLocation);
 	}
-
+	
 	public List<String> getSummary() {
 		List<String> result = new ArrayList<String>();
 		Collections.copy(result, this.communalSummary);
@@ -737,22 +739,22 @@ public class GameState {
 	public void setDay(final int newDay) {
 		this.day = newDay;
 	}
-
+	
 	public void setGameOver(boolean gameOver) {
 		this.gameOver = gameOver;
 	}
-
+	
 	public void setHumansWon(boolean humansWon) {
 		this.humansWon = humansWon;
 	}
-
+	
 	public void addSummaryMessage(String message) {
 		while (this.communalSummary.contains(message)) {
 			this.communalSummary.remove(message);
 		}
 		this.communalSummary.add(message);
 	}
-
+	
 	public void clearSummary() {
 		this.communalSummary.clear();
 	}
@@ -868,7 +870,8 @@ public class GameState {
 				SyncData.LocationData.LocationType type = SyncData.LocationData.LocationType
 						.valueOf(l.getType().toString());
 
-				SyncData.LocationData locData = new SyncData.LocationData(s, l.getName(), type, l.getActivityNames());
+				SyncData.LocationData locData = new SyncData.LocationData(
+						s, l.getName(), type, l.getActivityNames());
 
 				loc.add(locData);
 			}
@@ -877,7 +880,7 @@ public class GameState {
 		String auth = player.getAuthToken();
 
 		PlayerCharacter pChar = getCharacter(auth);
-
+		
 		// Determine if this player has won or not.
 		boolean playerWon = this.gameOver() && (pChar.isParasite() ^ this.humansWon());
 
@@ -898,11 +901,13 @@ public class GameState {
 			if (isLocationItem) {
 				AbstractLocationItem loc_item = AbstractLocationItem.class.cast(item);
 				for (LocationType locType : loc_item.getUseLocations()) {
-					useLocations.add(SyncData.LocationData.LocationType.valueOf(locType.toString()));
+					useLocations
+							.add(SyncData.LocationData.LocationType.valueOf(locType.toString()));
 				}
 			}
-			SyncData.ItemData itemData = new SyncData.ItemData(item.getName(), item.getDescription(),
-					item.getFlavorText(), item.getImagePath(), isLocationItem, useLocations);
+			SyncData.ItemData itemData = new SyncData.ItemData(
+					item.getName(), item.getDescription(), item.getFlavorText(), item.getImagePath(), isLocationItem,
+					useLocations);
 			personalInv.add(itemData);
 		}
 
@@ -915,8 +920,9 @@ public class GameState {
 				SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType type = SyncPlayerClientDataRequestData.PlayerCharacterData.LoadoutData.EquipmentType
 						.valueOf(slot.toString());
 				AbstractEquipmentItem equipmentItem = load.itemIn(slot);
-				SyncData.ItemData item = new SyncData.ItemData(equipmentItem.getName(), equipmentItem.getDescription(),
-						equipmentItem.getFlavorText(), equipmentItem.getImagePath(), false, useLocations);
+				SyncData.ItemData item = new SyncData.ItemData(
+						equipmentItem.getName(), equipmentItem.getDescription(), equipmentItem.getFlavorText(),
+						equipmentItem.getImagePath(), false, useLocations);
 				equipment.put(type, item);
 			}
 		}
@@ -935,16 +941,24 @@ public class GameState {
 			if (isLocationItem) {
 				AbstractLocationItem loc_item = AbstractLocationItem.class.cast(item);
 				for (LocationType locType : loc_item.getUseLocations()) {
-					useLocations.add(SyncData.LocationData.LocationType.valueOf(locType.toString()));
+					useLocations
+							.add(SyncData.LocationData.LocationType.valueOf(locType.toString()));
 				}
 			}
-			SyncData.ItemData itemData = new SyncData.ItemData(item.getName(), item.getDescription(),
-					item.getFlavorText(), item.getImagePath(), isLocationItem, useLocations);
+			SyncData.ItemData itemData = new SyncData.ItemData(
+					item.getName(), item.getDescription(), item.getFlavorText(), item.getImagePath(), isLocationItem,
+					useLocations);
 			inventory.add(itemData);
 		}
 
-		SyncPlayerClientDataRequestData data = new SyncPlayerClientDataRequestData(getFood(), getFuel(), getDay(),
-				playerWon, loc, dChar, characters, getGamePhase().toString(), inventory);
+		SyncPlayerClientDataRequestData data = new SyncPlayerClientDataRequestData(getFood(), 
+																				   getFuel(), 
+																				   getDay(),
+																				   playerWon,
+																				   loc,
+																				   dChar, 
+																				   characters, 
+																				   getGamePhase().toString(), inventory);
 
 		return data;
 
