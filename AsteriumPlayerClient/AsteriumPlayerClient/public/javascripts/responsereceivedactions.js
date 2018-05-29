@@ -31,10 +31,10 @@ function processToggleReadyUpResponse(response) {
 
         if (playerIsReady) {
             waitingForPlayersDisplayController.btn.innerHTML = 'UNREADY';
-            afterTurnWaitingDisplayController.btn.innerHTML = 'UNREADY';
+            afterTurnWaitingDisplayController.btnReady.innerHTML = 'UNREADY';
         } else {
             waitingForPlayersDisplayController.btn.innerHTML = 'READY';
-            afterTurnWaitingDisplayController.btn.innerHTML = 'READY';
+            afterTurnWaitingDisplayController.btnReady.innerHTML = 'READY';
         }
     } else {
         console.log("Failed to toggle ready up status, error_code: " + response.error_code);

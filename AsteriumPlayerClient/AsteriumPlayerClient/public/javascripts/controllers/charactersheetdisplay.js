@@ -109,7 +109,7 @@ CharacterSheetDisplayController.prototype.update = function () {
         var legsImage = document.createElement('img');
         legsImage.setAttribute("class", "gear-image");
         legsImage.src = "images/arms.png";
-        armsDiv.appendChild(chestImage);
+        armsDiv.appendChild(legsImage);
         armsDiv.innerHTML += armsGear.item_name;
     } else {
         var nothingEq = document.createElement("div");
@@ -128,7 +128,7 @@ CharacterSheetDisplayController.prototype.update = function () {
         var legsImage = document.createElement('img');
         legsImage.setAttribute("class", "gear-image");
         legsImage.src = "images/legs.png";
-        legsDiv.appendChild(chestImage);
+        legsDiv.appendChild(legsImage);
         legsDiv.innerHTML += legsGear.item_name;
     }else {
         var nothingEq = document.createElement("div");

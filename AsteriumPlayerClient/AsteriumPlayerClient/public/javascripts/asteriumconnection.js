@@ -1,8 +1,8 @@
 //The localhost. 
-var socket = new WebSocket("ws://localhost:8080/AsteriumWebServer/Game");
+//var socket = new WebSocket("ws://localhost:8080/AsteriumWebServer/Game");
 
 //The server IP. 
-//var socket = new WebSocket("ws://35.230.4.196:8080/AsteriumWebServer/Game");
+var socket = new WebSocket("ws://35.230.4.196:8080/AsteriumWebServer/Game");
 
 socket.onmessage = function (message) {
     var jsonObj = JSON.parse(message.data);
