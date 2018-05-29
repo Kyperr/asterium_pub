@@ -115,6 +115,8 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		Integer intuition = statsObj.getInt(ActionData.INTUITION);
 		StatsData stats = new StatsData(health, stamina, luck, intuition);
 		
+		double exposure = characterObj.getDouble(ActionData.EXPOSURE);
+		
 		Collection<String> characters = new ArrayList<String>();
 		JSONArray charactersArray = jsonObj.getJSONArray(ActionData.CHARACTERS);
 		for (int c = 0; c < characters.size(); c++) {
@@ -154,6 +156,7 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		character = new PlayerCharacterData(characterName, 
 											isParasite, 
 											stats, 
+											exposure,
 											personalInv, 
 											loadout, 
 											turnTaken, 
@@ -207,6 +210,7 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		private String name;
 		private boolean isParasite;
 		private StatsData stats;
+		private double exposure;
 		private List<ItemData> inventory;
 		private LoadoutData equipped;
 		private boolean turnTaken;
@@ -215,6 +219,7 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		public PlayerCharacterData(final String characterName, 
 								   final boolean isParasite,
 								   final StatsData stats,
+								   final double exposure,
 								   final List<ItemData> inventory, 
 								   final LoadoutData equipped, 
 								   final boolean turnTaken, 
@@ -222,6 +227,7 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 			this.name = characterName;
 			this.isParasite = isParasite;
 			this.stats = stats;
+			this.exposure = exposure;
 			this.inventory = inventory;
 			this.equipped = equipped;
 			this.turnTaken = turnTaken;
@@ -233,6 +239,7 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 			data.put(ActionData.CHARACTER_NAME, this.name);
 			data.put(ActionData.IS_PARASITE, this.isParasite);
 			data.put(ActionData.STATS, this.stats.jsonify());
+			data.put(ActionData.EXPOSURE, this.exposure);
 			JSONArray inventoryArray = new JSONArray();
 			for (ItemData item : this.inventory) {
 				inventoryArray.put(item.jsonify());

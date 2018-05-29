@@ -14,7 +14,8 @@ public class TurnSummaryRequestData extends AbstractRequestActionData {
 	public TurnSummaryRequestData(List<String> turnSummary) {
 		super(ActionData.SUMMARY);
 		
-		this.turnSummary = new ArrayList<String>(turnSummary);
+		this.turnSummary = new ArrayList<String>(turnSummary.size());
+		Collections.copy(this.turnSummary, turnSummary);
 	}
 
 	public List<String> getSummary() {

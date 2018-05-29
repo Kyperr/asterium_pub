@@ -1,20 +1,9 @@
 package com.toozo.asteriumwebserver.gamelogic.items;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Supplier;
 
 import com.toozo.asteriumwebserver.gamelogic.GameState;
 import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
-import com.toozo.asteriumwebserver.gamelogic.items.consumables.Bandage;
-import com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodChest;
-import com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodCrate;
-import com.toozo.asteriumwebserver.gamelogic.items.consumables.FoodPack;
-import com.toozo.asteriumwebserver.gamelogic.items.consumables.Medkit;
-import com.toozo.asteriumwebserver.gamelogic.items.consumables.RescueBeacon;
-import com.toozo.asteriumwebserver.gamelogic.items.consumables.Syringe;
-import com.toozo.asteriumwebserver.gamelogic.items.equipment.TinfoilHatEquipmentItem;
 
 /**
  * The abstract class for an item that can be used by a {@link PlayerCharacter}.
