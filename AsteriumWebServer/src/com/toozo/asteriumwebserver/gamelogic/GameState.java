@@ -960,7 +960,7 @@ public class GameState {
 				equipment);
 
 		SyncPlayerClientDataRequestData.PlayerCharacterData dChar = new SyncPlayerClientDataRequestData.PlayerCharacterData(
-				pChar.getCharacterName(), pChar.isParasite(), stat, personalInv, loadout, game.turnTaken(player),
+				pChar.getCharacterName(), pChar.isParasite(), stat, pChar.getExposure(), personalInv, loadout, game.turnTaken(player),
 				game.getPlayerIsReady(auth));
 
 		List<SyncData.ItemData> inventory = new ArrayList<SyncData.ItemData>();
