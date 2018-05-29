@@ -451,7 +451,7 @@ public class GameState {
 					if (forHumans) {
 						character.addSummaryMessage(String.format(HUMAN_WIN_MESSAGE, lastVCname));
 					} else {
-						character.addSummaryMessage(String.format(HUMAN_LOSS_MESSAGE, lastVCname));
+						character.addSummaryMessage(HUMAN_LOSS_MESSAGE);
 					}
 				}
 			}

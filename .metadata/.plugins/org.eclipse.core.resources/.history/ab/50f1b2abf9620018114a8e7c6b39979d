@@ -59,7 +59,7 @@ public abstract class AbstractStatusEffect {
 		}
 		
 		this.duration = duration;
-		//this.owner.addSummaryMessage(String.format(ADDED_MESSAGE, this.getName()));
+		this.owner.addSummaryMessage(String.format(ADDED_MESSAGE, this.getName()));
 	}
 	// ========================
 	
@@ -127,7 +127,7 @@ public abstract class AbstractStatusEffect {
 	 */
 	public void remove() {
 		this.owner.removeStatusEffect(this);
-		//cthis.owner.addSummaryMessage(String.format(REMOVED_MESSAGE, this.getName()));
+		this.owner.addSummaryMessage(String.format(REMOVED_MESSAGE, this.getName()));
 	}
 	
 	/**

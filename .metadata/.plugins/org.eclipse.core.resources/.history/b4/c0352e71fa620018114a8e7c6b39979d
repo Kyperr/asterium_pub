@@ -8,14 +8,14 @@ import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
 
 public interface Activity {
 
-	public static final double EXPOSURE_MAX = 0.15;
-	public static final double PARASITE_EXPOSURE_MIN = 0.14;
+	public static final double EXPOSURE_MAX = 0.1;
+	public static final double PARASITE_EXPOSURE_MIN = 0.09;
 	public static final double EXPOSURE_MIN = 0.0;
 
 	public static final String SEARCH = "Search";
 	public static final String USE_LOCATION_ITEM = "Use Location Item";
 	public static final String LOOT_SUMMARY_MESSAGE = "You looted the %s and got %s.";
-	public static final String ITEM_GAINED_MESSAGE = "You found %s.";
+	public static final String ITEM_GAINED_MESSAGE = "You looted %s.";
 	public static final String NO_ITEMS_FOUND_PHRASE = "nothing";
 	public static final String REST = "Rest";
 	public static final boolean VERBOSE = false;
@@ -33,7 +33,9 @@ public interface Activity {
 		}
 		//double randomValue = rangeMin + (rangeMax - rangeMin) * r.nextDouble();
 		rand = min + (max - min) * r.nextDouble();
+		System.out.println("Exposure: " + character.getExposure());
 		double exp = character.getExposure() + rand;
+		System.out.println("Exposure after increase: " + exp);
 		character.setExposure(exp);
 	}
 
@@ -54,7 +56,7 @@ public interface Activity {
 
 			for (AbstractItem item : loot) {
 				character.getInventory().add(item);
-				character.addSummaryMessage(String.format(ITEM_GAINED_MESSAGE, item.getName()));
+				character.addSummaryMessage();
 			}
 
 			if (character.isParasite()) {
