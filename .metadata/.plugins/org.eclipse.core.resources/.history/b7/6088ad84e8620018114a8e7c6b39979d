@@ -430,30 +430,10 @@ public class GameState {
 			
 			boolean forHumans = lastVC.isForHumans();
 			state.setHumansWon(forHumans);
-			
-			// Add end summary message for GameBoards.
 			if (forHumans) {
 				state.addSummaryMessage(HUMAN_VICTORY_MESSAGE);
 			} else {
 				state.addSummaryMessage(PARASITE_VICTORY_MESSAGE);
-			}
-			
-			// Add end summary message for each Player.
-			for (PlayerCharacter character : state.getCharacters()) {
-				if (character.isParasite()) {
-					if (forHumans) {
-						character.addSummaryMessage(PARASITE_LOSS_MESSAGE);
-					} else {
-						character.addSummaryMessage(PARASITE_WIN_MESSAGE);
-					}
-				} else {
-					// character is human
-					if (forHumans) {
-						character.addSummaryMessage(HUMAN_WIN_MESSAGE);
-					} else {
-						character.addSummaryMessage(HUMAN_LOSS_MESSAGE);
-					}
-				}
 			}
 			
 			state.setGamePhase(GamePhase.END_SUMMARY);
@@ -534,7 +514,6 @@ public class GameState {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		// Send a turn summary with the victory/loss messages.
 		GameState.initiateTurnSummaryPhase(state);
 	}
@@ -726,7 +705,7 @@ public class GameState {
 	}
 
 	public List<String> getSummary() {
-		List<String> result = new ArrayList<String>(this.communalSummary.size());
+		List<String> result = new ArrayList<String>();
 		Collections.copy(result, this.communalSummary);
 		return result;
 	}

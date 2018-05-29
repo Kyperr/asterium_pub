@@ -444,14 +444,14 @@ public class GameState {
 					if (forHumans) {
 						character.addSummaryMessage(PARASITE_LOSS_MESSAGE);
 					} else {
-						character.addSummaryMessage(PARASITE_WIN_MESSAGE);
+						// Send parasite win
 					}
 				} else {
 					// character is human
 					if (forHumans) {
-						character.addSummaryMessage(HUMAN_WIN_MESSAGE);
+						// Send human win
 					} else {
-						character.addSummaryMessage(HUMAN_LOSS_MESSAGE);
+						// Send human loss
 					}
 				}
 			}
@@ -726,7 +726,7 @@ public class GameState {
 	}
 
 	public List<String> getSummary() {
-		List<String> result = new ArrayList<String>(this.communalSummary.size());
+		List<String> result = new ArrayList<String>();
 		Collections.copy(result, this.communalSummary);
 		return result;
 	}
