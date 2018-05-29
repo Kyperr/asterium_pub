@@ -3,7 +3,6 @@ package com.toozo.asteriumwebserver.gamelogic.items;
 import java.util.Collection;
 
 import com.toozo.asteriumwebserver.gamelogic.GameState;
-import com.toozo.asteriumwebserver.gamelogic.Inventory;
 import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 
 /**
@@ -157,18 +156,6 @@ public abstract class AbstractItem {
 	 * @param targets The {@link PlayerCharacter}s which this item may affects.
 	 */
 	public abstract void applyEffect(final GameState state, final PlayerCharacter user, final Collection<PlayerCharacter> targets);
-	
-	/**
-	 * Removes this {@link AbstractItem} from user's {@link Inventory}, if it contains it.
-	 * 
-	 * @param user The {@link PlayerCharacter} who owns this {@link AbstractItem}.
-	 */
-	public void discard(final PlayerCharacter user) {
-		Inventory inventory = user.getInventory();
-		if (inventory.contains(this)) {
-			inventory.remove(this);
-		}
-	}
 	// ===================
 	@Override
 	public int hashCode() {
