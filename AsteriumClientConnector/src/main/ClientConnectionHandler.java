@@ -34,7 +34,7 @@ public class ClientConnectionHandler {
 	private final ConcurrentHashMap<UUID, Consumer<Message>> responseCallbacks;
 	private Parser parser;
 	private Session userSession = null;
-	public static final boolean VERBOSE = false;
+	public static final boolean VERBOSE = true;
 	
 	/**
 	 * Creates a new ClientConnectionHandler and connects it to the server at address:port.

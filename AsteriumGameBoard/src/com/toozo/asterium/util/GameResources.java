@@ -1,7 +1,9 @@
 package com.toozo.asterium.util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.toozo.asterium.controllers.GameSummaryController;
 import com.toozo.asterium.controllers.MapController;
@@ -17,6 +19,7 @@ import actiondata.SyncGameBoardDataRequestData.PlayerCharacterData;
 import actiondata.SyncGameBoardDataRequestData.VictoryData;
 import actiondata.SyncPlayerListRequestData;
 import actiondata.SyncPlayerListRequestData.PlayerData;
+import actiondata.TurnSummaryRequestData;
 import javafx.application.Platform;
 import main.ClientConnectionHandler;
 
@@ -30,7 +33,7 @@ public final class GameResources {
 	
 	private final String URI = "ws://localhost:8080/AsteriumWebServer/Game";	
 	
-	private final String GAME_SUMMARY = "GAME_SUMMARY";
+	private final String END_SUMMARY = "END_SUMMARY";
 	
 	private final String TURN_SUMMARY = "TURN_SUMMARY";
 	
@@ -48,6 +51,10 @@ public final class GameResources {
 	
 	private Integer fuel = 0;
 	
+	private Integer day = 1;
+	
+	private Map<Integer, String> locationMap = new HashMap<Integer, String>();
+	
 	private List<PlayerData> players = new ArrayList<PlayerData>();
 	
 	private List<PlayerCharacterData> characters = new ArrayList<PlayerCharacterData>();
@@ -59,6 +66,10 @@ public final class GameResources {
 	private List<ItemData> communalInventory = new ArrayList<ItemData>();
 	
 	private boolean gameWonStatus = false;
+	
+	private String gamePhase = "";
+	
+	private List<String> turnSummary = new ArrayList<String>();
 	
 	public GameResources(NodeNavigator nodeNavigator) {
 		this.nodeNavigator = nodeNavigator;
@@ -114,9 +125,20 @@ public final class GameResources {
 		return victoryConditions;
 	}
 
+	public Map<Integer, String> getLocationMap() {
+		return locationMap;
+	}
 	
 	public void setGameWonStatus(boolean status) {
 		gameWonStatus = status;
+	}
+	
+	public Integer getDay() {
+		return day;
+	}
+	
+	public List<String> getTurnSummary() {
+		return turnSummary;
 	}
 	
 	public String getGameWonStatus() {
@@ -142,19 +164,43 @@ public final class GameResources {
 					 // Sync the data
 					 food = data.getFood();
 					 fuel = data.getFuel();
+					 day = data.getDay();
 					 victoryConditions = (List<VictoryData>) data.getVictoryConditions();
 					 locations = (List<LocationData>) data.getLocations();
+					 putMapLocations();
 					 communalInventory = (List<ItemData>) data.getCommunalInventory();
 					 characters = (List<PlayerCharacterData>) data.getPlayers();
-					 
-					 if (data.getGamePhase() == GAME_SUMMARY) {
-						 GameSummaryController controller = nodeNavigator.getController(Display.GAME_SUMMARY);
-						 controller.update();
-						 nodeNavigator.display(Display.GAME_SUMMARY);
+					 gamePhase = data.getGamePhase();
+					 if (gamePhase.equals(END_SUMMARY)) {
+						 System.out.println("END OF GAME");
+						 
 					 } else if (data.getGamePhase() == TURN_SUMMARY) {
+						 gamePhase = TURN_SUMMARY; 
 						 TurnSummaryController controller = nodeNavigator.getController(Display.TURN_SUMMARY);
 						 controller.update();
 						 nodeNavigator.display(Display.TURN_SUMMARY);
+					 } else {
+						 MapController controller = nodeNavigator.getController(Display.MAP);
+						 controller.update();
+						 nodeNavigator.display(Display.MAP);
+					 }					 
+				 }
+				
+			});
+		});
+		
+		ccHandler.registerRequestCallback(ActionData.SUMMARY, (message) -> {
+			 System.err.println("Received turn_summary");
+			Platform.runLater(new Runnable() {
+				 @Override public void run() {
+					 // Get the data
+					 TurnSummaryRequestData data = TurnSummaryRequestData.class.cast(message.getActionData());
+					 // Sync the data
+					 turnSummary = data.getSummary();
+					 
+					 if (gamePhase == END_SUMMARY) {
+						 MapController controller = nodeNavigator.getController(Display.MAP);
+						 controller.endGame();
 					 } else {
 						 MapController controller = nodeNavigator.getController(Display.MAP);
 						 controller.update();
@@ -186,4 +232,14 @@ public final class GameResources {
 		
 	}
 	
+	/**
+	 * Map locations to positions based on sync data
+	 */
+	private void putMapLocations() {
+		// Map each location
+		for (LocationData loc : locations) {
+			locationMap.put(loc.getPosition(), loc.getName());
+		}
+		
+	}
 }
