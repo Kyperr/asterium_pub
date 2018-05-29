@@ -56,7 +56,7 @@ public interface Activity {
 
 			for (AbstractItem item : loot) {
 				character.getInventory().add(item);
-				character.addSummaryMessage(String.format(ITEM_GAINED_MESSAGE, item.getName()));
+				character.addSummaryMessage();
 			}
 
 			if (character.isParasite()) {

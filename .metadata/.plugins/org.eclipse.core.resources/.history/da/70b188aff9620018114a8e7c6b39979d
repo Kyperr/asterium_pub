@@ -127,7 +127,7 @@ public abstract class AbstractStatusEffect {
 	 */
 	public void remove() {
 		this.owner.removeStatusEffect(this);
-		//cthis.owner.addSummaryMessage(String.format(REMOVED_MESSAGE, this.getName()));
+		//this.owner.addSummaryMessage(String.format(REMOVED_MESSAGE, this.getName()));
 	}
 	
 	/**
