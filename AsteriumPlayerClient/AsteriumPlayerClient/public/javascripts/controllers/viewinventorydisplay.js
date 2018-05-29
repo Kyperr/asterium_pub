@@ -122,6 +122,16 @@ ViewInventoryDisplayController.prototype.selectInventory = function (inventory, 
 
     this.modalContent.appendChild(document.createElement("br"));
 
+    if(inventory.item_flavor_text.length != 0){
+        this.modalContent.appendChild(document.createElement("br"));
+        var flavorDiv = document.createElement("div");
+        flavorDiv.setAttribute("class", "flavor");
+        flavorDiv.innerHTML = inventory.item_flavor_text;
+        this.modalContent.appendChild(flavorDiv);
+        this.modalContent.appendChild(document.createElement("br"));
+    }
+
+
     if (inventory.is_location_item) {
         var span = document.createElement("span");
 

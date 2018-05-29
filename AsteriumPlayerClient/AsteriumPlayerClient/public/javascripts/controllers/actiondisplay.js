@@ -18,7 +18,7 @@ ActionDisplayController.prototype.init = function () {
     this.btnExplore.setAttribute("class", "button");
     this.btnExplore.innerHTML = "EXPLORE";
 
-    this.btnStay.innerHTML = "STAY";
+    this.btnStay.innerHTML = "STAY IN CONTROL ROOM";
     //this.btnStay.setAttribute("onClick", "locationsDisplayController.display()");
     this.btnStay.onclick = function(){
         locationsDisplayController.selectLocation(controlRoom);
