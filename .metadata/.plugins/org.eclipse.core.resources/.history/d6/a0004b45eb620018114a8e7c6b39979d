@@ -14,8 +14,8 @@ public class ParasiteTestKit extends AbstractLocationItem {
 	// ===== CONSTANTS =====
 	public static final String NAME = "Parasite Test Kit";
 	public static final double ACCURACY = 0.9;
-	public static final String DESCRIPTION = String.format("Reveals parasites with %d% accuracy.", (int) Math.floor(ACCURACY * 100));
-	public static final String FLAVOR_TEXT = "Well... we're pretty sure.";
+	public static final String DESCRIPTION = String.format("Reveals parasites with %f% accuracy.", ACCURACY);
+	public static final String FLAVOR_TEXT = "";
 	public static final String IMAGE_NAME = "testkit.png";
 	public static final String MESSAGE = "You tested %s, and the test came back %s.";
 	public static final String POSITIVE = "positive";

@@ -185,7 +185,13 @@ public class PlayerCharacter {
 	}
 	
 	public List<String> getTurnSummary() {
+<<<<<<< HEAD
 		return new ArrayList<String>(this.turnSummary);
+=======
+		List<String> result = new ArrayList<String>(this.turnSummary.size() + 1);
+		Collections.copy(result, this.turnSummary);
+		return result;
+>>>>>>> 9b21b1c4f931a804da792a717f6747325a3f2947
 	}
 	// ===================
 	
