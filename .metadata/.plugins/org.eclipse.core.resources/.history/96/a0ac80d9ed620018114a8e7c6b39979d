@@ -726,7 +726,9 @@ public class GameState {
 	}
 
 	public List<String> getSummary() {
-		return new ArrayList<String>(this.communalSummary.size());
+		List<String> result = new ArrayList<String>(this.communalSummary.size());
+		Collections.copy(result, this.communalSummary);
+		return result;
 	}
 	// ===================
 
