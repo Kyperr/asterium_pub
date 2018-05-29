@@ -285,18 +285,11 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 			}
 
 			public JSONObject jsonify() {
-				JSONObject data = new JSONObject();
-
-				JSONArray loadoutArray = new JSONArray();
 				JSONObject loadoutObject = new JSONObject();
 				for (EquipmentType type : equipment.keySet()) {
-					loadoutObject.put(ActionData.SLOT, type.toString());
-					loadoutObject.put(ActionData.EQUIPMENT, this.equipment.get(type).jsonify());
-					loadoutArray.put(loadoutObject);
+					loadoutObject.put(type.toString(), this.equipment.get(type).jsonify());
 				}
-				data.put(ActionData.LOADOUT, loadoutArray);
-
-				return data;
+				return loadoutObject;
 			}
 
 			public enum EquipmentType {

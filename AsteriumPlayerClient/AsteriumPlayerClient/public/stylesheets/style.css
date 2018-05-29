@@ -399,12 +399,30 @@ outline: 0 !important;
 .grid-container {
   display: grid;
   width: 100%;
-  grid-template-columns: auto auto;
+  /*grid-template-columns: auto auto;*/
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .grid-content {
   background-color: rgba(92, 92, 94, 0.918);
   border: 1px solid rgba(0, 0, 0, 0.8);
   text-align: center;
-  padding: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.flavor{
+  color: rgb(148, 155, 247);
+  font-style: italic;
+  font-size: small;
+}
+
+.small{
+  font-style: italic;
+  font-size: small;
+}
+.exposure{
+  color: rgb(0, 68, 9);
+  font-style: italic;
+  font-size: small;
 }
