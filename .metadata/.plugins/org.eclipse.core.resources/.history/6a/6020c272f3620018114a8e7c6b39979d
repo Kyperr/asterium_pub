@@ -5,10 +5,10 @@ import java.util.Collection;
 import com.toozo.asteriumwebserver.gamelogic.GameState;
 import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 
-public abstract class AbstractFoodItem extends AbstractConsumableItem {
+public abstract class AbstractFuelItem extends AbstractConsumableItem {
 	// ===== CONSTANTS =====
-	public static final String DESC = "Adds %d food to the supply.";
-	public static final String COMMUNAL_USE_MESSAGE = "%d was added to the food supply.";
+	public final static String DESCRIPTION = "Adds %d fuel to the supply.";
+	public final static String COMMUNAL_USE_MESSAGE = "%d fuel was added to the supply.";
 	// =====================
 	
 	// ===== FIELDS =====
@@ -16,9 +16,11 @@ public abstract class AbstractFoodItem extends AbstractConsumableItem {
 	// ==================
 
 	// ===== CONSTRUCTORS =====
-	protected AbstractFoodItem(final String name, final String flavor, final String image,
-			final int addAmount) {
-		super(name, String.format(DESC, addAmount), flavor, image);
+	protected AbstractFuelItem(final String name,
+							   final String flavorText, 
+							   final String image,
+							   final int addAmount) {
+		super(name, String.format(DESCRIPTION, addAmount), flavorText, image);
 		this.addAmount = addAmount;
 	}
 	// ========================
@@ -26,8 +28,7 @@ public abstract class AbstractFoodItem extends AbstractConsumableItem {
 	// ===== METHODS ======
 	@Override
 	public void applyEffect(GameState state, PlayerCharacter user, Collection<PlayerCharacter> targets) {
-		state.setFood(state.getFood() + this.addAmount);
-		state.addSummaryMessage(String.format(COMMUNAL_USE_MESSAGE, this.addAmount));
+		state.setFuel(state.getFuel() + this.addAmount);
 	}
 	// ====================
 }

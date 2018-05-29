@@ -66,7 +66,8 @@ public class GameState {
 	public static final String HUMAN_LOSS_MESSAGE = "You lost because the parasite completed victory condition: %s.";
 	public static final String PARASITE_WIN_MESSAGE = "You win! The parasite(s) completed victory condition: %s.";
 	public static final String PARASITE_LOSS_MESSAGE = "You lost because the humans completed victory condition: %s.";
-
+	
+	
 	public static final boolean VERBOSE = true;
 
 	// LOOT POOLS
@@ -411,7 +412,7 @@ public class GameState {
 				character.addSummaryMessage(message);
 			}
 		}
-
+		
 		// Check victory conditions
 		VictoryCondition lastVC = null;
 		for (VictoryCondition vc : state.getVictoryConditions()) {
@@ -426,17 +427,17 @@ public class GameState {
 				System.out.println(String.format("Game complete. Victory condition: %s.", lastVC.getName()));
 				System.out.println("Displaying end summary...");
 			}
-
+			
 			boolean forHumans = lastVC.isForHumans();
 			state.setHumansWon(forHumans);
-
+			
 			// Add end summary message for GameBoards.
 			if (forHumans) {
 				state.addSummaryMessage(HUMAN_VICTORY_MESSAGE);
 			} else {
 				state.addSummaryMessage(PARASITE_VICTORY_MESSAGE);
 			}
-
+			
 			// Add end summary message for each Player.
 			for (PlayerCharacter character : state.getCharacters()) {
 				if (character.isParasite()) {
@@ -454,7 +455,7 @@ public class GameState {
 					}
 				}
 			}
-
+			
 			state.setGamePhase(GamePhase.END_SUMMARY);
 		} else { // GAME NOT OVER
 			// Run all player's actions
@@ -473,7 +474,7 @@ public class GameState {
 			if (VERBOSE) {
 				System.out.println("Turns resolved. New turns phase...");
 			}
-
+			
 			state.setGamePhase(GamePhase.TURN_SUMMARY);
 		}
 
@@ -481,39 +482,7 @@ public class GameState {
 	}
 
 	private static final void initiateTurnSummaryPhase(GameState state) {
-		GameState.summarizePlayers(state);
-		
-		try {
-			GameState.summarizeGameBoards(state);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		state.setGamePhase(GamePhase.PLAYER_TURNS);
-		state.gamePhase.executePhase(state);
-	}
-
-	private static final void initiateEndSummaryPhase(GameState state) {
-		state.syncPlayerClients();
-		try {
-			syncGameBoards(state);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		// Send a final turn summary with the victory/loss messages.
-		try {
-			GameState.summarizeGameBoards(state);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		GameState.summarizePlayers(state);
-	}
-
-	private static final void summarizePlayers(GameState state) {
+		// Send turn summary to each player
 		String auth;
 		PlayerCharacter character;
 		TurnSummaryRequestData data;
@@ -538,16 +507,33 @@ public class GameState {
 
 			character.clearSummary();
 		}
+
+		GameState.summarizeGameBoards(state);
+		
+		state.setGamePhase(GamePhase.PLAYER_TURNS);
+		state.gamePhase.executePhase(state);
+	}
+
+	private static final void initiateEndSummaryPhase(GameState state) {
+		state.syncPlayerClients();
+		try {
+			syncGameBoards(state);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// Send a turn summary with the victory/loss messages.
+		GameState.initiateTurnSummaryPhase(state);
 	}
 
 	private static final void summarizeGameBoards(GameState state) throws IOException {
-		String auth;
-		PlayerCharacter character;
-		TurnSummaryRequestData data;
-		Request request;
-		Session session;
-
 		for (GameBoard gameBoard : state.game.getGameBoards()) {
+			auth = player.getAuthToken();
+			character = state.getCharacter(auth);
+			data = new TurnSummaryRequestData(character.getTurnSummary());
+			request = new Request(data, auth);
+			
 			auth = gameBoard.getAuthToken();
 			data = new TurnSummaryRequestData(state.communalSummary);
 			request = new Request(data, auth);
@@ -564,7 +550,7 @@ public class GameState {
 
 		state.clearSummary();
 	}
-
+	
 	private static final void syncGameBoards(GameState state) throws IOException {
 		int food = state.getFood();
 		int fuel = state.getFuel();
@@ -984,8 +970,8 @@ public class GameState {
 				equipment);
 
 		SyncPlayerClientDataRequestData.PlayerCharacterData dChar = new SyncPlayerClientDataRequestData.PlayerCharacterData(
-				pChar.getCharacterName(), pChar.isParasite(), stat, pChar.getExposure(), personalInv, loadout,
-				game.turnTaken(player), game.getPlayerIsReady(auth));
+				pChar.getCharacterName(), pChar.isParasite(), stat, pChar.getExposure(), personalInv, loadout, game.turnTaken(player),
+				game.getPlayerIsReady(auth));
 
 		List<SyncData.ItemData> inventory = new ArrayList<SyncData.ItemData>();
 		for (AbstractItem item : getCommunalInventory()) {

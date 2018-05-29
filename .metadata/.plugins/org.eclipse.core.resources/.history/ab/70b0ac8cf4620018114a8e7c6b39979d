@@ -504,16 +504,12 @@ public class GameState {
 		}
 
 		// Send a final turn summary with the victory/loss messages.
-		try {
-			GameState.summarizeGameBoards(state);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		GameState.summarizeGameBoards(state);
 		GameState.summarizePlayers(state);
 	}
 
 	private static final void summarizePlayers(GameState state) {
+		// Send turn summary to each player
 		String auth;
 		PlayerCharacter character;
 		TurnSummaryRequestData data;

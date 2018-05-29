@@ -49,8 +49,8 @@ ActivityDisplayController.prototype.display = function () {
     personalInventory.forEach(inventory => {
 
         if (inventory.is_location_item) {
-            inventory.use_locations.forEach((innerlocation) => {
-                if (innerlocation.location_type == innerlocation.location_type) {
+            inventory.use_locations.forEach((locationType) => {
+                if (location.location_type == locationType) {
                     counter++;
                     var btnInventory = document.createElement("BUTTON");
                     btnInventory.innerHTML = inventory.item_name;

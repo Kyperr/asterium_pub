@@ -194,7 +194,7 @@ public class Book extends AbstractLocationItem {
 			return ERROR_NAME;
 		} else {
 			// Pick a random flavor texts
-			return "It's titled \"" + possibleTexts.get(RNG.nextInt(possibleTexts.size() - 1)) + "\".";
+			return possibleTexts.get(RNG.nextInt(possibleTexts.size() - 1));
 		}
 	}
 	// ==========================
