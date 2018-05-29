@@ -19,6 +19,7 @@ import actiondata.SyncGameBoardDataRequestData.PlayerCharacterData;
 import actiondata.SyncGameBoardDataRequestData.VictoryData;
 import actiondata.SyncPlayerListRequestData;
 import actiondata.SyncPlayerListRequestData.PlayerData;
+import actiondata.TurnSummaryRequestData;
 import javafx.application.Platform;
 import main.ClientConnectionHandler;
 
@@ -50,6 +51,8 @@ public final class GameResources {
 	
 	private Integer fuel = 0;
 	
+	private Integer day = 1;
+	
 	private Map<Integer, String> locationMap = new HashMap<Integer, String>();
 	
 	private List<PlayerData> players = new ArrayList<PlayerData>();
@@ -63,6 +66,10 @@ public final class GameResources {
 	private List<ItemData> communalInventory = new ArrayList<ItemData>();
 	
 	private boolean gameWonStatus = false;
+	
+	private String gamePhase = "";
+	
+	private List<String> turnSummary = new ArrayList<String>();
 	
 	public GameResources(NodeNavigator nodeNavigator) {
 		this.nodeNavigator = nodeNavigator;
@@ -126,6 +133,14 @@ public final class GameResources {
 		gameWonStatus = status;
 	}
 	
+	public Integer getDay() {
+		return day;
+	}
+	
+	public List<String> getTurnSummary() {
+		return turnSummary;
+	}
+	
 	public String getGameWonStatus() {
 		StringBuilder endOfGameMessage = new StringBuilder();
 		if (gameWonStatus) {
@@ -149,6 +164,7 @@ public final class GameResources {
 					 // Sync the data
 					 food = data.getFood();
 					 fuel = data.getFuel();
+					 day = data.getDay();
 					 victoryConditions = (List<VictoryData>) data.getVictoryConditions();
 					 locations = (List<LocationData>) data.getLocations();
 					 putMapLocations();
@@ -156,13 +172,38 @@ public final class GameResources {
 					 characters = (List<PlayerCharacterData>) data.getPlayers();
 					 
 					 if (data.getGamePhase() == GAME_SUMMARY) {
+						 gamePhase = GAME_SUMMARY;
 						 GameSummaryController controller = nodeNavigator.getController(Display.GAME_SUMMARY);
 						 controller.update();
 						 nodeNavigator.display(Display.GAME_SUMMARY);
 					 } else if (data.getGamePhase() == TURN_SUMMARY) {
+						 gamePhase = TURN_SUMMARY; 
 						 TurnSummaryController controller = nodeNavigator.getController(Display.TURN_SUMMARY);
 						 controller.update();
 						 nodeNavigator.display(Display.TURN_SUMMARY);
+					 } else {
+						 MapController controller = nodeNavigator.getController(Display.MAP);
+						 controller.update();
+						 nodeNavigator.display(Display.MAP);
+					 }					 
+				 }
+				
+			});
+		});
+		
+		ccHandler.registerRequestCallback(ActionData.TURN_SUMMARY, (message) -> {
+			 System.err.println("Received turn_summary");
+			Platform.runLater(new Runnable() {
+				 @Override public void run() {
+					 // Get the data
+					 TurnSummaryRequestData data = TurnSummaryRequestData.class.cast(message.getActionData());
+					 // Sync the data
+					 List<String> summary = data.getSummary();
+					 
+					 if (gamePhase == GAME_SUMMARY) {
+						 MapController controller = nodeNavigator.getController(Display.MAP);
+						 controller.update();
+						 nodeNavigator.display(Display.MAP);
 					 } else {
 						 MapController controller = nodeNavigator.getController(Display.MAP);
 						 controller.update();
@@ -198,16 +239,10 @@ public final class GameResources {
 	 * Map locations to positions based on sync data
 	 */
 	private void putMapLocations() {
-		// Clear previous locations
-		locationMap.clear();
-		
 		// Map each location
 		for (LocationData loc : locations) {
 			locationMap.put(loc.getPosition(), loc.getName());
 		}
 		
-		// Update map?
-		MapController map = nodeNavigator.getController(Display.MAP);
-		map.update();
 	}
 }

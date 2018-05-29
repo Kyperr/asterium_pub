@@ -55,15 +55,41 @@
 	
 }
 
-#nameLabel, #foodLabel {
+#nameLabel, #foodLabel, #fuelLabel, #dayLabel {
     -fx-font: 20px "Arial";
 	-fx-padding: 5px;
     -fx-border-insets: 5px;
     -fx-background-insets: 5px;
 }
 
+#playersVBox {
+    -fx-font: 20px "Arial";
+    -fx-text-base-color: white;
+    -fx-text-background-color: white;
+	-fx-padding: 5px;
+    -fx-border-insets: 5px;
+    -fx-background-insets: 5px;
+    
+}
+
+#turnSummary {
+	-fx-font: 15px "Arial";
+    -fx-text-base-color: white;
+    -fx-text-background-color: white;
+	-fx-padding: 5px;
+    -fx-border-insets: 5px;
+}
+
+#titleHBox {
+	-fx-font: 30px "Arial";
+	-fx-padding: 10px;
+	-fx-alignment: center;
+	-fx-text-background-color: green;
+}
+
 #readyLabel{
     -fx-font: 16px "Arial";
+    
 	-fx-padding: 5px;
     -fx-border-insets: 5px;
     -fx-background-insets: 5px;	

@@ -4,21 +4,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
+import com.toozo.asterium.util.GameResources;
+
+import actiondata.SyncGameBoardDataRequestData.PlayerCharacterData;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 public class MapPane extends Pane {
 	
-	private final Double IMAGE_WIDTH = getWidth() * 1.5; 
-	private final Double IMAGE_HEIGHT = getHeight() * 1.5;
+	private static final Double IMAGE_WIDTH = 800.0;
 	
-	private final Double BACKGROUND_X = -getWidth()*.3;
-	private final Double BACKGROUND_Y = -getHeight()*.12;
+	private static final Double IMAGE_HEIGHT = 347.0;
 
 	private Image image;
 	
@@ -28,20 +31,18 @@ public class MapPane extends Pane {
 	
 	private List<Text> locationText;
 	
-	private Map<Integer, String> locationMap;
+	private Map<Integer, Function<Double, Double>> xTranslatorMap;
 	
-	private Map<Integer, Double> xCoordinateMap;
-	
-	private Map<Integer, Double> yCoordinateMap;
+	private Map<Integer, Function<Double, Double>> yTranslatorMap;
 	
 	private GraphicsContext gc;
 	
-	public MapPane(Image image, Map<Integer, String> locationMap) {
+	private GameResources gameResources;
+	
+	public MapPane(GameResources gr) {
 		super();
-		mapXCoordinates();
-		mapYCoordinates();
-		this.image = image;
-		this.locationMap = locationMap;
+		gameResources = gr;
+		this.image = new Image("/com/toozo/asterium/resources/map.png", 1600, 900, true, true);
 		canvas = new Canvas(getWidth(), getHeight());
 		getChildren().add(canvas);
 		widthProperty().addListener(e -> canvas.setWidth(getWidth()));
@@ -52,21 +53,27 @@ public class MapPane extends Pane {
 	private void init() {
 		
 		locationText = new ArrayList<Text>();
+		
+		mapXCoordinates();
+		mapYCoordinates();
 
 		backgroundAnim = new AnimationTimer() {
             long lastUpdate = 0 ;
+            
 			
 			@Override
 			public void handle(long now) {//now is in nanos
-
+				
 				gc = canvas.getGraphicsContext2D();
 				gc.clearRect(0, 0, getWidth(), getHeight());
-		        gc.drawImage(image, -getWidth()*.3, -getHeight()*.15, getWidth() * 1.5, getHeight() * 1.5);
+		        gc.drawImage(image, 0, 0, getWidth(), getHeight());
 		        
-		        for(Integer position : locationMap.keySet()) {
-					Double xLocation = xCoordinateMap.get(position);
-					Double yLocation = yCoordinateMap.get(position);
-					gc.fillText(locationMap.get(position), xLocation, yLocation);
+		        for(Integer position : gameResources.getLocationMap().keySet()) {
+					Double xLocation = xTranslatorMap.get(position).apply(getWidth());
+					Double yLocation = yTranslatorMap.get(position).apply(getHeight());
+					gc.setFill(Color.web("#4bf221"));
+					gc.fillText(gameResources.getLocationMap().get(position), 
+							xLocation, yLocation);
 				}
 			}
 		};
@@ -76,71 +83,62 @@ public class MapPane extends Pane {
 	
 	
 	private void mapXCoordinates() {
-		xCoordinateMap = new HashMap<Integer, Double>();
+		xTranslatorMap = new HashMap<Integer, Function<Double, Double>>();
 		// Control room
-		xCoordinateMap.put(1, 52/320 * IMAGE_WIDTH + BACKGROUND_X);
+		xTranslatorMap.put(1, width -> {return (15.0/320.0) * width;});//Valid
 		// 
-		xCoordinateMap.put(2, (114/320) * IMAGE_WIDTH + BACKGROUND_X);
-		xCoordinateMap.put(3, (136/320) * IMAGE_WIDTH + BACKGROUND_X);
-		xCoordinateMap.put(4, (166/320) * IMAGE_WIDTH + BACKGROUND_X);
-		xCoordinateMap.put(5, (188/320) * IMAGE_WIDTH + BACKGROUND_X);
-		xCoordinateMap.put(6, (218/320) * IMAGE_WIDTH + BACKGROUND_X);
-		xCoordinateMap.put(7, (240/320) * IMAGE_WIDTH + BACKGROUND_X);
+		xTranslatorMap.put(2, width -> {return (100.0/320.0) * width;});//Valid
+		xTranslatorMap.put(8, width -> {return (100.0/320.0) * width;});
+		xTranslatorMap.put(14, width -> {return (100.0/320.0) * width;});
+		xTranslatorMap.put(20, width -> {return (100.0/320.0) * width;});
 		
-		xCoordinateMap.put(8, (114/320) * IMAGE_WIDTH + BACKGROUND_X);
-		xCoordinateMap.put(9, (136/320) * IMAGE_WIDTH + BACKGROUND_X);
-		xCoordinateMap.put(10, (166/320) * IMAGE_WIDTH + BACKGROUND_X);
-		xCoordinateMap.put(11, (188/320) * IMAGE_WIDTH + BACKGROUND_X);
-		xCoordinateMap.put(12, (218/320) * IMAGE_WIDTH + BACKGROUND_X);
-		xCoordinateMap.put(13, (240/320) * IMAGE_WIDTH + BACKGROUND_X);
+		xTranslatorMap.put(3, width -> {return (136.0/320.0) * width;});
+		xTranslatorMap.put(9, width -> {return (136.0/320.0) * width;});
+		xTranslatorMap.put(15, width -> {return (136.0/320.0) * width;});
+		xTranslatorMap.put(21, width -> {return (136.0/320.0) * width;});
 		
-		xCoordinateMap.put(14, (114/320) * IMAGE_WIDTH + BACKGROUND_X);
-		xCoordinateMap.put(15, (136/320) * IMAGE_WIDTH + BACKGROUND_X);
-		xCoordinateMap.put(16, (166/320) * IMAGE_WIDTH + BACKGROUND_X);
-		xCoordinateMap.put(17, (188/320) * IMAGE_WIDTH + BACKGROUND_X);
-		xCoordinateMap.put(18, (218/320) * IMAGE_WIDTH + BACKGROUND_X);
-		xCoordinateMap.put(19, (240/320) * IMAGE_WIDTH + BACKGROUND_X);
+		xTranslatorMap.put(4, width -> {return (166.0/320.0) * width;});
+		xTranslatorMap.put(10, width -> {return (166.0/320.0) * width;});
+		xTranslatorMap.put(16, width -> {return (166.0/320.0) * width;});
+		xTranslatorMap.put(22, width -> {return (166.0/320.0) * width;});
 		
-		xCoordinateMap.put(20, (114/320) * IMAGE_WIDTH + BACKGROUND_X);
-		xCoordinateMap.put(21, (136/320) * IMAGE_WIDTH + BACKGROUND_X);
-		xCoordinateMap.put(22, (166/320) * IMAGE_WIDTH + BACKGROUND_X);
-		xCoordinateMap.put(23, (188/320) * IMAGE_WIDTH + BACKGROUND_X);
-		xCoordinateMap.put(24, (218/320) * IMAGE_WIDTH + BACKGROUND_X);
-		xCoordinateMap.put(25, (240/320) * IMAGE_WIDTH + BACKGROUND_X);
+		xTranslatorMap.put(5, width -> {return (188.0/320.0) * width;});
+		xTranslatorMap.put(11, width -> {return (188.0/320.0) * width;});
+		xTranslatorMap.put(17, width -> {return (188.0/320.0) * width;});
+		xTranslatorMap.put(23, width -> {return (188/320) * width;});
+		
+		xTranslatorMap.put(6, width -> {return (218.0/320.0) * width;});
+		xTranslatorMap.put(12, width -> {return (218.0/320.0) * width;});
+		xTranslatorMap.put(18, width -> {return (218.0/320.0) * width;});
+		xTranslatorMap.put(24, width -> {return (218.0/320.0) * width;});
+		
+		xTranslatorMap.put(7, width -> {return (240.0/320.0) * width;});
+		xTranslatorMap.put(13, width -> {return (240.0/320.0) * width;});
+		xTranslatorMap.put(19, width -> {return (240.0/320.0) * width;});
+		xTranslatorMap.put(25, width -> {return (240.0/320.0) * width;});
+		
 	}
 	
 	private void mapYCoordinates() {
-		yCoordinateMap = new HashMap<Integer, Double>();
+		yTranslatorMap = new HashMap<Integer, Function<Double, Double>>();
 		
-		yCoordinateMap.put(1, (64/180) * IMAGE_HEIGHT + BACKGROUND_Y);
-		yCoordinateMap.put(2, (42/180) * IMAGE_HEIGHT + BACKGROUND_Y);
-		yCoordinateMap.put(3, (42/180) * IMAGE_HEIGHT + BACKGROUND_Y);
-		yCoordinateMap.put(4, (42/180) * IMAGE_HEIGHT + BACKGROUND_Y);
-		yCoordinateMap.put(5, (42/180) * IMAGE_HEIGHT + BACKGROUND_Y);
-		yCoordinateMap.put(6, (42/180) * IMAGE_HEIGHT + BACKGROUND_Y);
-		yCoordinateMap.put(7, (42/180) * IMAGE_HEIGHT + BACKGROUND_Y);
+		yTranslatorMap.put(1, height -> {return 0.9 * height;});
 		
-		yCoordinateMap.put(8, (64/180) * IMAGE_HEIGHT + BACKGROUND_Y);
-		yCoordinateMap.put(9, (64/180) * IMAGE_HEIGHT + BACKGROUND_Y);
-		yCoordinateMap.put(10, (64/180) * IMAGE_HEIGHT + BACKGROUND_Y);
-		yCoordinateMap.put(11, (64/180) * IMAGE_HEIGHT + BACKGROUND_Y);
-		yCoordinateMap.put(12, (64/180) * IMAGE_HEIGHT + BACKGROUND_Y);
-		yCoordinateMap.put(13, (64/180) * IMAGE_HEIGHT + BACKGROUND_Y);
+		for (int i = 2; i < 8; ++i) {
+			yTranslatorMap.put(i, height -> {return (50.0/180.0) * height;});
+		}
 		
-		yCoordinateMap.put(14, (94/180) * IMAGE_HEIGHT + BACKGROUND_Y);
-		yCoordinateMap.put(15, (94/180) * IMAGE_HEIGHT + BACKGROUND_Y);
-		yCoordinateMap.put(16, (94/180) * IMAGE_HEIGHT + BACKGROUND_Y);
-		yCoordinateMap.put(17, (94/180) * IMAGE_HEIGHT + BACKGROUND_Y);
-		yCoordinateMap.put(18, (94/180) * IMAGE_HEIGHT + BACKGROUND_Y);
-		yCoordinateMap.put(19, (94/180) * IMAGE_HEIGHT + BACKGROUND_Y);
+		for (int i = 8; i < 14; i++) {
+			yTranslatorMap.put(1, height -> {return (64.0/180.0) * height;});
+		}
 		
+		for (int i = 14; i < 20; i++) {
+			yTranslatorMap.put(i, height -> {return (94.0/180.0) * height;});
+		}
 		
-		yCoordinateMap.put(20, (116/180) * IMAGE_HEIGHT + BACKGROUND_Y);
-		yCoordinateMap.put(21, (116/180) * IMAGE_HEIGHT + BACKGROUND_Y);
-		yCoordinateMap.put(22, (116/180) * IMAGE_HEIGHT + BACKGROUND_Y);
-		yCoordinateMap.put(23, (116/180) * IMAGE_HEIGHT + BACKGROUND_Y);
-		yCoordinateMap.put(24, (116/180) * IMAGE_HEIGHT + BACKGROUND_Y);
-		yCoordinateMap.put(25, (116/180) * IMAGE_HEIGHT + BACKGROUND_Y);
+		for (int i = 20; i < 26; i++) {
+			yTranslatorMap.put(i, height -> {return (116.0/180.0) * height;});
+		}
 		
 	}
 }
