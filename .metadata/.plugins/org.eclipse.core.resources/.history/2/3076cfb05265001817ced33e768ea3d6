@@ -66,7 +66,7 @@ public class GameState {
 	public static final String HUMAN_LOSS_MESSAGE = "You lost because the parasite completed victory condition: %s.";
 	public static final String PARASITE_WIN_MESSAGE = "You win! The parasite(s) completed victory condition: %s.";
 	public static final String PARASITE_LOSS_MESSAGE = "You lost because the humans completed victory condition: %s.";
-	public static final String MULTIPLE_SUMMARY_FORMAT = "%s (x%d)";
+	public static final String MULTIPLE_SUMMARY_FORMAT = "%s x%d";
 	public static final String BEACON_VC_NAME = "Rescue Beacon Activated";
 	public static final String FUEL_VC_NAME = "Out of Fuel";
 	public static final String PARASITES_VC_NAME = "All Humans Turned to Parasites";

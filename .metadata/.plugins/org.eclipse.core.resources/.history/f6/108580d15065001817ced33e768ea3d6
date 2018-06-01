@@ -36,7 +36,7 @@ public interface Activity {
 		rand = min + (max - min) * r.nextDouble();
 		double exp = character.getExposure() + rand;
 		character.setExposure(exp);
-		character.addSummaryMessage(String.format(EXPOSURE_GAINED_MESSAGE, Math.floor(rand * 100)));
+		character.addSummaryMessage(String.format(EXPOSURE_GAINED_MESSAGE, Math.floor(exp * 100)));
 	}
 
 	public static void increaseLocationExposure(Location location) {

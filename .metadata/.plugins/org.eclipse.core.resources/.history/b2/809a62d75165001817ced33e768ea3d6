@@ -303,7 +303,7 @@ public class PlayerCharacter {
 				this.turnSummary.remove(i);
 				this.turnSummary.add(String.format(MULTIPLE_SUMMARY_FORMAT, message, 2));
 				added = true;
-			} else if (oldMessage.matches(String.format("%s \\(x([0-9]+)\\)", message))) {
+			} else if (oldMessage.matches(String.format("(%s) \(x([0-9]+)\)", message))) {
 				// If repeated message exists in list, add "message x[repeatNumber + 1]".
 
 				// == Get repeatNumber ==
@@ -339,7 +339,7 @@ public class PlayerCharacter {
 	public void rest() {
 		// reduce exposure
 		double exp = this.getExposure();
-		exp = Math.max(exp - REST_EXPOSURE, 0.0);
+		exp -= REST_EXPOSURE;
 		this.setExposure(exp);
 
 		// heal up

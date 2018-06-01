@@ -15,7 +15,7 @@ public class PlayerCharacter {
 	private static final String DEFAULT_NAME = "DEFAULT_PC_NAME";
 	private static final int REST_HEAL = 2;
 	private static final double REST_EXPOSURE = 0.1;
-	public static final String MULTIPLE_SUMMARY_FORMAT = "%s (x%d)";
+	public static final String MULTIPLE_SUMMARY_FORMAT = "%s x%d";
 	// =====================
 
 	// ===== FIELDS =====
@@ -303,16 +303,16 @@ public class PlayerCharacter {
 				this.turnSummary.remove(i);
 				this.turnSummary.add(String.format(MULTIPLE_SUMMARY_FORMAT, message, 2));
 				added = true;
-			} else if (oldMessage.matches(String.format("%s \\(x([0-9]+)\\)", message))) {
+			} else if (oldMessage.matches(String.format("(%s) x([0-9]+)", message))) {
 				// If repeated message exists in list, add "message x[repeatNumber + 1]".
 
 				// == Get repeatNumber ==
 				// Move j to index of the x
-				for (j = oldMessage.length() - 2; Character.isDigit(oldMessage.charAt(j)); j--)
+				for (j = oldMessage.length() - 1; Character.isDigit(oldMessage.charAt(j)); j--)
 					;
-				// Get number from j+1 to close paren
+				// Get number from j+1 to end of string
 				try {
-					repeatNumber = Integer.parseInt(oldMessage.substring(j + 1, oldMessage.length() - 1));
+					repeatNumber = Integer.parseInt(oldMessage.substring(j + 1, oldMessage.length()));
 				} catch (NumberFormatException e) {
 					// Something went wrong, ignore repeated message.
 					repeatNumber = 1;
@@ -339,7 +339,7 @@ public class PlayerCharacter {
 	public void rest() {
 		// reduce exposure
 		double exp = this.getExposure();
-		exp = Math.max(exp - REST_EXPOSURE, 0.0);
+		exp -= REST_EXPOSURE;
 		this.setExposure(exp);
 
 		// heal up
