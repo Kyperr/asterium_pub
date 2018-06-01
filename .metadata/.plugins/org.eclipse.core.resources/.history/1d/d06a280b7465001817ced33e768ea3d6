@@ -41,9 +41,6 @@ import com.toozo.asteriumwebserver.gamelogic.items.equipment.Loadout;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.TinfoilHatEquipmentItem;
 import com.toozo.asteriumwebserver.gamelogic.items.location.AbstractLocationItem;
 import com.toozo.asteriumwebserver.gamelogic.items.location.Book;
-import com.toozo.asteriumwebserver.gamelogic.items.location.ControlModule;
-import com.toozo.asteriumwebserver.gamelogic.items.location.PowerSupply;
-import com.toozo.asteriumwebserver.gamelogic.items.location.RadioDish;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
 import actiondata.ActionData;
@@ -212,6 +209,14 @@ public class GameState {
 	public static final List<ItemLoot> DORMS_ITEM_LOOT;
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
+
+		// Food (20%)
+		// Fuel (20%)
+		// Exposure (12.5%)
+		// Heal (12.5%)
+		// Equipment (20%)
+		// Book (7.5%)
+		// Victory Item (2.5%)
 		
 		// Food
 		probs.add(new ItemLoot(FoodPack::new, 10, 0.0, 0.0, (state)->true));
@@ -230,16 +235,14 @@ public class GameState {
 		probs.add(new ItemLoot(Medkit::new, 3, 0.0, 0.0, (state)->true));
 		probs.add(new ItemLoot(Syringe::new, 3, 0.0, 0.0, (state)->true));
 		// Equipment
-		probs.add(new ItemLoot(TinfoilHatEquipmentItem::new, 7, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(HareyGlovesEquipmentItem::new, 7, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(HoverSkatesEquipmentItem::new, 7, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(LettermanJacketEquipmentItem::new, 7, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(TinfoilHatEquipmentItem::new, 24, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(HareyGlovesEquipmentItem::new, 24, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(HoverSkatesEquipmentItem::new, 24, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(LettermanJacketEquipmentItem::new, 24, 0.0, 0.0, (state)->true));
 		// Book
-		probs.add(new ItemLoot(Book::new, 8, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(Book::new, 99, 0.0, 0.0, (state)->true));
 		// Victory
-		probs.add(new ItemLoot(RadioDish::new, 3, 0.0, 0.0, GameState::radioConditional));
-		probs.add(new ItemLoot(PowerSupply::new, 3, 0.0, 0.0, GameState::psuConditional));
-		probs.add(new ItemLoot(ControlModule::new, 3, 0.0, 0.0, GameState::moduleConditional));
+		probs.add(new ItemLoot(RescueBeacon::new, 3, 0.0, 0.0, (state)->true));
 
 		DORMS_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
@@ -404,17 +407,8 @@ public class GameState {
 	// ===== STATIC METHODS =====
 	
 	private static final boolean radioConditional(GameState state) {
-		return !state.radioDishUsed();
+		if (!state.radioDishUsed())
 	}
-	
-	private static final boolean psuConditional(GameState state) {
-		return state.radioDishUsed() && !state.powerSupplyUsed();
-	}
-	
-	private static final boolean moduleConditional(GameState state) {
-		return state.radioDishUsed() && state.powerSupplyUsed() && !state.controlModuleUsed();
-	}
-	
 	/**
 	 * Definition of what should be performed during the players
 	 * 

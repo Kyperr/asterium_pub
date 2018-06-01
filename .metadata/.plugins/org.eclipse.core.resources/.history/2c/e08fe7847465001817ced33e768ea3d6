@@ -212,6 +212,14 @@ public class GameState {
 	public static final List<ItemLoot> DORMS_ITEM_LOOT;
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
+
+		// Food (20%)
+		// Fuel (20%)
+		// Exposure (12.5%)
+		// Heal (12.5%)
+		// Equipment (20%)
+		// Book (7.5%)
+		// Victory Item (2.5%)
 		
 		// Food
 		probs.add(new ItemLoot(FoodPack::new, 10, 0.0, 0.0, (state)->true));
