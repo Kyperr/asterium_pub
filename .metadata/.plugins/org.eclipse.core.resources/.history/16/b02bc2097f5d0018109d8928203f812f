@@ -1,5 +1,0 @@
-package com.toozo.asteriumwebserver.gamelogic.items.consumables;
-
-public class FoodChest extends AbstractFoodItem {
-
-}

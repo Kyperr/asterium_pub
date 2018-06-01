@@ -12,7 +12,7 @@ import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
  */
 public class AbstractExposureItem extends AbstractConsumableItem {
 	// ===== CONSTANTS =====
-	public static final String DESC = "Reduces your exposure by %d%%.";
+	public static final String DESC = "Reduces your exposure by %d%.";
 	// =====================
 	
 	// ===== FIELDS =====

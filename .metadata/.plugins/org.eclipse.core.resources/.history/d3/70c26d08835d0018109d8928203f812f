@@ -1,7 +1,0 @@
-package com.toozo.asteriumwebserver.gamelogic.items.consumables;
-
-public class Bandage extends HealItem {
-	public Bandage() {
-		
-	}
-}

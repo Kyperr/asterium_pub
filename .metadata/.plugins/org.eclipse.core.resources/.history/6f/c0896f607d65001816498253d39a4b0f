@@ -17,7 +17,7 @@ public interface Activity {
 	public static final String LOOT_SUMMARY_MESSAGE = "You looted the %s and got %s.";
 	public static final String ITEM_GAINED_MESSAGE = "You found %s.";
 	public static final String NO_ITEMS_FOUND_PHRASE = "nothing";
-	public static final String EXPOSURE_GAINED_MESSAGE = "You gained %d%% exposure.";
+	public static final String EXPOSURE_GAINED_MESSAGE = "You gained %d\% exposure.";
 	public static final String REST = "Rest";
 	public static final boolean VERBOSE = false;
 
