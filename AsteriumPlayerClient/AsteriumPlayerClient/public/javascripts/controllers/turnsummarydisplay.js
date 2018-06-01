@@ -26,12 +26,17 @@ TurnSummaryDisplayController.prototype.update = function () {
     summDiv.innerHTML = "Turn Summary";
     this.displayDiv.appendChild(summDiv);
 
+    var summaryDiv = document.createElement("div");
+    summaryDiv.setAttribute("class", "summary");
     summaryStrings.forEach(string => {
-        this.displayDiv.innerHTML += string;
-        this.displayDiv.innerHTML += "<br/>";
+        summaryDiv.innerHTML += deshitify(string);
+        summaryDiv.innerHTML += "<br/>";
     });
+    this.displayDiv.appendChild(summaryDiv);
     
-    this.displayDiv.appendChild(this.continueButton);
+    if(gamePhase !== "END_SUMMARY"){
+        this.displayDiv.appendChild(this.continueButton);
+    }
 }
 
 

@@ -190,13 +190,15 @@
    font-size: large;
  }
  
- .endGameDev {
+ .endGameDiv {
    padding-right: 5px;
    padding-left: 5px;
    padding-top: 5px;
    padding-bottom: 5px;
    font-size: large;
    text-align: center;
+   font-size: 2.5em;
+   color: rgb(225, 227, 255);
  }
  
  .itemDiv {
@@ -230,6 +232,7 @@
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
+  max-width: 400px;
 }
 
 .tooltip {
@@ -409,6 +412,7 @@ outline: 0 !important;
   text-align: center;
   padding-top: 10px;
   padding-bottom: 10px;
+  padding: 10px;
 }
 
 .flavor{
@@ -428,4 +432,9 @@ outline: 0 !important;
   font-style: italic;
   font-size: medium;
   text-align: center;
+}
+
+.summary{
+  color: rgb(255, 255, 255);
+  font-size: small;
 }

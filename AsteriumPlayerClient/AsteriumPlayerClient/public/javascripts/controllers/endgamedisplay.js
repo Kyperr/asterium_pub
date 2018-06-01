@@ -17,13 +17,9 @@ EndGameDisplayController.prototype.display = function () {
     div.innerHTML = "";
 
     var endGameDiv = document.createElement("div");
-    endGameDiv.setAttribute("class", "endGameDev");
+    endGameDiv.setAttribute("class", "endGameDiv");
 
-    if(usedTheBeacon){
-        endGameDiv.innerHTML = "<b>You Won!<n/>";
-    } else {
-        endGameDiv.innerHTML = "<b>Game Over.</b>"
-    }
+    endGameDiv.innerHTML = "<b>Game Over</b>"
 
     div.appendChild(endGameDiv);
 }

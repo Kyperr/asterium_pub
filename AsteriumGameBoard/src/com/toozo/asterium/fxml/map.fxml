@@ -6,22 +6,36 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<StackPane
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="com.toozo.asterium.controllers.MapController">
+	
+	<GridPane fx:id="mapPane">
+	</GridPane>
+	</StackPane>
+
+<!--  
+
 <BorderPane id="MapPane" prefHeight="500" prefWidth="720"
 	xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="com.toozo.asterium.controllers.MapController">
 	<top>
-	<HBox fx:id="titleHBox"><Label minHeight="20" minWidth="75" text="Asterium" /></HBox>
+		<HBox fx:id="titleHBox">
+			<Label minHeight="20" minWidth="75" text="Asterium" />
+		</HBox>
 		<BorderPane fx:id="mapInfoBorderPane">
-		
+
 			<left>
 				<HBox fx:id="infoHBox">
 					<Label minHeight="16" minWidth="69" fx:id="fuelLabel" />
 					<Label minHeight="16" minWidth="69" fx:id="foodLabel" />
-					
+
 				</HBox>
-				</left>
-				<right><Label minHeight="16" minWidth="69" fx:id="dayLabel" /></right>
-			
+			</left>
+			<right>
+				<Label minHeight="16" minWidth="69" fx:id="dayLabel" />
+			</right>
+
 		</BorderPane>
 	</top>
 	<center>
@@ -33,9 +47,10 @@
 		</VBox>
 	</right>
 	<bottom>
-	<VBox fx:id="summaryVBox">
+		<ScrollPane fx:id="summaryScrollPane">
 			<Label fx:id="turnSummaryLabel" />
-		</VBox>
+		</ScrollPane>
 	</bottom>
 
 </BorderPane>
+-->

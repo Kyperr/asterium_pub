@@ -13,6 +13,7 @@ import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
+import actiondata.DiscardItemRequestData;
 import actiondata.ErroredResponseData;
 import actiondata.InventoryData.ItemData;
 import actiondata.SuccessResponseData;
@@ -96,7 +97,7 @@ public class DiscardItemAction extends Action {
 	 * @return a {@link DiscardItemAction} containing the data from message.
 	 */
 	public static DiscardItemAction fromMessage(final Message message) {
-		UseItemRequestData data = UseItemRequestData.class.cast(message.getActionData());
+		DiscardItemRequestData data = DiscardItemRequestData.class.cast(message.getActionData());
 		return new DiscardItemAction(message.getAuthToken(), message.getMessageID(), data.getItem());
 
 	}

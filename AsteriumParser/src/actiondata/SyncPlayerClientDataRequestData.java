@@ -81,7 +81,7 @@ public class SyncPlayerClientDataRequestData extends AbstractRequestActionData {
 		data.put(ActionData.CHARACTERS, charactersArray);
 		JSONArray inventoryArray = new JSONArray();
 		for (ItemData item : this.inventory) {
-			data.put(ActionData.ITEM, item.jsonify());
+			inventoryArray.put(item.jsonify());
 		}
 		data.put(ActionData.COMMUNAL_INVENTORY, inventoryArray);
 		data.put(ActionData.GAME_PHASE_NAME, this.gamePhaseName);

@@ -25,7 +25,8 @@ function syncPlayerClientData(request) {
     var newPhase = request.sync_player_client_data.game_phase_name;
 
     if (gamePhase != newPhase) {
-        if(gamePhase != "TURN_RESOLVE"){
+        //If old phase was turn resolve(because player hasn't hit continue), or if it is end_summary
+        if(gamePhase != "TURN_RESOLVE" || newPhase == "END_SUMMARY"){
             phaseChangeStartingActions[newPhase]();
         }
         gamePhase = newPhase;
@@ -51,7 +52,6 @@ requestActions["summary"] = summary;
 var phaseChangeStartingActions = {};
 
 phaseChangeStartingActions["PLAYER_TURNS"] = function () {
-    
     actionDisplayController.display();
 };
 

@@ -13,6 +13,8 @@ function ViewInventoryDisplayController() {
     this.modalContent = document.createElement("div");
     this.modalClose = document.createElement("BUTTON");
     this.modalUse = document.createElement("BUTTON");
+    this.modalDiscard = document.createElement("BUTTON");
+    this.modalMoveToOther = document.createElement("BUTTON");
 
     this.init();
 }
@@ -35,6 +37,17 @@ ViewInventoryDisplayController.prototype.init = function () {
         viewInventoryDisplayController.useItem(viewInventoryDisplayController.selectedInventory, viewInventoryDisplayController.isCommunal);
     }
     this.modalUse.setAttribute("class", "button");
+
+    this.modalDiscard.innerHTML = "Discard";
+    this.modalDiscard.onclick = function () {
+        viewInventoryDisplayController.discardItem(viewInventoryDisplayController.selectedInventory);
+    }
+
+    this.modalDiscard.setAttribute("class", "button");
+
+    this.modalMoveToOther.innerHTML = "Move To {}";
+    
+    this.modalMoveToOther.setAttribute("class", "button");
 
     this.modalClose.innerHTML = "Close";
     this.modalClose.setAttribute("onClick", "viewInventoryDisplayController.setModalDisplay('none')");
@@ -122,7 +135,7 @@ ViewInventoryDisplayController.prototype.selectInventory = function (inventory, 
 
     this.modalContent.appendChild(document.createElement("br"));
 
-    if(inventory.item_flavor_text.length != 0){
+    if (inventory.item_flavor_text.length != 0) {
         this.modalContent.appendChild(document.createElement("br"));
         var flavorDiv = document.createElement("div");
         flavorDiv.setAttribute("class", "flavor");
@@ -149,6 +162,22 @@ ViewInventoryDisplayController.prototype.selectInventory = function (inventory, 
     } else {
         this.modalContent.appendChild(this.modalUse);
     }
+
+    this.modalContent.appendChild(this.modalMoveToOther);
+    
+    if (isCommunal) {
+        this.modalMoveToOther.innerHTML = "Move To Personal";
+        this.modalMoveToOther.onclick = function () {
+            viewInventoryDisplayController.moveToCommunal(viewInventoryDisplayController.selectedInventory, false);
+        }
+    } else {
+        this.modalContent.appendChild(this.modalDiscard);
+        this.modalMoveToOther.innerHTML = "Move To Communal";
+        this.modalMoveToOther.onclick = function () {
+            viewInventoryDisplayController.moveToCommunal(viewInventoryDisplayController.selectedInventory, true);
+        }
+    }
+
     this.modalContent.appendChild(this.modalClose);
 
     this.modal.style.display = "block";
@@ -161,6 +190,16 @@ ViewInventoryDisplayController.prototype.useItem = function (item, isCommunal) {
     useItemAction(item, targets, isCommunal);
 }
 
+ViewInventoryDisplayController.prototype.discardItem = function (item) {
+    this.modal.style.display = "none";
+    discardItem(item);
+}
+
+ViewInventoryDisplayController.prototype.moveToCommunal = function (item, moveToCommunal) {
+    this.modal.style.display = "none";
+    moveItemTo(item, moveToCommunal);
+}
+
 ViewInventoryDisplayController.prototype.setModalDisplay = function (display) {
     this.modal.style.display = display;
 }
@@ -168,11 +207,3 @@ ViewInventoryDisplayController.prototype.setModalDisplay = function (display) {
 var viewInventoryDisplayController = new ViewInventoryDisplayController();
 
 var displayFriendlyLocationTypes = {};
-
-function deshitify(str) {
-    var frags = str.toLowerCase().split('_');
-    for (i = 0; i < frags.length; i++) {
-        frags[i] = frags[i].charAt(0).toUpperCase() + frags[i].slice(1);
-    }
-    return frags.join(' ');
-}

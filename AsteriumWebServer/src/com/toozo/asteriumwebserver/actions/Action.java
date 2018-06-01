@@ -81,6 +81,8 @@ public abstract class Action implements Runnable {
 			put(ActionData.TURN_ACTION, TurnAction::fromMessage);
 			put(ActionData.ITEM_TURN_ACTION, ItemTurnAction::fromMessage);
 			put(ActionData.USE_ITEM, UseItemAction::fromMessage);
+			put(ActionData.COMMUNAL_INVENTORY, CommunalInventoryAction::fromMessage);
+			put(ActionData.DISCARD_ITEM, DiscardItemAction::fromMessage);
 			
 			put(ActionData.QUERY_IS_IN_GAME, QueryIsInGameAction::fromMessage);
 			put(ActionData.SET_READY_STATUS, SetReadyStatusAction::fromMessage);
@@ -108,10 +110,20 @@ public abstract class Action implements Runnable {
 		try {
 
 			// Look up the function that corresponds to actionData's class and call it.
-			return ACTION_LOOKUP.get(actionData.getName()).apply(message);
+			Function<Message, Action> action = ACTION_LOOKUP.get(actionData.getName());
+			if(action != null) {
+				return action.apply(message);				
+			} else {
+				throw new IllegalArgumentException("No action found for: " + actionData.getName());
+			}
 		} catch (ClassCastException e) {
+			e.printStackTrace();
 			return new SendErrorAction(actionData.getName(), message.getAuthToken(), SendErrorAction.INCORRECT_ACTION_MAPPING,
 					message.getMessageID());
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+			return new SendErrorAction(actionData.getName(), message.getAuthToken(), SendErrorAction.INCORRECT_ACTION_MAPPING,
+					message.getMessageID());			
 		}
 	}
 
