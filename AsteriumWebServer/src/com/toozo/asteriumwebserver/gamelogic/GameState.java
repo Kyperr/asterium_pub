@@ -100,8 +100,6 @@ public class GameState {
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 		
-		List<ItemLoot> probs = new ArrayList<ItemLoot>();
-		
 		// Heal Items (40%)
 		probs.add(new ItemLoot(Bandage::new, 15, 0.0, 0.0, (state)->true));
 		probs.add(new ItemLoot(Medkit::new, 15, 0.0, 0.0, (state)->true));
