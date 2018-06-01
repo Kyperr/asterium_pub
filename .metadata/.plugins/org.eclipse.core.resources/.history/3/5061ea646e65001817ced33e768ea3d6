@@ -1,0 +1,12 @@
+package com.toozo.asteriumwebserver.gamelogic.items.consumables;
+
+public class Inhaler extends AbstractExposureItem {
+	public static final String NAME = "Antivirus Inhaler";
+	public static final int AMOUNT = 3;
+	public static final String FLAV = "You'll get bullied for using this.";
+	public static final String IMG = "food.png";
+	
+	public Inhaler() {
+		super(NAME, FLAV, IMG, AMOUNT);
+	}
+}
