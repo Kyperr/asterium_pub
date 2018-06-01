@@ -303,14 +303,14 @@ public class PlayerCharacter {
 				this.turnSummary.remove(i);
 				this.turnSummary.add(String.format(MULTIPLE_SUMMARY_FORMAT, message, 2));
 				added = true;
-			} else if (oldMessage.matches(String.format("%s \\(x([0-9]+)\\)", message))) {
+			} else if (oldMessage.matches(String.format("(%s) \(x([0-9]+)\)", message))) {
 				// If repeated message exists in list, add "message x[repeatNumber + 1]".
 
 				// == Get repeatNumber ==
 				// Move j to index of the x
 				for (j = oldMessage.length() - 2; Character.isDigit(oldMessage.charAt(j)); j--)
 					;
-				// Get number from j+1 to close paren
+				// Get number from j+1 to end of string
 				try {
 					repeatNumber = Integer.parseInt(oldMessage.substring(j + 1, oldMessage.length() - 1));
 				} catch (NumberFormatException e) {

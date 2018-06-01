@@ -66,7 +66,7 @@ public class GameState {
 	public static final String HUMAN_LOSS_MESSAGE = "You lost because the parasite completed victory condition: %s.";
 	public static final String PARASITE_WIN_MESSAGE = "You win! The parasite(s) completed victory condition: %s.";
 	public static final String PARASITE_LOSS_MESSAGE = "You lost because the humans completed victory condition: %s.";
-	public static final String MULTIPLE_SUMMARY_FORMAT = "%s (x%d)";
+	public static final String MULTIPLE_SUMMARY_FORMAT = "%s x%d";
 	public static final String BEACON_VC_NAME = "Rescue Beacon Activated";
 	public static final String FUEL_VC_NAME = "Out of Fuel";
 	public static final String PARASITES_VC_NAME = "All Humans Turned to Parasites";
@@ -839,15 +839,15 @@ public class GameState {
 				this.communalSummary.remove(i);
 				this.communalSummary.add(String.format(MULTIPLE_SUMMARY_FORMAT, message, 2));
 				added = true;
-			} else if (oldMessage.matches(String.format("%s \\(x([0-9]+)\\)", message))) {
+			} else if (oldMessage.matches(String.format("(%s) x([0-9]+)", message))) {
 				// If repeated message exists in list, add "message x[repeatNumber + 1]".
 				
 				// == Get repeatNumber ==
 				// Move j to index of the x
-				for (j = oldMessage.length() - 2; Character.isDigit(oldMessage.charAt(j)); j--);
+				for (j = oldMessage.length() - 1; Character.isDigit(oldMessage.charAt(j)); j--);
 				// Get number from j+1 to end of string
 				try {
-					repeatNumber = Integer.parseInt(oldMessage.substring(j + 1, oldMessage.length() - 1));
+					repeatNumber = Integer.parseInt(oldMessage.substring(j + 1, oldMessage.length()));
 				} catch (NumberFormatException e) {
 					// Something went wrong, ignore repeated message.
 					repeatNumber = 1;

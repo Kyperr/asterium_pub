@@ -17,7 +17,6 @@ public interface Activity {
 	public static final String LOOT_SUMMARY_MESSAGE = "You looted the %s and got %s.";
 	public static final String ITEM_GAINED_MESSAGE = "You found %s.";
 	public static final String NO_ITEMS_FOUND_PHRASE = "nothing";
-	public static final String EXPOSURE_GAINED_MESSAGE = "You gained %d% exposure.";
 	public static final String REST = "Rest";
 	public static final boolean VERBOSE = false;
 
@@ -36,7 +35,6 @@ public interface Activity {
 		rand = min + (max - min) * r.nextDouble();
 		double exp = character.getExposure() + rand;
 		character.setExposure(exp);
-		character.addSummaryMessage(String.format(EXPOSURE_GAINED_MESSAGE, Math.floor(rand * 100)));
 	}
 
 	public static void increaseLocationExposure(Location location) {
