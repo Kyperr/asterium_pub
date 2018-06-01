@@ -43,7 +43,7 @@ public class DiscardItemRequestData extends AbstractRequestActionData {
 	 */
 	public static DiscardItemRequestData parseArgs(final JSONObject jsonObj) throws JSONException {
 		JSONObject itemObject = jsonObj.getJSONObject(ActionData.ITEM);
-		String itemID = itemObject.getString(ActionData.ITEM_ID);
+		String itemID = itemObject.getString(ActionData.ITEM_NAME);
 		ItemData item = new ItemData(itemID);
 
 		return new DiscardItemRequestData(item);

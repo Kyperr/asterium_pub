@@ -40,6 +40,7 @@ ViewInventoryDisplayController.prototype.init = function () {
 
     this.modalDiscard.innerHTML = "Discard";
     this.modalDiscard.onclick = function () {
+        viewInventoryDisplayController.discardItem(viewInventoryDisplayController.selectedInventory);
     }
 
     this.modalDiscard.setAttribute("class", "button");

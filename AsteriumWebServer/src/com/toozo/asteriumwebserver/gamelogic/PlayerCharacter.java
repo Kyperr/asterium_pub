@@ -339,7 +339,7 @@ public class PlayerCharacter {
 	public void rest() {
 		// reduce exposure
 		double exp = this.getExposure();
-		exp -= REST_EXPOSURE;
+		exp = Math.max(exp - REST_EXPOSURE, 0.0);
 		this.setExposure(exp);
 
 		// heal up
