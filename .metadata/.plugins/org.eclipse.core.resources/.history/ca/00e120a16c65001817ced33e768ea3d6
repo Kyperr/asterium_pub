@@ -9,6 +9,7 @@ import com.toozo.asteriumwebserver.gamelogic.Inventory;
 import com.toozo.asteriumwebserver.gamelogic.Location;
 import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
+import com.toozo.asteriumwebserver.gamelogic.items.garbage.UnfinishedRescueBeacon;
 
 public class ControlModule extends AbstractLocationItem {
 	// ===== CONSTANTS =====
@@ -35,14 +36,14 @@ public class ControlModule extends AbstractLocationItem {
 	// ===== METHODS =====
 	@Override
 	public void applyEffect(GameState state, PlayerCharacter user, Collection<PlayerCharacter> targets) {
-		state.setControlModuleUsed(true);
+		state.setPowerSupplyUsed(true);
 		Inventory communalInventory = state.getCommunalInventory();
 		for (AbstractItem item : communalInventory) {
 			if (item.getName().equals("Unfinished Rescue Beacon")) {
 				communalInventory.remove(item);
 			}
 		}
-		communalInventory.add(new RescueBeacon());
+		communalInventory.add(new IncompleteRescueBeacon());
 	}
 	// ====================
 
