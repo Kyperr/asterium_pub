@@ -1,7 +1,9 @@
 package com.toozo.asteriumwebserver.gamelogic.items;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
+import com.toozo.asteriumwebserver.gamelogic.GameState;
 import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 import com.toozo.asteriumwebserver.gamelogic.Stat;
 
@@ -17,16 +19,19 @@ public class ItemLoot {
 	private int base;
 	private double lukMod;
 	private double intMod;
+	private Function<GameState, Boolean> dropCondition;
 	// ==================
 	
 	// ===== CONSTRUCTORS =====
 	public ItemLoot(Supplier<? extends AbstractItem> itemConstructor,
 					int baseChance, 
-					double luckProbabilityModifier, double intuitionProbabilityModifier) {
+					double luckProbabilityModifier, double intuitionProbabilityModifier,
+					Function<GameState, Boolean> dropCondition) {
 		this.constructor = itemConstructor;
 		this.base = baseChance;
 		this.lukMod = luckProbabilityModifier;
 		this.intMod = intuitionProbabilityModifier;
+		this.dropCondition = dropCondition;
 	}
 	// ========================
 	
@@ -46,6 +51,10 @@ public class ItemLoot {
 	
 	public AbstractItem getItem() {
 		return this.constructor.get();
+	}
+	
+	public boolean canBeDropped(GameState state) {
+		return this.dropCondition.apply(state);
 	}
 	// ===================
 }

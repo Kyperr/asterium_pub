@@ -1,0 +1,21 @@
+package com.toozo.asteriumwebserver.gamelogic.items.garbage;
+
+import java.util.Collection;
+
+import com.toozo.asteriumwebserver.gamelogic.GameState;
+import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
+
+public class IncompleteRescueBeacon extends AbstractGarbageItem {
+
+	public IncompleteRescueBeacon(String name, String description, String flavor, String image) {
+		super(name, description, flavor, image);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public void applyEffect(GameState state, PlayerCharacter user, Collection<PlayerCharacter> targets) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

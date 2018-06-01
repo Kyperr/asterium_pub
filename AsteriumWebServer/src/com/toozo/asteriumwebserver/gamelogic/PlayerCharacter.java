@@ -173,6 +173,13 @@ public class PlayerCharacter {
 		for (AbstractStatusEffect condition : this.getStatusEffects()) {
 			stats = condition.affectStats(stats);
 		}
+		
+		int health = stats.getStat(Stat.HEALTH);
+		for (Stat stat : Stat.values()) {
+			if (!stat.isVariable()) {
+				stats.setStat(stat, Math.max(health, stats.getStat(stat)));
+			}
+		}
 
 		return stats;
 	}

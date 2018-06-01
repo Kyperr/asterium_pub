@@ -36,7 +36,7 @@ public interface Activity {
 		rand = min + (max - min) * r.nextDouble();
 		double exp = character.getExposure() + rand;
 		character.setExposure(exp);
-		character.addSummaryMessage(String.format(EXPOSURE_GAINED_MESSAGE, Math.floor(rand * 100)));
+		character.addSummaryMessage(String.format(EXPOSURE_GAINED_MESSAGE, (int) Math.floor(rand * 100)));
 	}
 
 	public static void increaseLocationExposure(Location location) {
@@ -52,7 +52,7 @@ public interface Activity {
 				System.out.printf("\tActivity says: %s performing search activity in %s.\n",
 						character.getCharacterName(), location.getName());
 			}
-			List<AbstractItem> loot = location.lootLocation(character);
+			List<AbstractItem> loot = location.lootLocation(game.getGameState(), character);
 
 			for (AbstractItem item : loot) {
 				character.getInventory().add(item);
