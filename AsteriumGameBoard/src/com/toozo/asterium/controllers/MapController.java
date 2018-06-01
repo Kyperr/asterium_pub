@@ -100,9 +100,9 @@ public class MapController extends AbstractAsteriumController {
         ColumnConstraints column3 = new ColumnConstraints();
         column3.setPercentWidth(20);
         ColumnConstraints column4 = new ColumnConstraints();
-        column4.setPercentWidth(30);
+        column4.setPercentWidth(35);
         ColumnConstraints column5 = new ColumnConstraints();
-        column5.setPercentWidth(20);
+        column5.setPercentWidth(15);
         mapPane.getColumnConstraints().addAll(column1, column2, column3, column4);
         mapPane.getRowConstraints().addAll(row1,row2,row3);
         
@@ -157,7 +157,33 @@ public class MapController extends AbstractAsteriumController {
 	
 	
 	public void endGame() {
-		// do nothing
+		
+		try {
+			mapImagePane.endGame(getGameResources().getGameWonStatus());
+			foodLabel.setText("Food storage: [" + getGameResources().getFood() + "]");
+			fuelLabel.setText("Fuel: [" + getGameResources().getFuel() + "]");
+			dayLabel.setText("Day: " + getGameResources().getDay());
+			dayLabel.setText("Day: " + getGameResources().getDay()); 
+			StringBuilder builder = new StringBuilder();
+			builder.append("Game Summary:\n");
+			for (String s : getGameResources().getTurnSummary()) {
+				builder.append(s);
+				builder.append("\n");
+			}
+			turnSummaryLabel.setText(builder.toString());
+			turnSummaryLabel.setTextFill(Color.WHITE);
+			for (PlayerCharacterData player : getGameResources().getCharacters()) {
+				if (!playerLabelMap.containsKey(player.getName())) {
+					Label l = new Label(player.getName());
+					l.setTextFill(Color.WHITE);
+					playerLabelMap.put(player.getName(), l);
+					playersVBox.getChildren().add(l);
+				}
+			}
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		/*
 		mapStackPane.getChildren().clear();
 		turnSummaryLabel.setText("");
