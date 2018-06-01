@@ -86,7 +86,8 @@ public abstract class AbstractEquipmentItem extends AbstractItem {
 		for (Stat stat : this.boosts.keySet()) {
 			statModifiers.put(stat, (oldStat) -> (oldStat + this.boosts.get(stat)));
 		}
-		AffectStats effect = new AffectStats(user, this.statusEffectName, statModifiers);
+		String name = this.getName() + " Equipped";
+		AffectStats effect = new AffectStats(user, name, statModifiers);
 		user.addStatusEffect(effect);
 	}
 

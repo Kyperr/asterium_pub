@@ -27,7 +27,7 @@ public abstract class AbstractEquipmentItem extends AbstractItem {
 	private boolean isEquipped;
 	private EquipmentSlot equipmentType;
 	private Map<Stat, Integer> boosts;
-	private String statusEffectName;
+	private AffectStats myEffect;
 	// ==================
 
 	// ===== CONSTRUCTORS =====
@@ -42,7 +42,14 @@ public abstract class AbstractEquipmentItem extends AbstractItem {
 		super(name, description, flavor, image, false);
 		this.equipmentType = equipmentType;
 		this.boosts = boosts;
-		this.statusEffectName = this.getName() + " Equipped";
+		
+		Map<Stat, Function<Integer, Integer>> statModifiers = new HashMap<Stat, Function<Integer, Integer>>();
+		for (Stat stat : this.boosts.keySet()) {
+			statModifiers.put(stat, (oldStat) -> (oldStat + this.boosts.get(stat)));
+		}
+		String name = this.getName() + " Equipped";
+		user.addStatusEffect(effect);
+		myEffect = new AffectStats(user, name, statModifiers);
 	}
 	// ========================
 
@@ -82,12 +89,7 @@ public abstract class AbstractEquipmentItem extends AbstractItem {
 
 	@Override
 	public void applyEffect(GameState state, PlayerCharacter user, Collection<PlayerCharacter> targets) {
-		Map<Stat, Function<Integer, Integer>> statModifiers = new HashMap<Stat, Function<Integer, Integer>>();
-		for (Stat stat : this.boosts.keySet()) {
-			statModifiers.put(stat, (oldStat) -> (oldStat + this.boosts.get(stat)));
-		}
-		AffectStats effect = new AffectStats(user, this.statusEffectName, statModifiers);
-		user.addStatusEffect(effect);
+		
 	}
 
 	/**
