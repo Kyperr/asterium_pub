@@ -34,7 +34,9 @@ TurnSummaryDisplayController.prototype.update = function () {
     });
     this.displayDiv.appendChild(summaryDiv);
     
-    this.displayDiv.appendChild(this.continueButton);
+    if(gamePhase !== "END_SUMMARY"){
+        this.displayDiv.appendChild(this.continueButton);
+    }
 }
 
 
