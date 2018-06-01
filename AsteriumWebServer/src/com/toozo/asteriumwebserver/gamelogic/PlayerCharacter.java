@@ -66,7 +66,7 @@ public class PlayerCharacter {
 		// =====================
 
 		// ===== FIELDS =====
-		Map<Stat, Integer> stats = new HashMap<>();;
+		Map<Stat, Integer> stats = new HashMap<>();
 		// ==================
 
 		// ===== CONSTRUCTORS =====
