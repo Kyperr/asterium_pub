@@ -195,6 +195,48 @@ function useItemAction(item, targets, isCommunal) {//Should use itemID later.
     responseActions[uuid] = processUseItemResponse;
 }
 
+function discardItem(item) {//Should use itemID later.  
+    var uuid = genUUID();
+    message =
+        {
+            "request":
+                {
+                    "action_name": "discard_item",
+                    "discard_item":
+                        {
+                            "item": {
+                                "item_name": item.item_name
+                            },
+                        },
+                    "auth_token": getAuthToken(),
+                    "message_id": uuid
+                }
+        }
+    socket.send(JSON.stringify(message));
+    responseActions[uuid] = processUseItemResponse;
+}
+
+function moveItemTo(item, toCommunal) {//Should use itemID later.  
+    var uuid = genUUID();
+    message =
+        {
+            "request":
+                {
+                    "action_name": "communal_inventory",
+                    "communal_inventory":
+                        {
+                            "item": {
+                                "item_name": item.item_name
+                            },
+                            "personal_to_communal":toCommunal
+                        },
+                    "auth_token": getAuthToken(),
+                    "message_id": uuid
+                }
+        }
+    socket.send(JSON.stringify(message));
+}
+
 //***Utils***
 
 //Created uuid

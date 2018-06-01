@@ -27,7 +27,7 @@ TurnSummaryDisplayController.prototype.update = function () {
     this.displayDiv.appendChild(summDiv);
 
     summaryStrings.forEach(string => {
-        this.displayDiv.innerHTML += string;
+        this.displayDiv.innerHTML += deshitify(string);
         this.displayDiv.innerHTML += "<br/>";
     });
     

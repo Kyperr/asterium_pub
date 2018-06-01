@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import actiondata.ActionData;
+import actiondata.CommunalInventoryRequestData;
 import actiondata.CreateGameRequestData;
 import actiondata.CreateGameResponseData;
 import actiondata.DiscardItemRequestData;
@@ -71,6 +72,7 @@ public class Parser {
 		put(Arrays.asList(true, ActionData.SYNC_PLAYER_LIST), SyncPlayerListRequestData::parseArgs);
 
 		put(Arrays.asList(true, ActionData.USE_ITEM), UseItemRequestData::parseArgs);
+		put(Arrays.asList(true, ActionData.COMMUNAL_INVENTORY), CommunalInventoryRequestData::parseArgs);
 		put(Arrays.asList(true, ActionData.DISCARD_ITEM), DiscardItemRequestData::parseArgs);
 		
 		put(Arrays.asList(true, ActionData.SUMMARY), TurnSummaryRequestData::parseArgs);

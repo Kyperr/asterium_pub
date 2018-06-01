@@ -17,7 +17,7 @@ public class CommunalInventoryRequestData extends AbstractRequestActionData {
 	private boolean personalToCommunal;
 
 	public CommunalInventoryRequestData(final ItemData item, final boolean personalToCommunal) {
-		super(ActionData.USE_ITEM);
+		super(ActionData.COMMUNAL_INVENTORY);
 		this.item = item;
 		this.personalToCommunal = personalToCommunal;
 	}
@@ -36,7 +36,7 @@ public class CommunalInventoryRequestData extends AbstractRequestActionData {
 
 		data.put(ActionData.ITEM, this.item.jsonify());
 
-		data.put(ActionData.IS_COMMUNAL, this.personalToCommunal);
+		data.put(ActionData.PERSONAL_TO_COMMUNAL, this.personalToCommunal);
 
 		return data;
 	}
@@ -51,7 +51,7 @@ public class CommunalInventoryRequestData extends AbstractRequestActionData {
 	 */
 	public static CommunalInventoryRequestData parseArgs(final JSONObject jsonObj) throws JSONException {
 		JSONObject itemObject = jsonObj.getJSONObject(ActionData.ITEM);
-		String itemID = itemObject.getString(ActionData.ITEM_ID);
+		String itemID = itemObject.getString(ActionData.ITEM_NAME);
 		ItemData item = new ItemData(itemID);
 
 		boolean personalToCommunal = jsonObj.getBoolean(ActionData.PERSONAL_TO_COMMUNAL);
