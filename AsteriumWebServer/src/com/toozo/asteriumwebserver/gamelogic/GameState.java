@@ -60,7 +60,7 @@ public class GameState {
 	public static final int STARTING_FOOD_PER_PLAYER = 5;
 	public static final int FOOD_DECREMENT_PER_PLAYER = 1;
 	public static final int STARVING_HEALTH_SUBTRACTED = 1;
-	public static final int STARTING_FUEL = 10;
+	public static final int STARTING_FUEL = 100;
 	public static final int FUEL_DECREMENT = 10;
 	public static final int STARTING_DAY = 0;
 	public static final String HUMAN_VICTORY_MESSAGE = "The parasite has been defeated. Humans live another day!";
