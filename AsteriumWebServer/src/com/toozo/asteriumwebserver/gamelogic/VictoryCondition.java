@@ -14,7 +14,7 @@ import com.toozo.asteriumwebserver.gamelogic.items.consumables.RescueBeacon;
  */
 public class VictoryCondition {
 	// ===== CONSTANTS =====
-	public static final String DEFAULT_NAME = "";
+	public static final String DEFAULT_NAME = "DEFAULT_VICTORY_CONDITION";
 	public static final double COMPLETE_THRESHOLD = 1.0;
 	public static final double ERROR_VALUE = -1.0;
 	

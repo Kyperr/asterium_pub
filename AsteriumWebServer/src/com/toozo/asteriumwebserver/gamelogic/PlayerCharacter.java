@@ -2,7 +2,6 @@ package com.toozo.asteriumwebserver.gamelogic;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -16,6 +15,7 @@ public class PlayerCharacter {
 	private static final String DEFAULT_NAME = "DEFAULT_PC_NAME";
 	private static final int REST_HEAL = 2;
 	private static final double REST_EXPOSURE = 0.1;
+	public static final String MULTIPLE_SUMMARY_FORMAT = "%s x%d";
 	// =====================
 	
 	// ===== FIELDS =====
@@ -276,11 +276,45 @@ public class PlayerCharacter {
 	 * @param message The new message which should be appended to the summary. Should not be null.
 	 */
 	public void addSummaryMessage(String message) {
-		while (this.turnSummary.contains(message)) {
-			this.turnSummary.remove(message);
+		int repeatNumber;
+		int i, j;
+		String oldMessage;
+		boolean added = false;
+		
+		for (i = this.turnSummary.size(); i >= 0; i--) {
+			oldMessage = this.turnSummary.get(i);
+			if (oldMessage.equals(message)) {
+				// If basic message exists in list, add "message x2".
+				this.turnSummary.remove(i);
+				this.turnSummary.add(String.format(MULTIPLE_SUMMARY_FORMAT, message, 2));
+				added = true;
+			} else if (oldMessage.matches(String.format("(%s) x([0-9]+)", message))) {
+				// If repeated message exists in list, add "message x[repeatNumber + 1]".
+				
+				// == Get repeatNumber ==
+				// Move j to index of the x
+				for (j = oldMessage.length() - 1; Character.isDigit(oldMessage.charAt(j)); j--);
+				// Get number from j+1 to end of string
+				try {
+					repeatNumber = Integer.parseInt(oldMessage.substring(j + 1, oldMessage.length()));
+				} catch (NumberFormatException e) {
+					// Something went wrong, ignore repeated message.
+					repeatNumber = 1;
+				}
+				// ======================
+				
+				if (repeatNumber > 1) {
+					this.turnSummary.remove(i);
+					this.turnSummary.add(String.format(MULTIPLE_SUMMARY_FORMAT, message, repeatNumber));
+					added = true;
+				}
+			}
 		}
 		
-		this.turnSummary.add(message);
+		if (!added) {
+			// Message did not exist.
+			this.turnSummary.add(message);
+		}
 	}
 	// ===================
 	

@@ -32,6 +32,8 @@ public abstract class AbstractConsumableItem extends AbstractItem {
 			user.getInventory().remove(this);
 			user.addSummaryMessage(String.format(PERSONAL_USE_MESSAGE, name));
 		}
+		
+		state.syncGameBoards();
 	}
 	
 }
