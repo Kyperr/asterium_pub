@@ -802,7 +802,7 @@ public class GameState {
 
 			@Override
 			public int compare(String o1, String o2) {
-				return GameState.locations.get(o2).getCost() - GameState.locations.get(o1).getCost();
+				return GameState.locations.get(o1).getCost() - GameState.locations.get(o2).getCost();
 				
 			}
 		}).forEach((string) -> {stringInOrder.add(string);});
