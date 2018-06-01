@@ -832,7 +832,7 @@ public class GameState {
 		String oldMessage;
 		boolean added = false;
 		
-		for (i = this.communalSummary.size() - 1; i >= 0; i--) {
+		for (i = this.communalSummary.size(); i >= 0; i--) {
 			oldMessage = this.communalSummary.get(i);
 			if (oldMessage.equals(message)) {
 				// If basic message exists in list, add "message x2".
