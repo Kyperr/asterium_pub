@@ -127,6 +127,7 @@ public class GameState {
 	public static final List<ItemLoot> CAFETERIA_ITEM_LOOT;
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
+		// Food (75%)
 		probs.add(new ItemLoot(FoodPack::new, 25, 0.0, 0.0, (state)->true));
 		probs.add(new ItemLoot(FoodCrate::new, 25, 0.0, 0.0, (state)->true));
 		probs.add(new ItemLoot(FoodChest::new, 25, 0.0, 0.0, (state)->true));
