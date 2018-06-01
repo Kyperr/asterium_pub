@@ -3,7 +3,7 @@ package com.toozo.asteriumwebserver.gamelogic;
 import java.util.function.Function;
 
 import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
-import com.toozo.asteriumwebserver.gamelogic.items.consumables.RescueBeacon;
+import com.toozo.asteriumwebserver.gamelogic.items.location.RescueBeacon;
 
 /**
  * A VictoryCondition of the {@link Game}.
@@ -26,14 +26,17 @@ public class VictoryCondition {
 	 * @return COMPLETE_THRESHOLD if there is, 0.0 if there isn't.
 	 */
 	public static final double getBeaconProgress(GameState state) {
-		for (AbstractItem item : state.getCommunalInventory()) {
-			if (item.getName().equals(RescueBeacon.NAME) &&
-				RescueBeacon.class.cast(item).isUsed()) {
-				return COMPLETE_THRESHOLD;
-			}
+		if (state.rescueBeaconUsed()) {
+			return COMPLETE_THRESHOLD;
+		} else if (state.controlModuleUsed()) {
+			return 0.75;
+		} else if (state.powerSupplyUsed()) {
+			return 0.5;
+		} else if (state.radioDishUsed()) {
+			return 0.25;
+		} else {
+			return 0.0;
 		}
-		
-		return 0.0;
 	}
 	
 	

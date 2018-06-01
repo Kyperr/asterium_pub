@@ -145,11 +145,11 @@ public class Location {
 		}
 	}
 
-	public List<AbstractItem> lootLocation(PlayerCharacter looter) {
+	public List<AbstractItem> lootLocation(GameState state, PlayerCharacter looter) {
 		if (VERBOSE) {
 			System.out.printf("\tLocation says: %s looted.\n", this.getName());
 		}
 
-		return loot.loot(looter);
+		return loot.loot(state, looter);
 	}
 }

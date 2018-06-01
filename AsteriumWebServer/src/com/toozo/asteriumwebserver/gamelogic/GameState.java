@@ -27,7 +27,7 @@ import com.toozo.asteriumwebserver.gamelogic.items.consumables.FuelBarrel;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.FuelCanister;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.FuelCell;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.Medkit;
-import com.toozo.asteriumwebserver.gamelogic.items.consumables.RescueBeacon;
+import com.toozo.asteriumwebserver.gamelogic.items.location.RescueBeacon;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.Syringe;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.AbstractEquipmentItem;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.EquipmentSlot;
@@ -38,7 +38,6 @@ import com.toozo.asteriumwebserver.gamelogic.items.equipment.Loadout;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.TinfoilHatEquipmentItem;
 import com.toozo.asteriumwebserver.gamelogic.items.location.AbstractLocationItem;
 import com.toozo.asteriumwebserver.gamelogic.items.location.Book;
-import com.toozo.asteriumwebserver.gamelogic.statuseffects.LowerHealth;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
 import actiondata.ActionData;
@@ -83,7 +82,7 @@ public class GameState {
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 
-		probs.add(new ItemLoot(RescueBeacon::new, 100, 0.0, 0.0));
+		probs.add(new ItemLoot(RescueBeacon::new, 100, 0.0, 0.0, (state)->true));
 
 		CONTROL_ROOM_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
@@ -94,10 +93,10 @@ public class GameState {
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 
-		probs.add(new ItemLoot(Bandage::new, 60, 0.0, 0.0));
-		probs.add(new ItemLoot(Medkit::new, 30, 0.0, 0.0));
-		probs.add(new ItemLoot(Syringe::new, 9, 0.0, 0.0));
-		probs.add(new ItemLoot(RescueBeacon::new, 1, 0.0, 0.0));
+		probs.add(new ItemLoot(Bandage::new, 60, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(Medkit::new, 30, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(Syringe::new, 9, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(RescueBeacon::new, 1, 0.0, 0.0, (state)->true));
 
 		MEDBAY_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
@@ -108,10 +107,10 @@ public class GameState {
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 
-		probs.add(new ItemLoot(FoodPack::new, 60, 0.0, 0.0));
-		probs.add(new ItemLoot(FoodCrate::new, 30, 0.0, 0.0));
-		probs.add(new ItemLoot(FoodChest::new, 9, 0.0, 0.0));
-		probs.add(new ItemLoot(RescueBeacon::new, 1, 0.0, 0.0));
+		probs.add(new ItemLoot(FoodPack::new, 60, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(FoodCrate::new, 30, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(FoodChest::new, 9, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(RescueBeacon::new, 1, 0.0, 0.0, (state)->true));
 
 		CAFETERIA_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
@@ -122,11 +121,11 @@ public class GameState {
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 
-		probs.add(new ItemLoot(TinfoilHatEquipmentItem::new, 24, 0.0, 0.0));
-		probs.add(new ItemLoot(HareyGlovesEquipmentItem::new, 24, 0.0, 0.0));
-		probs.add(new ItemLoot(HoverSkatesEquipmentItem::new, 24, 0.0, 0.0));
-		probs.add(new ItemLoot(LettermanJacketEquipmentItem::new, 24, 0.0, 0.0));
-		probs.add(new ItemLoot(RescueBeacon::new, 4, 0.0, 0.0));
+		probs.add(new ItemLoot(TinfoilHatEquipmentItem::new, 24, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(HareyGlovesEquipmentItem::new, 24, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(HoverSkatesEquipmentItem::new, 24, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(LettermanJacketEquipmentItem::new, 24, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(RescueBeacon::new, 4, 0.0, 0.0, (state)->true));
 
 		ARMORY_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
@@ -137,8 +136,8 @@ public class GameState {
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 
-		probs.add(new ItemLoot(Book::new, 99, 0.0, 0.0));
-		probs.add(new ItemLoot(RescueBeacon::new, 1, 0.0, 0.0));
+		probs.add(new ItemLoot(Book::new, 99, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(RescueBeacon::new, 1, 0.0, 0.0, (state)->true));
 
 		LIBRARY_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
@@ -149,9 +148,9 @@ public class GameState {
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 
-		probs.add(new ItemLoot(FuelCanister::new, 30, 0.0, 0.0));
-		probs.add(new ItemLoot(FuelBarrel::new, 10, 0.0, 0.0));
-		probs.add(new ItemLoot(RescueBeacon::new, 60, 0.0, 0.0));
+		probs.add(new ItemLoot(FuelCanister::new, 30, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(FuelBarrel::new, 10, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(RescueBeacon::new, 60, 0.0, 0.0, (state)->true));
 
 		ENGINE_ROOM_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
@@ -162,10 +161,10 @@ public class GameState {
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 
-		probs.add(new ItemLoot(FuelCell::new, 50, 0.0, 0.0));
-		probs.add(new ItemLoot(FuelCanister::new, 25, 0.0, 0.0));
-		probs.add(new ItemLoot(FuelBarrel::new, 10, 0.0, 0.0));
-		probs.add(new ItemLoot(RescueBeacon::new, 15, 0.0, 0.0));
+		probs.add(new ItemLoot(FuelCell::new, 50, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(FuelCanister::new, 25, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(FuelBarrel::new, 10, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(RescueBeacon::new, 15, 0.0, 0.0, (state)->true));
 
 		VEHICLE_BAY_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
@@ -176,10 +175,10 @@ public class GameState {
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 
-		probs.add(new ItemLoot(FuelCell::new, 50, 0.0, 0.0));
-		probs.add(new ItemLoot(FuelCanister::new, 25, 0.0, 0.0));
-		probs.add(new ItemLoot(FuelBarrel::new, 10, 0.0, 0.0));
-		probs.add(new ItemLoot(RescueBeacon::new, 15, 0.0, 0.0));
+		probs.add(new ItemLoot(FuelCell::new, 50, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(FuelCanister::new, 25, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(FuelBarrel::new, 10, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(RescueBeacon::new, 15, 0.0, 0.0, (state)->true));
 
 		DORMS_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
@@ -190,10 +189,10 @@ public class GameState {
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 
-		probs.add(new ItemLoot(FuelCell::new, 50, 0.0, 0.0));
-		probs.add(new ItemLoot(FuelCanister::new, 25, 0.0, 0.0));
-		probs.add(new ItemLoot(FuelBarrel::new, 10, 0.0, 0.0));
-		probs.add(new ItemLoot(RescueBeacon::new, 15, 0.0, 0.0));
+		probs.add(new ItemLoot(FuelCell::new, 50, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(FuelCanister::new, 25, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(FuelBarrel::new, 10, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(RescueBeacon::new, 15, 0.0, 0.0, (state)->true));
 
 		HYDROPONICS_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
@@ -204,10 +203,10 @@ public class GameState {
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 
-		probs.add(new ItemLoot(FuelCell::new, 50, 0.0, 0.0));
-		probs.add(new ItemLoot(FuelCanister::new, 25, 0.0, 0.0));
-		probs.add(new ItemLoot(FuelBarrel::new, 10, 0.0, 0.0));
-		probs.add(new ItemLoot(RescueBeacon::new, 15, 0.0, 0.0));
+		probs.add(new ItemLoot(FuelCell::new, 50, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(FuelCanister::new, 25, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(FuelBarrel::new, 10, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(RescueBeacon::new, 15, 0.0, 0.0, (state)->true));
 
 		RESEARCH_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
@@ -321,6 +320,10 @@ public class GameState {
 	private boolean humansWon;
 	private Map<String, PlayerCharacter> authCharacterMap;
 	private Map<String, PlayerCharacter> nameCharacterMap;
+	private boolean radioDishUsed;
+	private boolean powerSupplyUsed;
+	private boolean controlModuleUsed;
+	private boolean rescueBeaconUsed;
 	// An ordered list of victory conditions, where the index is the tie-breaker
 	// priority.
 	// i.e. if victoryConditions = [A, B], A == true and B == true, B will take
@@ -695,7 +698,10 @@ public class GameState {
 		if (VERBOSE) {
 			System.out.println("Player join phase...");
 		}
-
+		this.radioDishUsed = false;
+		this.powerSupplyUsed = false;
+		this.controlModuleUsed = false;
+		this.rescueBeaconUsed = false;
 	}
 	// ========================
 
@@ -799,9 +805,41 @@ public class GameState {
 	public List<String> getSummary() {
 		return new ArrayList<String>(this.communalSummary.size());
 	}
+	
+	public boolean radioDishUsed() {
+		return this.radioDishUsed;
+	}
+	
+	public boolean powerSupplyUsed() {
+		return this.powerSupplyUsed;
+	}
+	
+	public boolean controlModuleUsed() {
+		return this.controlModuleUsed;
+	}
+	
+	public boolean rescueBeaconUsed() {
+		return this.rescueBeaconUsed;
+	}
 	// ===================
 
 	// ===== SETTERS =====
+	public void setRadioDishUsed(boolean isUsed) {
+		this.radioDishUsed = isUsed;
+	}
+	
+	public void setPowerSupplyUsed(boolean isUsed) {
+		this.powerSupplyUsed = isUsed;
+	}
+	
+	public void setControlModuleUsed(boolean isUsed) {
+		this.controlModuleUsed = isUsed;
+	}
+	
+	public void setRescueBeaconUsed(boolean isUsed) {
+		this.rescueBeaconUsed = isUsed;
+	}
+	
 	/**
 	 * Set the current {@link GamePhase} to newGamePhase.
 	 * 
