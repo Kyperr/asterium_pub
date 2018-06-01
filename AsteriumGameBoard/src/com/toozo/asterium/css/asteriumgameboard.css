@@ -9,14 +9,12 @@
 #PlayerPane {
 	-fx-alignment: center;
 	-fx-text-base-color: white;
-	-fx-background-color: linear-gradient(to top right, #7582a3, #3d4861);
-	-fx-border-width: 1;
-	-fx-border-color: black;
 	-fx-padding: 10, 2, 10, 2;
 }
 
 #LobbyPane, #MapPane {/*Holds the lobbyVBox and the player scroll pane */
-	/*-fx-background-color: rgba(255,140,0, 0.0);/* */
+	-fx-text-base-color: white;
+    -fx-text-background-color: white;
 	-fx-padding: 75;
 	-fx-border-color: #3d4861;
 	-fx-border-insets: 5;
@@ -40,6 +38,9 @@
 
 #playerHBox {
 	-fx-alignment: center;
+	-fx-background-color: linear-gradient(to top right, #7582a3, #3d4861);
+	-fx-border-width: 1;
+	-fx-border-color: black;
 }
 
 
@@ -85,6 +86,12 @@
 	-fx-padding: 10px;
 	-fx-alignment: center;
 	-fx-text-background-color: green;
+}
+
+#summaryScrollPane {
+	 -fx-background-color: transparent;
+	 -fx-text-base-color: white;
+    -fx-text-background-color: white;
 }
 
 #readyLabel{

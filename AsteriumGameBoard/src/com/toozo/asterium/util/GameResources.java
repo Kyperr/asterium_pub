@@ -31,7 +31,7 @@ import main.ClientConnectionHandler;
  */
 public final class GameResources {
 	
-	private final String URI = "ws://35.230.4.196:8080/AsteriumWebServer/Game";
+	private final String URI = "ws://localhost:8080/AsteriumWebServer/Game";
 	
 	private final String END_SUMMARY = "END_SUMMARY";
 	
