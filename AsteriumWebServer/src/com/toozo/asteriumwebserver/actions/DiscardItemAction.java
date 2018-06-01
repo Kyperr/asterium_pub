@@ -27,6 +27,7 @@ import message.Response;
  * @author Studio Toozo
  */
 public class DiscardItemAction extends Action {
+	public static final String MESSAGE = "You discarded %s.";
 	private GameState state;
 	private PlayerCharacter user;
 	private ItemData itemData;
@@ -57,6 +58,7 @@ public class DiscardItemAction extends Action {
 				}
 				if (use != null) {
 					use.discard(user);
+					user.addSummaryMessage(String.format(MESSAGE, item));
 					System.out.printf("%s has discarded %s.\n", user.getCharacterName(), item);
 
 					SuccessResponseData data = new SuccessResponseData(Action.DISCARD_ITEM);

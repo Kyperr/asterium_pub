@@ -57,3 +57,5 @@ pom.xml.tag
 *pom.properties
 */MANIFEST.MF
 */META-INF/*
+
+AsteriumGameBoard/hs_err_pid*

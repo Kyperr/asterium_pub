@@ -73,6 +73,10 @@ public class CommunalInventoryAction extends Action {
 					// Item found
 					ownerInventory.remove(matchingItem);
 					communalInventory.add(matchingItem);
+					if (Action.VERBOSE) {
+						System.out.printf("%s put %s into the communal inventory.\n", 
+										  owner.getCharacterName(), nameToMatch);
+					}
 					owner.addSummaryMessage(String.format(GIVE_MESSAGE, nameToMatch));
 					success = true;
 				} else {
@@ -93,7 +97,11 @@ public class CommunalInventoryAction extends Action {
 				if (matchingItem != null) {
 					// Item found
 					communalInventory.remove(matchingItem);
-					ownerInventory.add(matchingItem);
+					ownerInventory.add(matchingItem);					
+					if (Action.VERBOSE) {
+						System.out.printf("%s took %s out of the communal inventory.\n", 
+										  owner.getCharacterName(), nameToMatch);
+					}
 					owner.addSummaryMessage(String.format(TAKE_MESSAGE, nameToMatch));
 					success = true;
 				} else {

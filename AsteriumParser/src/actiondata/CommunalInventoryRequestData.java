@@ -36,7 +36,7 @@ public class CommunalInventoryRequestData extends AbstractRequestActionData {
 
 		data.put(ActionData.ITEM, this.item.jsonify());
 
-		data.put(ActionData.IS_COMMUNAL, this.personalToCommunal);
+		data.put(ActionData.PERSONAL_TO_COMMUNAL, this.personalToCommunal);
 
 		return data;
 	}
