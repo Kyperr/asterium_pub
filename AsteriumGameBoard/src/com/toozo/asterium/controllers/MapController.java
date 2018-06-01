@@ -159,7 +159,6 @@ public class MapController extends AbstractAsteriumController {
 	public void endGame() {
 		
 		try {
-			mapImagePane.endGame(getGameResources().getGameWonStatus());
 			foodLabel.setText("Food storage: [" + getGameResources().getFood() + "]");
 			fuelLabel.setText("Fuel: [" + getGameResources().getFuel() + "]");
 			dayLabel.setText("Day: " + getGameResources().getDay());

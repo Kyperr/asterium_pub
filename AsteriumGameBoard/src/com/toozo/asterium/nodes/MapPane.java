@@ -93,7 +93,7 @@ public class MapPane extends Pane {
 		        gc.drawImage(image, 0, 0, getWidth(), getHeight());
 		        gc.setFont(new Font("Arial", 80.0));
 		        gc.setFill(Color.BLACK);
-		        gc.fillText(message, getWidth()/2, getHeight()/2);
+		        gc.fillText("GAME OVER", getWidth()/2, getHeight()/2);
 
 			}
 		};
