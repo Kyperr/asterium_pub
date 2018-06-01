@@ -63,6 +63,7 @@ public class SyncGameBoardDataRequestData extends AbstractRequestActionData {
 		super(ActionData.SYNC_GAME_BOARD_DATA);
 		this.food = food;
 		this.fuel = fuel;
+		this.day = day;
 		this.gameOver = gameOver;
 		this.humansWon = humansWon;
 		this.locations = locations;

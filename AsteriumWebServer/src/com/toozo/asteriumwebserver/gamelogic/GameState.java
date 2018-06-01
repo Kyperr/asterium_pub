@@ -171,7 +171,7 @@ public class GameState {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 
 		// Books (90%)
-		probs.add(new ItemLoot(Book::new, 9, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(Book::new, 90, 0.0, 0.0, (state)->true));
 		// Harey Gloves (7.5%)
 		probs.add(new ItemLoot(HareyGlovesEquipmentItem::new, 8, 0.0, 0.0, (state)->true));
 		// Victory Item (2.5%)
