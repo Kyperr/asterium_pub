@@ -131,7 +131,6 @@ public class Loadout implements Iterable<AbstractEquipmentItem> {
 	 * 
 	 * @param item The loadout from which this item should be removed.
 	 */
-	/*
 	public void unequip(AbstractEquipmentItem item) {
 		EquipmentSlot slot = item.getType();
 		if (this.itemIn(slot) == item) {
@@ -140,7 +139,6 @@ public class Loadout implements Iterable<AbstractEquipmentItem> {
 			item.setEquipped(false);
 		}
 	}
-	*/
 	
 	/**
 	 * Removes and returns the {@link AbstractEquipmentItem} (if any) from the appropriate slot.
