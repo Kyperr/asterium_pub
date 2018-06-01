@@ -7,6 +7,7 @@ import java.util.Collections;
 import com.toozo.asteriumwebserver.gamelogic.GameState;
 import com.toozo.asteriumwebserver.gamelogic.Location;
 import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
+import com.toozo.asteriumwebserver.gamelogic.items.garbage.IncompleteRescueBeacon;
 
 public class RadioDish extends AbstractLocationItem {
 	// ===== CONSTANTS =====
@@ -34,6 +35,7 @@ public class RadioDish extends AbstractLocationItem {
 	@Override
 	public void applyEffect(GameState state, PlayerCharacter user, Collection<PlayerCharacter> targets) {
 		state.setRadioDishUsed(true);
+		state.getCommunalInventory().add(new IncompleteRescueBeacon());
 	}
 	// ====================
 

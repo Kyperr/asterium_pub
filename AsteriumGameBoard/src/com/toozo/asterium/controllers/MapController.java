@@ -94,15 +94,15 @@ public class MapController extends AbstractAsteriumController {
         RowConstraints row3 = new RowConstraints();
         row3.setPercentHeight(20);
         ColumnConstraints column1 = new ColumnConstraints();
-        column1.setPercentWidth(10);
+        column1.setPercentWidth(12);
         ColumnConstraints column2 = new ColumnConstraints();
         column2.setPercentWidth(20);
         ColumnConstraints column3 = new ColumnConstraints();
         column3.setPercentWidth(20);
         ColumnConstraints column4 = new ColumnConstraints();
-        column4.setPercentWidth(30);
+        column4.setPercentWidth(33);
         ColumnConstraints column5 = new ColumnConstraints();
-        column5.setPercentWidth(20);
+        column5.setPercentWidth(15);
         mapPane.getColumnConstraints().addAll(column1, column2, column3, column4);
         mapPane.getRowConstraints().addAll(row1,row2,row3);
         
@@ -157,7 +157,33 @@ public class MapController extends AbstractAsteriumController {
 	
 	
 	public void endGame() {
-		// do nothing
+		
+		try {
+			mapImagePane.endGame(getGameResources().getGameWonStatus());
+			foodLabel.setText("Food storage: [" + getGameResources().getFood() + "]");
+			fuelLabel.setText("Fuel: [" + getGameResources().getFuel() + "]");
+			dayLabel.setText("Day: " + getGameResources().getDay());
+			dayLabel.setText("Day: " + getGameResources().getDay()); 
+			StringBuilder builder = new StringBuilder();
+			builder.append("Game Summary:\n");
+			for (String s : getGameResources().getTurnSummary()) {
+				builder.append(s);
+				builder.append("\n");
+			}
+			turnSummaryLabel.setText(builder.toString());
+			turnSummaryLabel.setTextFill(Color.WHITE);
+			for (PlayerCharacterData player : getGameResources().getCharacters()) {
+				if (!playerLabelMap.containsKey(player.getName())) {
+					Label l = new Label(player.getName());
+					l.setTextFill(Color.WHITE);
+					playerLabelMap.put(player.getName(), l);
+					playersVBox.getChildren().add(l);
+				}
+			}
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		/*
 		mapStackPane.getChildren().clear();
 		turnSummaryLabel.setText("");

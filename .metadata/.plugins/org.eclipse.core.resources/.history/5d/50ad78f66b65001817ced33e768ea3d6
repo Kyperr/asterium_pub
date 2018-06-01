@@ -177,7 +177,7 @@ public class PlayerCharacter {
 		int health = stats.getStat(Stat.HEALTH);
 		for (Stat stat : Stat.values()) {
 			if (!stat.isVariable()) {
-				stats.setStat(stat, Math.min(health, stats.getStat(stat)));
+				stats.setStat(stat, Math.max(health, stats.getStat(stat)));
 			}
 		}
 
@@ -346,7 +346,7 @@ public class PlayerCharacter {
 	public void rest() {
 		// reduce exposure
 		double exp = this.getExposure();
-		exp = Math.max(exp - REST_EXPOSURE, 0.0);
+		exp -= REST_EXPOSURE;
 		this.setExposure(exp);
 
 		// heal up

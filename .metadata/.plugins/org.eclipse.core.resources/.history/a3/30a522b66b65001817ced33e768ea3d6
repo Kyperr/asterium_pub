@@ -6,7 +6,7 @@ public class IncompleteRescueBeacon extends AbstractGarbageItem {
 	public static final String FLAVOR = "Still missing a Power Supply and Control Module.";
 	public static final String IMAGE = "incomplete_beacon.png";
 	
-	public IncompleteRescueBeacon() {
+	public IncompleteRescueBeacon(String name, String description, String flavor, String image) {
 		super(NAME, DESCRIPTION, FLAVOR, IMAGE);
 	}
 }

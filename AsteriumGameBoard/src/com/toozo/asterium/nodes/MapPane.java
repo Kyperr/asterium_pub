@@ -1,20 +1,19 @@
 package com.toozo.asterium.nodes;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
 import com.toozo.asterium.util.GameResources;
 
-import actiondata.SyncGameBoardDataRequestData.PlayerCharacterData;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class MapPane extends Pane {
@@ -42,7 +41,7 @@ public class MapPane extends Pane {
 	public MapPane(GameResources gr) {
 		super();
 		gameResources = gr;
-		this.image = new Image("/com/toozo/asterium/resources/ship.png", 1600, 900, true, true);
+		this.image = new Image("/com/toozo/asterium/resources/shipNEW3.png", 1600, 900, true, true);
 		canvas = new Canvas(getWidth(), getHeight());
 		getChildren().add(canvas);
 		widthProperty().addListener(e -> canvas.setWidth(getWidth()));
@@ -74,6 +73,28 @@ public class MapPane extends Pane {
 //					gc.fillText(gameResources.getLocationMap().get(position), 
 //							xLocation, yLocation);
 //				}
+			}
+		};
+
+		backgroundAnim.start();		
+	}
+	
+	public void endGame(String message) {
+		backgroundAnim.stop();
+		backgroundAnim = new AnimationTimer() {
+            long lastUpdate = 0 ;
+            
+			
+			@Override
+			public void handle(long now) {//now is in nanos
+				
+				gc = canvas.getGraphicsContext2D();
+				gc.clearRect(0, 0, getWidth(), getHeight());
+		        gc.drawImage(image, 0, 0, getWidth(), getHeight());
+		        gc.setFont(new Font("Arial", 80.0));
+		        gc.setFill(Color.BLACK);
+		        gc.fillText(message, getWidth()/2, getHeight()/2);
+
 			}
 		};
 
