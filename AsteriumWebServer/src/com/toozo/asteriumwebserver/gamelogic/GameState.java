@@ -66,7 +66,12 @@ public class GameState {
 	public static final String HUMAN_LOSS_MESSAGE = "You lost because the parasite completed victory condition: %s.";
 	public static final String PARASITE_WIN_MESSAGE = "You win! The parasite(s) completed victory condition: %s.";
 	public static final String PARASITE_LOSS_MESSAGE = "You lost because the humans completed victory condition: %s.";
-
+	public static final String MULTIPLE_SUMMARY_FORMAT = "%s x%d";
+	public static final String BEACON_VC_NAME = "Rescue Beacon Activated";
+	public static final String FUEL_VC_NAME = "Out of Fuel";
+	public static final String PARASITES_VC_NAME = "All Humans Turned to Parasites";
+	public static final String UNDISCOVERED_VC_NAME = "Parasite Escaped Undiscovered";
+	
 	public static final boolean VERBOSE = true;
 
 	// LOOT POOLS
@@ -350,10 +355,14 @@ public class GameState {
 		state.food = STARTING_FOOD_PER_PLAYER * state.game.getPlayers().size();
 		state.fuel = STARTING_FUEL;
 		state.day = STARTING_DAY;
-		state.addVictoryCondition(new VictoryCondition(VictoryCondition::getBeaconProgress, false));
-		state.addVictoryCondition(new VictoryCondition(VictoryCondition::getFuelProgress, true));
-		state.addVictoryCondition(new VictoryCondition(VictoryCondition::areAllPlayersParasites, true));
-		state.addVictoryCondition(new VictoryCondition(VictoryCondition::isParasiteUndiscovered, true));
+		state.addVictoryCondition(new VictoryCondition(BEACON_VC_NAME, 
+													   VictoryCondition::getBeaconProgress, false));
+		state.addVictoryCondition(new VictoryCondition(FUEL_VC_NAME,
+													   VictoryCondition::getFuelProgress, true));
+		state.addVictoryCondition(new VictoryCondition(PARASITES_VC_NAME,
+													   VictoryCondition::areAllPlayersParasites, true));
+		state.addVictoryCondition(new VictoryCondition(UNDISCOVERED_VC_NAME,
+													   VictoryCondition::isParasiteUndiscovered, true));
 
 		if (VERBOSE) {
 			System.out.println("Game initialized. Starting game...");
@@ -414,7 +423,13 @@ public class GameState {
 
 		// Check victory conditions
 		VictoryCondition lastVC = null;
-		for (VictoryCondition vc : state.getVictoryConditions()) {
+		VictoryCondition vc = null;
+		List<VictoryCondition> victoryConditions = state.getVictoryConditions();
+		
+		// Iterate over VCs, looking for complete VCs and keeping track of the last complete VC.
+		for (int i = 0; i < victoryConditions.size(); i++) {
+			vc = victoryConditions.get(i);
+			
 			if (vc.isComplete(state)) {
 				state.setGameOver(true);
 				lastVC = vc;
@@ -713,7 +728,7 @@ public class GameState {
 	 * @return a {@link Collection} of references to this GameState's
 	 *         {@link VictoryCondition}s.
 	 */
-	public Collection<VictoryCondition> getVictoryConditions() {
+	public List<VictoryCondition> getVictoryConditions() {
 		return this.victoryConditions;
 	}
 
@@ -721,8 +736,8 @@ public class GameState {
 	 * @return a {@link Collection} of references to all complete
 	 *         {@link VictoryCondition}s in this GameState.
 	 */
-	public Collection<VictoryCondition> getCompleteVictoryConditions() {
-		Collection<VictoryCondition> result = new ArrayList<VictoryCondition>();
+	public List<VictoryCondition> getCompleteVictoryConditions() {
+		List<VictoryCondition> result = new ArrayList<VictoryCondition>();
 
 		// Add all complete victory conditions
 		for (VictoryCondition vc : this.victoryConditions) {
@@ -812,10 +827,45 @@ public class GameState {
 	}
 
 	public void addSummaryMessage(String message) {
-		while (this.communalSummary.contains(message)) {
-			this.communalSummary.remove(message);
+		int repeatNumber;
+		int i, j;
+		String oldMessage;
+		boolean added = false;
+		
+		for (i = this.communalSummary.size(); i >= 0; i--) {
+			oldMessage = this.communalSummary.get(i);
+			if (oldMessage.equals(message)) {
+				// If basic message exists in list, add "message x2".
+				this.communalSummary.remove(i);
+				this.communalSummary.add(String.format(MULTIPLE_SUMMARY_FORMAT, message, 2));
+				added = true;
+			} else if (oldMessage.matches(String.format("(%s) x([0-9]+)", message))) {
+				// If repeated message exists in list, add "message x[repeatNumber + 1]".
+				
+				// == Get repeatNumber ==
+				// Move j to index of the x
+				for (j = oldMessage.length() - 1; Character.isDigit(oldMessage.charAt(j)); j--);
+				// Get number from j+1 to end of string
+				try {
+					repeatNumber = Integer.parseInt(oldMessage.substring(j + 1, oldMessage.length()));
+				} catch (NumberFormatException e) {
+					// Something went wrong, ignore repeated message.
+					repeatNumber = 1;
+				}
+				// ======================
+				
+				if (repeatNumber > 1) {
+					this.communalSummary.remove(i);
+					this.communalSummary.add(String.format(MULTIPLE_SUMMARY_FORMAT, message, repeatNumber));
+					added = true;
+				}
+			}
 		}
-		this.communalSummary.add(message);
+		
+		if (!added) {
+			// Message did not exist.
+			this.communalSummary.add(message);
+		}
 	}
 
 	public void clearSummary() {
@@ -901,6 +951,15 @@ public class GameState {
 			this.syncPlayerClient(auth);
 		}
 
+	}
+	
+	public final void syncGameBoards() {
+		try {
+			GameState.syncGameBoards(this);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public final void syncPlayerClient(String auth) {

@@ -61,7 +61,14 @@ public class UseItemAction extends Action {
 			String item = this.itemData.getName();
 			AbstractItem use = null;
 			if (user != null && item != null) {
-				for (AbstractItem i : user.getInventory()) {
+				// Get correct inventory
+				Inventory inventory;
+				if (this.isCommunal) {
+					inventory = state.getCommunalInventory();
+				} else {
+					inventory = user.getInventory();
+				}
+				for (AbstractItem i : inventory) {
 					if (i.getName().equals(item)) {
 						use = i;
 						break;

@@ -8,7 +8,7 @@ import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 public abstract class AbstractFoodItem extends AbstractConsumableItem {
 	// ===== CONSTANTS =====
 	public static final String DESC = "Adds %d food to the supply.";
-	public static final String COMMUNAL_USE_MESSAGE = "%d was added to the food supply.";
+	public static final String COMMUNAL_USE_MESSAGE = "%d food was added to the supply.";
 	// =====================
 	
 	// ===== FIELDS =====
