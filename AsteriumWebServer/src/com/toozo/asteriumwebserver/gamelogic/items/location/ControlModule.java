@@ -37,10 +37,15 @@ public class ControlModule extends AbstractLocationItem {
 	public void applyEffect(GameState state, PlayerCharacter user, Collection<PlayerCharacter> targets) {
 		state.setControlModuleUsed(true);
 		Inventory communalInventory = state.getCommunalInventory();
+		AbstractItem lastItem = null;
 		for (AbstractItem item : communalInventory) {
 			if (item.getName().equals("Unfinished Rescue Beacon")) {
-				communalInventory.remove(item);
+				lastItem = item;
+				break;
 			}
+		}
+		if (lastItem != null) {
+			communalInventory.remove(lastItem);
 		}
 		communalInventory.add(new RescueBeacon());
 	}

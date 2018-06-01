@@ -26,7 +26,7 @@ public class AbstractExposureItem extends AbstractConsumableItem {
 	 * @param healAmount The amount this healItem should heal each of its targets.
 	 */
 	public AbstractExposureItem(final String name, final String flavor, final String image, final double reductionAmount) {
-		super(name, String.format(DESC, (int) Math.floor(reductionAmount * 100)), flavor, image);
+		super(name, String.format(DESC, (int) Math.floor(reductionAmount)), flavor, image);
 		this.reductionAmount = reductionAmount;
 	}
 	// ========================

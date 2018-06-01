@@ -38,15 +38,10 @@ public class PowerSupply extends AbstractLocationItem {
 	public void applyEffect(GameState state, PlayerCharacter user, Collection<PlayerCharacter> targets) {
 		state.setPowerSupplyUsed(true);
 		Inventory communalInventory = state.getCommunalInventory();
-		AbstractItem lastItem = null;
 		for (AbstractItem item : communalInventory) {
 			if (item.getName().equals("Incomplete Rescue Beacon")) {
-				lastItem = item;
-				break;
+				communalInventory.remove(item);
 			}
-		}
-		if (lastItem != null) {
-			communalInventory.remove(lastItem);
 		}
 		communalInventory.add(new UnfinishedRescueBeacon());
 	}
