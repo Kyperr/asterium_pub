@@ -11,12 +11,13 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/AsteriumClientConnector"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/AsteriumParser"/>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/AsteriumClientConnector"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/AsteriumParser"/>
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v9.0"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

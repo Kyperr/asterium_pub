@@ -16336,3 +16336,325 @@ Caused by: java.io.FileNotFoundException: /home/gpschmitt/git/asterium2/.metadat
 2018-06-01 12:59:01,542 [Worker-44] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/main/resources
 2018-06-01 12:59:01,548 [Worker-44] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (ANSI_X3.4-1968 actually) to copy filtered resources, i.e. build is platform dependent!
 2018-06-01 12:59:01,552 [Worker-44] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/gpschmitt/git/asterium2/AsteriumWebServer/src/test/resources
+2018-06-01 14:22:32,720 [Worker-5] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2018-06-01 14:23:55,181 [Worker-15] ERROR o.e.m.c.i.i.nexus.NexusIndexManager - Error changing index details workspace://
+java.io.FileNotFoundException: C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\.metadata\.plugins\org.eclipse.m2e.core\nexus\830bc118332e77292949ed1e6d2fabe0\_a.cfs (The system cannot find the file specified)
+	at java.io.RandomAccessFile.open0(Native Method) ~[na:1.8.0_92]
+	at java.io.RandomAccessFile.open(Unknown Source) ~[na:1.8.0_92]
+	at java.io.RandomAccessFile.<init>(Unknown Source) ~[na:1.8.0_92]
+	at org.apache.lucene.store.FSDirectory$FSIndexInput$Descriptor.<init>(FSDirectory.java:552) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.store.FSDirectory$FSIndexInput.<init>(FSDirectory.java:582) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.store.FSDirectory.openInput(FSDirectory.java:488) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.CompoundFileReader.<init>(CompoundFileReader.java:70) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.SegmentReader.initialize(SegmentReader.java:321) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.SegmentReader.get(SegmentReader.java:306) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.SegmentReader.get(SegmentReader.java:236) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.DocumentsWriter.applyDeletes(DocumentsWriter.java:915) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.IndexWriter.applyDeletes(IndexWriter.java:4339) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.IndexWriter.doFlush(IndexWriter.java:3579) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.IndexWriter.flush(IndexWriter.java:3450) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.IndexWriter.closeInternal(IndexWriter.java:1638) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.IndexWriter.close(IndexWriter.java:1602) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.IndexWriter.close(IndexWriter.java:1578) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.maven.index.context.NexusIndexWriter.close(NexusIndexWriter.java:58) ~[indexer-core-3.1.0.jar:3.1.0]
+	at org.apache.maven.index.context.DefaultIndexingContext.prepareCleanIndex(DefaultIndexingContext.java:235) ~[indexer-core-3.1.0.jar:3.1.0]
+	at org.apache.maven.index.context.DefaultIndexingContext.prepareIndex(DefaultIndexingContext.java:205) ~[indexer-core-3.1.0.jar:3.1.0]
+	at org.apache.maven.index.context.DefaultIndexingContext.<init>(DefaultIndexingContext.java:173) ~[indexer-core-3.1.0.jar:3.1.0]
+	at org.apache.maven.index.DefaultNexusIndexer.addIndexingContextForced(DefaultNexusIndexer.java:160) ~[org.eclipse.m2e.maven.indexer_1.8.3.20180227-2135/:na]
+	at org.eclipse.m2e.core.internal.index.nexus.NexusIndexManager.createIndexingContext(NexusIndexManager.java:965) [org.eclipse.m2e.core_1.8.3.20180227-2137.jar:na]
+	at org.eclipse.m2e.core.internal.index.nexus.NexusIndexManager.setIndexDetails(NexusIndexManager.java:932) [org.eclipse.m2e.core_1.8.3.20180227-2137.jar:na]
+	at org.eclipse.m2e.core.internal.index.nexus.NexusIndexManager.repositoryAdded(NexusIndexManager.java:878) [org.eclipse.m2e.core_1.8.3.20180227-2137.jar:na]
+	at org.eclipse.m2e.core.internal.repository.RepositoryRegistry.addRepository(RepositoryRegistry.java:163) [org.eclipse.m2e.core_1.8.3.20180227-2137.jar:na]
+	at org.eclipse.m2e.core.internal.repository.RepositoryRegistry.updateRegistry(RepositoryRegistry.java:236) [org.eclipse.m2e.core_1.8.3.20180227-2137.jar:na]
+	at org.eclipse.m2e.core.internal.repository.RepositoryRegistryUpdateJob.run(RepositoryRegistryUpdateJob.java:47) [org.eclipse.m2e.core_1.8.3.20180227-2137.jar:na]
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:56) [org.eclipse.core.jobs_3.9.3.v20180115-1757.jar:na]
+2018-06-01 14:23:55,184 [Worker-15] ERROR o.e.m.c.i.r.RepositoryRegistry - Could not add repository index
+org.eclipse.core.runtime.CoreException: Could not add repository index
+	at org.eclipse.m2e.core.internal.index.nexus.NexusIndexManager.setIndexDetails(NexusIndexManager.java:945) ~[org.eclipse.m2e.core_1.8.3.20180227-2137.jar:na]
+	at org.eclipse.m2e.core.internal.index.nexus.NexusIndexManager.repositoryAdded(NexusIndexManager.java:878) ~[org.eclipse.m2e.core_1.8.3.20180227-2137.jar:na]
+	at org.eclipse.m2e.core.internal.repository.RepositoryRegistry.addRepository(RepositoryRegistry.java:163) [org.eclipse.m2e.core_1.8.3.20180227-2137.jar:na]
+	at org.eclipse.m2e.core.internal.repository.RepositoryRegistry.updateRegistry(RepositoryRegistry.java:236) [org.eclipse.m2e.core_1.8.3.20180227-2137.jar:na]
+	at org.eclipse.m2e.core.internal.repository.RepositoryRegistryUpdateJob.run(RepositoryRegistryUpdateJob.java:47) [org.eclipse.m2e.core_1.8.3.20180227-2137.jar:na]
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:56) [org.eclipse.core.jobs_3.9.3.v20180115-1757.jar:na]
+Caused by: java.io.FileNotFoundException: C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\.metadata\.plugins\org.eclipse.m2e.core\nexus\830bc118332e77292949ed1e6d2fabe0\_a.cfs (The system cannot find the file specified)
+	at java.io.RandomAccessFile.open0(Native Method) ~[na:1.8.0_92]
+	at java.io.RandomAccessFile.open(Unknown Source) ~[na:1.8.0_92]
+	at java.io.RandomAccessFile.<init>(Unknown Source) ~[na:1.8.0_92]
+	at org.apache.lucene.store.FSDirectory$FSIndexInput$Descriptor.<init>(FSDirectory.java:552) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.store.FSDirectory$FSIndexInput.<init>(FSDirectory.java:582) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.store.FSDirectory.openInput(FSDirectory.java:488) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.CompoundFileReader.<init>(CompoundFileReader.java:70) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.SegmentReader.initialize(SegmentReader.java:321) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.SegmentReader.get(SegmentReader.java:306) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.SegmentReader.get(SegmentReader.java:236) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.DocumentsWriter.applyDeletes(DocumentsWriter.java:915) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.IndexWriter.applyDeletes(IndexWriter.java:4339) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.IndexWriter.doFlush(IndexWriter.java:3579) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.IndexWriter.flush(IndexWriter.java:3450) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.IndexWriter.closeInternal(IndexWriter.java:1638) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.IndexWriter.close(IndexWriter.java:1602) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.IndexWriter.close(IndexWriter.java:1578) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.maven.index.context.NexusIndexWriter.close(NexusIndexWriter.java:58) ~[indexer-core-3.1.0.jar:3.1.0]
+	at org.apache.maven.index.context.DefaultIndexingContext.prepareCleanIndex(DefaultIndexingContext.java:235) ~[indexer-core-3.1.0.jar:3.1.0]
+	at org.apache.maven.index.context.DefaultIndexingContext.prepareIndex(DefaultIndexingContext.java:205) ~[indexer-core-3.1.0.jar:3.1.0]
+	at org.apache.maven.index.context.DefaultIndexingContext.<init>(DefaultIndexingContext.java:173) ~[indexer-core-3.1.0.jar:3.1.0]
+	at org.apache.maven.index.DefaultNexusIndexer.addIndexingContextForced(DefaultNexusIndexer.java:160) ~[org.eclipse.m2e.maven.indexer_1.8.3.20180227-2135/:na]
+	at org.eclipse.m2e.core.internal.index.nexus.NexusIndexManager.createIndexingContext(NexusIndexManager.java:965) ~[org.eclipse.m2e.core_1.8.3.20180227-2137.jar:na]
+	at org.eclipse.m2e.core.internal.index.nexus.NexusIndexManager.setIndexDetails(NexusIndexManager.java:932) ~[org.eclipse.m2e.core_1.8.3.20180227-2137.jar:na]
+	... 5 common frames omitted
+2018-06-01 14:24:51,581 [Worker-16] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: AsteriumParser:AsteriumParser:0.0.1-SNAPSHOT @ C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumParser\pom.xml.
+2018-06-01 14:24:52,296 [Worker-16] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:24:52,316 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumParser\src\main\resources
+2018-06-01 14:24:52,319 [Worker-16] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:24:52,320 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumParser\src\test\resources
+2018-06-01 14:24:52,482 [Worker-16] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: AsteriumClientConnector:AsteriumClientConnector:0.0.1-SNAPSHOT @ C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumClientConnector\pom.xml.
+2018-06-01 14:24:52,644 [Worker-16] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:24:52,645 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumClientConnector\src\main\resources
+2018-06-01 14:24:52,648 [Worker-16] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:24:52,649 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumClientConnector\src\test\resources
+2018-06-01 14:24:52,773 [Worker-16] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: AsteriumServer:AsteriumServer:0.0.1-SNAPSHOT @ C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumGameBoard\pom.xml.
+2018-06-01 14:24:52,865 [Worker-16] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:24:52,866 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumGameBoard\src\main\resources
+2018-06-01 14:24:52,868 [Worker-16] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:24:52,869 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumGameBoard\src\test\resources
+2018-06-01 14:24:52,976 [Worker-16] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: AsteriumWebServer:AsteriumWebServer:0.0.1-SNAPSHOT @ C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumWebServer\pom.xml.
+2018-06-01 14:24:53,088 [Worker-16] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:24:53,090 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumWebServer\src\main\resources
+2018-06-01 14:24:53,091 [Worker-16] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:24:53,092 [Worker-16] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumWebServer\src\test\resources
+2018-06-01 14:24:54,042 [Worker-4] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: AsteriumParser:AsteriumParser:0.0.1-SNAPSHOT @ C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumParser\pom.xml.
+2018-06-01 14:24:56,253 [Worker-1] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:24:56,254 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumParser\src\main\resources
+2018-06-01 14:24:56,256 [Worker-1] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:24:56,257 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumParser\src\test\resources
+2018-06-01 14:24:56,580 [Worker-1] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:24:56,581 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumClientConnector\src\main\resources
+2018-06-01 14:24:56,583 [Worker-1] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:24:56,584 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumClientConnector\src\test\resources
+2018-06-01 14:24:57,964 [Worker-1] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:24:57,965 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumGameBoard\src\main\resources
+2018-06-01 14:24:57,967 [Worker-1] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:24:57,968 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumGameBoard\src\test\resources
+2018-06-01 14:25:01,847 [Worker-1] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:25:01,848 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumWebServer\src\main\resources
+2018-06-01 14:25:01,852 [Worker-1] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:25:01,853 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumWebServer\src\test\resources
+2018-06-01 14:25:46,821 [Worker-5] INFO  o.e.m.i.launch.MavenLaunchDelegate - C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumGameBoard
+2018-06-01 14:25:46,822 [Worker-5] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -B clean
+2018-06-01 14:25:50,889 [Worker-1] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:25:50,926 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumGameBoard\src\main\resources
+2018-06-01 14:25:50,928 [Worker-1] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:25:50,929 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumGameBoard\src\test\resources
+2018-06-01 14:26:27,856 [Worker-1] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:26:27,891 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumParser\src\main\resources
+2018-06-01 14:26:27,893 [Worker-1] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:26:27,895 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumParser\src\test\resources
+2018-06-01 14:26:28,046 [Worker-1] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:26:28,048 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumClientConnector\src\main\resources
+2018-06-01 14:26:28,051 [Worker-1] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:26:28,052 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumClientConnector\src\test\resources
+2018-06-01 14:26:29,223 [Worker-1] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:26:29,224 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumGameBoard\src\main\resources
+2018-06-01 14:26:29,226 [Worker-1] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:26:29,227 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumGameBoard\src\test\resources
+2018-06-01 14:26:30,611 [Worker-1] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:26:30,613 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumWebServer\src\main\resources
+2018-06-01 14:26:30,615 [Worker-1] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:26:30,616 [Worker-1] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumWebServer\src\test\resources
+2018-06-01 14:26:54,731 [Worker-18] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: AsteriumServer:AsteriumServer:0.0.1-SNAPSHOT @ C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumGameBoard\pom.xml.
+2018-06-01 14:26:55,645 [Worker-18] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /AsteriumGameBoard/src
+2018-06-01 14:26:55,647 [Worker-18] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Not adding source folder /AsteriumGameBoard/src/test/java because it overlaps with /AsteriumGameBoard/src
+2018-06-01 14:26:55,721 [Worker-18] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update started
+2018-06-01 14:26:55,838 [Worker-18] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: AsteriumServer:AsteriumServer:0.0.1-SNAPSHOT @ C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumGameBoard\pom.xml.
+2018-06-01 14:26:56,032 [Worker-18] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /AsteriumGameBoard/src
+2018-06-01 14:26:56,033 [Worker-18] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Not adding source folder /AsteriumGameBoard/src/test/java because it overlaps with /AsteriumGameBoard/src
+2018-06-01 14:26:56,153 [Worker-18] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update completed: 0 sec
+2018-06-01 14:26:57,526 [Worker-4] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:26:57,527 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumGameBoard\src\main\resources
+2018-06-01 14:26:57,529 [Worker-4] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:26:57,530 [Worker-4] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumGameBoard\src\test\resources
+2018-06-01 14:28:35,220 [Worker-17] INFO  o.e.m.i.launch.MavenLaunchDelegate - C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumClientConnector
+2018-06-01 14:28:35,221 [Worker-17] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -B install
+2018-06-01 14:28:39,852 [Worker-18] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:28:39,853 [Worker-18] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumClientConnector\src\main\resources
+2018-06-01 14:28:39,855 [Worker-18] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:28:39,857 [Worker-18] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumClientConnector\src\test\resources
+2018-06-01 14:29:48,956 [Worker-9] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:29:48,957 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumParser\src\main\resources
+2018-06-01 14:29:48,961 [Worker-9] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:29:48,961 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumParser\src\test\resources
+2018-06-01 14:29:49,132 [Worker-9] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:29:49,133 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumClientConnector\src\main\resources
+2018-06-01 14:29:49,134 [Worker-9] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:29:49,136 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumClientConnector\src\test\resources
+2018-06-01 14:29:49,345 [Worker-9] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:29:49,346 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumGameBoard\src\main\resources
+2018-06-01 14:29:49,348 [Worker-9] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:29:49,349 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumGameBoard\src\test\resources
+2018-06-01 14:29:50,860 [Worker-9] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:29:50,861 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumWebServer\src\main\resources
+2018-06-01 14:29:50,862 [Worker-9] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:29:50,864 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumWebServer\src\test\resources
+2018-06-01 14:29:58,843 [Worker-8] INFO  o.e.m.i.launch.MavenLaunchDelegate - C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumClientConnector
+2018-06-01 14:29:58,843 [Worker-8] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -B install
+2018-06-01 14:30:11,923 [Worker-9] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:30:11,924 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumClientConnector\src\main\resources
+2018-06-01 14:30:11,926 [Worker-9] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:30:11,927 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumClientConnector\src\test\resources
+2018-06-01 14:30:17,175 [Worker-8] INFO  o.e.m.i.launch.MavenLaunchDelegate - C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumGameBoard
+2018-06-01 14:30:17,175 [Worker-8] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -B install
+2018-06-01 14:30:20,520 [Worker-0] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:30:20,521 [Worker-0] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumGameBoard\src\main\resources
+2018-06-01 14:30:20,523 [Worker-0] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:30:20,524 [Worker-0] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumGameBoard\src\test\resources
+2018-06-01 14:30:32,730 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:30:32,731 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumGameBoard\src\main\resources
+2018-06-01 14:30:32,744 [Worker-2] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:30:32,752 [Worker-2] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumGameBoard\src\test\resources
+2018-06-01 14:30:37,050 [Worker-15] INFO  o.e.m.i.launch.MavenLaunchDelegate - C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumGameBoard
+2018-06-01 14:30:37,051 [Worker-15] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -B install
+2018-06-01 14:30:43,756 [Worker-11] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:30:43,757 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumGameBoard\src\main\resources
+2018-06-01 14:30:43,759 [Worker-11] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:30:43,760 [Worker-11] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumGameBoard\src\test\resources
+2018-06-01 14:31:32,021 [Worker-4] INFO  o.e.m.i.launch.MavenLaunchDelegate - C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumParser
+2018-06-01 14:31:32,022 [Worker-4] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -B install
+2018-06-01 14:31:35,184 [Worker-15] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:31:35,187 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumParser\src\main\resources
+2018-06-01 14:31:35,190 [Worker-15] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:31:35,193 [Worker-15] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumParser\src\test\resources
+2018-06-01 14:31:46,370 [Worker-7] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:31:46,371 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumParser\src\main\resources
+2018-06-01 14:31:46,373 [Worker-7] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:31:46,374 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumParser\src\test\resources
+2018-06-01 14:31:51,892 [Worker-9] INFO  o.e.m.i.launch.MavenLaunchDelegate - C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumParser
+2018-06-01 14:31:51,892 [Worker-9] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -B install
+2018-06-01 14:32:06,179 [Worker-1] INFO  o.e.m.i.launch.MavenLaunchDelegate - C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumGameBoard
+2018-06-01 14:32:06,179 [Worker-1] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -B install
+2018-06-01 14:32:10,094 [Worker-9] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:32:10,095 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumGameBoard\src\main\resources
+2018-06-01 14:32:10,097 [Worker-9] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:32:10,098 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumGameBoard\src\test\resources
+2018-06-01 14:32:13,195 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:32:13,196 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumParser\src\main\resources
+2018-06-01 14:32:13,198 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:32:13,199 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumParser\src\test\resources
+2018-06-01 14:32:13,334 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:32:13,336 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumClientConnector\src\main\resources
+2018-06-01 14:32:13,337 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:32:13,338 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumClientConnector\src\test\resources
+2018-06-01 14:32:14,415 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:32:14,416 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumGameBoard\src\main\resources
+2018-06-01 14:32:14,417 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:32:14,418 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumGameBoard\src\test\resources
+2018-06-01 14:32:15,751 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:32:15,753 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumWebServer\src\main\resources
+2018-06-01 14:32:15,755 [Worker-8] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:32:15,759 [Worker-8] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumWebServer\src\test\resources
+2018-06-01 14:34:31,028 [Worker-4] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2018-06-01 14:34:32,472 [Worker-8] ERROR o.e.m.c.i.i.nexus.NexusIndexManager - Error changing index details workspace://
+java.io.FileNotFoundException: C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\.metadata\.plugins\org.eclipse.m2e.core\nexus\830bc118332e77292949ed1e6d2fabe0\_a.cfs (The system cannot find the file specified)
+	at java.io.RandomAccessFile.open0(Native Method) ~[na:1.8.0_92]
+	at java.io.RandomAccessFile.open(Unknown Source) ~[na:1.8.0_92]
+	at java.io.RandomAccessFile.<init>(Unknown Source) ~[na:1.8.0_92]
+	at org.apache.lucene.store.FSDirectory$FSIndexInput$Descriptor.<init>(FSDirectory.java:552) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.store.FSDirectory$FSIndexInput.<init>(FSDirectory.java:582) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.store.FSDirectory.openInput(FSDirectory.java:488) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.CompoundFileReader.<init>(CompoundFileReader.java:70) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.SegmentReader.initialize(SegmentReader.java:321) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.SegmentReader.get(SegmentReader.java:306) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.SegmentReader.get(SegmentReader.java:236) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.DocumentsWriter.applyDeletes(DocumentsWriter.java:915) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.IndexWriter.applyDeletes(IndexWriter.java:4339) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.IndexWriter.doFlush(IndexWriter.java:3579) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.IndexWriter.flush(IndexWriter.java:3450) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.IndexWriter.closeInternal(IndexWriter.java:1638) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.IndexWriter.close(IndexWriter.java:1602) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.IndexWriter.close(IndexWriter.java:1578) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.maven.index.context.NexusIndexWriter.close(NexusIndexWriter.java:58) ~[indexer-core-3.1.0.jar:3.1.0]
+	at org.apache.maven.index.context.DefaultIndexingContext.prepareCleanIndex(DefaultIndexingContext.java:235) ~[indexer-core-3.1.0.jar:3.1.0]
+	at org.apache.maven.index.context.DefaultIndexingContext.prepareIndex(DefaultIndexingContext.java:205) ~[indexer-core-3.1.0.jar:3.1.0]
+	at org.apache.maven.index.context.DefaultIndexingContext.<init>(DefaultIndexingContext.java:173) ~[indexer-core-3.1.0.jar:3.1.0]
+	at org.apache.maven.index.DefaultNexusIndexer.addIndexingContextForced(DefaultNexusIndexer.java:160) ~[org.eclipse.m2e.maven.indexer_1.8.3.20180227-2135/:na]
+	at org.eclipse.m2e.core.internal.index.nexus.NexusIndexManager.createIndexingContext(NexusIndexManager.java:965) [org.eclipse.m2e.core_1.8.3.20180227-2137.jar:na]
+	at org.eclipse.m2e.core.internal.index.nexus.NexusIndexManager.setIndexDetails(NexusIndexManager.java:932) [org.eclipse.m2e.core_1.8.3.20180227-2137.jar:na]
+	at org.eclipse.m2e.core.internal.index.nexus.NexusIndexManager.repositoryAdded(NexusIndexManager.java:878) [org.eclipse.m2e.core_1.8.3.20180227-2137.jar:na]
+	at org.eclipse.m2e.core.internal.repository.RepositoryRegistry.addRepository(RepositoryRegistry.java:163) [org.eclipse.m2e.core_1.8.3.20180227-2137.jar:na]
+	at org.eclipse.m2e.core.internal.repository.RepositoryRegistry.updateRegistry(RepositoryRegistry.java:236) [org.eclipse.m2e.core_1.8.3.20180227-2137.jar:na]
+	at org.eclipse.m2e.core.internal.repository.RepositoryRegistryUpdateJob.run(RepositoryRegistryUpdateJob.java:47) [org.eclipse.m2e.core_1.8.3.20180227-2137.jar:na]
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:56) [org.eclipse.core.jobs_3.9.3.v20180115-1757.jar:na]
+2018-06-01 14:34:32,535 [Worker-8] ERROR o.e.m.c.i.r.RepositoryRegistry - Could not add repository index
+org.eclipse.core.runtime.CoreException: Could not add repository index
+	at org.eclipse.m2e.core.internal.index.nexus.NexusIndexManager.setIndexDetails(NexusIndexManager.java:945) ~[org.eclipse.m2e.core_1.8.3.20180227-2137.jar:na]
+	at org.eclipse.m2e.core.internal.index.nexus.NexusIndexManager.repositoryAdded(NexusIndexManager.java:878) ~[org.eclipse.m2e.core_1.8.3.20180227-2137.jar:na]
+	at org.eclipse.m2e.core.internal.repository.RepositoryRegistry.addRepository(RepositoryRegistry.java:163) [org.eclipse.m2e.core_1.8.3.20180227-2137.jar:na]
+	at org.eclipse.m2e.core.internal.repository.RepositoryRegistry.updateRegistry(RepositoryRegistry.java:236) [org.eclipse.m2e.core_1.8.3.20180227-2137.jar:na]
+	at org.eclipse.m2e.core.internal.repository.RepositoryRegistryUpdateJob.run(RepositoryRegistryUpdateJob.java:47) [org.eclipse.m2e.core_1.8.3.20180227-2137.jar:na]
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:56) [org.eclipse.core.jobs_3.9.3.v20180115-1757.jar:na]
+Caused by: java.io.FileNotFoundException: C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\.metadata\.plugins\org.eclipse.m2e.core\nexus\830bc118332e77292949ed1e6d2fabe0\_a.cfs (The system cannot find the file specified)
+	at java.io.RandomAccessFile.open0(Native Method) ~[na:1.8.0_92]
+	at java.io.RandomAccessFile.open(Unknown Source) ~[na:1.8.0_92]
+	at java.io.RandomAccessFile.<init>(Unknown Source) ~[na:1.8.0_92]
+	at org.apache.lucene.store.FSDirectory$FSIndexInput$Descriptor.<init>(FSDirectory.java:552) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.store.FSDirectory$FSIndexInput.<init>(FSDirectory.java:582) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.store.FSDirectory.openInput(FSDirectory.java:488) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.CompoundFileReader.<init>(CompoundFileReader.java:70) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.SegmentReader.initialize(SegmentReader.java:321) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.SegmentReader.get(SegmentReader.java:306) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.SegmentReader.get(SegmentReader.java:236) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.DocumentsWriter.applyDeletes(DocumentsWriter.java:915) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.IndexWriter.applyDeletes(IndexWriter.java:4339) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.IndexWriter.doFlush(IndexWriter.java:3579) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.IndexWriter.flush(IndexWriter.java:3450) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.IndexWriter.closeInternal(IndexWriter.java:1638) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.IndexWriter.close(IndexWriter.java:1602) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.lucene.index.IndexWriter.close(IndexWriter.java:1578) ~[lucene-core-2.4.1.jar:2.4.1 750176 - 2009-03-04 21:56:52]
+	at org.apache.maven.index.context.NexusIndexWriter.close(NexusIndexWriter.java:58) ~[indexer-core-3.1.0.jar:3.1.0]
+	at org.apache.maven.index.context.DefaultIndexingContext.prepareCleanIndex(DefaultIndexingContext.java:235) ~[indexer-core-3.1.0.jar:3.1.0]
+	at org.apache.maven.index.context.DefaultIndexingContext.prepareIndex(DefaultIndexingContext.java:205) ~[indexer-core-3.1.0.jar:3.1.0]
+	at org.apache.maven.index.context.DefaultIndexingContext.<init>(DefaultIndexingContext.java:173) ~[indexer-core-3.1.0.jar:3.1.0]
+	at org.apache.maven.index.DefaultNexusIndexer.addIndexingContextForced(DefaultNexusIndexer.java:160) ~[org.eclipse.m2e.maven.indexer_1.8.3.20180227-2135/:na]
+	at org.eclipse.m2e.core.internal.index.nexus.NexusIndexManager.createIndexingContext(NexusIndexManager.java:965) ~[org.eclipse.m2e.core_1.8.3.20180227-2137.jar:na]
+	at org.eclipse.m2e.core.internal.index.nexus.NexusIndexManager.setIndexDetails(NexusIndexManager.java:932) ~[org.eclipse.m2e.core_1.8.3.20180227-2137.jar:na]
+	... 5 common frames omitted
+2018-06-01 14:36:39,930 [Worker-13] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:36:39,932 [Worker-13] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumParser\src\main\resources
+2018-06-01 14:36:39,934 [Worker-13] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:36:39,936 [Worker-13] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumParser\src\test\resources
+2018-06-01 14:36:40,091 [Worker-13] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:36:40,092 [Worker-13] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumClientConnector\src\main\resources
+2018-06-01 14:36:40,094 [Worker-13] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:36:40,095 [Worker-13] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumClientConnector\src\test\resources
+2018-06-01 14:36:41,576 [Worker-13] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:36:41,577 [Worker-13] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumGameBoard\src\main\resources
+2018-06-01 14:36:41,579 [Worker-13] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:36:41,580 [Worker-13] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumGameBoard\src\test\resources
+2018-06-01 14:36:44,108 [Worker-13] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:36:44,110 [Worker-13] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumWebServer\src\main\resources
+2018-06-01 14:36:44,111 [Worker-13] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:36:44,112 [Worker-13] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumWebServer\src\test\resources
+2018-06-01 14:38:52,977 [Worker-12] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: AsteriumClientConnector:AsteriumClientConnector:0.0.1-SNAPSHOT @ C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumClientConnector\pom.xml.
+2018-06-01 14:38:53,491 [Worker-12] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /AsteriumClientConnector/src
+2018-06-01 14:38:53,492 [Worker-12] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Not adding source folder /AsteriumClientConnector/src/test/java because it overlaps with /AsteriumClientConnector/src
+2018-06-01 14:38:54,476 [Worker-12] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update started
+2018-06-01 14:38:55,217 [Worker-12] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.eclipse.m2e.jdt.JarLifecycleMapping lifecycle mapping for MavenProject: AsteriumClientConnector:AsteriumClientConnector:0.0.1-SNAPSHOT @ C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumClientConnector\pom.xml.
+2018-06-01 14:38:55,325 [Worker-12] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Adding source folder /AsteriumClientConnector/src
+2018-06-01 14:38:55,326 [Worker-12] INFO  o.e.m.j.i.AbstractJavaProjectConfigurator - Not adding source folder /AsteriumClientConnector/src/test/java because it overlaps with /AsteriumClientConnector/src
+2018-06-01 14:38:55,588 [Worker-12] INFO  o.e.m.c.i.p.ProjectConfigurationManager - Update completed: 1 sec
+2018-06-01 14:38:56,120 [Worker-9] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:38:56,121 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumClientConnector\src\main\resources
+2018-06-01 14:38:56,123 [Worker-9] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:38:56,124 [Worker-9] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumClientConnector\src\test\resources
+2018-06-01 14:39:07,245 [Worker-4] INFO  o.e.m.i.launch.MavenLaunchDelegate - C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumClientConnector
+2018-06-01 14:39:07,246 [Worker-4] INFO  o.e.m.i.launch.MavenLaunchDelegate -  mvn -B install
+2018-06-01 14:39:13,516 [Worker-13] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:39:13,518 [Worker-13] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumClientConnector\src\main\resources
+2018-06-01 14:39:13,520 [Worker-13] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:39:13,522 [Worker-13] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumClientConnector\src\test\resources
+2018-06-01 14:39:37,736 [Worker-10] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloading https://repo.maven.apache.org/maven2/javax/javaee-api/8.0/javaee-api-8.0-sources.jar
+2018-06-01 14:39:46,953 [Worker-10] INFO  o.e.m.c.i.e.AbstractTransferListenerAdapter - Downloaded https://repo.maven.apache.org/maven2/javax/javaee-api/8.0/javaee-api-8.0-sources.jar
+2018-06-01 14:39:47,222 [Worker-10] INFO  o.e.m.j.internal.DownloadSourcesJob - Downloaded sources for javax:javaee-api:8.0
+2018-06-01 14:39:47,455 [Worker-10] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:39:47,457 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumClientConnector\src\main\resources
+2018-06-01 14:39:47,459 [Worker-10] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2018-06-01 14:39:47,461 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Daniel\Desktop\Asterium Workspace Temp\asterium\AsteriumClientConnector\src\test\resources

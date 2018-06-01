@@ -59,3 +59,5 @@ pom.xml.tag
 */META-INF/*
 
 AsteriumGameBoard/hs_err_pid*
+/.metadata/
+/.recommenders/

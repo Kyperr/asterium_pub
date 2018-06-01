@@ -1,5 +1,0 @@
-package com.toozo.asteriumwebserver.exceptions;
-
-public class NoSuchGameException extends Exception {
-
-}

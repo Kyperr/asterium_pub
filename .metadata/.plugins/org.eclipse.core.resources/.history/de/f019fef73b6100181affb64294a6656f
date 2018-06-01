@@ -1,5 +1,0 @@
-package com.toozo.asteriumwebserver.gamelogic.statuseffects;
-
-public class ReduceExposure extends AbstractStatusEffect {
-
-}

@@ -1,11 +1,2 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<typeInfoHistroy>
-<typeInfo handle="=AsteriumWebServer/src&lt;com.toozo.asteriumwebserver.gamelogic.items{AbstractItem.java[AbstractItem" modifiers="1025" timestamp="1527567026000"/>
-<typeInfo handle="=AsteriumWebServer/src&lt;com.toozo.asteriumwebserver.gamelogic.items.consumables{AbstractFoodItem.java[AbstractFoodItem" modifiers="1025" timestamp="1527819353000"/>
-<typeInfo handle="=AsteriumWebServer/src&lt;com.toozo.asteriumwebserver.gamelogic.items.consumables{AbstractHealItem.java[AbstractHealItem" modifiers="1" timestamp="1527460133000"/>
-<typeInfo handle="=AsteriumWebServer/src&lt;com.toozo.asteriumwebserver.gamelogic.statuseffects{AbstractStatusEffect.java[AbstractStatusEffect" modifiers="1025" timestamp="1527568516000"/>
-<typeInfo handle="=AsteriumWebServer/src&lt;com.toozo.asteriumwebserver.gamelogic.items.location{AbstractLocationItem.java[AbstractLocationItem" modifiers="1025" timestamp="1527482119000"/>
-<typeInfo handle="=AsteriumWebServer/src&lt;com.toozo.asteriumwebserver.gamelogic.statuseffects{AffectStats.java[AffectStats" modifiers="1" timestamp="1527378111000"/>
-<typeInfo handle="=AsteriumWebServer/src&lt;com.toozo.asteriumwebserver.gamelogic.items.garbage{AbstractGarbageItem.java[AbstractGarbageItem" modifiers="1025" timestamp="1527834146000"/>
-<typeInfo handle="=AsteriumWebServer/src&lt;com.toozo.asteriumwebserver.gamelogic.items.consumables{AbstractConsumableItem.java[AbstractConsumableItem" modifiers="1025" timestamp="1527819310000"/>
-</typeInfoHistroy>
+<typeInfoHistroy/>
