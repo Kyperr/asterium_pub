@@ -30,7 +30,6 @@ import com.toozo.asteriumwebserver.gamelogic.items.consumables.FuelCell;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.Inhaler;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.Medkit;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.ParasiteBGone;
-import com.toozo.asteriumwebserver.gamelogic.items.location.RescueBeacon;
 import com.toozo.asteriumwebserver.gamelogic.items.consumables.Syringe;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.AbstractEquipmentItem;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.EquipmentSlot;
@@ -45,6 +44,7 @@ import com.toozo.asteriumwebserver.gamelogic.items.location.ControlModule;
 import com.toozo.asteriumwebserver.gamelogic.items.location.ParasiteTestKit;
 import com.toozo.asteriumwebserver.gamelogic.items.location.PowerSupply;
 import com.toozo.asteriumwebserver.gamelogic.items.location.RadioDish;
+import com.toozo.asteriumwebserver.gamelogic.items.location.RescueBeacon;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
 import actiondata.ActionData;
@@ -100,16 +100,25 @@ public class GameState {
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 		
-		// Heal Items (40%)
-		// Exposure Items (30%)
-		// Food packs (15%)
-		// Parasite Test Kit (5%)
-		// Books (5%)
-		// Tinfoil Hat (5%)
+		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 		
-		probs.add(new ItemLoot(Bandage::new, 20, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(Medkit::new, 10, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(Syringe::new, 5, 0.0, 0.0, (state)->true));
+		// Heal Items (40%)
+		probs.add(new ItemLoot(Bandage::new, 15, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(Medkit::new, 15, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(Syringe::new, 10, 0.0, 0.0, (state)->true));
+		// Exposure Items (30%)
+		probs.add(new ItemLoot(ParasiteBGone::new, 10, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(Inhaler::new, 10, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(Antibiotics::new, 10, 0.0, 0.0, (state)->true));
+		// Food packs (15%)
+		probs.add(new ItemLoot(FoodPack::new, 15, 0.0, 0.0, (state)->true));
+		// Parasite Test Kit (5%)
+		probs.add(new ItemLoot(ParasiteTestKit::new, 15, 0.0, 0.0, (state)->true));
+		// Books (5%)
+		probs.add(new ItemLoot(Book::new, 5, 0.0, 0.0, (state)->true));
+		// Tinfoil Hat (5%)
+		probs.add(new ItemLoot(TinfoilHatEquipmentItem::new, 5, 0.0, 0.0, (state)->true));
+		
 
 		MEDBAY_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
@@ -121,15 +130,15 @@ public class GameState {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 
 		// Food (75%)
+		probs.add(new ItemLoot(FoodPack::new, 25, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(FoodCrate::new, 25, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(FoodChest::new, 25, 0.0, 0.0, (state)->true));
 		// Letterman Jacket (10%)
+		probs.add(new ItemLoot(LettermanJacketEquipmentItem::new, 10, 0.0, 0.0, (state)->true));
 		// Fuel Cell (10%)
+		probs.add(new ItemLoot(FuelCell::new, 10, 0.0, 0.0, (state)->true));
 		// Inhaler (5%)
-		
-		
-		probs.add(new ItemLoot(FoodPack::new, 60, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(FoodCrate::new, 30, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(FoodChest::new, 9, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(RescueBeacon::new, 1, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(Inhaler::new, 5, 0.0, 0.0, (state)->true));
 
 		CAFETERIA_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
@@ -141,15 +150,20 @@ public class GameState {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 
 		// Equipment (85%)
+		probs.add(new ItemLoot(TinfoilHatEquipmentItem::new, 21, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(HareyGlovesEquipmentItem::new, 21, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(HoverSkatesEquipmentItem::new, 21, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(LettermanJacketEquipmentItem::new, 22, 0.0, 0.0, (state)->true));
 		// Victory Item (2.5%)
+		probs.add(new ItemLoot(RadioDish::new, 3, 0.0, 0.0, GameState::radioConditional));
+		probs.add(new ItemLoot(PowerSupply::new, 3, 0.0, 0.0, GameState::psuConditional));
+		probs.add(new ItemLoot(ControlModule::new, 3, 0.0, 0.0, GameState::moduleConditional));
 		// Fuel (7.5%)
+		probs.add(new ItemLoot(FuelCell::new, 3, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(FuelCanister::new, 2, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(FuelBarrel::new, 2, 0.0, 0.0, (state)->true));
 		// Medkit (5%)
-		
-		probs.add(new ItemLoot(TinfoilHatEquipmentItem::new, 24, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(HareyGlovesEquipmentItem::new, 24, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(HoverSkatesEquipmentItem::new, 24, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(LettermanJacketEquipmentItem::new, 24, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(RescueBeacon::new, 4, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(Medkit::new, 5, 0.0, 0.0, (state)->true));
 
 		ARMORY_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
@@ -161,11 +175,13 @@ public class GameState {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 
 		// Books (90%)
+		probs.add(new ItemLoot(Book::new, 9, 0.0, 0.0, (state)->true));
 		// Harey Gloves (7.5%)
+		probs.add(new ItemLoot(HareyGlovesEquipmentItem::new, 8, 0.0, 0.0, (state)->true));
 		// Victory Item (2.5%)
-		
-		probs.add(new ItemLoot(Book::new, 99, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(RescueBeacon::new, 1, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(RadioDish::new, 3, 0.0, 0.0, GameState::radioConditional));
+		probs.add(new ItemLoot(PowerSupply::new, 3, 0.0, 0.0, GameState::psuConditional));
+		probs.add(new ItemLoot(ControlModule::new, 3, 0.0, 0.0, GameState::moduleConditional));
 
 		LIBRARY_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
