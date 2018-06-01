@@ -21,12 +21,15 @@ public class UseItemRequestData extends AbstractRequestActionData {
 	private Collection<String> targets;
 	private ItemData item;
 	private boolean isCommunal;
+	private boolean isEquipped;
 
-	public UseItemRequestData(final Collection<String> targets, final ItemData item, final boolean isCommunal) {
+	public UseItemRequestData(final Collection<String> targets, final ItemData item, 
+							  final boolean isCommunal, final boolean isEquipped) {
 		super(ActionData.USE_ITEM);
 		this.targets = targets;
 		this.item = item;
 		this.isCommunal = isCommunal;
+		this.isEquipped = isEquipped;
 	}
 
 	public final Collection<String> getTargets() {
@@ -39,6 +42,9 @@ public class UseItemRequestData extends AbstractRequestActionData {
 
 	public final boolean getIsCommunal() {
 		return this.isCommunal;
+	}
+	public boolean getIsEquipped() {
+		return this.isEquipped;
 	}
 
 	@Override
@@ -54,6 +60,8 @@ public class UseItemRequestData extends AbstractRequestActionData {
 		data.put(ActionData.ITEM, this.item.jsonify());
 
 		data.put(ActionData.IS_COMMUNAL, this.isCommunal);
+		
+		data.put(ActionData.IS_EQUIPPED, this.isEquipped);
 
 		return data;
 	}
@@ -80,7 +88,10 @@ public class UseItemRequestData extends AbstractRequestActionData {
 		ItemData item = new ItemData(itemID);
 
 		boolean isCommunal = jsonObj.getBoolean(ActionData.IS_COMMUNAL);
+		
+		boolean isEquipped = jsonObj.getBoolean(ActionData.IS_EQUIPPED);
 
-		return new UseItemRequestData(targets, item, isCommunal);
+		return new UseItemRequestData(targets, item, isCommunal, isEquipped);
 	}
+
 }

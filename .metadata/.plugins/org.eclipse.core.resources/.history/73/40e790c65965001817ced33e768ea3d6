@@ -1,0 +1,29 @@
+package com.toozo.asteriumwebserver.gamelogic.statuseffects;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
+
+import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
+import com.toozo.asteriumwebserver.gamelogic.Stat;
+
+public class LowerHealth extends AffectStats {
+	public static final String NAME = "Health Lowered";
+	
+	private 
+	public LowerHealth(PlayerCharacter owner, int amount, boolean becauseStarving) {
+		super(owner);
+		// TODO Auto-generated constructor stub
+	}
+
+	public LowerHealth(PlayerCharacter owner, String name, int duration) {
+		super(owner, name, duration, statModifiers);
+		// TODO Auto-generated constructor stub
+	}
+	
+	private Map<Stat, Function<Integer, Integer>> getLowerHealthMap(int amount) {
+		Map<Stat, Function<Integer, Integer>> result = new HashMap<Stat, Function<Integer, Integer>>();
+		result.put(Stat.HEALTH, (x) -> (x - amount));
+		return result;
+	}
+}

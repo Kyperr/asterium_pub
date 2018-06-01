@@ -77,6 +77,7 @@ public interface ActionData {
 	public static final String TYPE = "type";
 	public static final String ITEM = "item";
 	public static final String IS_COMMUNAL = "is_communal";
+	public static final String IS_EQUIPPED = "is_equipped";
 	public static final String USER = "user";
 	public static final String TARGETS = "targets";
 	public static final String ITEM_ID = "item_id";
