@@ -391,9 +391,7 @@ public class GameState {
 	}
 
 	private static final void initiateTurnResolvePhase(GameState state) {
-		System.out.println("Day before update: "+ state.getDay());
 		state.setDay(state.getDay() + 1);
-		System.out.println("Day updated: "+ state.getDay());
 
 		state.game.setAllCharactersNotReady();
 
@@ -834,7 +832,7 @@ public class GameState {
 		String oldMessage;
 		boolean added = false;
 		
-		for (i = this.communalSummary.size() - 1; i >= 0; i--) {
+		for (i = this.communalSummary.size(); i >= 0; i--) {
 			oldMessage = this.communalSummary.get(i);
 			if (oldMessage.equals(message)) {
 				// If basic message exists in list, add "message x2".
