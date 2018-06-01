@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -73,7 +75,7 @@ public class GameState {
 	public static final String FUEL_VC_NAME = "Out of Fuel";
 	public static final String PARASITES_VC_NAME = "All Humans Turned to Parasites";
 	public static final String UNDISCOVERED_VC_NAME = "Parasite Escaped Undiscovered";
-	
+
 	public static final boolean VERBOSE = true;
 
 	// LOOT POOLS
@@ -82,7 +84,7 @@ public class GameState {
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 
-		probs.add(new ItemLoot(RescueBeacon::new, 100, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(RescueBeacon::new, 100, 0.0, 0.0, (state) -> true));
 
 		CONTROL_ROOM_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
@@ -93,10 +95,10 @@ public class GameState {
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 
-		probs.add(new ItemLoot(Bandage::new, 60, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(Medkit::new, 30, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(Syringe::new, 9, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(RescueBeacon::new, 1, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(Bandage::new, 60, 0.0, 0.0, (state) -> true));
+		probs.add(new ItemLoot(Medkit::new, 30, 0.0, 0.0, (state) -> true));
+		probs.add(new ItemLoot(Syringe::new, 9, 0.0, 0.0, (state) -> true));
+		probs.add(new ItemLoot(RescueBeacon::new, 1, 0.0, 0.0, (state) -> true));
 
 		MEDBAY_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
@@ -107,10 +109,10 @@ public class GameState {
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 
-		probs.add(new ItemLoot(FoodPack::new, 60, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(FoodCrate::new, 30, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(FoodChest::new, 9, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(RescueBeacon::new, 1, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(FoodPack::new, 60, 0.0, 0.0, (state) -> true));
+		probs.add(new ItemLoot(FoodCrate::new, 30, 0.0, 0.0, (state) -> true));
+		probs.add(new ItemLoot(FoodChest::new, 9, 0.0, 0.0, (state) -> true));
+		probs.add(new ItemLoot(RescueBeacon::new, 1, 0.0, 0.0, (state) -> true));
 
 		CAFETERIA_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
@@ -121,11 +123,11 @@ public class GameState {
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 
-		probs.add(new ItemLoot(TinfoilHatEquipmentItem::new, 24, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(HareyGlovesEquipmentItem::new, 24, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(HoverSkatesEquipmentItem::new, 24, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(LettermanJacketEquipmentItem::new, 24, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(RescueBeacon::new, 4, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(TinfoilHatEquipmentItem::new, 24, 0.0, 0.0, (state) -> true));
+		probs.add(new ItemLoot(HareyGlovesEquipmentItem::new, 24, 0.0, 0.0, (state) -> true));
+		probs.add(new ItemLoot(HoverSkatesEquipmentItem::new, 24, 0.0, 0.0, (state) -> true));
+		probs.add(new ItemLoot(LettermanJacketEquipmentItem::new, 24, 0.0, 0.0, (state) -> true));
+		probs.add(new ItemLoot(RescueBeacon::new, 4, 0.0, 0.0, (state) -> true));
 
 		ARMORY_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
@@ -136,8 +138,8 @@ public class GameState {
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 
-		probs.add(new ItemLoot(Book::new, 99, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(RescueBeacon::new, 1, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(Book::new, 99, 0.0, 0.0, (state) -> true));
+		probs.add(new ItemLoot(RescueBeacon::new, 1, 0.0, 0.0, (state) -> true));
 
 		LIBRARY_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
@@ -148,9 +150,9 @@ public class GameState {
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 
-		probs.add(new ItemLoot(FuelCanister::new, 30, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(FuelBarrel::new, 10, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(RescueBeacon::new, 60, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(FuelCanister::new, 30, 0.0, 0.0, (state) -> true));
+		probs.add(new ItemLoot(FuelBarrel::new, 10, 0.0, 0.0, (state) -> true));
+		probs.add(new ItemLoot(RescueBeacon::new, 60, 0.0, 0.0, (state) -> true));
 
 		ENGINE_ROOM_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
@@ -161,10 +163,10 @@ public class GameState {
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 
-		probs.add(new ItemLoot(FuelCell::new, 50, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(FuelCanister::new, 25, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(FuelBarrel::new, 10, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(RescueBeacon::new, 15, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(FuelCell::new, 50, 0.0, 0.0, (state) -> true));
+		probs.add(new ItemLoot(FuelCanister::new, 25, 0.0, 0.0, (state) -> true));
+		probs.add(new ItemLoot(FuelBarrel::new, 10, 0.0, 0.0, (state) -> true));
+		probs.add(new ItemLoot(RescueBeacon::new, 15, 0.0, 0.0, (state) -> true));
 
 		VEHICLE_BAY_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
@@ -175,10 +177,10 @@ public class GameState {
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 
-		probs.add(new ItemLoot(FuelCell::new, 50, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(FuelCanister::new, 25, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(FuelBarrel::new, 10, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(RescueBeacon::new, 15, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(FuelCell::new, 50, 0.0, 0.0, (state) -> true));
+		probs.add(new ItemLoot(FuelCanister::new, 25, 0.0, 0.0, (state) -> true));
+		probs.add(new ItemLoot(FuelBarrel::new, 10, 0.0, 0.0, (state) -> true));
+		probs.add(new ItemLoot(RescueBeacon::new, 15, 0.0, 0.0, (state) -> true));
 
 		DORMS_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
@@ -189,10 +191,10 @@ public class GameState {
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 
-		probs.add(new ItemLoot(FuelCell::new, 50, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(FuelCanister::new, 25, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(FuelBarrel::new, 10, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(RescueBeacon::new, 15, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(FuelCell::new, 50, 0.0, 0.0, (state) -> true));
+		probs.add(new ItemLoot(FuelCanister::new, 25, 0.0, 0.0, (state) -> true));
+		probs.add(new ItemLoot(FuelBarrel::new, 10, 0.0, 0.0, (state) -> true));
+		probs.add(new ItemLoot(RescueBeacon::new, 15, 0.0, 0.0, (state) -> true));
 
 		HYDROPONICS_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
@@ -203,10 +205,10 @@ public class GameState {
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
 
-		probs.add(new ItemLoot(FuelCell::new, 50, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(FuelCanister::new, 25, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(FuelBarrel::new, 10, 0.0, 0.0, (state)->true));
-		probs.add(new ItemLoot(RescueBeacon::new, 15, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(FuelCell::new, 50, 0.0, 0.0, (state) -> true));
+		probs.add(new ItemLoot(FuelCanister::new, 25, 0.0, 0.0, (state) -> true));
+		probs.add(new ItemLoot(FuelBarrel::new, 10, 0.0, 0.0, (state) -> true));
+		probs.add(new ItemLoot(RescueBeacon::new, 15, 0.0, 0.0, (state) -> true));
 
 		RESEARCH_ITEM_LOOT = Collections.unmodifiableList(probs);
 	}
@@ -361,14 +363,12 @@ public class GameState {
 		state.food = STARTING_FOOD_PER_PLAYER * state.game.getPlayers().size();
 		state.fuel = STARTING_FUEL;
 		state.day = STARTING_DAY;
-		state.addVictoryCondition(new VictoryCondition(BEACON_VC_NAME, 
-													   VictoryCondition::getBeaconProgress, false));
-		state.addVictoryCondition(new VictoryCondition(FUEL_VC_NAME,
-													   VictoryCondition::getFuelProgress, true));
-		state.addVictoryCondition(new VictoryCondition(PARASITES_VC_NAME,
-													   VictoryCondition::areAllPlayersParasites, true));
-		state.addVictoryCondition(new VictoryCondition(UNDISCOVERED_VC_NAME,
-													   VictoryCondition::isParasiteUndiscovered, true));
+		state.addVictoryCondition(new VictoryCondition(BEACON_VC_NAME, VictoryCondition::getBeaconProgress, false));
+		state.addVictoryCondition(new VictoryCondition(FUEL_VC_NAME, VictoryCondition::getFuelProgress, true));
+		state.addVictoryCondition(
+				new VictoryCondition(PARASITES_VC_NAME, VictoryCondition::areAllPlayersParasites, true));
+		state.addVictoryCondition(
+				new VictoryCondition(UNDISCOVERED_VC_NAME, VictoryCondition::isParasiteUndiscovered, true));
 
 		if (VERBOSE) {
 			System.out.println("Game initialized. Starting game...");
@@ -411,25 +411,26 @@ public class GameState {
 		Location.initVisitedLocations(locations.values());
 
 		List<String> playerMessages = new ArrayList<String>();
-		
+
 		// Use resources
 		int numberOfPlayers = state.game.getPlayers().size();
 		boolean starving = state.getFood() <= 0;
 		int foodToConsume = Math.min(FOOD_DECREMENT_PER_PLAYER * numberOfPlayers, state.getFood());
 		int fuelToConsume = Math.min(FUEL_DECREMENT, state.getFuel());
-		
+
 		state.setFood(state.getFood() - foodToConsume);
 		state.setFuel(state.getFuel() - fuelToConsume);
-		
+
 		if (!starving) {
-			playerMessages.add(String.format("You consumed %d food.", (int) Math.floor(foodToConsume / numberOfPlayers)));
+			playerMessages
+					.add(String.format("You consumed %d food.", (int) Math.floor(foodToConsume / numberOfPlayers)));
 		} else {
 			playerMessages.add(String.format("You took %d damage from hunger.", STARVING_HEALTH_SUBTRACTED));
 		}
-		
+
 		state.addSummaryMessage(foodToConsume + " food was consumed.");
 		state.addSummaryMessage(fuelToConsume + " fuel was used.");
-		
+
 		// Add playerMessages to all PC's summaries
 		for (PlayerCharacter character : state.getCharacters()) {
 			if (starving) {
@@ -446,11 +447,12 @@ public class GameState {
 		VictoryCondition lastVC = null;
 		VictoryCondition vc = null;
 		List<VictoryCondition> victoryConditions = state.getVictoryConditions();
-		
-		// Iterate over VCs, looking for complete VCs and keeping track of the last complete VC.
+
+		// Iterate over VCs, looking for complete VCs and keeping track of the last
+		// complete VC.
 		for (int i = 0; i < victoryConditions.size(); i++) {
 			vc = victoryConditions.get(i);
-			
+
 			if (vc.isComplete(state)) {
 				state.setGameOver(true);
 				lastVC = vc;
@@ -459,7 +461,7 @@ public class GameState {
 
 		if (state.gameOver() && lastVC != null) { // GAME OVER
 			state.clearSummary();
-			
+
 			String lastVCname = lastVC.getName();
 			if (VERBOSE) {
 				System.out.println(String.format("Game complete. Victory condition: %s.", lastVCname));
@@ -522,7 +524,7 @@ public class GameState {
 
 	private static final void initiateTurnSummaryPhase(GameState state) {
 		GameState.summarizePlayers(state);
-		
+
 		try {
 			GameState.summarizeGameBoards(state);
 		} catch (IOException e) {
@@ -551,7 +553,7 @@ public class GameState {
 			e.printStackTrace();
 		}
 		GameState.summarizePlayers(state);
-		
+
 		state.setGamePhase(GamePhase.GAME_OVER);
 		state.executePhase();
 	}
@@ -568,11 +570,11 @@ public class GameState {
 			auth = player.getAuthToken();
 			character = state.getCharacter(auth);
 			List<String> summary = character.getTurnSummary();
-			
+
 			if (!summary.isEmpty()) {
 				data = new TurnSummaryRequestData(summary);
 				request = new Request(data, auth);
-	
+
 				try {
 					session = SessionManager.getInstance().getSession(auth);
 					synchronized (session) {
@@ -581,7 +583,7 @@ public class GameState {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-	
+
 				character.clearSummary();
 			}
 		}
@@ -592,13 +594,13 @@ public class GameState {
 		TurnSummaryRequestData data;
 		Request request;
 		Session session;
-		
+
 		if (!state.communalSummary.isEmpty()) {
 			for (GameBoard gameBoard : state.game.getGameBoards()) {
 				auth = gameBoard.getAuthToken();
 				data = new TurnSummaryRequestData(state.communalSummary);
 				request = new Request(data, auth);
-	
+
 				try {
 					session = SessionManager.getInstance().getSession(auth);
 					synchronized (session) {
@@ -608,7 +610,7 @@ public class GameState {
 					e.printStackTrace();
 				}
 			}
-	
+
 			state.clearSummary();
 		}
 	}
@@ -794,8 +796,17 @@ public class GameState {
 		return GameState.locations.get(locationID);
 	}
 
-	public Set<String> getMapLocations() {
-		return GameState.locations.keySet();
+	public List<String> getMapLocations() {
+		List<String> stringInOrder = new ArrayList<String>();
+		GameState.locations.keySet().stream().sorted(new Comparator<String>() {
+
+			@Override
+			public int compare(String o1, String o2) {
+				return GameState.locations.get(o2).getCost() - GameState.locations.get(o1).getCost();
+				
+			}
+		}).forEach((string) -> {stringInOrder.add(string);});
+		return stringInOrder;
 	}
 
 	public Location getAtMapLocation(String mapLocation) {
@@ -805,19 +816,19 @@ public class GameState {
 	public List<String> getSummary() {
 		return new ArrayList<String>(this.communalSummary.size());
 	}
-	
+
 	public boolean radioDishUsed() {
 		return this.radioDishUsed;
 	}
-	
+
 	public boolean powerSupplyUsed() {
 		return this.powerSupplyUsed;
 	}
-	
+
 	public boolean controlModuleUsed() {
 		return this.controlModuleUsed;
 	}
-	
+
 	public boolean rescueBeaconUsed() {
 		return this.rescueBeaconUsed;
 	}
@@ -827,19 +838,19 @@ public class GameState {
 	public void setRadioDishUsed(boolean isUsed) {
 		this.radioDishUsed = isUsed;
 	}
-	
+
 	public void setPowerSupplyUsed(boolean isUsed) {
 		this.powerSupplyUsed = isUsed;
 	}
-	
+
 	public void setControlModuleUsed(boolean isUsed) {
 		this.controlModuleUsed = isUsed;
 	}
-	
+
 	public void setRescueBeaconUsed(boolean isUsed) {
 		this.rescueBeaconUsed = isUsed;
 	}
-	
+
 	/**
 	 * Set the current {@link GamePhase} to newGamePhase.
 	 * 
@@ -893,7 +904,7 @@ public class GameState {
 		int i, j;
 		String oldMessage;
 		boolean added = false;
-		
+
 		for (i = this.communalSummary.size() - 1; i >= 0; i--) {
 			oldMessage = this.communalSummary.get(i);
 			if (oldMessage.equals(message)) {
@@ -903,10 +914,11 @@ public class GameState {
 				added = true;
 			} else if (oldMessage.matches(String.format("%s \\(x([0-9]+)\\)", message))) {
 				// If repeated message exists in list, add "message x[repeatNumber + 1]".
-				
+
 				// == Get repeatNumber ==
 				// Move j to index of the x
-				for (j = oldMessage.length() - 2; Character.isDigit(oldMessage.charAt(j)); j--);
+				for (j = oldMessage.length() - 2; Character.isDigit(oldMessage.charAt(j)); j--)
+					;
 				// Get number from j+1 to end of string
 				try {
 					repeatNumber = Integer.parseInt(oldMessage.substring(j + 1, oldMessage.length() - 1));
@@ -915,7 +927,7 @@ public class GameState {
 					repeatNumber = 1;
 				}
 				// ======================
-				
+
 				if (repeatNumber > 1) {
 					this.communalSummary.remove(i);
 					this.communalSummary.add(String.format(MULTIPLE_SUMMARY_FORMAT, message, repeatNumber));
@@ -923,7 +935,7 @@ public class GameState {
 				}
 			}
 		}
-		
+
 		if (!added) {
 			// Message did not exist.
 			this.communalSummary.add(message);
@@ -1014,7 +1026,7 @@ public class GameState {
 		}
 
 	}
-	
+
 	public final void syncGameBoards() {
 		try {
 			GameState.syncGameBoards(this);
