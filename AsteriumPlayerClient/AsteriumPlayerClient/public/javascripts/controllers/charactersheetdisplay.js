@@ -8,6 +8,13 @@ function CharacterSheetDisplayController() {
     this.statDiv = document.createElement("div");
     this.loadoutDiv = document.createElement("div");
     this.exposureDiv = document.createElement("div");
+
+    //buttons
+    this.unequipHead = document.createElement("BUTTON");
+    this.unequipTorso = document.createElement("BUTTON");
+    this.unequipLegs = document.createElement("BUTTON");
+    this.unequipArms = document.createElement("BUTTON");
+
     this.init();
 }
 
@@ -19,6 +26,15 @@ CharacterSheetDisplayController.prototype.init = function () {
     this.statDiv.setAttribute("class", "grid-container");
     this.loadoutDiv.setAttribute("class", "grid-container");
     this.exposureDiv.setAttribute("class", "exposure");
+    
+    this.unequipHead.innerHTML = "UNEQUIP";
+    this.unequipHead.setAttribute("class", "button");
+    this.unequipTorso.innerHTML = "UNEQUIP";
+    this.unequipTorso.setAttribute("class", "button");
+    this.unequipLegs.innerHTML = "UNEQUIP";
+    this.unequipLegs.setAttribute("class", "button");
+    this.unequipArms.innerHTML = "UNEQUIP";
+    this.unequipArms.setAttribute("class", "button");
 }
 
 CharacterSheetDisplayController.prototype.update = function () {
@@ -73,6 +89,8 @@ CharacterSheetDisplayController.prototype.update = function () {
         headImage.src = "images/helmet.png";
         headDiv.appendChild(headImage);
         headDiv.innerHTML += headGear.item_name;
+        this.unequipHead.onclick = function(){unequip(headGear)};
+        headDiv.appendChild(this.unequipHead);
     } else {
         var nothingEq = document.createElement("div");
         nothingEq.setAttribute("class", "small");
@@ -92,6 +110,8 @@ CharacterSheetDisplayController.prototype.update = function () {
         chestImage.src = "images/chest.png";
         torsoDiv.appendChild(chestImage);
         torsoDiv.innerHTML += torsoGear.item_name;
+        this.unequipTorso.onclick = function(){unequip(torsoGear)};
+        torsoDiv.appendChild(this.unequipTorso);
     } else {
         var nothingEq = document.createElement("div");
         nothingEq.setAttribute("class", "small");
@@ -111,6 +131,8 @@ CharacterSheetDisplayController.prototype.update = function () {
         legsImage.src = "images/arms.png";
         armsDiv.appendChild(legsImage);
         armsDiv.innerHTML += armsGear.item_name;
+        this.unequipArms.onclick = function(){unequip(armsGear)};
+        armsDiv.appendChild(this.unequipArms);
     } else {
         var nothingEq = document.createElement("div");
         nothingEq.setAttribute("class", "small");
@@ -130,7 +152,9 @@ CharacterSheetDisplayController.prototype.update = function () {
         legsImage.src = "images/legs.png";
         legsDiv.appendChild(legsImage);
         legsDiv.innerHTML += legsGear.item_name;
-    }else {
+        this.unequipLegs.onclick = function(){unequip(legsGear)};
+        legsDiv.appendChild(this.unequipLegs);
+    } else {
         var nothingEq = document.createElement("div");
         nothingEq.setAttribute("class", "small");
         nothingEq.innerHTML += "Nothing Equipped";

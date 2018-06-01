@@ -163,6 +163,8 @@ ViewInventoryDisplayController.prototype.selectInventory = function (inventory, 
         this.modalContent.appendChild(this.modalUse);
     }
 
+    this.modalContent.appendChild(this.modalMoveToOther);
+    
     if (isCommunal) {
         this.modalMoveToOther.innerHTML = "Move To Personal";
         this.modalMoveToOther.onclick = function () {
@@ -176,7 +178,6 @@ ViewInventoryDisplayController.prototype.selectInventory = function (inventory, 
         }
     }
 
-    this.modalContent.appendChild(this.modalMoveToOther);
     this.modalContent.appendChild(this.modalClose);
 
     this.modal.style.display = "block";

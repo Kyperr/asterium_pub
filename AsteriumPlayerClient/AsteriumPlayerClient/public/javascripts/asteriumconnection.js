@@ -184,6 +184,43 @@ function useItemAction(item, targets, isCommunal) {//Should use itemID later.
                             "item": {
                                 "item_id": item.item_name
                             },
+                            "is_equipped":false,
+                            "targets": targets,
+                            "is_communal": isCommunal
+                        },
+                    "auth_token": getAuthToken(),
+                    "message_id": uuid
+                }
+        }
+    socket.send(JSON.stringify(message));
+    responseActions[uuid] = processUseItemResponse;
+}
+
+function unequip(item) {//Should use itemID later.  
+
+    var targets = [user];
+    var isCommunal = false;
+
+    console.log("Sending use-item!");
+
+    //Ew, remove this after the MVP
+    if (item.item_name == "Rescue Beacon") {
+        usedTheBeacon = true;
+    }
+
+
+    var uuid = genUUID();
+    message =
+        {
+            "request":
+                {
+                    "action_name": "use_item",
+                    "use_item":
+                        {
+                            "item": {
+                                "item_id": item.item_name
+                            },
+                            "is_equipped":true,
                             "targets": targets,
                             "is_communal": isCommunal
                         },
