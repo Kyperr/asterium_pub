@@ -10,7 +10,6 @@ import com.toozo.asteriumwebserver.gamelogic.Inventory;
 import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 import com.toozo.asteriumwebserver.gamelogic.Stat;
 import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
-import com.toozo.asteriumwebserver.gamelogic.statuseffects.AbstractStatusEffect;
 import com.toozo.asteriumwebserver.gamelogic.statuseffects.AffectStats;
 
 /**
@@ -96,7 +95,6 @@ public abstract class AbstractEquipmentItem extends AbstractItem {
 		equipper.getEquipment().equip(this);
 		equipper.addSummaryMessage(String.format(EQUIP_MESSAGE, this.getName()));
 		
-		// Add effect of this item
 		Map<Stat, Function<Integer, Integer>> statModifiers = new HashMap<Stat, Function<Integer, Integer>>();
 		for (Stat stat : this.boosts.keySet()) {
 			statModifiers.put(stat, (oldStat) -> (oldStat + this.boosts.get(stat)));
@@ -127,16 +125,7 @@ public abstract class AbstractEquipmentItem extends AbstractItem {
 			if (this == equipperEquipment.itemIn(mySlot) && !equipperInventory.isFull()) {
 				equipper.addSummaryMessage(String.format(UNEQUIP_MESSAGE, this.getName()));
 				this.setEquipped(false);
-				boolean result = equipperInventory.add(equipperEquipment.removeFrom(mySlot));
-				if (result) {
-					for (AbstractStatusEffect se : equipper.getStatusEffects()) {
-						if (se.getName().equals(this.statusEffectName)) {
-							equipper.removeStatusEffect(se);
-							break;
-						}
-					}
-				}
-				return result;
+				return equipperInventory.add(equipperEquipment.removeFrom(mySlot));
 			}
 		}
 

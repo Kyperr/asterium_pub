@@ -418,8 +418,8 @@ public class GameState {
 		state.setFood(state.getFood() - foodToConsume);
 		state.setFuel(state.getFuel() - fuelToConsume);
 		
-		if (!starving) {
-			playerMessages.add(String.format("You consumed %d food.", (int) Math.floor(foodToConsume / numberOfPlayers)));
+		if (starving) {
+			playerMessages.add(String.format("You consumed %d food.", Math.floor(foodToConsume / numberOfPlayers)));
 		} else {
 			playerMessages.add(String.format("You took %d damage from hunger.", STARVING_HEALTH_SUBTRACTED));
 		}

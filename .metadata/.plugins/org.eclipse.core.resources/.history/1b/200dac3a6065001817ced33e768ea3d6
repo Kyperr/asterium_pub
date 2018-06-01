@@ -132,7 +132,6 @@ public abstract class AbstractEquipmentItem extends AbstractItem {
 					for (AbstractStatusEffect se : equipper.getStatusEffects()) {
 						if (se.getName().equals(this.statusEffectName)) {
 							equipper.removeStatusEffect(se);
-							break;
 						}
 					}
 				}

@@ -10,7 +10,6 @@ import com.toozo.asteriumwebserver.gamelogic.Inventory;
 import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
 import com.toozo.asteriumwebserver.gamelogic.Stat;
 import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
-import com.toozo.asteriumwebserver.gamelogic.statuseffects.AbstractStatusEffect;
 import com.toozo.asteriumwebserver.gamelogic.statuseffects.AffectStats;
 
 /**
@@ -130,10 +129,7 @@ public abstract class AbstractEquipmentItem extends AbstractItem {
 				boolean result = equipperInventory.add(equipperEquipment.removeFrom(mySlot));
 				if (result) {
 					for (AbstractStatusEffect se : equipper.getStatusEffects()) {
-						if (se.getName().equals(this.statusEffectName)) {
-							equipper.removeStatusEffect(se);
-							break;
-						}
+						if se.
 					}
 				}
 				return result;

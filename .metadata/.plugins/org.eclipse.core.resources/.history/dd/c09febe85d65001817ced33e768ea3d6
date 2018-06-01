@@ -418,8 +418,8 @@ public class GameState {
 		state.setFood(state.getFood() - foodToConsume);
 		state.setFuel(state.getFuel() - fuelToConsume);
 		
-		if (!starving) {
-			playerMessages.add(String.format("You consumed %d food.", (int) Math.floor(foodToConsume / numberOfPlayers)));
+		if (starving) {
+			playerMessages.add(String.format("You consumed %d food.", Math.floor(foodToConsume / numberOfPlayers)));
 		} else {
 			playerMessages.add(String.format("You took %d damage from hunger.", STARVING_HEALTH_SUBTRACTED));
 		}
@@ -455,8 +455,6 @@ public class GameState {
 		}
 
 		if (state.gameOver() && lastVC != null) { // GAME OVER
-			state.clearSummary();
-			
 			String lastVCname = lastVC.getName();
 			if (VERBOSE) {
 				System.out.println(String.format("Game complete. Victory condition: %s.", lastVCname));
@@ -475,7 +473,6 @@ public class GameState {
 
 			// Add end summary message for each Player.
 			for (PlayerCharacter character : state.getCharacters()) {
-				character.clearSummary();
 				if (character.isParasite()) {
 					if (forHumans) {
 						character.addSummaryMessage(String.format(PARASITE_LOSS_MESSAGE, lastVCname));
