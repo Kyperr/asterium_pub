@@ -27,6 +27,7 @@ public abstract class AbstractEquipmentItem extends AbstractItem {
 	private boolean isEquipped;
 	private EquipmentSlot equipmentType;
 	private Map<Stat, Integer> boosts;
+	private String statusEffectName;
 	// ==================
 
 	// ===== CONSTRUCTORS =====
@@ -41,6 +42,7 @@ public abstract class AbstractEquipmentItem extends AbstractItem {
 		super(name, description, flavor, image, false);
 		this.equipmentType = equipmentType;
 		this.boosts = boosts;
+		this.statusEffectName = this.getName() + " Equipped";
 	}
 	// ========================
 
@@ -84,8 +86,7 @@ public abstract class AbstractEquipmentItem extends AbstractItem {
 		for (Stat stat : this.boosts.keySet()) {
 			statModifiers.put(stat, (oldStat) -> (oldStat + this.boosts.get(stat)));
 		}
-		String name = this.getName() + " Equipped";
-		AffectStats effect = new AffectStats(user, name, statModifiers);
+		AffectStats effect = new AffectStats(user, this.statusEffectName, statModifiers);
 		user.addStatusEffect(effect);
 	}
 

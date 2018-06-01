@@ -15,6 +15,7 @@ import java.util.function.Consumer;
 import javax.websocket.Session;
 
 import com.toozo.asteriumwebserver.gamelogic.Location.LocationType;
+import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter.StatBlock;
 import com.toozo.asteriumwebserver.gamelogic.items.AbstractItem;
 import com.toozo.asteriumwebserver.gamelogic.items.ItemLoot;
 import com.toozo.asteriumwebserver.gamelogic.items.LootPool;
@@ -37,6 +38,7 @@ import com.toozo.asteriumwebserver.gamelogic.items.equipment.Loadout;
 import com.toozo.asteriumwebserver.gamelogic.items.equipment.TinfoilHatEquipmentItem;
 import com.toozo.asteriumwebserver.gamelogic.items.location.AbstractLocationItem;
 import com.toozo.asteriumwebserver.gamelogic.items.location.Book;
+import com.toozo.asteriumwebserver.gamelogic.statuseffects.LowerHealth;
 import com.toozo.asteriumwebserver.sessionmanager.SessionManager;
 
 import actiondata.ActionData;
@@ -57,6 +59,7 @@ public class GameState {
 	// ===== CONSTANTS & ENUMS =====
 	public static final int STARTING_FOOD_PER_PLAYER = 5;
 	public static final int FOOD_DECREMENT_PER_PLAYER = 1;
+	public static final int STARVING_HEALTH_SUBTRACTED = 1;
 	public static final int STARTING_FUEL = 100;
 	public static final int FUEL_DECREMENT = 10;
 	public static final int STARTING_DAY = 0;
@@ -224,7 +227,7 @@ public class GameState {
 
 		END_SUMMARY(GameState::initiateEndSummaryPhase),
 
-		START_SUMMARY(game -> {
+		GAME_OVER(game -> {
 
 		});
 
@@ -405,17 +408,32 @@ public class GameState {
 		Location.initVisitedLocations(locations.values());
 
 		List<String> playerMessages = new ArrayList<String>();
-
+		
 		// Use resources
-		int foodToConsume = FOOD_DECREMENT_PER_PLAYER * state.game.getPlayers().size();
-		state.setFood(state.getFood() - (foodToConsume));
-		state.setFuel(state.getFuel() - FUEL_DECREMENT);
-		playerMessages.add("You consumed " + FOOD_DECREMENT_PER_PLAYER + " food.");
+		int numberOfPlayers = state.game.getPlayers().size();
+		boolean starving = state.getFood() <= 0;
+		int foodToConsume = Math.min(FOOD_DECREMENT_PER_PLAYER * numberOfPlayers, state.getFood());
+		int fuelToConsume = Math.min(FUEL_DECREMENT, state.getFuel());
+		
+		state.setFood(state.getFood() - foodToConsume);
+		state.setFuel(state.getFuel() - fuelToConsume);
+		
+		if (!starving) {
+			playerMessages.add(String.format("You consumed %d food.", (int) Math.floor(foodToConsume / numberOfPlayers)));
+		} else {
+			playerMessages.add(String.format("You took %d damage from hunger.", STARVING_HEALTH_SUBTRACTED));
+		}
+		
 		state.addSummaryMessage(foodToConsume + " food was consumed.");
-		state.addSummaryMessage(FUEL_DECREMENT + " fuel was used.");
-
+		state.addSummaryMessage(fuelToConsume + " fuel was used.");
+		
 		// Add playerMessages to all PC's summaries
 		for (PlayerCharacter character : state.getCharacters()) {
+			if (starving) {
+				StatBlock newStats = character.getBaseStats();
+				newStats.setStat(Stat.HEALTH, Math.max(newStats.getStat(Stat.HEALTH) - 1, 0));
+				character.setStats(newStats);
+			}
 			for (String message : playerMessages) {
 				character.addSummaryMessage(message);
 			}
@@ -437,6 +455,8 @@ public class GameState {
 		}
 
 		if (state.gameOver() && lastVC != null) { // GAME OVER
+			state.clearSummary();
+			
 			String lastVCname = lastVC.getName();
 			if (VERBOSE) {
 				System.out.println(String.format("Game complete. Victory condition: %s.", lastVCname));
@@ -455,6 +475,7 @@ public class GameState {
 
 			// Add end summary message for each Player.
 			for (PlayerCharacter character : state.getCharacters()) {
+				character.clearSummary();
 				if (character.isParasite()) {
 					if (forHumans) {
 						character.addSummaryMessage(String.format(PARASITE_LOSS_MESSAGE, lastVCname));
@@ -527,6 +548,9 @@ public class GameState {
 			e.printStackTrace();
 		}
 		GameState.summarizePlayers(state);
+		
+		state.setGamePhase(GamePhase.GAME_OVER);
+		state.executePhase();
 	}
 
 	private static final void summarizePlayers(GameState state) {

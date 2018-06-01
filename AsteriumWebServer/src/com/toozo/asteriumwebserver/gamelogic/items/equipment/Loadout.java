@@ -2,6 +2,7 @@ package com.toozo.asteriumwebserver.gamelogic.items.equipment;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
@@ -14,7 +15,7 @@ import com.toozo.asteriumwebserver.gamelogic.PlayerCharacter;
  * 
  * @author Greg Schmitt
  */
-public class Loadout {
+public class Loadout implements Iterable<AbstractEquipmentItem> {
 	// ===== CONSTANTS =====
 	public static final String OWNER_ERROR = "NULL OWNER PASSED TO LOADOUT CONSTRUCTOR";
 	// =====================
@@ -126,6 +127,20 @@ public class Loadout {
 	}
 	
 	/**
+	 * Removes the item from this loadout, if this item is equipped in this loadout.
+	 * 
+	 * @param item The loadout from which this item should be removed.
+	 */
+	public void unequip(AbstractEquipmentItem item) {
+		EquipmentSlot slot = item.getType();
+		if (this.itemIn(slot) == item) {
+			this.removeFrom(slot);
+			this.owner.getInventory().add(item);
+			item.setEquipped(false);
+		}
+	}
+	
+	/**
 	 * Removes and returns the {@link AbstractEquipmentItem} (if any) from the appropriate slot.
 	 * 
 	 * @param slot The slot from which the {@link AbstractEquipmentItem} should be removed.
@@ -140,5 +155,11 @@ public class Loadout {
 		
 		return result;
 	}
+	
+	@Override
+	public Iterator<AbstractEquipmentItem> iterator() {
+		return this.slots.values().iterator();
+	}
 	// ===================
+
 }
