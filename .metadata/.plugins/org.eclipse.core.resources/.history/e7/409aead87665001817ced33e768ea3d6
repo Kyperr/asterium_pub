@@ -286,7 +286,19 @@ public class GameState {
 	public static final List<ItemLoot> RESEARCH_ITEM_LOOT;
 	static {
 		List<ItemLoot> probs = new ArrayList<ItemLoot>();
-		
+
+		// Test kit (15%)
+		// Victory (15%)
+		// Exposure (20%)
+
+		// Food
+		probs.add(new ItemLoot(FoodPack::new, 10, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(FoodCrate::new, 5, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(FoodChest::new, 5, 0.0, 0.0, (state)->true));
+		// Fuel
+		probs.add(new ItemLoot(FuelCell::new, 10, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(FuelCanister::new, 5, 0.0, 0.0, (state)->true));
+		probs.add(new ItemLoot(FuelBarrel::new, 5, 0.0, 0.0, (state)->true));
 		// Exposure
 		probs.add(new ItemLoot(Inhaler::new, 10, 0.0, 0.0, (state)->true));
 		probs.add(new ItemLoot(Antibiotics::new, 7, 0.0, 0.0, (state)->true));
