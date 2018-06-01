@@ -391,7 +391,9 @@ public class GameState {
 	}
 
 	private static final void initiateTurnResolvePhase(GameState state) {
+		System.out.println("Day before update: "+ state.getDay());
 		state.setDay(state.getDay() + 1);
+		System.out.println("Day updated: "+ state.getDay());
 
 		state.game.setAllCharactersNotReady();
 
