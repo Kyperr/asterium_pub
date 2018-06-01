@@ -41,7 +41,7 @@ public class MapPane extends Pane {
 	public MapPane(GameResources gr) {
 		super();
 		gameResources = gr;
-		this.image = new Image("/com/toozo/asterium/resources/ship.png", 1600, 900, true, true);
+		this.image = new Image("/com/toozo/asterium/resources/shipNEW3.png", 1600, 900, true, true);
 		canvas = new Canvas(getWidth(), getHeight());
 		getChildren().add(canvas);
 		widthProperty().addListener(e -> canvas.setWidth(getWidth()));

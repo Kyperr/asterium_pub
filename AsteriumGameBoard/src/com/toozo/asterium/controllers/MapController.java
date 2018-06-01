@@ -94,13 +94,13 @@ public class MapController extends AbstractAsteriumController {
         RowConstraints row3 = new RowConstraints();
         row3.setPercentHeight(20);
         ColumnConstraints column1 = new ColumnConstraints();
-        column1.setPercentWidth(10);
+        column1.setPercentWidth(12);
         ColumnConstraints column2 = new ColumnConstraints();
         column2.setPercentWidth(20);
         ColumnConstraints column3 = new ColumnConstraints();
         column3.setPercentWidth(20);
         ColumnConstraints column4 = new ColumnConstraints();
-        column4.setPercentWidth(35);
+        column4.setPercentWidth(33);
         ColumnConstraints column5 = new ColumnConstraints();
         column5.setPercentWidth(15);
         mapPane.getColumnConstraints().addAll(column1, column2, column3, column4);
