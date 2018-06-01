@@ -51,6 +51,7 @@ public class AsteriumGameBoard extends Application {
 		
 		stage.setTitle(GAME_BOARD_TITLE);
 		stage.setScene(createScene(gameboardPane));
+		stage.setMaximized(true);
 		stage.show();
 		navigator.display(Display.MENU);
 

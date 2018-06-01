@@ -67,7 +67,6 @@ public class MapPane extends Pane {
 				gc = canvas.getGraphicsContext2D();
 				gc.clearRect(0, 0, getWidth(), getHeight());
 		        gc.drawImage(image, 0, 0, getWidth(), getHeight());
-		        
 //		        for(Integer position : gameResources.getLocationMap().keySet()) {
 //					Double xLocation = xTranslatorMap.get(position).apply(getWidth());
 //					Double yLocation = yTranslatorMap.get(position).apply(getHeight());
@@ -80,7 +79,6 @@ public class MapPane extends Pane {
 
 		backgroundAnim.start();		
 	}
-	
 	
 //	private void mapXCoordinates() {
 //		xTranslatorMap = new HashMap<Integer, Function<Double, Double>>();
